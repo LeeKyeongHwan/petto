@@ -10,4 +10,5 @@ npm install vue-awesome-swiper --save-dev
 npm install materialize-css@next --save-dev
 npm install material-design-icons --save-dev
 npm install --save vueperslides
+npm install vue-cookie
 
