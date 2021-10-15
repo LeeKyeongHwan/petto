@@ -1,9 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+
+import Vue from "vue";
+import VueRouter from "vue-router";
+import MemberLoginPage from "@/views/member/MemberLoginPage.vue";
 import PettoHome from '../views/PettoHome.vue'
 import signup from '../views/member/signup.vue'
 
-Vue.use(VueRouter)
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -15,13 +18,21 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: signup
-  }
+  },
+  {
+    path: "/member/login",
+    name: "MemberLoginPage",
+    components: {
+      default: MemberLoginPage,
+    },
+  },
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
 
-export default router
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
+});
+
+export default router;

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -62,5 +63,38 @@ public class MemberServiceImpl implements MemberService {
         Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
 
         memberRepository.save(member);
+    }
+    @Override
+    public boolean login(MemberRequest memberRequest) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
+
+        if (maybeMember == null)
+        {
+            log.info("login(): 그런 사람 없다.");
+            return false;
+        }
+
+        /* Member loginMember = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
+        {
+            log.info("login(): 비밀번호 잘못 입력하였습니다.");
+            return false;
+        }
+        */
+        return true;
+    }
+
+    @Override
+    public boolean checkIdValidation(String id) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findById(id);
+
+        if (maybeMember == null)
+        {
+            log.info("login(): 회원가입부터 하세요");
+            return false;
+        }
+
+        return true;
     }
 }
