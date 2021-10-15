@@ -7,4 +7,6 @@ public interface MemberService {
     public boolean idDupliChk(String id);
 
     public void signup(MemberRequest memberRequest);
+
+    public boolean nicknameDupliChk(String nickname);
 }

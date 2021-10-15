@@ -32,9 +32,9 @@ public class MemberController {
     public ResponseEntity<Boolean> nicknameDupliChk(@PathVariable("nickname") String nickname) {
         log.info("nicknameDupliChk(): " + nickname);
 
-        //boolean NoDupliNickname =  memberService.nicknameDupliChk(nickname);
+        boolean NoDupliNickname =  memberService.nicknameDupliChk(nickname);
 
-        return new ResponseEntity<Boolean>(HttpStatus.OK);
+        return new ResponseEntity<Boolean>(NoDupliNickname, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
