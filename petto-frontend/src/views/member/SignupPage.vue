@@ -9,7 +9,7 @@
         :style="'background-color: white;'">
         <template v-slot:content>
 
-            <p class="mainText">사용할 ID를 입력해주세요</p>
+            <p class="mainText">사용할 ID를 입력해주세요. (8자리 이상)</p>
 
           <div style="margin-top: 40px; height: 200px; background: #42b8d4">
             <input type="text" style="width: 20%; margin-top: 40px;" v-model="id"/>
@@ -345,21 +345,26 @@ export default {
   methods: {
     checkIdDupli() {
 
-        const id = this.id
+        if(7 <= this.id.length) {
+            
+            const id = this.id
 
-        axios.post(`http://localhost:8888/petto/member/idDupliChk/${ id }`)
-            .then((res) => {
-                if(res.data == true) {
+            axios.post(`http://localhost:8888/petto/member/idDupliChk/${ id }`)
+                .then((res) => {
+                    if(res.data == true) {
 
-                    this.isDupliChecked = true
-                    this.confirmedId = this.id
-                } else {
-                    alert('동일한 id가 존재합니다.')
-                }
-            })
-            .catch(() => {
-                alert('잠시 후에 다시 시도해주세요.')
-            })
+                        this.isDupliChecked = true
+                        this.confirmedId = this.id
+                    } else {
+                        alert('동일한 id가 존재합니다.')
+                    }
+                })
+                .catch(() => {
+                    alert('잠시 후에 다시 시도해주세요.')
+                })
+        } else {
+            alert('아이디는 8자리 이상으로 설정해주세요.')
+        }
     },
 
     checkSamePassword() {

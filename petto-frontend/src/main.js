@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify'
 import cookies from 'vue-cookies'
 
 Vue.use(cookies)
-Vue.$cookies.config("1h") 
+//Vue.$cookies.config("1h") 
 
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
