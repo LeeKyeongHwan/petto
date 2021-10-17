@@ -9,7 +9,7 @@
         :style="'background-color: white;'">
         <template v-slot:content>
 
-            <p class="mainText">사용할 ID를 입력해주세요. (8자리 이상)</p>
+            <p class="mainText">사용할 ID를 입력해주세요</p>
 
           <div style="margin-top: 40px; height: 200px; background: #42b8d4">
             <input type="text" style="width: 20%; margin-top: 40px;" v-model="id"/>
@@ -346,7 +346,7 @@ export default {
     checkIdDupli() {
 
         if(7 <= this.id.length) {
-            
+
             const id = this.id
 
             axios.post(`http://localhost:8888/petto/member/idDupliChk/${ id }`)
