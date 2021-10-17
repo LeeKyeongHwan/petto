@@ -4,4 +4,20 @@ import com.example.petto.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
+
+
+    Optional<Member> findById(String id);
+
+    Optional<Member> findByNickname(String nickname);
+
+    Optional<Member> findByEmail(String email);
+
+    Optional<Member> findByEmailAndId(String email, String id);
+
+    @Transactional
+    @Modifying
+    @Query("update Member mem set mem.password = :password where mem.id = :id")
+    void changePassword(String id, String password);
+
 }
