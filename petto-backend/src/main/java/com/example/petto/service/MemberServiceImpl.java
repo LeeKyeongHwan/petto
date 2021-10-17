@@ -157,7 +157,6 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return true;
-
     }
 }
 
