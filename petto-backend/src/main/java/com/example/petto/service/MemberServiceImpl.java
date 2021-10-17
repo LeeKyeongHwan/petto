@@ -16,7 +16,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.Random;
+
+
 
 @Slf4j
 @Service
@@ -60,6 +63,7 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.save(member);
     }
+
 
     @Override
     public boolean checkValidEmail(String email) {
@@ -118,6 +122,40 @@ public class MemberServiceImpl implements MemberService {
         String password = passwordEncoder.encode(memberRequest.getPassword());
 
         memberRepository.changePassword(id, password);
+
+    @Override
+    public boolean login(MemberRequest memberRequest) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
+
+        if (maybeMember == null)
+        {
+            log.info("login(): 그런 사람 없다.");
+            return false;
+        }
+
+        /* Member loginMember = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
+        {
+            log.info("login(): 비밀번호 잘못 입력하였습니다.");
+            return false;
+        }
+        */
+        return true;
+    }
+
+    @Override
+    public boolean checkIdValidation(String id) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findById(id);
+
+        if (maybeMember == null)
+        {
+            log.info("login(): 회원가입부터 하세요");
+            return false;
+        }
+
+        return true;
+
     }
 }
 
