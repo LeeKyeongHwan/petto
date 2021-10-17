@@ -16,13 +16,41 @@
                 </ul>
             </div>
         </div>
+        <div>
+            <v-card v-if="layers">
+                <div id="layer">
+                    <img src="https://d2v80xjmx68n4w.cloudfront.net/gigs/jZCCL1620102805.png" alt="자원봉사" height="600">
+                    <v-btn class="close" @click="Close()" small icon><v-icon>close</v-icon></v-btn>
+                    <v-btn class="today-close" @click="TodayClose()" plain>오늘 하루 보지 않기</v-btn>
+                </div> 
+            </v-card> 
+        </div>
     </div>
 </template>
 
 <script>
 
 export default {
-    
+    data () {
+        return {
+            layers: false
+        }
+    },
+    methods: {
+        Close() {
+                this.layers = false
+        },
+        TodayClose() {
+            this.$store.dispatch('TodayPopUp')
+            this.layers = false
+        }    
+    },
+    mounted () {
+        console.log(this.$cookies.isKey('TodayPopUpClose'))
+            if(this.$cookies.isKey('TodayPopUpClose') === false){
+                this.layers = true;
+            }
+    }
 }
 </script>
 
@@ -129,5 +157,33 @@ h1 {
     right:2em;
 }
 
+//  팝업
 
+#layer{
+    position: fixed; 
+    left: 50px; 
+    top: 50px; 
+    width: 450px; 
+    border: 3px solid #fff; 
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.40);
+}
+
+#layer img {
+    width: 100%;
+    display: block;
+}
+
+#layer .close {
+    position: absolute;
+    right: 0.2em;
+    top: 3px;
+    font-size: 20px;
+    }
+
+#layer .today-close{
+    position: absolute;
+    right: 0.2em;
+    bottom: 0px;
+    font-size: 12px;
+}
 </style>
