@@ -123,6 +123,8 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.changePassword(id, password);
 
+    }
+
     @Override
     public boolean login(MemberRequest memberRequest) throws Exception {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
