@@ -1,19 +1,15 @@
 <template>
-    <div class="home">
-        <div id="header">
-            <petto-home/>
-        </div>
-    </div>
+  <hello-world />
 </template>
 
 <script>
-
-import PettoHome from'@/views/PettoHome.vue'
+  import HelloWorld from '../components/HelloWorld'
 
   export default {
-    components: { PettoHome },
-    name: 'Home'
+    name: 'Home',
+
+    components: {
+      HelloWorld,
+    },
   }
-
 </script>
-
