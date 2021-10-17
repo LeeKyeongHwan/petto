@@ -143,7 +143,13 @@ h1 {
     list-style: none;
     right:2em;
 }
+<<<<<<< HEAD
 //  팝업
+=======
+
+//  팝업
+
+>>>>>>> f9ccf9b1e400e744ce2c3d77034cd40f0fecfb17
 #layer{
     position: fixed; 
     left: 50px; 
@@ -152,16 +158,28 @@ h1 {
     border: 3px solid #fff; 
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.40);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9ccf9b1e400e744ce2c3d77034cd40f0fecfb17
 #layer img {
     width: 100%;
     display: block;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9ccf9b1e400e744ce2c3d77034cd40f0fecfb17
 #layer .close {
     position: absolute;
     right: 0.2em;
     top: 3px;
     font-size: 20px;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9ccf9b1e400e744ce2c3d77034cd40f0fecfb17
 #layer .today-close{
     position: absolute;
     right: 0.2em;
