@@ -3,23 +3,12 @@ package com.example.petto.service;
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
 import com.example.petto.repository.MemberRepository;
-import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import java.util.Random;
-
-
 
 @Slf4j
 @Service
@@ -29,22 +18,33 @@ public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public boolean idDupliChk(String id) {
 
-        if(memberRepository.findById(id).isEmpty()) return true;
+        List<Member> memberList = memberRepository.findAll();
 
-        return false;
+        for(int i=0; i<memberList.size(); i++) {
+            if(memberList.get(i).getId().equals(id)) {
+                log.info("ddd");
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean nicknameDupliChk(String nickname) {
 
-        if(memberRepository.findByNickname(nickname).isEmpty()) return true;
+        List<Member> memberList = memberRepository.findAll();
 
-        return false;
+        for(int i=0; i<memberList.size(); i++) {
+            if(memberList.get(i).getNickname().equals(nickname)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -63,6 +63,7 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.save(member);
     }
+
 
 
     @Override
@@ -159,5 +160,5 @@ public class MemberServiceImpl implements MemberService {
         return true;
 
     }
-}
 
+}

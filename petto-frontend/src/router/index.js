@@ -7,7 +7,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import MemberLoginPage from "@/views/member/MemberLoginPage.vue";
 import PettoHome from '../views/PettoHome.vue'
-import signup from '../views/member/signup.vue'
+import Home from '../views/Home.vue'
 
 
 Vue.use(VueRouter);
@@ -16,7 +16,6 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-
     name: 'Home',
     component: Home
   },
@@ -30,15 +29,10 @@ const routes = [
     name: 'FindIdAndPwPage',
     component: FindIdAndPwPage
   },
-
-
+  {
+    path: '/pettoHome',
     name: 'PettoHome',
     component: PettoHome
-  },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: signup
   },
   {
     path: "/member/login",
