@@ -1,10 +1,10 @@
 <template>  
     <div id="main">
         <div id="header">
-            <a href="/" class="logo"><h1>petto</h1></a>
+            <a href="/pettohome" class="logo"><h1>petto</h1></a>
             <div class="header-top">
                 <v-btn plain color="white" router :to="{name: 'MemberLoginPage'}">LOGIN</v-btn>
-                <v-btn plain color="white" router :to="{name: 'signup'}">JOIN US</v-btn>
+                <v-btn plain color="white" router :to="{name: 'SignupPage'}">JOIN US</v-btn>
             </div>
             <div>
                 <ul>

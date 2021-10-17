@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 import PettoHome from'@/views/PettoHome.vue'
 
   export default {
@@ -15,3 +16,4 @@ import PettoHome from'@/views/PettoHome.vue'
   }
 
 </script>
+

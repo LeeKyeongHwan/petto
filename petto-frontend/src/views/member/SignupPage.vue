@@ -309,8 +309,10 @@
 
 <script>
 import axios from 'axios'
+
 import { VueperSlides, VueperSlide } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
+
 export default {
   components: { VueperSlides, VueperSlide },
   data() {
@@ -318,38 +320,53 @@ export default {
           isDupliChecked: false,
           id: '', //
           confirmedId: '',
+
           password: '', //
           passwordChk: '',
           email: '', //
           phoneNumber: '', //
+
           name: '', //
           birthday: '', //
+
           haveRaisedPet: '',
           whichAnimal: [],
+
           numDog: 0,
           numCat: 0,
+
           petsRaised: '', //
           nickname: '',
           confirmedNickname: '',
+
           isDupliNickChecked: false
       }
   },
   methods: {
     checkIdDupli() {
-        const id = this.id
-        axios.post(`http://localhost:8888/petto/member/idDupliChk/${ id }`)
-            .then((res) => {
-                if(res.data == true) {
-                    this.isDupliChecked = true
-                    this.confirmedId = this.id
-                } else {
-                    alert('동일한 id가 존재합니다.')
-                }
-            })
-            .catch(() => {
-                alert('잠시 후에 다시 시도해주세요.')
-            })
+
+        if(7 <= this.id.length) {
+
+            const id = this.id
+
+            axios.post(`http://localhost:8888/petto/member/idDupliChk/${ id }`)
+                .then((res) => {
+                    if(res.data == true) {
+
+                        this.isDupliChecked = true
+                        this.confirmedId = this.id
+                    } else {
+                        alert('동일한 id가 존재합니다.')
+                    }
+                })
+                .catch(() => {
+                    alert('잠시 후에 다시 시도해주세요.')
+                })
+        } else {
+            alert('아이디는 8자리 이상으로 설정해주세요.')
+        }
     },
+
     checkSamePassword() {
         if(this.password != "" && this.password == this.passwordChk) {
             return true
@@ -357,6 +374,7 @@ export default {
             return false
         }
     },
+
     checkMailAndNumber() {
         if(this.email != "" && this.phoneNumber != "") {
             return true
@@ -364,48 +382,62 @@ export default {
             return false
         }
     },
+
     isRightBirthday() {
         return true
     },
+
     dogChecked() {
         if(this.whichAnimal.includes("dog")) {
             return true
         }
         return false
     },
+
     catChecked() {
         if(this.whichAnimal.includes("cat")) {
             return true
         }
         return false
     },
+
     havePets() {
         if(this.whichAnimal == '') {
             alert('선택사항에 체크해주세요!')
             return false
         }
+
         var tmpArr = []
         if(this.whichAnimal.includes("dog")) {
+
             if(this.numDog <= 0) return false
             tmpArr.push("강아지 " + this.numDog + "마리")
         }
+
         if (this.whichAnimal.includes("cat")) {
+
             if(this.numCat <= 0) return false
             tmpArr.push("고양이 " + this.numCat + "마리")
         }
+
         if (this.whichAnimal.includes("etc")) tmpArr.push("그 외")
+
         let tmpArrSecond = JSON.stringify(tmpArr)
         this.petsRaised = tmpArrSecond.replace(/\[/gi, "").replace(/\]/gi, "").replace(/"/gi, ""),
   
         this.$refs.first.next()
     },
+
     checkNicknameDupli() {
         const nickname = this.nickname
+
         axios.post(`http://localhost:8888/petto/member/nicknameDupliChk/${ nickname }`)
             .then((res) => {
                 if(res.data == true) {
+
                     this.isDupliNickChecked = true
                     this.confirmedNickname = this.nickname
+
                 } else {
                     alert('동일한 닉네임이 존재합니다.')
                 }
@@ -414,6 +446,7 @@ export default {
                 alert('잠시 후에 다시 시도해주세요.')
             })
     },
+
     singnup() {
         const id = this.id
         const password = this.password
@@ -423,6 +456,7 @@ export default {
         const birthday = this.birthday
         const petsRaised = this.petsRaised
         const nickname = this.nickname
+
         axios.post('http://localhost:8888/petto/member/signup', { id, password, email, phoneNumber, name, birthday, petsRaised, nickname })
             .then(() => {
                 alert('가입이 완료되었습니다!')
@@ -434,6 +468,7 @@ export default {
                 alert('잠시 후에 다시 시도해주세요.')
             })
     },
+
     showAlert(msg) {
       alert(msg);
     }
@@ -458,6 +493,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap');
+
 .mainText {
     margin-top: 50px;
     font-family: 'Gowun Batang', serif;
@@ -466,8 +502,11 @@ export default {
     font-style: normal;
     color: #42b8d4;
 }
+
 .btnText {
     font-family: 'Gowun Batang', serif;
     color: white;
 }
+
+
 </style>
