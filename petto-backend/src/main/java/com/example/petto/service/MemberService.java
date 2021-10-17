@@ -11,4 +11,10 @@ public interface MemberService {
     public void signup(MemberRequest memberRequest);
 
     public boolean nicknameDupliChk(String nickname);
+
+    public boolean checkValidEmail(String email);
+
+    public String checkValidEmailForPw(String email, String id);
+
+    public void changePassword(MemberRequest memberRequest);
 }

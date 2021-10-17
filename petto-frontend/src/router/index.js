@@ -1,4 +1,8 @@
 
+import SignupPage from '../views/member/SignupPage.vue'
+import FindIdAndPwPage from '../views/member/FindIdAndPwPage.vue'
+
+
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MemberLoginPage from "@/views/member/MemberLoginPage.vue";
@@ -8,9 +12,26 @@ import signup from '../views/member/signup.vue'
 
 Vue.use(VueRouter);
 
+
 const routes = [
   {
     path: '/',
+
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/signupPage',
+    name: 'SignupPage',
+    component: SignupPage
+  },
+  {
+    path: '/findIdAndPwPage',
+    name: 'FindIdAndPwPage',
+    component: FindIdAndPwPage
+  },
+
+
     name: 'PettoHome',
     component: PettoHome
   },
@@ -26,6 +47,7 @@ const routes = [
       default: MemberLoginPage,
     },
   },
+
 ]
 
 
