@@ -461,7 +461,7 @@ export default {
             .then(() => {
                 alert('가입이 완료되었습니다!')
                 this.$router.push({
-                    name: 'MainPage'
+                    name: 'PettoHome'
                 })
             })
             .catch(() => {
