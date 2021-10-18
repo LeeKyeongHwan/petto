@@ -62,9 +62,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean checkValidEmail(String email) {
+    public boolean checkValidEmail(String email, String birthday) {
 
-        Optional<Member> member = memberRepository.findByEmail(email); //NonUniqueResultException 이메일 체크 메소드도 만들어야 하나 고민중..
+        Optional<Member> member = memberRepository.findByEmailAndBirthday(email, birthday); //NonUniqueResultException 이메일 체크 메소드도 만들어야 하나 고민중..
 
         if(!member.isEmpty()) {
             String id = member.get().getId();
@@ -118,6 +118,27 @@ public class MemberServiceImpl implements MemberService {
         String password = passwordEncoder.encode(memberRequest.getPassword());
 
         memberRepository.changePassword(id, password);
+    }
+
+    @Override
+    public Member getUserInfo(Integer userNo) {
+
+        Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
+
+        return member;
+    }
+
+    @Override
+    public void modifyUserInfo(Member member) {
+
+        String id = member.getId();
+        String email = member.getEmail();
+        String phoneNumber = member.getPhoneNumber();
+        String name = member.getName();
+        String birthday = member.getBirthday();
+        String nickname = member.getNickname();
+
+        memberRepository.modifyUserInfo(id, email, phoneNumber, name, birthday, nickname, new Long(member.getMemberNo()));
     }
 }
 
