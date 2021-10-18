@@ -199,7 +199,7 @@ export default {
                         alert('비밀번호가 변경되었습니다.')
 
                         this.$router.push({
-                            name: 'MainPage'
+                            name: 'PettoHome'
                         })
                     })
                     .catch(() => {
@@ -213,7 +213,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap');
 
 .normalText {

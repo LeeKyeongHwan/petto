@@ -6,6 +6,7 @@ import SignupPage from '../views/member/SignupPage.vue'
 import FindIdAndPwPage from '../views/member/FindIdAndPwPage.vue'
 import PettoHome from '../views/PettoHome.vue'
 import MemberLoginPage from '../views/member/MemberLoginPage.vue'
+import InfoModifyPage from '../views/member/InfoModifyPage.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     name: 'MemberLoginPage',
     component: MemberLoginPage
   },
+  {
+    path: '/infoModify/modify',
+    name: 'InfoModifyPage',
+    component: InfoModifyPage
+  }
 
 ]
 
