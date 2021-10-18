@@ -19,8 +19,10 @@
         <div>
             <v-card v-if="layers">
                 <div id="layer">
-                    <img src="https://d2v80xjmx68n4w.cloudfront.net/gigs/jZCCL1620102805.png" alt="자원봉사" height="600">
+                    <!-- <img src="https://d2v80xjmx68n4w.cloudfront.net/gigs/jZCCL1620102805.png" alt="자원봉사" height="600"> -->
+                    <img src="@/assets/img/popup.png" alt="자원봉사">
                     <v-btn class="close" @click="Close()" small icon><v-icon>close</v-icon></v-btn>
+                    <v-btn class="img-link" color="#feecae" depressed width="200" height="40">자세히보기</v-btn>
                     <v-btn class="today-close" @click="TodayClose()" plain>오늘 하루 보지 않기</v-btn>
                 </div> 
             </v-card> 
@@ -184,6 +186,13 @@ h1 {
     position: absolute;
     right: 0.2em;
     bottom: 0px;
+    font-size: 12px;
+}
+
+#layer .img-link{
+    position: absolute;
+    right: 10em;
+    bottom: 3em;
     font-size: 12px;
 }
 </style>
