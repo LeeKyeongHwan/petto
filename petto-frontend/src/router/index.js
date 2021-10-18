@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 
 import SignupPage from '../views/member/SignupPage.vue'
 import FindIdAndPwPage from '../views/member/FindIdAndPwPage.vue'
+import PettoHome from '../views/PettoHome.vue'
+import MemberLoginPage from '../views/member/MemberLoginPage.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +24,16 @@ const routes = [
     path: '/findIdAndPwPage',
     name: 'FindIdAndPwPage',
     component: FindIdAndPwPage
+  },
+  {
+    path: '/pettoHome',
+    name: 'PettoHome',
+    component: PettoHome
+  },
+  {
+    path: '/memberLoginPage',
+    name: 'MemberLoginPage',
+    component: MemberLoginPage
   },
 
 ]
