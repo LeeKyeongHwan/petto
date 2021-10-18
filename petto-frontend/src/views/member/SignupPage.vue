@@ -206,27 +206,31 @@
 
             <p class="mainText">어떤 반려동물과 함께하고있나요?</p>
 
-          <div style="margin-top: 40px; height: 200px; background: #42b8d4;">
+            <div style="margin-top: 40px; height: 200px; background: #42b8d4;">
 
-                <div style="display: inline-block; margin-top: 40px;">
-                    <span class="row btnText">
-                        <v-checkbox label="강아지" value="dog" v-model="whichAnimal" dark style="margin-right: 20px;"/>
-                        <div v-if="dogChecked()" style="margin-right: 40px;">
-                            <input type="number" style="width: 50px; margin-top: 10px;" v-model="numDog"/>
-                            마리
-                        </div>
+                <div class="btnText" style="padding-top: 20px;">
 
-                        <v-checkbox label="고양이" value="cat" v-model="whichAnimal" dark style="margin-right: 20px;"/>
-                        <div v-if="catChecked()" style="margin-right: 40px;">
-                            <input type="number" style="width: 50px; margin-top: 10px;" v-model="numCat"/>
-                            마리
-                        </div>
+                    <v-checkbox label="강아지" value="dog" v-model="whichAnimal" dark style="display: inline-block; margin-right: 15px;"/>
 
-                        <v-checkbox label="그 외" value="etc" v-model="whichAnimal" dark/>
-                    </span>
+                    <div v-if="dogChecked()" style="margin-right: 40px; display: inline-block;">
+
+                    <input type="number" style="width: 50px; margin-top: 10px;" v-model="numDog"/>
+                         마리
+                    </div>
+
+                    <v-checkbox label="고양이" value="cat" v-model="whichAnimal" dark style="display: inline-block; margin-right: 15px;"/>
+
+                    <div v-if="catChecked()" style="margin-right: 40px; display: inline-block;">
+
+                    <input type="number" style="width: 50px; margin-top: 10px;" v-model="numCat"/>
+                        마리
+                    </div>
+
+                    <v-checkbox label="그 외" value="etc" v-model="whichAnimal" dark style="display: inline-block;"/>
                 </div>
-                    
+             
             <br/>
+
             <v-btn text @click="$refs.first.previous()" class="btnText" style="margin: 10px; color: white;">
                 이전
             </v-btn>
