@@ -13,9 +13,17 @@
         <div style="margin-top: 60px;">
 
             <div v-if="findId">
-                <p class="normalText">가입시 입력했던 이메일을 입력해주세요.</p>
+                <p class="normalText">생년월일과 가입시 입력했던 이메일을 입력해주세요.</p>
 
-                <input class="mainText" v-model="email" style="width: 200px; color: black;"/>
+                <label>
+                    생년월일(6자)
+                    <input class="mainText" v-model="birthday" style="width: 200px; color: black;"/>
+                </label>
+
+                <label>
+                    이메일
+                    <input class="mainText" v-model="email" style="width: 200px; color: black;"/>
+                </label>
 
                 <v-btn text class="mainText" style="margin-top: 0px;" @click="checkValidEmail">
                     확인
@@ -104,6 +112,7 @@ export default {
 
             id: '',
             email: '',
+            birthday: '',
 
             emailValidChk: '',
 
@@ -134,6 +143,8 @@ export default {
             this.findId = false
 
             this.changePw = false
+
+            this.birthday = ''
         },
 
         checkValidEmail() {
@@ -142,9 +153,11 @@ export default {
 
             let email = this.email
             let id = this.id
+            let birthday = this.birthday
 
             formData.append("email", email)
             formData.append("id", id)
+            formData.append("birthday", birthday)
 
             axios.post('http://localhost:8888/petto/member/checkValidEmail', formData)
             .then((res) => {
