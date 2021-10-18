@@ -1,3 +1,6 @@
-import {} from "./mutation-types";
+import {
+} from './mutation-types'
 
-export default {};
+export default {
+  
+}

@@ -16,10 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import java.util.Random;
-
-
 
 @Slf4j
 @Service
@@ -46,24 +43,6 @@ public class MemberServiceImpl implements MemberService {
 
         return false;
     }
-
-    @Override
-    public void signup(MemberRequest memberRequest) {
-
-        String id = memberRequest.getId();
-        String password = passwordEncoder.encode(memberRequest.getPassword());
-        String email = memberRequest.getEmail();
-        String phoneNumber = memberRequest.getPhoneNumber();
-        String name = memberRequest.getName();
-        String birthday = memberRequest.getBirthday();
-        String petsRaised = memberRequest.getPetsRaised();
-        String nickname = memberRequest.getNickname();
-
-        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
-
-        memberRepository.save(member);
-    }
-
 
     @Override
     public boolean checkValidEmail(String email) {
@@ -96,6 +75,23 @@ public class MemberServiceImpl implements MemberService {
             return confidentialCode;
         }
         return "unvalid";
+    }
+
+    @Override
+    public void signup(MemberRequest memberRequest) {
+
+        String id = memberRequest.getId();
+        String password = passwordEncoder.encode(memberRequest.getPassword());
+        String email = memberRequest.getEmail();
+        String phoneNumber = memberRequest.getPhoneNumber();
+        String name = memberRequest.getName();
+        String birthday = memberRequest.getBirthday();
+        String petsRaised = memberRequest.getPetsRaised();
+        String nickname = memberRequest.getNickname();
+
+        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
+
+        memberRepository.save(member);
     }
 
     private StringBuffer makeConfidentialCode() {
