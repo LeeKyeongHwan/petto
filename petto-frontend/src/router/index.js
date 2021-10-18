@@ -1,17 +1,11 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
 import SignupPage from '../views/member/SignupPage.vue'
 import FindIdAndPwPage from '../views/member/FindIdAndPwPage.vue'
 
-
-import Vue from "vue";
-import VueRouter from "vue-router";
-import MemberLoginPage from "@/views/member/MemberLoginPage.vue";
-import PettoHome from '../views/PettoHome.vue'
-import Home from '../views/Home.vue'
-
-
-Vue.use(VueRouter);
-
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -29,26 +23,13 @@ const routes = [
     name: 'FindIdAndPwPage',
     component: FindIdAndPwPage
   },
-  {
-    path: '/pettoHome',
-    name: 'PettoHome',
-    component: PettoHome
-  },
-  {
-    path: "/member/login",
-    name: "MemberLoginPage",
-    components: {
-      default: MemberLoginPage,
-    },
-  },
 
 ]
 
-
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

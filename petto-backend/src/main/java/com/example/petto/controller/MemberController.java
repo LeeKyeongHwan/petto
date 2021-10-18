@@ -45,4 +45,37 @@ public class MemberController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @PostMapping("/checkValidEmail")
+    //@ResponseBody
+    public ResponseEntity<String> checkValidEmail(@RequestParam("email") String email, @RequestParam("id") String id) {
+
+        if(!id.equals("")) {
+            log.info("checkValidEmail(): " + email + ", " + id);
+
+            String confidentialCode = memberService.checkValidEmailForPw(email, id);
+
+            return new ResponseEntity<String>(confidentialCode, HttpStatus.OK);
+
+        } else {
+
+            log.info("checkValidEmail(): " + email);
+
+            boolean isEmailExists = memberService.checkValidEmail(email);
+
+            String EmailExists = "NotEmailExists";
+            if(isEmailExists) EmailExists = "EmailExists";
+
+            return new ResponseEntity<String>(EmailExists, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<Void> changePassword(@Validated @RequestBody MemberRequest memberRequest) {
+        log.info("changePassword(): " + memberRequest);
+
+        memberService.changePassword(memberRequest);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
