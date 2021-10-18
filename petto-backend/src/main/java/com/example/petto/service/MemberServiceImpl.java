@@ -45,23 +45,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void signup(MemberRequest memberRequest) {
-
-        String id = memberRequest.getId();
-        String password = passwordEncoder.encode(memberRequest.getPassword());
-        String email = memberRequest.getEmail();
-        String phoneNumber = memberRequest.getPhoneNumber();
-        String name = memberRequest.getName();
-        String birthday = memberRequest.getBirthday();
-        String petsRaised = memberRequest.getPetsRaised();
-        String nickname = memberRequest.getNickname();
-
-        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
-
-        memberRepository.save(member);
-    }
-
-    @Override
     public boolean checkValidEmail(String email) {
 
         Optional<Member> member = memberRepository.findByEmail(email); //NonUniqueResultException 이메일 체크 메소드도 만들어야 하나 고민중..
@@ -94,6 +77,23 @@ public class MemberServiceImpl implements MemberService {
         return "unvalid";
     }
 
+    @Override
+    public void signup(MemberRequest memberRequest) {
+
+        String id = memberRequest.getId();
+        String password = passwordEncoder.encode(memberRequest.getPassword());
+        String email = memberRequest.getEmail();
+        String phoneNumber = memberRequest.getPhoneNumber();
+        String name = memberRequest.getName();
+        String birthday = memberRequest.getBirthday();
+        String petsRaised = memberRequest.getPetsRaised();
+        String nickname = memberRequest.getNickname();
+
+        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
+
+        memberRepository.save(member);
+    }
+
     private StringBuffer makeConfidentialCode() {
 
         Random rnd =new Random();
@@ -118,6 +118,44 @@ public class MemberServiceImpl implements MemberService {
         String password = passwordEncoder.encode(memberRequest.getPassword());
 
         memberRepository.changePassword(id, password);
+
+    }
+
+    @Override
+    public boolean login(MemberRequest memberRequest) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
+
+
+
+        if (maybeMember == null)
+        {
+            log.info("login(): 그런 사람 없다.");
+            return false;
+        }
+
+        /* Member loginMember = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
+        {
+            log.info("login(): 비밀번호 잘못 입력하였습니다.");
+            return false;
+        }
+        */
+        return true;
+    }
+
+    @Override
+    public boolean checkIdValidation(String id) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findById(id);
+
+        if (maybeMember == null)
+        {
+            log.info("login(): 회원가입부터 하세요");
+            return false;
+        }
+
+        return true;
+
     }
 }
 
