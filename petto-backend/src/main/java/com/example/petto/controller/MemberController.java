@@ -1,6 +1,7 @@
 package com.example.petto.controller;
 
 import com.example.petto.controller.request.MemberRequest;
+import com.example.petto.entity.Member;
 import com.example.petto.service.MemberService;
 import com.example.petto.session.UserInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,6 @@ public class MemberController {
     private UserInfo info;
 
     private HttpSession session;
-
 
     @Autowired
     MemberService memberService;
@@ -55,10 +55,10 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-
     @PostMapping("/checkValidEmail")
     //@ResponseBody
-    public ResponseEntity<String> checkValidEmail(@RequestParam("email") String email, @RequestParam("id") String id) {
+    public ResponseEntity<String> checkValidEmail(@RequestParam("email") String email, @RequestParam("id") String id,
+                                                @RequestParam("birthday") String birthday) {
 
         if(!id.equals("")) {
             log.info("checkValidEmail(): " + email + ", " + id);
@@ -69,9 +69,9 @@ public class MemberController {
 
         } else {
 
-            log.info("checkValidEmail(): " + email);
+            log.info("checkValidEmail(): " + email, ", " + birthday);
 
-            boolean isEmailExists = memberService.checkValidEmail(email);
+            boolean isEmailExists = memberService.checkValidEmail(email, birthday);
 
             String EmailExists = "NotEmailExists";
             if(isEmailExists) EmailExists = "EmailExists";
@@ -85,6 +85,24 @@ public class MemberController {
         log.info("changePassword(): " + memberRequest);
 
         memberService.changePassword(memberRequest);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/getUserInfo/{userNo}")
+    public ResponseEntity<Member> getUserInfo(@PathVariable("userNo") Integer userNo) {
+        log.info("getUserInfo(): " + userNo);
+
+        Member memberInfo = memberService.getUserInfo(userNo);
+
+        return new ResponseEntity<Member>(memberInfo, HttpStatus.OK);
+    }
+
+    @PutMapping("/modifyUserInfo")
+    public ResponseEntity<Void> modifyUserInfo(@Validated @RequestBody Member member) {
+        log.info("modifyUserInfo(): " + member);
+
+        memberService.modifyUserInfo(member);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
