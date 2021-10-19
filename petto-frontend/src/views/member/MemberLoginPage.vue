@@ -5,7 +5,6 @@
     </div>-->
   <member-login-form @submit="onSubmit" />
   <!--<v-spacer></v-spacer>
-
     <v-btn tile color="teal" @click="showSession">
       <v-icon left>
         ads_click
@@ -31,7 +30,6 @@
 
 <script>
 import MemberLoginForm from "@/components/member/MemberLoginForm.vue";
-
 export default {
   name: "MemberLoginPage",
   components: {
