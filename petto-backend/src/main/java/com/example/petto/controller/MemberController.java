@@ -1,6 +1,7 @@
 package com.example.petto.controller;
 
 import com.example.petto.controller.request.MemberRequest;
+import com.example.petto.controller.response.ResponseSession;
 import com.example.petto.entity.Member;
 import com.example.petto.service.MemberService;
 import com.example.petto.session.UserInfo;
@@ -117,19 +118,18 @@ public class MemberController {
 
         Boolean isSuccess = memberService.login(memberRequest);
 
-        if (isSuccess) {
-            log.info("Login Success");
-            info = new UserInfo();
-            info.setId(memberRequest.getId());
-            log.info("Session Info: " + info);
+            if (isSuccess) {
+                log.info("Login Success");
+                info = new UserInfo();
+                info.setId(memberRequest.getId());
+                log.info("Session Info: " + info);
 
-            session = request.getSession();
-            session.setAttribute("member", info);
-        } else {
-            log.info("Login Failure");
-            info = null;
-        }
-
+                session = request.getSession();
+                session.setAttribute("member", info);
+            } else {
+                log.info("Login Failure");
+                info = null;
+            }
         return new ResponseEntity<UserInfo>(info, HttpStatus.OK);
     }
 
