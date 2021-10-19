@@ -47,56 +47,6 @@
           >
         </div>
       </v-card>
-
-<template>
-  <div id="main">
-    <div id="header">
-      <a href="/pettohome" class="logo"><h1>petto</h1></a>
-      <div class="header-top">
-        <v-btn
-          plain
-          color="white"
-          v-if="!isLogin"
-          router
-          :to="{ name: 'MemberLoginPage' }"
-          >LOGIN</v-btn
-        >
-        <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
-        <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
-          >JOIN US</v-btn
-        >
-      </div>
-      <div>
-        <ul>
-          <li><a href="#">소개</a></li>
-          <li><a href="#">유기동물</a></li>
-          <li><a href="#">제보</a></li>
-          <li><a href="#">자원봉사</a></li>
-          <li><a href="#">Q&A</a></li>
-        </ul>
-      </div>
-    </div>
-    <div>
-      <v-card v-if="layers">
-        <div id="layer">
-          <!-- <img src="https://d2v80xjmx68n4w.cloudfront.net/gigs/jZCCL1620102805.png" alt="자원봉사" height="600"> -->
-          <img src="@/assets/img/popup.png" alt="자원봉사" />
-          <v-btn class="close" @click="Close()" small icon
-            ><v-icon>close</v-icon></v-btn
-          >
-          <v-btn
-            class="img-link"
-            color="#feecae"
-            depressed
-            width="200"
-            height="40"
-            >자세히보기</v-btn
-          >
-          <v-btn class="today-close" @click="TodayClose()" plain
-            >오늘 하루 보지 않기</v-btn
-          >
-        </div>
-
     <div id="youtube">
         <!-- https://www.youtube.com/embed/는 고정적인 url 이고
         유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙
