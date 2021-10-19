@@ -129,18 +129,18 @@ public class MemberServiceImpl implements MemberService {
 
         if (maybeMember == null)
         {
-            log.info("login(): 아이디를 잘못 입력하였습니다..");
+            log.info("login(): 그런 사람 없다.");
             return false;
         }
 
-         Member loginMember = maybeMember.get();
+        /* Member loginMember = maybeMember.get();
 
         if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
         {
             log.info("login(): 비밀번호 잘못 입력하였습니다.");
             return false;
         }
-
+        */
         return true;
     }
 

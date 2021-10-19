@@ -48,20 +48,67 @@
         </div>
       </v-card>
 
-      <div id="youtube">
-        <!-- https://www.youtube.com/embed/는 고정적인 url 이고
-        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙하면 끝-->
-        <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs">
-        </iframe>
-        <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs">
-        </iframe>
-        <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE">
-        </iframe>
-        <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY">
-        </iframe>
+<template>
+  <div id="main">
+    <div id="header">
+      <a href="/pettohome" class="logo"><h1>petto</h1></a>
+      <div class="header-top">
+        <v-btn
+          plain
+          color="white"
+          v-if="!isLogin"
+          router
+          :to="{ name: 'MemberLoginPage' }"
+          >LOGIN</v-btn
+        >
+        <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
+        <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
+          >JOIN US</v-btn
+        >
+      </div>
+      <div>
+        <ul>
+          <li><a href="#">소개</a></li>
+          <li><a href="#">유기동물</a></li>
+          <li><a href="#">제보</a></li>
+          <li><a href="#">자원봉사</a></li>
+          <li><a href="#">Q&A</a></li>
+        </ul>
       </div>
     </div>
-  </div>
+    <div>
+      <v-card v-if="layers">
+        <div id="layer">
+          <!-- <img src="https://d2v80xjmx68n4w.cloudfront.net/gigs/jZCCL1620102805.png" alt="자원봉사" height="600"> -->
+          <img src="@/assets/img/popup.png" alt="자원봉사" />
+          <v-btn class="close" @click="Close()" small icon
+            ><v-icon>close</v-icon></v-btn
+          >
+          <v-btn
+            class="img-link"
+            color="#feecae"
+            depressed
+            width="200"
+            height="40"
+            >자세히보기</v-btn
+          >
+          <v-btn class="today-close" @click="TodayClose()" plain
+            >오늘 하루 보지 않기</v-btn
+          >
+        </div>
+
+    <div id="youtube">
+        <!-- https://www.youtube.com/embed/는 고정적인 url 이고
+        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙
+        유튜브 주소창 그대로 사용시 유튜브에서 연결을 거부했습니다 메세지 출력되면서 영상출력X -->
+    <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY"> </iframe>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 <script>
@@ -228,10 +275,5 @@ h1 {
   position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
   width: 100%;
   padding-bottom: 56.25%; /* 16:9 비율 */
-}
-#video {
-  position: absolute;
-  width: 100%; /* 부모에 맞게 꽉 채운다. */
-  height: 100%;
 }
 </style>
