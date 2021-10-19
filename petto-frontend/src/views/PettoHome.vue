@@ -46,7 +46,6 @@
             >오늘 하루 보지 않기</v-btn
           >
         </div>
-
       </v-card>
 
 <template>
@@ -109,6 +108,7 @@
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -271,7 +271,7 @@ h1 {
   bottom: 3em;
   font-size: 12px;
 }
-#youtube{
+#youtube {
   position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
   width: 100%;
   padding-bottom: 56.25%; /* 16:9 비율 */
