@@ -46,6 +46,18 @@
             >오늘 하루 보지 않기</v-btn
           >
         </div>
+
+    <div id="youtube">
+        // https://www.youtube.com/embed/는 고정적인 url 이고
+        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙하면 끝
+    <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY"> </iframe>
+    </div>
+    </div>
+    
+
       </v-card>
     </div>
   </div>
@@ -228,5 +240,17 @@ h1 {
   right: 10em;
   bottom: 3em;
   font-size: 12px;
+}
+
+
+#youtube{
+  position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 비율 */
+}
+#video {
+  position: absolute;
+  width: 100%; /* 부모에 맞게 꽉 채운다. */
+  height: 100%;
 }
 </style>
