@@ -46,19 +46,20 @@
             >오늘 하루 보지 않기</v-btn
           >
         </div>
-
-    <div id="youtube">
-        // https://www.youtube.com/embed/는 고정적인 url 이고
-        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙하면 끝
-    <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs"> </iframe>
-    <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs"> </iframe>
-    <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE"> </iframe>
-    <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY"> </iframe>
-    </div>
-    </div>
-    
-
       </v-card>
+
+      <div id="youtube">
+        <!-- https://www.youtube.com/embed/는 고정적인 url 이고
+        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙하면 끝-->
+        <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs">
+        </iframe>
+        <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs">
+        </iframe>
+        <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE">
+        </iframe>
+        <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY">
+        </iframe>
+      </div>
     </div>
   </div>
 </template>
@@ -106,7 +107,6 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: "GowunDodum-Regular";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff")
@@ -114,13 +114,11 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 #main {
   position: relative;
   min-height: 100vh;
@@ -138,7 +136,6 @@ export default {
     size: cover;
   }
 }
-
 #header {
   position: absolute;
   top: 0;
@@ -148,23 +145,19 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-
 .logo {
   color: #fff;
   letter-spacing: 3px;
 }
-
 #header ul {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 #header ul li {
   list-style: none;
   margin-left: 15px;
 }
-
 #header ul li a {
   text-decoration: none;
   padding: 6px 12px;
@@ -175,7 +168,6 @@ export default {
   margin-left: 30px;
   margin-right: 30px;
 }
-
 #header ul li a::after {
   content: "";
   position: absolute;
@@ -187,26 +179,21 @@ export default {
   background: #f7b43e;
   transition: all 0.5s ease-out;
 }
-
 #header ul li a:hover::after {
   width: 100%;
 }
-
 h1 {
   font-family: "Manse";
   font-size: 80px;
   text-shadow: 2px 2px 2px gray;
 }
-
 .header-top {
   position: absolute;
   top: 1em;
   list-style: none;
   right: 2em;
 }
-
 //  팝업
-
 #layer {
   position: fixed;
   left: 50px;
@@ -215,35 +202,29 @@ h1 {
   border: 3px solid #fff;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
 }
-
 #layer img {
   width: 100%;
   display: block;
 }
-
 #layer .close {
   position: absolute;
   right: 0.2em;
   top: 3px;
   font-size: 20px;
 }
-
 #layer .today-close {
   position: absolute;
   right: 0.2em;
   bottom: 0px;
   font-size: 12px;
 }
-
 #layer .img-link {
   position: absolute;
   right: 10em;
   bottom: 3em;
   font-size: 12px;
 }
-
-
-#youtube{
+#youtube {
   position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
   width: 100%;
   padding-bottom: 56.25%; /* 16:9 비율 */

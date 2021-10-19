@@ -34,7 +34,9 @@
         <div class="form-group">
           <input class="login-submit" type="submit" value="로그인" />
         </div>
-        <a href="#" class="login-forgotpassword">아이디/비밀번호 찾기</a>
+        <a href="FindIdAndPwPage" class="login-forgotpassword"
+          >아이디/비밀번호 찾기</a
+        >
         <svg>
           <symbol id="user" viewBox="0 0 1792 1792">
             <path
