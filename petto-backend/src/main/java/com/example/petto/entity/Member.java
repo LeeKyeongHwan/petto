@@ -57,7 +57,7 @@ public class Member {
     private Date updDate;
 
     public Member(String id, String password, String email, String phoneNumber, String name, String birthday,
-                  String petsRaised, String nickname) {
+                   String petsRaised, String nickname) {
         this.id = id;
         this.password = password;
         this.email = email;

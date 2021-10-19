@@ -134,6 +134,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         /* Member loginMember = maybeMember.get();
+
         if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
         {
             log.info("login(): 비밀번호 잘못 입력하였습니다.");
@@ -178,3 +179,4 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.modifyUserInfo(id, email, phoneNumber, name, birthday, nickname, new Long(member.getMemberNo()));
     }
 }
+
