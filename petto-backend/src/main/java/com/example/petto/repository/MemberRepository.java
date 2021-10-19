@@ -1,90 +1,40 @@
-package com.example.petto.entity;
+package com.example.petto.repository;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.example.petto.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
-@Data
-@NoArgsConstructor
-@Entity
-@Table(name="member")
-public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_no")
-    private Long memberNo;
-
-    @Column(length = 64, nullable = false)
-    private String userId;
-
-    @Column(length = 64, nullable = false)
-    private String password;
-
-    @Column(length = 64, nullable = false)
-    private String name;
-
-    @Column(length = 64, nullable = false)
-    private Integer dateOfBirth;
-
-    @Column(length = 64, nullable = false)
-    private Integer phoneNumber;
-
-    @Column(length = 64, nullable = false)
-    private String email;
-
-    @Column(length = 64, nullable = false)
-    private String address;
-
-    @Column(name="gender", nullable = false)
-    private String gender;
-
-    @Column
-    private String drawing;
-
-    @Column
-    private String article;
-
-    @Column
-    private String largeArtwork;
-
-    @CreationTimestamp
-    private Date regDate;
-
-    @UpdateTimestamp
-    private Date updDate;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 
-    /* Join Column 파트 */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_no")
-    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
+import java.util.Optional;
 
-    public Member(String userId, String password, String name, Integer dateOfBirth, Integer phoneNumber, String email,
-                  String address, String gender, String drawing, String article, String largeArtwork) {
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
-        this.gender = gender;
-        this.drawing = drawing;
-        this.article = article;
-        this.largeArtwork = largeArtwork;
-    }
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    public void addAuth(MemberAuth auth) {
-        authList.add(auth);
-    }
+    Optional<Member> findById(String id);
 
-    public void clearAuthList () {
-        authList.clear();
-    }
+    Optional<Member> findByNickname(String nickname);
+
+    Optional<Member> findByEmailAndBirthday(String email, String birthday);
+
+    Optional<Member> findByEmailAndId(String email, String id);
+
+    @Transactional
+    @Modifying
+    @Query("update Member mem set mem.password = :password where mem.id = :id")
+    void changePassword(String id, String password);
+
+    Optional<Member> findByMemberNo(Long userNo);
+
+    @Transactional
+    @Modifying
+    @Query("update Member mem set mem.id = :id, mem.email = :email, mem.phoneNumber = :phoneNumber, mem.name = :name, " +
+            "mem.birthday = :birthday, mem.nickname = :nickname where mem.memberNo = :memberNo")
+    void modifyUserInfo(String id, String email, String phoneNumber, String name, String birthday, String nickname, Long memberNo);
 }

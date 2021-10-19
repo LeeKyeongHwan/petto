@@ -1,90 +1,70 @@
 package com.example.petto.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
+//@AllArgsConstructor
 @Entity
-@Table(name="pettomember")
+@Table(name="petto_member")
+@Transactional
 public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_no")
     private Long memberNo;
 
-    @Column(length = 64, nullable = false)
-    private String userId;
+    @Column(length = 50, nullable = false)
+    private String id;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 64, nullable = false)
-    private String name;
-
-    @Column(length = 64, nullable = false)
-    private Integer dateOfBirth;
-
-    @Column(length = 64, nullable = false)
-    private Integer phoneNumber;
-
-    @Column(length = 64, nullable = false)
+    @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(length = 64, nullable = false)
-    private String address;
+    @Column(length = 20, nullable = false)
+    private String phoneNumber;
 
-    @Column(name="gender", nullable = false)
-    private String gender;
+    @Column(length = 20, nullable = false)
+    private String name;
 
-    @Column
-    private String drawing;
+    @Column(length = 10, nullable = false)
+    private String birthday;
 
-    @Column
-    private String article;
+    @Column(length = 50, nullable = false)
+    private String petsRaised;
 
-    @Column
-    private String largeArtwork;
+    @Column(length = 30, nullable = false)
+    private String nickname;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @CreationTimestamp
     private Date regDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @UpdateTimestamp
     private Date updDate;
 
-
-    /* Join Column 파트 */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_no")
-    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
-
-    public Member(String userId, String password, String name, Integer dateOfBirth, Integer phoneNumber, String email,
-                  String address, String gender, String drawing, String article, String largeArtwork) {
-        this.userId = userId;
+    public Member(String id, String password, String email, String phoneNumber, String name, String birthday,
+                  String petsRaised, String nickname) {
+        this.id = id;
         this.password = password;
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
         this.email = email;
-        this.address = address;
-        this.gender = gender;
-        this.drawing = drawing;
-        this.article = article;
-        this.largeArtwork = largeArtwork;
-    }
-
-    public void addAuth(MemberAuth auth) {
-        authList.add(auth);
-    }
-
-    public void clearAuthList () {
-        authList.clear();
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+        this.birthday = birthday;
+        this.petsRaised = petsRaised;
+        this.nickname = nickname;
     }
 }
