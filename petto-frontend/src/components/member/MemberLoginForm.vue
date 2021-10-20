@@ -165,7 +165,7 @@ export default {
 
 .login-form .login-submit:hover,
 .login-form .login-submit:active {
-  background: #27ae60;
+  background: #27ae61;
   outline: none;
 }
 
