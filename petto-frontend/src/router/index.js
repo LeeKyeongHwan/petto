@@ -8,6 +8,8 @@ import PettoHome from '../views/PettoHome.vue'
 import MemberLoginPage from '../views/member/MemberLoginPage.vue'
 import InfoModifyPage from '../views/member/InfoModifyPage.vue'
 
+import FacilityListPage from '../views/facility/FacilityListPage.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,6 +42,11 @@ const routes = [
     path: '/infoModify/modify',
     name: 'InfoModifyPage',
     component: InfoModifyPage
+  },
+  {
+    path: '/facility/list',
+    name: 'FacilityListPage',
+    component: FacilityListPage
   }
 
 ]
