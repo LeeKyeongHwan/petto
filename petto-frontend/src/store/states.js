@@ -1,5 +1,6 @@
 export default {
   userInfo: "",
   session: [],
-  facilityList: []
+  facilityList: [],
+  animals: []
 };

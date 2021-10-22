@@ -1,7 +1,8 @@
 import { 
   FETCH_USER_INFO, 
   FETCH_SESSION,
-  FETCH_FACILITY_LIST 
+  FETCH_FACILITY_LIST,
+  FETCH_ANIMAL_LIST
 
 } from "./mutation-types";
 
@@ -16,13 +17,6 @@ export default {
         console.log(cookies.get("TodayPopUpClose"))
       }
     },
-
-  fetchUserInfo({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
-      .then(res => {
-        commit(FETCH_USER_INFO, res.data);
-      });
-  },
 
   fetchFacilityList({ commit }) {
     return axios.get('http://localhost:8888/petto/facility/getFacilityList')
@@ -40,5 +34,11 @@ export default {
       .then((res) => {
         commit(FETCH_USER_INFO, res.data)
       })
-  }
+  },
+  fetchAnimalList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/animals/lists')
+            .then((res) => {
+                commit(FETCH_ANIMAL_LIST, res.data)
+            })
+  },
 };
