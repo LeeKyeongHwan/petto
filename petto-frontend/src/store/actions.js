@@ -1,4 +1,9 @@
-import { FETCH_USER_INFO, FETCH_SESSION } from "./mutation-types";
+import { 
+  FETCH_USER_INFO, 
+  FETCH_SESSION,
+  FETCH_FACILITY_LIST 
+
+} from "./mutation-types";
 
 import axios from "axios";
 // import router from '../router'
@@ -13,10 +18,16 @@ export default {
   },
 
   fetchUserInfo({ commit }, payload) {
-    return axios
-      .get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
+    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
       .then(res => {
         commit(FETCH_USER_INFO, res.data);
+      });
+  },
+
+  fetchFacilityList({ commit }) {
+    return axios.get('http://localhost:8888/petto/facility/getFacilityList')
+      .then(res => {
+        commit(FETCH_FACILITY_LIST, res.data);
       });
   },
   // Session

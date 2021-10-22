@@ -39,7 +39,7 @@ export default {
           .post("http://localhost:8888/petto/member/login", { id, password })
           .then(res => {
             if (res.data != "") {
-              alert("로그인 성공! - " + res.data);
+              alert("로그인 성공! - " + JSON.stringify(res.data));
               this.isLogin = true;
               this.$store.state.session = res.data;
               this.$cookies.set("user", res.data, "1h");

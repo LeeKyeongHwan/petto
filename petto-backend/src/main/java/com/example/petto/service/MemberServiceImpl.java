@@ -125,8 +125,6 @@ public class MemberServiceImpl implements MemberService {
     public boolean login(MemberRequest memberRequest) throws Exception {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
-
-
         if (maybeMember == null)
         {
             log.info("login(): 아이디를 잘못 입력하였습니다..");

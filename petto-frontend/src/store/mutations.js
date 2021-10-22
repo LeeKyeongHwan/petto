@@ -1,4 +1,9 @@
-import { FETCH_USER_INFO, FETCH_SESSION } from "./mutation-types";
+import { 
+  FETCH_USER_INFO, 
+  FETCH_SESSION,
+  FETCH_FACILITY_LIST 
+
+} from "./mutation-types";
 
 export default {
   [FETCH_USER_INFO](state, payload) {
@@ -8,4 +13,8 @@ export default {
   [FETCH_SESSION](state) {
     state.session = this.$cookies.get();
   },
+
+  [FETCH_FACILITY_LIST](state, payload) {
+    state.facilityList = payload
+  }
 };
