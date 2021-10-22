@@ -18,3 +18,4 @@ export default {
     state.facilityList = payload
   }
 };
+

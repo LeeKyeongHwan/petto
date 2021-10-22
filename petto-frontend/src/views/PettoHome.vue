@@ -47,21 +47,18 @@
           >
         </div>
       </v-card>
-
-      <div id="youtube">
+    <div id="youtube">
         <!-- https://www.youtube.com/embed/는 고정적인 url 이고
-        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙하면 끝-->
-        <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs">
-        </iframe>
-        <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs">
-        </iframe>
-        <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE">
-        </iframe>
-        <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY">
-        </iframe>
-      </div>
+        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙
+        유튜브 주소창 그대로 사용시 유튜브에서 연결을 거부했습니다 메세지 출력되면서 영상출력X -->
+    <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE"> </iframe>
+    <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY"> </iframe>
+            </div>
+        </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -228,10 +225,5 @@ h1 {
   position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
   width: 100%;
   padding-bottom: 56.25%; /* 16:9 비율 */
-}
-#video {
-  position: absolute;
-  width: 100%; /* 부모에 맞게 꽉 채운다. */
-  height: 100%;
 }
 </style>
