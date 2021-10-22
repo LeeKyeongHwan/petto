@@ -30,6 +30,9 @@
 
 <script>
 import MemberLoginForm from "@/components/member/MemberLoginForm.vue";
+import axios from 'axios'
+import {mapState, mapActions} from 'vuex'
+
 export default {
   name: "MemberLoginPage",
   components: {

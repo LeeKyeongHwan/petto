@@ -9,6 +9,7 @@ import MemberLoginPage from '../views/member/MemberLoginPage.vue'
 import InfoModifyPage from '../views/member/InfoModifyPage.vue'
 
 import FacilityListPage from '../views/facility/FacilityListPage.vue'
+import AbandonedAnimal from '../views/abandon/AbandonedAnimal.vue'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,7 @@ const routes = [
     component: FindIdAndPwPage
   },
   {
-    path: '/pettoHome',
+    path: '/pettohome',
     name: 'PettoHome',
     component: PettoHome
   },
@@ -47,6 +48,11 @@ const routes = [
     path: '/facility/list',
     name: 'FacilityListPage',
     component: FacilityListPage
+  },
+  {
+    path: '/abandonedAnimal',
+    name: 'AbandonedAnimal',
+    component: AbandonedAnimal
   }
 
 ]
