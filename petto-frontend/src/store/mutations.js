@@ -1,9 +1,12 @@
 import { 
   FETCH_USER_INFO, 
   FETCH_SESSION,
+  
   FETCH_FACILITY_LIST,
-  FETCH_FACILITY_INFO
+  FETCH_FACILITY_INFO,
 
+  FETCH_ANIMAL_LIST
+  
 } from "./mutation-types";
 
 export default {
@@ -21,6 +24,10 @@ export default {
 
   [FETCH_FACILITY_INFO](state, payload) {
     state.facilityInfo = payload
+  },
+  
+  [FETCH_ANIMAL_LIST] (state, animals) {
+    state.animals = animals;
   }
 };
 

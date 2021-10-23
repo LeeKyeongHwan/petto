@@ -11,6 +11,8 @@ import InfoModifyPage from '../views/member/InfoModifyPage.vue'
 import FacilityListPage from '../views/facility/FacilityListPage.vue'
 import FacilityReadPage from '../views/facility/FacilityReadPage.vue'
 
+import AbandonedAnimal from '../views/abandon/AbandonedAnimal.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -30,7 +32,7 @@ const routes = [
     component: FindIdAndPwPage
   },
   {
-    path: '/pettoHome',
+    path: '/pettohome',
     name: 'PettoHome',
     component: PettoHome
   },
@@ -58,8 +60,12 @@ const routes = [
     props: {
       default: true
     }
+  },
+  {
+    path: '/abandonedAnimal',
+    name: 'AbandonedAnimal',
+    component: AbandonedAnimal
   }
-
 ]
 
 const router = new VueRouter({

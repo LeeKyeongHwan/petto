@@ -4,8 +4,9 @@ import {
 
   //보호소 리스트, 개별 정보
   FETCH_FACILITY_LIST,
-  FETCH_FACILITY_INFO
+  FETCH_FACILITY_INFO,
 
+  FETCH_ANIMAL_LIST
 
 } from "./mutation-types";
 
@@ -21,13 +22,6 @@ export default {
       }
     },
 
-  fetchUserInfo({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
-      .then(res => {
-        commit(FETCH_USER_INFO, res.data);
-      });
-  },
-
   fetchFacilityList({ commit }) {
     return axios.get('http://localhost:8888/petto/facility/getFacilityList')
       .then(res => {
@@ -41,8 +35,22 @@ export default {
         commit(FETCH_FACILITY_INFO, res.data);
       });
   },
+  
   // Session
   fetchSession({ commit }) {
     commit(FETCH_SESSION);
-  }
+  },
+  
+  fetchUserInfo({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
+      .then((res) => {
+        commit(FETCH_USER_INFO, res.data)
+      })
+  },
+  fetchAnimalList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/animals/lists')
+            .then((res) => {
+                commit(FETCH_ANIMAL_LIST, res.data)
+      })
+  },
 };
