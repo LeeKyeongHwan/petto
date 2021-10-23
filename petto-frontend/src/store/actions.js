@@ -1,7 +1,11 @@
 import { 
   FETCH_USER_INFO, 
   FETCH_SESSION,
-  FETCH_FACILITY_LIST 
+
+  //보호소 리스트, 개별 정보
+  FETCH_FACILITY_LIST,
+  FETCH_FACILITY_INFO
+
 
 } from "./mutation-types";
 
@@ -30,15 +34,15 @@ export default {
         commit(FETCH_FACILITY_LIST, res.data);
       });
   },
+
+  fetchFacilityInfo({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/facility/getFacilityInfo/${payload}`)
+      .then(res => {
+        commit(FETCH_FACILITY_INFO, res.data);
+      });
+  },
   // Session
   fetchSession({ commit }) {
     commit(FETCH_SESSION);
-  },
-  
-  fetchUserInfo({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
-      .then((res) => {
-        commit(FETCH_USER_INFO, res.data)
-      })
   }
 };

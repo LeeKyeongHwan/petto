@@ -17,4 +17,9 @@ public class FacilityServiceImpl implements FacilityService {
     public List<Facility> getFacilityList() {
         return facilityRepository.findAll();
     }
+
+    @Override
+    public Facility getFacilityInfo(Integer facilityNo) {
+        return facilityRepository.findByFacilityNo(new Long(facilityNo));
+    }
 }

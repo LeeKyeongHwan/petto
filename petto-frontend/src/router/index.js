@@ -9,6 +9,7 @@ import MemberLoginPage from '../views/member/MemberLoginPage.vue'
 import InfoModifyPage from '../views/member/InfoModifyPage.vue'
 
 import FacilityListPage from '../views/facility/FacilityListPage.vue'
+import FacilityReadPage from '../views/facility/FacilityReadPage.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,16 @@ const routes = [
     path: '/facility/list',
     name: 'FacilityListPage',
     component: FacilityListPage
+  },
+  {
+    path: '/facility/read/:facilityNo', // *뒤로가기가 안됨
+    name: 'FacilityReadPage',
+    components: {
+      default: FacilityReadPage
+    },
+    props: {
+      default: true
+    }
   }
 
 ]

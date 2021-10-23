@@ -28,4 +28,11 @@ public class FacilityController {
 
         return new ResponseEntity<List<Facility>>(facilityList, HttpStatus.OK);
     }
+
+    @GetMapping("/getFacilityInfo/{facilityNo}")
+    public ResponseEntity<Facility> getFacilityInfo(@PathVariable("facilityNo") Integer facilityNo) {
+        log.info("getFacilityInfo(): ");
+
+        return new ResponseEntity<Facility>(facilityService.getFacilityInfo(facilityNo), HttpStatus.OK);
+    }
 }

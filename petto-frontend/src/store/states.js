@@ -1,5 +1,7 @@
 export default {
   userInfo: "",
   session: [],
-  facilityList: []
+  
+  facilityList: [],
+  facilityInfo: ''
 };

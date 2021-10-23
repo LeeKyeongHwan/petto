@@ -29,6 +29,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+import { mapActions, mapState } from 'vuex'
+
 import MemberLoginForm from "@/components/member/MemberLoginForm.vue";
 export default {
   name: "MemberLoginPage",
