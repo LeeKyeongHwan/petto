@@ -1,7 +1,7 @@
 <template>
     <div align="center" style="padding-top: 60px;">
 
-        <p class="normalText">전국 보호소 리스트</p>
+        <p class="mainText">전국 보호소 리스트</p>
 
         <v-container style="margin-top: 60px;">
             
@@ -35,7 +35,9 @@
                 class="elevation-1">
 
                 <template v-slot:item="{ item }"> 
-                        <tr>
+
+                        <tr @click="toReadPage(item.facilityNo, item.facilityAddr)">
+
                             <td>{{ item.facilityName }}</td>
                             <td>{{ item.facilityAddr }}</td>
                             <td>{{ item.facilityTel }}</td>
@@ -52,10 +54,12 @@
             </label>
 
         </v-container>
+
     </div>
 </template>
 
 <script>
+
 import { mapState } from 'vuex'
 export default {
     name: 'FacilityListPage',
@@ -94,7 +98,7 @@ export default {
                     var selectedAreasLen = this.selectedAreas.length
                     var selectedAnimalsLen = this.selectedAnimals.length
 
-                    var length = selectedAreasLen > selectedAnimalsLen ? selectedAreasLen : selectedAnimalsLen
+                    const length = selectedAreasLen > selectedAnimalsLen ? selectedAreasLen : selectedAnimalsLen
                 
                     for(var j=0; j<length; j++) {
 
@@ -130,6 +134,13 @@ export default {
             }
 
             return fl
+        },
+        toReadPage(facilityNo, facilityAddr) {
+
+            this.$router.push({
+                name: 'FacilityReadPage',
+                params: { facilityNo: facilityNo, facilityAddr: facilityAddr }
+            })
         }
     },
     mounted() {

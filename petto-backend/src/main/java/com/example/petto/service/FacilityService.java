@@ -7,4 +7,6 @@ import java.util.List;
 public interface FacilityService {
 
     public List<Facility> getFacilityList();
+
+    public Facility getFacilityInfo(Integer facilityNo);
 }

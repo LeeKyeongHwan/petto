@@ -9,6 +9,8 @@ import MemberLoginPage from '../views/member/MemberLoginPage.vue'
 import InfoModifyPage from '../views/member/InfoModifyPage.vue'
 
 import FacilityListPage from '../views/facility/FacilityListPage.vue'
+import FacilityReadPage from '../views/facility/FacilityReadPage.vue'
+
 import AbandonedAnimal from '../views/abandon/AbandonedAnimal.vue'
 
 Vue.use(VueRouter)
@@ -50,11 +52,20 @@ const routes = [
     component: FacilityListPage
   },
   {
+    path: '/facility/read/:facilityNo', // *뒤로가기가 안됨
+    name: 'FacilityReadPage',
+    components: {
+      default: FacilityReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
     path: '/abandonedAnimal',
     name: 'AbandonedAnimal',
     component: AbandonedAnimal
   }
-
 ]
 
 const router = new VueRouter({
