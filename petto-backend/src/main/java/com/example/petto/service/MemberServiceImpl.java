@@ -2,6 +2,8 @@ package com.example.petto.service;
 
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
+import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.repository.LikedAnimalRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    LikedAnimalRepository likedAnimalRepository;
 
     @Override
     public boolean idDupliChk(String id) {
@@ -125,20 +130,22 @@ public class MemberServiceImpl implements MemberService {
     public boolean login(MemberRequest memberRequest) throws Exception {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
-        if (maybeMember == null)
+        log.info("member: " + maybeMember);
+
+        if (maybeMember.isEmpty())
         {
             log.info("login(): 그런 사람 없다.");
             return false;
         }
 
-        /* Member loginMember = maybeMember.get();
+         Member loginMember = maybeMember.get();
 
         if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
         {
             log.info("login(): 비밀번호 잘못 입력하였습니다.");
             return false;
         }
-        */
+
         return true;
     }
 
@@ -175,6 +182,22 @@ public class MemberServiceImpl implements MemberService {
         String nickname = member.getNickname();
 
         memberRepository.modifyUserInfo(id, email, phoneNumber, name, birthday, nickname, new Long(member.getMemberNo()));
+    }
+
+    @Override
+    public void addLikedAnimal(LikedAnimal likedAnimal) {
+        likedAnimalRepository.save(likedAnimal);
+    }
+
+    @Override
+    public List<LikedAnimal> getlikedAnimalList(Integer memberNo) {
+
+        return likedAnimalRepository.findByMemberNo(new Long(memberNo));
+    }
+
+    @Override
+    public void deleteLikedAnimal(LikedAnimal likedAnimal) {
+        likedAnimalRepository.delete(new Long(likedAnimal.getNoticeNo()), new Long(likedAnimal.getMemberNo()));
     }
 }
 

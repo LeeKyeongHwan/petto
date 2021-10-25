@@ -5,7 +5,9 @@ import {
   FETCH_FACILITY_LIST,
   FETCH_FACILITY_INFO,
 
-  FETCH_ANIMAL_LIST
+  FETCH_ANIMAL_LIST,
+
+  FETCH_LIKED_ANIMAL_LIST
   
 } from "./mutation-types";
 
@@ -28,6 +30,10 @@ export default {
   
   [FETCH_ANIMAL_LIST] (state, animals) {
     state.animals = animals;
-  }
+  },
+
+  [FETCH_LIKED_ANIMAL_LIST] (state, payload) {
+    state.likedAnimalList = payload;
+  },
 };
 

@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
+
       <v-card v-for="animal in paginatedData" :key="animal.notice_no" class="list-card"> 
         <figure class="snip1477">
             <img :src="animal.image" width="350" height="300"/>
@@ -17,7 +18,30 @@
                 품종 : {{animal.kind}}<br/>
                 발견장소 : {{animal.happenplace}}</p>
             </figcaption>
+
         </figure>
+
+        <div style="float: right; margin-right: 30px; margin-bottom: 10px;">
+          
+          <v-tooltip bottom>
+
+            <template v-slot:activator="{ on, attrs }">
+          
+            <font-awesome-icon v-show="chkLikedOrNot(animal.id)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+            @click="deleteLikedAnimal(animal.id)"/>
+
+            <font-awesome-icon v-show="!chkLikedOrNot(animal.id)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+            @click="addLikedAnimal(animal.id)"/>
+
+            </template>
+
+            <span v-show="chkLikedOrNot(animal.id)">찜해제</span>
+
+            <span v-show="!chkLikedOrNot(animal.id)">찜하기</span>
+
+          </v-tooltip>
+        </div>
+
       </v-card>
     </v-row>
     
@@ -36,6 +60,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'paginated-list',
   data () {
@@ -55,14 +82,64 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchLikedAnimalList']),
+
     nextPage () {
       this.pageNum += 1;
     },
     prevPage () {
       this.pageNum -= 1;
+    },
+
+    addLikedAnimal(id) {
+      
+      const memberNo = this.$store.state.session.memberNo
+      const noticeNo = id
+
+      axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
+        .then(() => {
+
+          this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
+
+        })
+        .catch(() => {
+          alert('잠시후에 다시 시도해주세요.')
+        })
+    },
+
+    chkLikedOrNot(id) {
+      for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
+        if(id == this.$store.state.likedAnimalList[i].noticeNo) {
+          return true
+        }
+      }
+      return false
+    },
+
+    deleteLikedAnimal(id) {
+      
+      const memberNo = this.$store.state.session.memberNo
+      const noticeNo = id
+
+      axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(() => {
+
+          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === id)
+          this.$store.state.likedAnimalList.splice(targetIndex, 1)
+
+        })
+        .catch(() => {
+          alert('잠시후에 다시 시도해주세요.')
+        })
     }
   },
   computed: {
+    ...mapState(['session', 'likedAnimalList']),
+
     pageCount () {
       let listLeng = this.animals.length,
           listSize = this.pageSize,
@@ -75,6 +152,12 @@ export default {
       const start = this.pageNum * this.pageSize,
             end = start + this.pageSize;
       return this.animals.slice(start, end);
+    }
+  },
+  mounted() {
+    if(this.$cookies.get("user").id) {
+      this.$store.state.session = this.$cookies.get("user")
+      this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
     }
   }
 }
@@ -130,6 +213,7 @@ figure.snip1477 {
     position: relative;
     overflow: hidden;
     margin: 10px;
+    margin-bottom: 10px; //여기
     min-width: 230px;
     max-width: 315px;
     width: 100%;

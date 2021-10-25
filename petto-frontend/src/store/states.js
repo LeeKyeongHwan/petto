@@ -1,10 +1,12 @@
 export default {
   userInfo: "",
-  session: [],
+  session: '',
 
   facilityList: [],
   facilityInfo: '',
 
-  animals: []
+  animals: [],
+
+  likedAnimalList: []
 
 };
