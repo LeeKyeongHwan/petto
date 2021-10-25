@@ -6,7 +6,9 @@ import {
   FETCH_FACILITY_LIST,
   FETCH_FACILITY_INFO,
 
-  FETCH_ANIMAL_LIST
+  FETCH_ANIMAL_LIST,
+
+  FETCH_LIKED_ANIMAL_LIST
 
 } from "./mutation-types";
 
@@ -47,10 +49,19 @@ export default {
         commit(FETCH_USER_INFO, res.data)
       })
   },
+
   fetchAnimalList ({ commit }) {
     return axios.get('http://localhost:8888/petto/animals/lists')
             .then((res) => {
                 commit(FETCH_ANIMAL_LIST, res.data)
+      })
+  },
+
+  fetchLikedAnimalList ({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/member/likedAnimalList/${payload}`)
+            .then((res) => {
+                //alert(JSON.stringify(res.data))
+                commit(FETCH_LIKED_ANIMAL_LIST, res.data)
       })
   },
 };

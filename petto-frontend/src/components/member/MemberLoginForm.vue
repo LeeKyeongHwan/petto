@@ -1,9 +1,9 @@
 <template>
-  <div class="login-screen" @submit.prevent="onsubmit">
+  <form class="login-screen" @submit.prevent="onSubmit">
     <div class="login-form">
       <h1>petto</h1>
       <div class="form-group">
-        <input id="id" class="login-id" type="text" placeholder="Id" />
+        <input id="id" class="login-id" type="text" placeholder="Id" v-model="id"/>
         <label for="id">
           <svg>
             <use xlink:href="#user" />
@@ -16,6 +16,7 @@
           class="login-password"
           type="password"
           placeholder="Password"
+          v-model="password"
         />
         <label for="password">
           <svg>
@@ -40,7 +41,7 @@
         </symbol>
       </svg>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>

@@ -2,6 +2,9 @@ package com.example.petto.service;
 
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
+import com.example.petto.entity.MemberRelated.LikedAnimal;
+
+import java.util.List;
 
 public interface MemberService {
 
@@ -25,4 +28,10 @@ public interface MemberService {
     public Member getUserInfo(Integer userNo);
 
     public void modifyUserInfo(Member member);
+
+    public void addLikedAnimal(LikedAnimal likedAnimal);
+
+    public List<LikedAnimal> getlikedAnimalList(Integer memberNo);
+
+    public void deleteLikedAnimal(LikedAnimal likedAnimal);
 }
