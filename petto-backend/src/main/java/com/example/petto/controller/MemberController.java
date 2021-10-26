@@ -2,18 +2,22 @@ package com.example.petto.controller;
 
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
+import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.repository.MemberRepository;
 import com.example.petto.service.MemberService;
 import com.example.petto.session.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -27,6 +31,9 @@ public class MemberController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @PostMapping("/idDupliChk/{id}")
     public ResponseEntity<Boolean> idDupliChk(@PathVariable("id") String id) {
@@ -119,8 +126,13 @@ public class MemberController {
 
         if (isSuccess) {
             log.info("Login Success");
+
             info = new UserInfo();
             info.setId(memberRequest.getId());
+
+            Long memberNo = memberRepository.findById(memberRequest.getId()).get().getMemberNo();
+            info.setMemberNo(memberNo);
+
             log.info("Session Info: " + info);
 
             session = request.getSession();
@@ -162,4 +174,30 @@ public class MemberController {
         return new ResponseEntity<Boolean>(mustFalse, HttpStatus.OK);
     }
 
+    @PostMapping("/addLikedAnimal")
+    public ResponseEntity<Void> addLikedAnimal(@Validated @RequestBody LikedAnimal likedAnimal) {
+        log.info("addLikedAnimal(): " + likedAnimal);
+
+        memberService.addLikedAnimal(likedAnimal);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/likedAnimalList/{memberNo}")
+    public ResponseEntity<List<LikedAnimal>> getlikedAnimalList(@PathVariable("memberNo") Integer memberNo) {
+        log.info("getlikedAnimalList(): " + memberNo);
+
+        List<LikedAnimal> likedAnimalList = memberService.getlikedAnimalList(memberNo);
+
+        return new ResponseEntity<List<LikedAnimal>>(likedAnimalList, HttpStatus.OK);
+    }
+
+    @PutMapping("/deleteLikedAnimal")
+    public ResponseEntity<Void> deleteLikedAnimal(@Validated @RequestBody LikedAnimal likedAnimal) {
+        log.info("deleteLikedAnimal(): " + likedAnimal);
+
+        memberService.deleteLikedAnimal(likedAnimal);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
