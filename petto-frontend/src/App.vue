@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <category v-if="($route.name !== 'PettoHome') && ($route.name !== 'Home')"/>
     <v-main>
       <router-view/>
     </v-main>
@@ -7,11 +8,12 @@
 </template>
 
 <script>
+import Category from '@/views/Category.vue'
 
 export default {
   name: 'App',
   components: {
-
+    Category
   }
 }
 </script>
