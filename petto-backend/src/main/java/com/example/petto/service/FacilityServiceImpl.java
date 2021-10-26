@@ -2,11 +2,14 @@ package com.example.petto.service;
 
 import com.example.petto.entity.Facility;
 import com.example.petto.repository.FacilityRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
@@ -21,5 +24,22 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public Facility getFacilityInfo(Integer facilityNo) {
         return facilityRepository.findByFacilityNo(new Long(facilityNo));
+    }
+
+    @Override
+    public List<String> getFacilityNoAndAddr(String carenm) {
+
+        Facility facility = facilityRepository.findByFacilityName(carenm).get();
+        //log.info("facility: " + facility);
+
+        String facilityNo = String.valueOf(facility.getFacilityNo());
+        String facilityAddr = facility.getFacilityAddr();
+
+        List<String> list = new ArrayList<>();
+
+        list.add(facilityNo);
+        list.add(facilityAddr);
+
+        return list;
     }
 }

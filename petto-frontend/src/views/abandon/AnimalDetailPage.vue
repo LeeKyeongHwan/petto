@@ -101,13 +101,13 @@ export default {
         ...mapActions(['fetchAnimalInfo']),
 
         toFacilityInfo(carenm) {
-
-            axios.get(`http://localhost:8888/petto/facility/getFacilityInfo/${carenm}`)
+            
+            axios.get(`http://localhost:8888/petto/facility/getFacilityNoAndAddr/${carenm}`)
                 .then((res) => {
 
                     this.$router.push({
                         name: 'FacilityReadPage',
-                        params: { "facilityNo": res.data.facilityNo, "facilityAddr": res.data.facilityAddr  }
+                        params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
                         
                     })
                 })

@@ -33,7 +33,7 @@ public class AnimalsController {
 
     @GetMapping("/getAnimalsInfo/{id}")
     public ResponseEntity<Animals> getAnimalsInfo(@PathVariable("id") Integer id) {
-        log.info("getAnimalsInfo(): ");
+        log.info("getAnimalsInfo(): " + id);
 
         return new ResponseEntity<Animals>(animalsService.getAnimalsInfo(id), HttpStatus.OK);
 
