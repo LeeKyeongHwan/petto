@@ -22,6 +22,23 @@
         </figure>
 
         <div style="float: right; margin-right: 30px; margin-bottom: 10px;">
+
+          <v-tooltip bottom>
+
+            <template v-slot:activator="{ on, attrs }">
+          
+            <v-btn text v-on="on" v-bind="attrs" @click="toDetailPage" style="margin-bottom: 5px; margin-right: 10px;">
+
+              <v-icon color="#42b8d4">
+                assessment
+              </v-icon>
+
+            </v-btn>
+            </template>
+
+            <span>상세 정보 보기</span>
+
+          </v-tooltip>
           
           <v-tooltip bottom>
 
@@ -89,6 +106,11 @@ export default {
     },
     prevPage () {
       this.pageNum -= 1;
+    },
+
+    toDetailPage() {
+      alert('xx')
+      //디테일 페이지로 이동
     },
 
     addLikedAnimal(id) {
