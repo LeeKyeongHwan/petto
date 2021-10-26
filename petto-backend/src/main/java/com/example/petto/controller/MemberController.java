@@ -65,7 +65,7 @@ public class MemberController {
     @PostMapping("/checkValidEmail")
     //@ResponseBody
     public ResponseEntity<String> checkValidEmail(@RequestParam("email") String email, @RequestParam("id") String id,
-                                                @RequestParam("birthday") String birthday) {
+                                                  @RequestParam("birthday") String birthday) {
 
         if(!id.equals("")) {
             log.info("checkValidEmail(): " + email + ", " + id);
