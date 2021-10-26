@@ -7,6 +7,7 @@ import {
   FETCH_FACILITY_INFO,
 
   FETCH_ANIMAL_LIST,
+  FETCH_ANIMAL_INFO,
 
   FETCH_LIKED_ANIMAL_LIST
 
@@ -64,4 +65,11 @@ export default {
                 commit(FETCH_LIKED_ANIMAL_LIST, res.data)
       })
   },
-};
+  fetchAnimalInfo({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/animals/getAnimalsInfo/${payload}`)
+      .then(res => {
+        commit(FETCH_ANIMAL_INFO, res.data);
+      });
+    },
+  };
+  

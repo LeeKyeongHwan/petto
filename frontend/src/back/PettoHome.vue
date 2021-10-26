@@ -19,12 +19,12 @@
       <div>
         <ul>
           <li><a href="#">소개</a></li>
-          <li><a href="/abandonedAnimal">유기동물</a></li>
+          <li><a href="#">유기동물</a></li>
           <li><a href="#">제보</a></li>
           <li><a href="#">자원봉사</a></li>
           <li><a href="#">Q&A</a></li>
         </ul>
-       </div>
+      </div>
     </div>
     <div id="youtube">
         <!-- https://www.youtube.com/embed/는 고정적인 url 이고
@@ -35,7 +35,6 @@
     <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE"> </iframe>
     <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY"> </iframe>
       </div>
-    <div>
     <div>
       <v-card v-if="layers">
         <div id="layer">
@@ -56,11 +55,11 @@
             >오늘 하루 보지 않기</v-btn
           >
         </div>
-      </v-card> 
-            </div>
-        </div>
-    </div>
+      </v-card>
+  
+        </div>    
 
+      </div>
 </template>
 
 <script>

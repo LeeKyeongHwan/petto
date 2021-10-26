@@ -17,6 +17,10 @@ public class AnimalsServiceImpl implements AnimalsService {
 
     @Override
     public List<Animals> list() throws Exception {
-        return animalsRepository.findAll();
+        return animalsRepository.findAll();}
+
+    @Override public Animals getAnimalsInfo(Integer id) {
+        return animalsRepository.findByid(new Long(id));
+
     }
 }
