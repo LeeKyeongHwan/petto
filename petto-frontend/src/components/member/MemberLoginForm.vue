@@ -3,7 +3,13 @@
     <div class="login-form">
       <h1>petto</h1>
       <div class="form-group">
-        <input id="id" class="login-id" type="text" placeholder="Id" v-model="id"/>
+        <input
+          id="id"
+          class="login-id"
+          type="text"
+          placeholder="Id"
+          v-model="id"
+        />
         <label for="id">
           <svg>
             <use xlink:href="#user" />
@@ -27,7 +33,9 @@
       <div class="form-group">
         <input class="login-submit" type="submit" value="로그인" />
       </div>
-      <a href="#" class="login-forgotpassword">아이디/비밀번호 찾기</a>
+      <a href="FindIdAndPwPage" class="login-forgotpassword"
+        >아이디/비밀번호 찾기</a
+      >
       <svg>
         <symbol id="user" viewBox="0 0 1792 1792">
           <path
@@ -45,7 +53,6 @@
 </template>
 
 <script>
-//import LoginScreen from "@/components/member/LoginScreen.vue";
 export default {
   data() {
     return {
