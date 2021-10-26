@@ -30,12 +30,8 @@
 
 <script>
 import axios from 'axios'
-
 import { mapActions, mapState } from 'vuex'
-
 import MemberLoginForm from "@/components/member/MemberLoginForm.vue";
-import axios from 'axios'
-import {mapState, mapActions} from 'vuex'
 
 export default {
   name: "MemberLoginPage",
@@ -58,6 +54,7 @@ export default {
   },
   methods: {
     ...mapActions(["fetchSession"]),
+
     onSubmit(payload) {
       if (this.$store.state.session == null) {
         const { id, password } = payload;
@@ -69,6 +66,7 @@ export default {
               this.isLogin = true;
               this.$store.state.session = res.data;
               this.$cookies.set("user", res.data, "1h");
+              //alert(JSON.stringify(this.$store.state.session))
               location.href = "/";
             } else {
               alert("로그인 실패! - " + res.data);
