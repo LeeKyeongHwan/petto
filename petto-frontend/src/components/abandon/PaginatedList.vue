@@ -1,7 +1,50 @@
 <template>
   <div>
+    <div>
+      <v-layout class="search-btn">
+            <v-dialog v-model="searchDialog" persistent max-width="400px">
+                <template v-slot:activator="{ on }">
+                    <v-btn icon x-large v-on="on"><v-icon>search</v-icon></v-btn>        
+                </template>
+                <v-card>
+                  <v-toolbar color="white darken-3" flat height="50">
+                              <v-btn icon x-large @click="cancle()" style="positoin:absolute; left:23em;">
+                                  <v-icon>clear</v-icon>
+                              </v-btn>
+                  </v-toolbar>
+                  <v-card-text >
+                      <v-select
+                        v-model="selectPlace"
+                        :items="areas"
+                        label="모든 지역"
+                        multiple
+                        attach
+                        chips
+                        style="width: 300px; display: inline-block; margin-right: 40px;"
+                        persistent-hint>
+                      </v-select>
+                      <v-select
+                          v-model="selectKinds"
+                          :items="kinds"
+                          label="모든 품종"
+                          multiple 
+                          attach
+                          chips
+                          style="width: 300px; display: inline-block; margin-right: 40px;"
+                          persistent-hint>
+                      </v-select>
+                  </v-card-text>
+                  <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="orange lighten-3 white--text" @click="selectSearch()">
+                          검색
+                      </v-btn>
+                  </v-card-actions>
+                </v-card>
+            </v-dialog>
+          </v-layout>
+    </div>
     <v-row justify="center">
-
       <v-card v-for="animal in paginatedData" :key="animal.notice_no" class="list-card"> 
         <figure class="snip1477">
             <img :src="animal.image" width="350" height="300"/>
@@ -78,13 +121,19 @@
 
 <script>
 import axios from 'axios'
+import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'paginated-list',
   data () {
     return {
-      pageNum: 0
+      pageNum: 0,
+      searchDialog: false,
+      areas: [ '서울', '경기', '인천', '강원', '충북', '충남', '충북', '전북', '전남', '경북', '경남', '부산', '대구', '제주' ],
+      selectPlace: [],
+      selectKinds: [],
+      kinds: [ '개', '고양이', '기타' ],
     }
   },
   props: {
@@ -107,12 +156,49 @@ export default {
     prevPage () {
       this.pageNum -= 1;
     },
-
+    cancle() {
+      this.searchDialog = false
+    },
     toDetailPage() {
       alert('xx')
       //디테일 페이지로 이동
     },
-
+    selectSearch() {
+    const { selectPlace, selectKinds } = this
+    return axios.get('http://localhost:8888/petto/animals/lists')
+            .then((res) => {
+              var ani = []
+              if(selectPlace.length > 0 && selectKinds.length > 0) {
+                for(var i=0; i<res.data.length; i++) {
+                  for(var j=0; j< selectPlace.length; j++) {
+                    if(res.data[i].notice_no.includes(selectPlace[j]) && res.data[i].kind.includes(selectKinds[j])) {
+                      ani.push(res.data[i])
+                      this.$store.commit(FETCH_ANIMAL_LIST, ani)
+                    }
+                  }
+                }
+              } else if(selectPlace.length > 0) {
+                  for(var k=0; k<res.data.length; k++) {
+                    for(var l=0; l< selectPlace.length; l++) {
+                      if(res.data[k].notice_no.includes(selectPlace[l])) {
+                        ani.push(res.data[k])
+                        this.$store.commit(FETCH_ANIMAL_LIST, ani)
+                      }
+                    }
+                  }
+              } else if(selectKinds.length > 0) {
+                  for(var m=0; m<res.data.length; m++) {
+                    for(var n=0; n< selectKinds.length; n++) {
+                      if(res.data[m].kind.includes(selectKinds[n])) {
+                        ani.push(res.data[m])
+                        this.$store.commit(FETCH_ANIMAL_LIST, ani)
+                      }
+                    }
+                  }
+              }
+            this.searchDialog = false
+        })
+    },
     addLikedAnimal(id) {
       
       const memberNo = this.$store.state.session.memberNo
@@ -187,6 +273,11 @@ export default {
 
 <style lang="scss">
 
+.search-btn{
+  position: absolute;
+  top:11em;
+  right: 10em;
+}
 
 table {
   width: 100%;
