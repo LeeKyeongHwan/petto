@@ -5,8 +5,9 @@ import com.example.petto.entity.Animals;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AnimalsRepository extends JpaRepository<Animals, Long> {
 
-    Animals findByid(Long id);
+    Optional<Animals> findById(Long id);
 }

@@ -1,4 +1,4 @@
-package com.example.petto.controller.response;
+package com.example.petto.controller;
 
 import com.example.petto.entity.Animals;
 import com.example.petto.service.AnimalsService;

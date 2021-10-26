@@ -70,7 +70,7 @@
 
             <template v-slot:activator="{ on, attrs }">
           
-            <v-btn text v-on="on" v-bind="attrs" @click="toDetailPage" style="margin-bottom: 5px; margin-right: 10px;">
+            <v-btn text v-on="on" v-bind="attrs" @click="toDetailPage(animal.id)" style="margin-bottom: 5px; margin-right: 10px;">
 
               <v-icon color="#42b8d4">
                 assessment
@@ -159,9 +159,11 @@ export default {
     cancle() {
       this.searchDialog = false
     },
-    toDetailPage() {
-      alert('xx')
-      //디테일 페이지로 이동
+    toDetailPage(id) {
+      this.$router.push({
+        name: 'AnimalDetailPage',
+        params: { "id": id }
+      })
     },
     selectSearch() {
     const { selectPlace, selectKinds } = this
