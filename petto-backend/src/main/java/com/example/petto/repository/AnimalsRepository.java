@@ -9,5 +9,4 @@ import java.util.List;
 public interface AnimalsRepository extends JpaRepository<Animals, Long> {
 
     Animals findByid(Long id);
-
 }
