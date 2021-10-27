@@ -1,4 +1,4 @@
-package com.example.petto.controller.response;
+package com.example.petto.controller;
 
 import com.example.petto.entity.Animals;
 import com.example.petto.service.AnimalsService;
@@ -33,7 +33,7 @@ public class AnimalsController {
 
     @GetMapping("/getAnimalsInfo/{id}")
     public ResponseEntity<Animals> getAnimalsInfo(@PathVariable("id") Integer id) {
-        log.info("getAnimalsInfo(): ");
+        log.info("getAnimalsInfo(): " + id);
 
         return new ResponseEntity<Animals>(animalsService.getAnimalsInfo(id), HttpStatus.OK);
 

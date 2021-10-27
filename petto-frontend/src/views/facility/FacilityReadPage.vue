@@ -60,6 +60,7 @@ export default {
   name: "KakaoMap",
 
   props: {
+
     facilityNo: {
       type: String,
       required: true
@@ -69,8 +70,8 @@ export default {
       type: String,
       required: true
     }
-
   },
+  
   data() {
     return {
       map: null,

@@ -70,6 +70,6 @@ export default {
       .then(res => {
         commit(FETCH_ANIMAL_INFO, res.data);
       });
-    },
+    }
   };
   
