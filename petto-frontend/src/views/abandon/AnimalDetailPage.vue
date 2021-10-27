@@ -41,7 +41,7 @@
             <br/>
             <br/>
 
-            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">성별</p>
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">특징</p>
             <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.feature }}</p>
 
             <br/>
