@@ -44,13 +44,14 @@
             </v-dialog>
           </v-layout>
     </div>
-    <v-row justify="center">
+    <v-container style="width:100%;">
+    <v-row>
       <v-card v-for="animal in paginatedData" :key="animal.notice_no" class="list-card"> 
         <figure class="snip1477">
             <img :src="animal.image" width="350" height="300"/>
             <div class="title">
                 <div>
-                <h4>상세보기 <v-icon color="white">keyboard_arrow_right</v-icon></h4>
+                <h4 @click="toDetailPage(animal.id)">상세보기 <v-icon color="white">keyboard_arrow_right</v-icon></h4>
                 </div>
             </div>
             <figcaption>
@@ -104,7 +105,7 @@
 
       </v-card>
     </v-row>
-    
+    </v-container>
     <v-container>
       <div class="btn-cover">
         <v-btn :disabled="pageNum === 0" @click="prevPage" icon text>
@@ -171,9 +172,11 @@ export default {
             .then((res) => {
               var ani = []
               if(selectPlace.length > 0 && selectKinds.length > 0) {
+                var len = selectKinds.length + selectPlace.length
                 for(var i=0; i<res.data.length; i++) {
-                  for(var j=0; j< selectPlace.length; j++) {
-                    if(res.data[i].notice_no.includes(selectPlace[j]) && res.data[i].kind.includes(selectKinds[j])) {
+                  for(var j=0; j< len; j++) {
+                    for(var o=0; o< len; o++)
+                    if((res.data[i].notice_no.includes(selectPlace[j]) && res.data[i].kind.includes(selectKinds[o]))) {
                       ani.push(res.data[i])
                       this.$store.commit(FETCH_ANIMAL_LIST, ani)
                     }
