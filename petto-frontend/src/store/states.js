@@ -6,7 +6,7 @@ export default {
   facilityInfo: '',
 
   animals: [],
+  animalsInfo: '',
 
   likedAnimalList: []
-
 };

@@ -31,8 +31,17 @@ public class FacilityController {
 
     @GetMapping("/getFacilityInfo/{facilityNo}")
     public ResponseEntity<Facility> getFacilityInfo(@PathVariable("facilityNo") Integer facilityNo) {
-        log.info("getFacilityInfo(): ");
+        log.info("getFacilityInfo(): " + facilityNo);
 
         return new ResponseEntity<Facility>(facilityService.getFacilityInfo(facilityNo), HttpStatus.OK);
+    }
+
+    @GetMapping("/getFacilityNoAndAddr/{carenm}")
+    public ResponseEntity<List<String>> getFacilityNoAndAddr(@PathVariable("carenm") String carenm) {
+        log.info("getFacilityNoAndAddr(): " + carenm);
+
+        List<String> facilityNoAndAddr = facilityService.getFacilityNoAndAddr(carenm);
+
+        return new ResponseEntity<List<String>>(facilityNoAndAddr, HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@ import {
   FETCH_FACILITY_INFO,
 
   FETCH_ANIMAL_LIST,
+  FETCH_ANIMAL_INFO,
 
   FETCH_LIKED_ANIMAL_LIST
   
@@ -30,6 +31,10 @@ export default {
   
   [FETCH_ANIMAL_LIST] (state, animals) {
     state.animals = animals;
+  },
+  
+  [FETCH_ANIMAL_INFO](state, animals) {
+    state.animalsInfo = animals;
   },
 
   [FETCH_LIKED_ANIMAL_LIST] (state, payload) {
