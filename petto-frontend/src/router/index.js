@@ -16,6 +16,8 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
+import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+
 
 Vue.use(VueRouter);
 
@@ -84,6 +86,12 @@ const routes = [
     path: "/map",
     name: "KakaoMap",
     component: KakaoMap,
+  },
+  {
+    path: "/animalVoluntary",
+    name: "AnimalVoluntary",
+    component: AnimalVoluntary,
+
   }
 ];
 
