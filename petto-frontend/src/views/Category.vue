@@ -3,8 +3,18 @@
         <div id="header">
             <a href="/pettohome" class="logo"><h1>petto</h1></a>
             <div class="header-top">
-                <v-btn plain router :to="{name: 'MemberLoginPage'}">LOGIN</v-btn>
-                <v-btn plain router :to="{name: 'SignupPage'}">JOIN US</v-btn>
+                <v-btn
+                    plain
+                    color="white"
+                    v-if="!isLogin"
+                    router
+                    :to="{ name: 'MemberLoginPage' }"
+                    >LOGIN</v-btn
+                >
+                <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
+                <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
+                    >JOIN US</v-btn
+                >
             </div>
             <div>
                 <ul>
@@ -18,6 +28,29 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+  methods: {
+    logout() {
+      this.$cookies.remove("user");
+      this.isLogin = false;
+      this.$store.state.session = null;
+    },
+  },
+  mounted() {
+    this.$store.state.session = this.$cookies.get("user");
+    if (this.$store.state.session != null) {
+      this.isLogin = true;
+    }
+  },
+};
+</script>
 
 
 <style lang="scss" scoped>
