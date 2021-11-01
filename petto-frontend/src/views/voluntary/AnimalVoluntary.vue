@@ -1,7 +1,7 @@
 <template>
 
   <div class="Voluntary" >  
-    <h1> 봉사봉사 심봉사</h1>    
+    <h1> 봉사활동 리스트</h1>    
     <div class = "banner1">
     <image-shadow :width="240"  :src="this.src1" shadow-hover></image-shadow>
     </div>
