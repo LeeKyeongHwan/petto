@@ -19,7 +19,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["animals"]),
+    ...mapState(["facilityList"]),
   },
 
   mounted() {
@@ -33,10 +33,10 @@ export default {
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     }
-    this.fetchAnimalList();
+    this.fetchFacilityList();
   },
   methods: {
-    ...mapActions(["fetchAnimalList"]),
+    ...mapActions(["fetchFacilityList"]),
 
     initMap() {
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
@@ -56,17 +56,17 @@ export default {
 
       var markers = [];
 
-      console.log(this.animals);
-      this.animals.length = 1000;
+      console.log(this.facilityList);
+      this.facilityList.length = 300;
       var _self = this;
 
-      for (var i = 0; i < this.animals.length; i++) {
+      for (var i = 0; i < this.facilityList.length; i++) {
         (function(i) {
           // 주소-좌표 변환 객체를 생성합니다
           var geocoder = new kakao.maps.services.Geocoder();
 
           // 주소로 좌표를 검색합니다
-          geocoder.addressSearch(_self.animals[i].careaddr, function(
+          geocoder.addressSearch(_self.facilityList[i].facilityAddr, function(
             result,
             status
           ) {
@@ -89,7 +89,7 @@ export default {
               var infowindow = new kakao.maps.InfoWindow({
                 content:
                   '<div style="width:150px;text-align:center;padding:6px 0;">' +
-                  _self.animals[i].carenm +
+                  _self.facilityList[i].facilityName +
                   "</div>",
               });
 
