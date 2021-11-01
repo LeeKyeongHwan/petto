@@ -44,4 +44,3 @@ public class FacilityServiceImpl implements FacilityService {
 
         return list;
     }
-}

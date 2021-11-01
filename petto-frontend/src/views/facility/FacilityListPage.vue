@@ -36,7 +36,7 @@
 
                 <template v-slot:item="{ item }"> 
 
-                        <tr @click="toReadPage(item.facilityNo, item.facilityAddr)">
+                        <tr @click="toReadPage(item.facilityNo, item.facilityAddr, item.facilityName)">
 
                             <td>{{ item.facilityName }}</td>
                             <td>{{ item.facilityAddr }}</td>
@@ -76,7 +76,7 @@ export default {
             
             searchKeyword: '',
 
-            areas: [ '서울', '경기', '인천', '강원', '충북', '충남', '충북', '전북', '전남', '경북', '경남', '부산', '대구', '제주' ],
+            areas: [ '서울', '경기', '인천', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '부산', '대구', '제주' ],
             selectedAreas: [],
 
             animals: [ '개', '고양이', '기타' ],
@@ -135,11 +135,11 @@ export default {
 
             return fl
         },
-        toReadPage(facilityNo, facilityAddr) {
+        toReadPage(facilityNo, facilityAddr, facilityName) {
 
             this.$router.push({
                 name: 'FacilityReadPage',
-                params: { facilityNo: facilityNo, facilityAddr: facilityAddr }
+                params: { facilityNo: facilityNo, facilityAddr: facilityAddr, facilityName: facilityName }
             })
         }
     },

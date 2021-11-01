@@ -91,6 +91,7 @@ const routes = [
     path: "/animalVoluntary",
     name: "AnimalVoluntary",
     component: AnimalVoluntary,
+
   }
 ];
 
