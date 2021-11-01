@@ -11,6 +11,10 @@
           :to="{ name: 'MemberLoginPage' }"
           >LOGIN</v-btn
         >
+
+        <!-- 회원탈퇴 -->
+        <v-btn plain color="white" v-if="isLogin" @click="onDelete">회원탈퇴</v-btn>
+        <!--  -->
         <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
         <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
           >JOIN US</v-btn
@@ -26,15 +30,25 @@
         </ul>
        </div>
     </div>
-    <div id="youtube">
-        <!-- https://www.youtube.com/embed/는 고정적인 url 이고
-        유튜브 주소창(https://www.youtube.com/watch?v=VmCAU9i-PSs)에서 v=VmCAU9i-PSs 이부분만 복붙
-        유튜브 주소창 그대로 사용시 유튜브에서 연결을 거부했습니다 메세지 출력되면서 영상출력X -->
-    <iframe id="video" src="https://www.youtube.com/embed/svAT8oezkYs"> </iframe>
-    <iframe id="video" src="https://www.youtube.com/embed/VmCAU9i-PSs"> </iframe>
-    <iframe id="video" src="https://www.youtube.com/embed/pvjr0h2-HnE"> </iframe>
-    <iframe id="video" src="https://www.youtube.com/embed/qTpKCZI__YY"> </iframe>
-      </div>
+    <div class="container">
+        <div id="youtube">
+            <h3>petto 유튜브</h3>
+                <ul>
+                    <li><iframe src="https://www.youtube.com/embed/BtjKQUW8Eg0?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/3HimGmjD73k?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/vrPm4SFRviY?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/R-b2LwMCYC8?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/EVrx-UfXS8o?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/CMI2TdvLMBE?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/nBdpJIN9QEU?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/4on_v7ZebSw?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/0anYp7gZJ3w?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/wy2qwD_xx9k?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                    <li><iframe src="https://www.youtube.com/embed/qllzIfMSMMc?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                </ul>
+        </div>
+    </div>
+
     <div>
     <div>
       <v-card v-if="layers">
@@ -64,6 +78,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -84,6 +99,21 @@ export default {
       this.isLogin = false;
       this.$store.state.session = null;
     },
+    //회원탈퇴
+    onDelete () {
+            const memberNo = this.$store.state.session.memberNo
+            axios.delete(`http://localhost:8888/petto/member/${memberNo}`)
+                .then(() => {
+                    alert('계정을 삭제했습니다.')
+                    this.isLogin = false
+                    this.$router.push({ name: 'PettoHome' })
+                    this.$store.state.session = null
+                    this.$cookies.remove("user")                    
+                })
+               .catch(res => {
+                    alert(res.response.data.message)
+                })
+        }
   },
   mounted() {
     console.log(this.$cookies.isKey("TodayPopUpClose"));
@@ -223,9 +253,66 @@ h1 {
   bottom: 3em;
   font-size: 12px;
 }
-#youtube {
-  position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
+
+
+// 유튜브
+
+.container{
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 비율 */
+  position: absolute;
+  bottom: -5em;
 }
+
+#youtube{
+  position: absolute;
+  padding: 2% 8em 10% 0%;
+  max-width: 100vw;
+}
+
+#youtube ul {
+  white-space:nowrap; 
+  overflow-x: auto; 
+  text-align:center;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+
+#youtube ul::-webkit-scrollbar{
+    width: 1em;
+    height: 0.8em;
+}
+
+
+#youtube ul::-webkit-scrollbar-thumb{
+    height: 10%;
+    background-color:#f7b43e;
+    border-radius: 10px;  
+}
+
+#youtube ul li{
+    margin-left: 15px;
+
+
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transform-origin: center left;
+    
+}
+
+#youtube ul li iframe{
+    text-decoration:none; 
+    color:inherit;
+}
+
+h3{
+    font-size: 2em;
+    color: black;
+    font-family: "GowunDodum-Regular";
+    margin: 0% 0% 1% 1%;
+}
+
 </style>
