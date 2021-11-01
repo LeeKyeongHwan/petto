@@ -11,4 +11,3 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
     Facility findByFacilityNo(Long facilityNo);
 
     List<Facility> findByFacilityName(String facilityName);
-}

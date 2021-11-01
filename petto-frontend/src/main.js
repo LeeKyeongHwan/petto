@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faHeart as fasHeart} from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart} from '@fortawesome/free-regular-svg-icons'
 
+import ImageShadow from 'vue-image-shadow'
+Vue.component('image-shadow', ImageShadow)
+
 Vue.use(cookies)
 //Vue.$cookies.config("1h") 
 
