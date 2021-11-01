@@ -107,7 +107,7 @@ export default {
 
                     this.$router.push({
                         name: 'FacilityReadPage',
-                        params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
+                        params: { facilityNo: res.data[0], facilityAddr: res.data[1], facilityName: res.data[2] }
                         
                     })
                 })
