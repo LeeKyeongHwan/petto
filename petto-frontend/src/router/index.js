@@ -12,8 +12,12 @@ import FacilityListPage from "../views/facility/FacilityListPage.vue";
 import FacilityReadPage from "../views/facility/FacilityReadPage.vue";
 
 import AbandonedAnimal from "../views/abandon/AbandonedAnimal.vue";
+import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
+
+import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+
 
 Vue.use(VueRouter);
 
@@ -54,7 +58,7 @@ const routes = [
     component: FacilityListPage,
   },
   {
-    path: "/facility/read/:facilityNo", // *뒤로가기가 안됨
+    path: "/facility/read/:facilityNo", 
     name: "FacilityReadPage",
     components: {
       default: FacilityReadPage,
@@ -69,10 +73,25 @@ const routes = [
     component: AbandonedAnimal,
   },
   {
+    path: "/animalDetail/read/:id",
+    name: "AnimalDetailPage",
+    components: {
+      default: AnimalDetailPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
     path: "/map",
     name: "KakaoMap",
     component: KakaoMap,
   },
+  {
+    path: "/animalVoluntary",
+    name: "AnimalVoluntary",
+    component: AnimalVoluntary,
+  }
 ];
 
 const router = new VueRouter({

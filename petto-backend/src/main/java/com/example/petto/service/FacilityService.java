@@ -9,4 +9,6 @@ public interface FacilityService {
     public List<Facility> getFacilityList();
 
     public Facility getFacilityInfo(Integer facilityNo);
+
+    public List<String> getFacilityNoAndAddr(String carenm);
 }

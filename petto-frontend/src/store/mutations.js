@@ -13,19 +13,19 @@ import {
 } from "./mutation-types";
 
 export default {
-  [FETCH_USER_INFO](state, payload) {
+  [FETCH_USER_INFO] (state, payload) {
     state.userInfo = payload;
   },
   //세션
-  [FETCH_SESSION](state) {
+  [FETCH_SESSION] (state) {
     state.session = this.$cookies.get();
   },
 
-  [FETCH_FACILITY_LIST](state, payload) {
+  [FETCH_FACILITY_LIST] (state, payload) {
     state.facilityList = payload
   },
 
-  [FETCH_FACILITY_INFO](state, payload) {
+  [FETCH_FACILITY_INFO] (state, payload) {
     state.facilityInfo = payload
   },
   
@@ -33,7 +33,7 @@ export default {
     state.animals = animals;
   },
   
-  [FETCH_ANIMAL_INFO](state, animals) {
+  [FETCH_ANIMAL_INFO] (state, animals) {
     state.animalsInfo = animals;
   },
 
@@ -41,4 +41,3 @@ export default {
     state.likedAnimalList = payload;
   },
 };
-
