@@ -199,5 +199,20 @@ public class MemberServiceImpl implements MemberService {
     public void deleteLikedAnimal(LikedAnimal likedAnimal) {
         likedAnimalRepository.delete(new Long(likedAnimal.getNoticeNo()), new Long(likedAnimal.getMemberNo()));
     }
+
+    @Override
+    public void removeUser(Long memberNo) throws Exception {
+        memberRepository.deleteById(memberNo);
+    }
+
+    @Override
+    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception{
+        List<LikedAnimal> lists = likedAnimalRepository.findByMemberNo(memberNo);
+
+        for(LikedAnimal list : lists) {
+            likedAnimalRepository.deleteById(list.getLikedAnimalNo());
+        }
+        return null;
+    }
 }
 
