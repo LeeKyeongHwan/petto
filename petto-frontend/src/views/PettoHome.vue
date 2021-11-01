@@ -25,7 +25,7 @@
           <li><a href="#">소개</a></li>
           <li><a href="/abandonedAnimal">유기동물</a></li>
           <li><a href="#">제보</a></li>
-          <li><a href="#">자원봉사</a></li>
+          <li><a href="/animalVoluntary">자원봉사</a></li>
           <li><a href="#">Q&A</a></li>
         </ul>
        </div>
