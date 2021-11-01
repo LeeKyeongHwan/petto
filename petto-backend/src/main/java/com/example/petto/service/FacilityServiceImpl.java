@@ -29,16 +29,18 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public List<String> getFacilityNoAndAddr(String carenm) {
 
-        Facility facility = facilityRepository.findByFacilityName(carenm).get();
+        Facility facility = facilityRepository.findByFacilityName(carenm).get(0);
         //log.info("facility: " + facility);
 
         String facilityNo = String.valueOf(facility.getFacilityNo());
         String facilityAddr = facility.getFacilityAddr();
+        String facilityName = facility.getFacilityName();
 
         List<String> list = new ArrayList<>();
 
         list.add(facilityNo);
         list.add(facilityAddr);
+        list.add((facilityName));
 
         return list;
     }
