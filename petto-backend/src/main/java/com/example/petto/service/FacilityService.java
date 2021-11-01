@@ -11,4 +11,3 @@ public interface FacilityService {
     public Facility getFacilityInfo(Integer facilityNo);
 
     public List<String> getFacilityNoAndAddr(String carenm);
-}
