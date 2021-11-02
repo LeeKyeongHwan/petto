@@ -201,6 +201,7 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+
     @DeleteMapping("/{memberNo}")
     public ResponseEntity<Void> removeUser(@PathVariable("memberNo") Long memberNo) throws Exception {
         log.info("memberNo == " + memberNo);
@@ -209,3 +210,6 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
+
+
+
