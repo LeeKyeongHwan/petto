@@ -20,6 +20,6 @@ public class LikedAnimal {
     private Long memberNo;
 
     @Column(length = 20, nullable = false)
-    private Long noticeNo;
+    private String noticeNo;
 
 }

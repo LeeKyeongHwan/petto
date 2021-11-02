@@ -8,5 +8,7 @@ export default {
   animals: [],
   animalsInfo: '',
 
-  likedAnimalList: []
+  likedAnimalList: [],
+
+  voluntary: []
 };
