@@ -15,5 +15,5 @@ public interface LikedAnimalRepository extends JpaRepository<LikedAnimal, Long> 
     @Transactional
     @Modifying
     @Query("delete LikedAnimal la where la.noticeNo = :noticeNo and la.memberNo = :memberNo")
-    void delete(Long noticeNo, Long memberNo);
+    void delete(String noticeNo, Long memberNo);
 }

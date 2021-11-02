@@ -88,17 +88,17 @@
 
             <template v-slot:activator="{ on, attrs }">
           
-            <font-awesome-icon v-show="chkLikedOrNot(animal.id)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
-            @click="deleteLikedAnimal(animal.id)"/>
+            <font-awesome-icon v-show="chkLikedOrNot(animal.notice_no)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+            @click="deleteLikedAnimal(animal.notice_no)"/>
 
-            <font-awesome-icon v-show="!chkLikedOrNot(animal.id)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
-            @click="addLikedAnimal(animal.id)"/>
+            <font-awesome-icon v-show="!chkLikedOrNot(animal.notice_no)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+            @click="addLikedAnimal(animal.notice_no)"/>
 
             </template>
 
-            <span v-show="chkLikedOrNot(animal.id)">찜해제</span>
+            <span v-show="chkLikedOrNot(animal.notice_no)">찜해제</span>
 
-            <span v-show="!chkLikedOrNot(animal.id)">찜하기</span>
+            <span v-show="!chkLikedOrNot(animal.notice_no)">찜하기</span>
 
           </v-tooltip>
         </div>
@@ -202,12 +202,13 @@ export default {
                   }
               }
             this.searchDialog = false
+            this.pageNum = 0
         })
     },
-    addLikedAnimal(id) {
+    addLikedAnimal(notice_no) {
       
       const memberNo = this.$store.state.session.memberNo
-      const noticeNo = id
+      const noticeNo = notice_no
 
       axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
         .then(() => {
@@ -220,19 +221,19 @@ export default {
         })
     },
 
-    chkLikedOrNot(id) {
+    chkLikedOrNot(notice_no) {
       for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
-        if(id == this.$store.state.likedAnimalList[i].noticeNo) {
+        if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
           return true
         }
       }
       return false
     },
 
-    deleteLikedAnimal(id) {
+    deleteLikedAnimal(notice_no) {
       
       const memberNo = this.$store.state.session.memberNo
-      const noticeNo = id
+      const noticeNo = notice_no
 
       axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
         headers: {
@@ -241,7 +242,7 @@ export default {
       })
         .then(() => {
 
-          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === id)
+          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === notice_no)
           this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
         })

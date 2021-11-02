@@ -197,7 +197,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteLikedAnimal(LikedAnimal likedAnimal) {
-        likedAnimalRepository.delete(new Long(likedAnimal.getNoticeNo()), new Long(likedAnimal.getMemberNo()));
+        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
     }
 
     @Override
