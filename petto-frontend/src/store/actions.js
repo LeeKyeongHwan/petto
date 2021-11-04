@@ -54,7 +54,7 @@ export default {
   fetchAnimalList ({ commit }) {
     return axios.get('http://localhost:8888/petto/animals/lists')
             .then((res) => {
-                commit(FETCH_ANIMAL_LIST, res.data)
+                commit(FETCH_ANIMAL_LIST, res.data) //
       })
   },
 

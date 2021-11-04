@@ -118,7 +118,7 @@ export default {
 
             axios.post(`http://localhost:8888/petto/member/idDupliChk/${ id }`)
                 .then((res) => {
-                    if(res.data == true) {
+                    if(res.data) {
 
                         this.idDupli = false
                     } else {
@@ -133,7 +133,7 @@ export default {
 
             axios.post(`http://localhost:8888/petto/member/nicknameDupliChk/${ nickname }`)
                 .then((res) => {
-                    if(res.data == true) {
+                    if(res.data) {
 
                         this.nicknameDupli = false
                     } else {
