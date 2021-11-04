@@ -28,7 +28,7 @@
 
           <template v-slot:activator="{ on, attrs }">
         
-          <v-btn text color="#42b8d4" @click="showFacilitiesDistribution" v-on="on" v-bind="attrs" large>
+          <v-btn text color="#42b8d4" @click="showFacilitiesDistribution" v-on="on" v-bind="attrs" :loading="loading" large>
             <v-icon>
               location_searching
             </v-icon>
@@ -67,6 +67,55 @@
       <br/>
       <br/>
 
+      <div v-show="showBasicFacilInfo">
+
+        <p class="normalText" style="color: black; display: inline-block;">전국의 전체 보호소 수</p>
+          &nbsp;
+        <p class="normalText" style="display: inline-block;">{{ facilityList.length }}개 기관</p>
+        <p class="normalText" style="color: black; display: inline-block;">이 검색되었습니다.</p>
+
+        <div v-show="showSpecificAreaFacil">
+
+          <p class="normalText" style="display: inline-block;">{{ chosenArea }}지역</p>
+          <p class="normalText" style="color: black; display: inline-block;">의 보호소 수</p>
+          &nbsp;
+          <p class="normalText" style="display: inline-block;">{{ searchedFacilities.length }}개</p>
+
+          <v-container>
+            <v-simple-table dense>
+
+              <tr v-for="(searchedFacility, index) in searchedFacilities" :key="index">
+
+                <td style="font-size: 12px;"> 
+                  <p>{{ searchedFacility.facilityName }}</p>
+                </td>
+
+                <td style="font-size: 12px;"> 
+                  <p>주소 &nbsp; {{ searchedFacility.facilityAddr }}</p>
+                </td>
+
+                <td style="font-size: 12px;"> 
+                  <p>연락처 &nbsp; {{ searchedFacility.facilityTel }}</p>
+                </td>
+
+                <td style="font-size: 12px;"> 
+                  <p>구조 동물 &nbsp; {{ searchedFacility.saveTrgtAnimal }}</p>
+                </td>
+
+                <td style="font-size: 12px; float: right;"> 
+                  <v-btn text outlined small @click="toFacilityDetailPage(searchedFacility.facilityNo)">
+                    상세 정보
+                  </v-btn>
+                </td>
+
+              </tr>
+
+            </v-simple-table>
+          </v-container>
+
+        </div>
+      </div>
+
       <div v-show="showBasicInfo">
         
         <div v-show="showWholeStat">
@@ -78,10 +127,12 @@
         <br/>
 
         <div v-show="showSpecificStat">
+
           <p class="normalText" style="display: inline-block;">{{ chosenArea }}</p>
           <p class="normalText" style="color: black; display: inline-block;">지역의 전체 유기동물 수</p>
           &nbsp;
           <p class="normalText" style="display: inline-block;">{{ numOfDogs + numOfCats + numOfEtc }}마리</p>
+
         </div>
 
         <p class="normalText" style="color: black; display: inline-block;">유기된 개의 수</p>
@@ -195,7 +246,13 @@ export default {
       userLat: 0,
       userLon: 0,
       loading: false,
-      showBasicInfo: true,
+
+      showBasicFacilInfo: true,
+      showSpecificAreaFacil: false,
+
+      searchedFacilities: [],
+
+      showBasicInfo: false,
       showFacilityStatics: false,
       showNumOfAbandoned: false,
       showWholeStat: false,
@@ -244,15 +301,39 @@ export default {
           map.setCenter(coords);
         }
       })
-      this.showNumOfAbandoned = false
-      this.showWholeStat = false
-      this.showBasicInfo = true
-      this.showSpecificStat = true
-      this.searchedAnimals = [] //초기화
-      for(var i=0; i<this.$store.state.animals.length; i++) {
-        if(this.$store.state.animals[i].careaddr.includes(targetArea)) this.searchedAnimals.push(this.$store.state.animals[i])
+
+      if(this.showBasicFacilInfo) { //지역별 *보호소* 정보
+
+        this.showSpecificAreaFacil = true
+        this.searchedFacilities = []
+
+        for(var i=0; i<this.$store.state.facilityList.length; i++) {
+
+          if(this.$store.state.facilityList[i].facilityAddr.includes(targetArea)) this.searchedFacilities.push(this.$store.state.facilityList[i])
+        }
       }
-      this.chkNumOfEachKind(this.searchedAnimals)
+
+      else if(!this.showBasicFacilInfo) { //지역별 *동물* 정보
+
+        this.showNumOfAbandoned = false
+        this.showWholeStat = false
+        this.showBasicInfo = true
+        this.showSpecificStat = true
+        this.searchedAnimals = [] //초기화
+
+        for(var j=0; j<this.$store.state.animals.length; j++) {
+          if(this.$store.state.animals[j].careaddr.includes(targetArea)) this.searchedAnimals.push(this.$store.state.animals[j])
+        }
+
+        this.chkNumOfEachKind(this.searchedAnimals)
+      }
+    },
+
+    toFacilityDetailPage(facilityNo) {
+      let routeData = this.$router.resolve({
+        name: 'FacilityReadPage',
+        params: { 'facilityNo': facilityNo }
+      });window.open(routeData.href, '_blank')
     },
 
     toAnimalDetailPage(id) {
@@ -292,6 +373,8 @@ export default {
     },
 
     async initMap() {
+
+      this.showBasicFacilInfo = true
 
       if(this.$store.state.facilityList == '') await this.fetchFacilityList()
 
@@ -374,6 +457,7 @@ export default {
         })(i)
       }
       //보호소 정보 마커로 표시 끝
+      this.map = map
     },
 
     async loadingAni(length) {
@@ -383,7 +467,10 @@ export default {
     },
 
     async showAnimalsDistribution() {
-      
+
+      this.showBasicFacilInfo = false
+      this.showSpecificAreaFacil = false
+
       this.showNumOfAbandoned = false
       this.showBasicInfo = true
       
@@ -503,36 +590,59 @@ export default {
     },
 
     showFacilitiesDistribution() {
+
+      this.showBasicInfo = false
+      this.showFacilityStatics = false
+      this.showNumOfAbandoned = false
+      this.showWholeStat = false
+      this.showSpecificStat = false
+
+
       this.initMap()
     },
 
     searchByMap($event) {
       const mode = document.getElementById("name").innerHTML
+
       if($event.target.innerText == mode) {
+
         this.showBasicInfo = false
         this.showNumOfAbandoned = true
         this.searchedAnimals = [] //null하면 안됨, 초기화
+
         this.numOfDogs = 0
         this.numOfCats = 0
         this.numOfEtc = 0
       
         this.facilityName = mode
+
         for(var i=0; i<this.$store.state.animals.length; i++) {
+
           if(this.$store.state.animals[i].carenm == this.facilityName) this.searchedAnimals.push(this.$store.state.animals[i])
         }
+
         this.filteredAnimals = this.searchedAnimals
         this.chkNumOfEachKind(this.searchedAnimals)
+
       }
+
     },
     chkNumOfEachKind(list) {
+
       this.numOfDogs = 0
       this.numOfCats = 0
       this.numOfEtc = 0
+
       for(var j=0; j<list.length; j++) {
+
         if(list[j].kind.includes('[개]')) {
+
           this.numOfDogs += 1
+
         } else if(list[j].kind.includes('[고양이]')) {
+
           this.numOfCats += 1
+
         } else this.numOfEtc += 1
       } 
     }
