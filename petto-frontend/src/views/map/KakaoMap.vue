@@ -74,6 +74,36 @@
         <p class="normalText" style="display: inline-block;">{{ facilityList.length }}개 기관</p>
         <p class="normalText" style="color: black; display: inline-block;">이 검색되었습니다.</p>
 
+        <div v-show="showSpecificInfoFacil">
+
+          <p class="normalText" style="color: black; display: inline-block;">현재 선택된 보호소</p>
+
+          <br/>
+          
+          <p class="normalText" style="color: black; display: inline-block;">기관명</p>
+          &nbsp;
+          <p class="normalText" style="display: inline-block;">{{ searchedFacil.facilityName }}</p>
+
+          &emsp; &emsp; &emsp;
+
+          <p class="normalText" style="color: black; display: inline-block;">주소</p>
+          &nbsp;
+          <p class="normalText" style="display: inline-block;">{{ searchedFacil.facilityAddr }}</p>
+
+          &emsp; &emsp; &emsp;
+
+          <p class="normalText" style="color: black; display: inline-block;">연락처</p>
+          &nbsp;
+          <p class="normalText" style="display: inline-block;">{{ searchedFacil.facilityTel }}</p>
+
+          &emsp; &emsp; &emsp;
+
+          <p class="normalText" style="color: black; display: inline-block;">보호 동물</p>
+          &nbsp;
+          <p class="normalText" style="display: inline-block;">{{ searchedFacil.saveTrgtAnimal }}</p>
+
+        </div>
+
         <div v-show="showSpecificAreaFacil">
 
           <p class="normalText" style="display: inline-block;">{{ chosenArea }}지역</p>
@@ -249,14 +279,17 @@ export default {
 
       showBasicFacilInfo: true,
       showSpecificAreaFacil: false,
+      showSpecificInfoFacil: false,
 
       searchedFacilities: [],
+      searchedFacil: '',
 
       showBasicInfo: false,
       showFacilityStatics: false,
       showNumOfAbandoned: false,
       showWholeStat: false,
       showSpecificStat: false,
+
       facilityName: '',
       searchedAnimals: [],
       filteredAnimals: [],
@@ -304,6 +337,7 @@ export default {
 
       if(this.showBasicFacilInfo) { //지역별 *보호소* 정보
 
+        this.showSpecificInfoFacil = false
         this.showSpecificAreaFacil = true
         this.searchedFacilities = []
 
@@ -470,6 +504,7 @@ export default {
 
       this.showBasicFacilInfo = false
       this.showSpecificAreaFacil = false
+      this.showSpecificInfoFacil = false
 
       this.showNumOfAbandoned = false
       this.showBasicInfo = true
@@ -550,6 +585,7 @@ export default {
 
                 markers.push(marker)
                 infowindowsList.push(infoBox)
+                
                 kakao.maps.event.addListener(
                   marker,
                   "mouseover",
@@ -560,6 +596,7 @@ export default {
                   "mouseout",
                   makeOutListener(infowindow)
                 );
+                
                 //문제) marker 이외에 infowindow에는 마우스 이벤트가 작동 x --> 해결 infoBox를 배열로 담아 for문으로 전부 닫아줌
                 kakao.maps.event.addListener(marker, 'click', function() { 
                     for(var i=0; i<infowindowsList.length; i++) {
@@ -569,18 +606,38 @@ export default {
                     infoBox.open(map, marker)
                     infowindow.close()
                 });
+
+                kakao.maps.event.addListener(
+                  map,
+                  "mouseout",
+                  makeRemoveListener(infoBox)
+                );
+
               }
               clusterer.addMarkers(markers);
+
               function makeOverListener(map, marker, infowindow) {
                 return function() {
                   infowindow.open(map, marker);
                 };
               }
+              
               function makeOutListener(infowindow) {
                 return function() {
                   infowindow.close();
                 };
               }
+
+              function makeRemoveListener() {
+                return function() {
+
+                  // for(var i=0; i<infowindowsList.length; i++) {
+                  //   infowindowsList[i].close()
+                  // }
+                  infoBox.close()
+                };
+              }
+
             })
           })(i)
         }
@@ -602,9 +659,25 @@ export default {
     },
 
     searchByMap($event) {
-      const mode = document.getElementById("name").innerHTML
 
-      if($event.target.innerText == mode) {
+      this.facilityName = document.getElementById("name").innerHTML
+
+      if(this.showBasicFacilInfo) {
+        
+        this.showSpecificAreaFacil = false
+        this.showSpecificInfoFacil = true
+
+        for(var j=0; j<this.$store.state.facilityList.length; j++) {
+
+          if(this.$store.state.facilityList[j].facilityName == this.facilityName) {
+
+            this.searchedFacil = this.$store.state.facilityList[j]
+          }
+        }
+
+      }
+
+      else if($event.target.innerText == this.facilityName) {
 
         this.showBasicInfo = false
         this.showNumOfAbandoned = true
@@ -613,8 +686,6 @@ export default {
         this.numOfDogs = 0
         this.numOfCats = 0
         this.numOfEtc = 0
-      
-        this.facilityName = mode
 
         for(var i=0; i<this.$store.state.animals.length; i++) {
 
