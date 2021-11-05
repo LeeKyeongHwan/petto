@@ -92,13 +92,13 @@
             @click="[deleteLikedAnimal(animal.id)]"/>
 
             <font-awesome-icon v-show="!chkLikedOrNot(animal.id)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
-            @click="[addLikedAnimal(animal.id)]"/>
-            
+            @click="addLikedAnimal(animal.id)"/>
+
             </template>
 
-            <span v-show="chkLikedOrNot(animal.id)">찜해제</span>
+            <span v-show="chkLikedOrNot(animal.notice_no)">찜해제</span>
 
-            <span v-show="!chkLikedOrNot(animal.id)">찜하기</span>
+            <span v-show="!chkLikedOrNot(animal.notice_no)">찜하기</span>
 
           </v-tooltip>
         </div>
@@ -122,7 +122,7 @@
 
 <script>
 import axios from 'axios'
-import { FETCH_ANIMAL_LIST} from '@/store/mutation-types'
+import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -167,8 +167,8 @@ export default {
       })
     },
     selectSearch() {
-      const { selectPlace, selectKinds } = this
-      return axios.get('http://localhost:8888/petto/animals/lists')
+    const { selectPlace, selectKinds } = this
+    return axios.get('http://localhost:8888/petto/animals/lists')
             .then((res) => {
               var ani = []
               if(selectPlace.length > 0 && selectKinds.length > 0) {
@@ -202,20 +202,22 @@ export default {
                   }
               }
             this.searchDialog = false
+            this.pageNum = 0
         })
     },
-    addLikedAnimal(id) {
+    addLikedAnimal(notice_no) {
       
       const memberNo = this.$store.state.session.memberNo
-      const noticeNo = id
+      const noticeNo = notice_no
       const likedAnimalNo = 1
       const likedCnt = 0
 
-      axios.post('http://localhost:8888/petto/member/addLikedAnimal', { likedAnimalNo, memberNo, noticeNo, likedCnt })
+
+      axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
         .then(() => {
 
           this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
-          
+
           axios.post('http://localhost:8888/petto/member/selectLikeCnt', { likedAnimalNo, memberNo, noticeNo, likedCnt })
             .then((res) => {
               console.log(res);
@@ -223,7 +225,7 @@ export default {
 
               const _self = this;
               for(var i=0; i<res.data.length; i++) {
-                
+
                 for(var j=0; j<_self.animals.length; j++) {
 
                   if(_self.animals[j].id == res.data[i].noticeNo){
@@ -237,25 +239,21 @@ export default {
               alert('잠시후에 다시 시도해주세요.2')
             })
         })
-        .catch(() => {
-          alert('잠시후에 다시 시도해주세요.1')
-        })
-        
     },
 
-    chkLikedOrNot(id) {
+    chkLikedOrNot(notice_no) {
       for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
-        if(id == this.$store.state.likedAnimalList[i].noticeNo) {
+        if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
           return true
         }
       }
       return false
     },
 
-    deleteLikedAnimal(id) {
+    deleteLikedAnimal(notice_no) {
       
       const memberNo = this.$store.state.session.memberNo
-      const noticeNo = id
+      const noticeNo = notice_no
       const likedAnimalNo = 1
       const likedCnt = 1
 
@@ -266,7 +264,7 @@ export default {
       })
         .then(() => {
 
-          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === id)
+          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === notice_no)
           this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
            axios.post('http://localhost:8888/petto/member/selectLikeCnt', { likedAnimalNo, memberNo, noticeNo, likedCnt })
@@ -276,7 +274,7 @@ export default {
 
               const _self = this;
               for(var i=0; i<res.data.length; i++) {
-                
+
                 for(var j=0; j<_self.animals.length; j++) {
 
                   if(_self.animals[j].id == res.data[i].noticeNo){
@@ -294,7 +292,6 @@ export default {
         .catch(() => {
           alert('잠시후에 다시 시도해주세요.')
         })
-        
     },
   },
   computed: {
@@ -312,9 +309,8 @@ export default {
       const start = this.pageNum * this.pageSize,
             end = start + this.pageSize;
       return this.animals.slice(start, end);
-    },
+    }
   },
-
   mounted() {
     if(this.$cookies.get("user").id) {
       this.$store.state.session = this.$cookies.get("user")
