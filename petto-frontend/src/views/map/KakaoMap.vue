@@ -216,58 +216,6 @@ export default {
       
       chosenArea: '',
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
-
-      facility: [
-        {
-          title: "원주유기동물보호관리센터",
-          addr: "강원도 원주시 호저면 칠봉로 110-6",
-        },
-        {
-          title: "화천군농업기술센터",
-          addr: "강원도 화천군 상서면 영서로 6387-9  화천군농업기술센터",
-        },
-        {
-          title: "홍익동물종합병원",
-          addr: "서울특별시 마포구 독막로 45 (합정동)",
-        },
-        {
-          title: "화원연합동물병원",
-          addr: "대구광역시 달성군 화원읍 사문진로 447",
-        },
-        {
-          title: "최종주동물병원",
-          addr: "충청북도 영동군 영동읍 계산로 54",
-        },
-        {
-          title: "현풍동물병원",
-          addr: "대구광역시 달성군 유가읍 테크노공원로 51 (유가읍)",
-        },
-        {
-          title: "21세기동물병원",
-          addr: "서울특별시 용산구 보광동 259-1",
-        },
-        {
-          title: "C.T종합동물병원",
-          addr:
-            "서울특별시 마포구 만리재로 74 (신공덕동, 신공덕2차삼성래미안) 삼성 래미안상가 117호",
-        },
-        {
-          title: "강동구청 반려동물팀",
-          addr: "서울특별시 강동구 성내로 25 (성내동, 강동구청) 강동구청",
-        },
-        {
-          title: "강릉시동물사랑센터",
-          addr: "강원도 강릉시 성산면 내맬길 172 ",
-        },
-        {
-          title: "강현림동물병원",
-          addr: "서울특별시 양천구 등촌로 160 (목동) 1층",
-        },
-        {
-          title: "경동동물병원",
-          addr: "인천광역시 중구 개항로 68 (경동)",
-        },
-      ],
       markers: []
     };
   },
@@ -283,14 +231,15 @@ export default {
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=07c4540ad9492806ee3339221fbf2965&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     }
+    this.fetchFacilityList()
   },
 
   computed: {
-    ...mapState(['animals'])
+    ...mapState(['animals','facilityList'])
   },
 
   methods: {
-    ...mapActions(['fetchAnimalList']),
+    ...mapActions(['fetchAnimalList','fetchFacilityList']),
 
     chooseArea() {
       var targetArea = this.chosenArea
@@ -398,14 +347,14 @@ export default {
 
       //보호소 정보 마커로 표시 시작
       var markers = [];
-      var facility = this.facility;
+    
 
-      for (var i = 0; i < facility.length; i++) {
-        (function(i) {
+      for (var i = 0; i < ''; i++) {
+        {
          
           var geocoder = new kakao.maps.services.Geocoder();
 
-          geocoder.addressSearch(facility[i].addr, function(result, status) {
+          geocoder.addressSearch('', function(result, status) {
 
             if (status === kakao.maps.services.Status.OK) {
               var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -419,7 +368,7 @@ export default {
               var infowindow = new kakao.maps.InfoWindow({
                 content:
                   '<div style="width:150px;text-align:center;padding:6px 0;">' +
-                  facility[i].title +
+                 '' +
                   "</div>",
               });
 
@@ -436,9 +385,7 @@ export default {
               );
 
             }
-
             clusterer.addMarkers(markers);
-
             function makeOverListener(map, marker, infowindow) {
               return function() {
                 infowindow.open(map, marker);
@@ -451,7 +398,7 @@ export default {
               };
             }
           })
-        })(i)
+        }
       }
       //보호소 정보 마커로 표시 끝
     },
@@ -597,6 +544,73 @@ export default {
 
     showFacilitiesDistribution() {
       this.initMap()
+        var mapContainer = document.getElementById("map"), 
+        mapOption = {
+          center: new kakao.maps.LatLng(37.564343, 126.947613),
+          level: 3, 
+        };
+
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+
+      var clusterer = new kakao.maps.MarkerClusterer({
+        map: map, 
+        averageCenter: true, 
+        minLevel: 5, 
+      });
+
+      var markers = [];
+      var facilityList = this.facilityList;
+
+      for (var i = 0; i < facilityList.length; i++) {
+        (function(i) {
+          var geocoder = new kakao.maps.services.Geocoder();
+
+          geocoder.addressSearch(facilityList[i].facilityAddr, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+              var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords,
+              });
+
+              var infowindow = new kakao.maps.InfoWindow({
+                content:
+                  '<div style="width:150px;text-align:center;padding:6px 0;">' +
+                  facilityList[i].facilityName +
+                  "</div>",
+              });
+
+              markers.push(marker);
+              kakao.maps.event.addListener(
+                marker,
+                "mouseover",
+                makeOverListener(map, marker, infowindow)
+              );
+              kakao.maps.event.addListener(
+                marker,
+                "mouseout",
+                makeOutListener(infowindow)
+              );
+
+              map.setCenter(coords);
+            }
+            clusterer.addMarkers(markers);
+            function makeOverListener(map, marker, infowindow) {
+              return function() {
+                infowindow.open(map, marker);
+              };
+            }
+
+            function makeOutListener(infowindow) {
+              return function() {
+                infowindow.close();
+              };
+            }
+          });
+        })(i);
+      }
+      }
     },
 
     searchByMap($event) {
@@ -645,7 +659,7 @@ export default {
     }
 
   }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

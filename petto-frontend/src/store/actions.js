@@ -9,7 +9,8 @@ import {
   FETCH_ANIMAL_LIST,
   FETCH_ANIMAL_INFO,
 
-  FETCH_LIKED_ANIMAL_LIST
+  FETCH_LIKED_ANIMAL_LIST,
+  FETCH_LIKED_ANIMAL_CNT
 
 } from "./mutation-types";
 
@@ -72,6 +73,11 @@ export default {
         commit(FETCH_ANIMAL_INFO, res.data);
       })
   },
-
+  fetchLikedAnimalCnt({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/member/selectLikeCnt/${payload}`)
+      .then(res => {
+        commit(FETCH_LIKED_ANIMAL_CNT, res.data);
+      })
+    }
   };
   

@@ -22,4 +22,7 @@ public class LikedAnimal {
     @Column(length = 20, nullable = false)
     private Long noticeNo;
 
+    @Column(length = 20, nullable = false)
+    private Long likedCnt;
+
 }

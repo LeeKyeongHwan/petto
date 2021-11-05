@@ -9,3 +9,4 @@ public interface AnimalsService {
     public List<Animals> list() throws Exception;
 
     public Animals getAnimalsInfo(Integer id);
+}
