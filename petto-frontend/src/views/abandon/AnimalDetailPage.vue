@@ -105,11 +105,19 @@ export default {
             axios.get(`http://localhost:8888/petto/facility/getFacilityNoAndAddr/${carenm}`)
                 .then((res) => {
 
-                    this.$router.push({
-                        name: 'FacilityReadPage',
-                        params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
+                    if(res.data != '') {
 
-                    })
+                        this.$router.push({
+                            name: 'FacilityReadPage',
+                            params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
+
+                        })
+                    } else {
+                        this.$router.push({
+                            name: 'ExceptionPage',
+                            params: { 'facilityName': carenm }
+                        })
+                    }
                 })
                 .catch(() => {
                     alert('잠시후에 다시 시도해주세요.')

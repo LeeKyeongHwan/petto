@@ -314,7 +314,6 @@ export default {
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=07c4540ad9492806ee3339221fbf2965&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     }
-    this.fetchFacilityList()
   },
 
   computed: {
@@ -657,73 +656,6 @@ export default {
 
 
       this.initMap()
-        var mapContainer = document.getElementById("map"), 
-        mapOption = {
-          center: new kakao.maps.LatLng(37.564343, 126.947613),
-          level: 3, 
-        };
-
-      var map = new kakao.maps.Map(mapContainer, mapOption);
-
-      var clusterer = new kakao.maps.MarkerClusterer({
-        map: map, 
-        averageCenter: true, 
-        minLevel: 5, 
-      });
-
-      var markers = [];
-      var facilityList = this.facilityList;
-
-      for (var i = 0; i < facilityList.length; i++) {
-        (function(i) {
-          var geocoder = new kakao.maps.services.Geocoder();
-
-          geocoder.addressSearch(facilityList[i].facilityAddr, function(result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-              var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords,
-              });
-
-              var infowindow = new kakao.maps.InfoWindow({
-                content:
-                  '<div style="width:150px;text-align:center;padding:6px 0;">' +
-                  facilityList[i].facilityName +
-                  "</div>",
-              });
-
-              markers.push(marker);
-              kakao.maps.event.addListener(
-                marker,
-                "mouseover",
-                makeOverListener(map, marker, infowindow)
-              );
-              kakao.maps.event.addListener(
-                marker,
-                "mouseout",
-                makeOutListener(infowindow)
-              );
-
-              map.setCenter(coords);
-            }
-            clusterer.addMarkers(markers);
-            function makeOverListener(map, marker, infowindow) {
-              return function() {
-                infowindow.open(map, marker);
-              };
-            }
-
-            function makeOutListener(infowindow) {
-              return function() {
-                infowindow.close();
-              };
-            }
-          });
-        })(i);
-      }
-      }
     },
 
     searchByMap($event) {
@@ -786,8 +718,7 @@ export default {
       } 
     }
   }
-
-
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

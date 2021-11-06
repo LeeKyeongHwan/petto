@@ -23,7 +23,7 @@ export default {
       ...mapState(['animals'])
   },
   mounted () {
-      this.fetchAnimalList()
+      if(this.$store.state.animals == '') this.fetchAnimalList() // ????
   },
   methods: {
       ...mapActions(['fetchAnimalList'])

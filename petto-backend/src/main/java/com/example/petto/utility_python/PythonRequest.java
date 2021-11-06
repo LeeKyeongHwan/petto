@@ -22,7 +22,7 @@ public class PythonRequest {
             Info info = new Info(email, null, idOrCode);
             log.info("info: " + info.getEmail() + ", " + info.getCode());
 
-            String result = restTemplate.postForObject("http://localhost:5000/findIdAndPwByEmail", info, String.class);
+            String result = restTemplate.postForObject("http://localhost:5000/find_id_and_pw_by_email", info, String.class);
 
             return result;
 
@@ -31,7 +31,7 @@ public class PythonRequest {
             Info info = new Info(email, idOrCode, null);
             log.info("info: " + info.getEmail() + ", " + info.getId());
 
-            String result = restTemplate.postForObject("http://localhost:5000/findIdAndPwByEmail", info, String.class);
+            String result = restTemplate.postForObject("http://localhost:5000/find_id_and_pw_by_email", info, String.class);
 
             return result;
         }
