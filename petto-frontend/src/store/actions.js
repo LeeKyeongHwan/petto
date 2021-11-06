@@ -56,7 +56,7 @@ export default {
   fetchAnimalList ({ commit }) {
     return axios.get('http://localhost:8888/petto/animals/lists')
             .then((res) => {
-                commit(FETCH_ANIMAL_LIST, res.data)
+                commit(FETCH_ANIMAL_LIST, res.data) //
       })
   },
 
@@ -75,6 +75,7 @@ export default {
       })
   },
 
+
   fetchOlderAnimalList({ commit }) {
     return axios.get('http://localhost:8888/petto/animals/orderLists')
       .then(res => {
@@ -82,11 +83,13 @@ export default {
       })
   },
 
+
   fetchLikedAnimalCnt({ commit }, payload) {
     return axios.get(`http://localhost:8888/petto/member/selectLikeCnt/${payload}`)
       .then(res => {
         commit(FETCH_LIKED_ANIMAL_CNT, res.data);
       })
     }
+
   };
   
