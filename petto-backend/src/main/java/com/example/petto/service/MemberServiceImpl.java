@@ -214,5 +214,10 @@ public class MemberServiceImpl implements MemberService {
         }
         return null;
     }
+
+    @Override
+    public List<LikedAnimal> selectLikeCnt() throws Exception {
+        return likedAnimalRepository.selectLikeCnt();
+    }
 }
 

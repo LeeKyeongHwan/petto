@@ -209,6 +209,15 @@ public class MemberController {
         memberService.removeUser(memberNo);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @PostMapping("/selectLikeCnt")
+    public ResponseEntity<List<LikedAnimal>> selectLikeCnt(@Validated @RequestBody LikedAnimal likedAnimal) throws Exception {
+        log.info("selectLikeCnt(): " + likedAnimal);
+
+        List<LikedAnimal> selectLikeCnt = memberService.selectLikeCnt() ;
+
+        return new ResponseEntity<List<LikedAnimal>>(selectLikeCnt, HttpStatus.OK);
+    }
 }
 
 
