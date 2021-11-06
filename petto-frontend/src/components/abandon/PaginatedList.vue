@@ -254,7 +254,8 @@ export default {
           const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
           this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
-          this.$store.state.animals[targetIndex].numberOfLiked --
+          const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+          this.$store.state.animals[targetIndex2].numberOfLiked --
         })
         .catch(() => {
           alert('잠시후에 다시 시도해주세요.')
