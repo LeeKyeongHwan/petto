@@ -68,7 +68,7 @@
         <div style="float: right; margin-right: 30px; margin-bottom: 10px;">
 
           <p class="normalText" style="display: inline-block; font-size: 15px;">{{ animal.numberOfLiked }}</p>
-          &ensp;
+          &nbsp;
           <p class="normalText" style="display: inline-block; font-size: 12px; color: black;">명이 이 동물을 찜했어요!</p>
 
           <v-tooltip bottom>
