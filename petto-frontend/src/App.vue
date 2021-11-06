@@ -1,19 +1,22 @@
 <template>
   <v-app>
     <category v-if="($route.name !== 'PettoHome') && ($route.name !== 'Home')"/>
-    <v-main>
-      <router-view/>
-    </v-main>
+      <v-main>
+        <router-view/>
+      </v-main>
+    <petto-footer/>
   </v-app>
 </template>
 
 <script>
 import Category from '@/views/Category.vue'
+import PettoFooter from '@/views/PettoFooter.vue'
 
 export default {
   name: 'App',
   components: {
-    Category
+    Category,
+    PettoFooter
   }
 }
 </script>

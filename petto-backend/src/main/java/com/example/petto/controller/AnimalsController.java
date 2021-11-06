@@ -38,4 +38,10 @@ public class AnimalsController {
         return new ResponseEntity<Animals>(animalsService.getAnimalsInfo(id), HttpStatus.OK);
 
     }
+
+    @GetMapping("/orderLists")
+    public ResponseEntity<List<Animals>> getOlderLists () throws Exception {
+        log.info("getLists(): " + animalsService.oldList());
+        return new ResponseEntity<>(animalsService.oldList(), HttpStatus.OK);
+    }
 }

@@ -8,6 +8,7 @@ import {
 
   FETCH_ANIMAL_LIST,
   FETCH_ANIMAL_INFO,
+  FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_LIST
 
@@ -72,6 +73,13 @@ export default {
         commit(FETCH_ANIMAL_INFO, res.data);
       })
   },
+
+  fetchOlderAnimalList({ commit }) {
+    return axios.get('http://localhost:8888/petto/animals/orderLists')
+      .then(res => {
+        commit(FETCH_ORDER_ANIMAL_LIST, res.data)
+      });
+  }
 
   };
   
