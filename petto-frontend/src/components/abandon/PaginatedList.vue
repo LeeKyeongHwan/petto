@@ -172,6 +172,7 @@ export default {
       })
     },
     selectSearch() {
+      
       const { selectPlace, selectKinds } = this
       return axios.get('http://localhost:8888/petto/animals/lists')
               .then((res) => {
@@ -212,6 +213,8 @@ export default {
     },
 
     addLikedAnimal(notice_no) {
+
+      if(this.$store.state.session) {
       
       const memberNo = this.$store.state.session.memberNo
       const noticeNo = notice_no
@@ -229,18 +232,28 @@ export default {
         .catch(() => {
           alert('잠시후에 다시 시도해주세요.')
         })
+
+      } else alert('로그인이 필요한 서비스입니다.')
+      
     },
 
     chkLikedOrNot(notice_no) {
-      for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
-        if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
-          return true
+
+      if(this.$store.state.session) {
+
+        for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
+          if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
+            return true
+          }
         }
-      }
-      return false
+        return false
+
+      } else return false
     },
 
     deleteLikedAnimal(notice_no) {
+
+      if(this.$store.state.session) {
       
       const memberNo = this.$store.state.session.memberNo
       const noticeNo = notice_no
@@ -260,9 +273,11 @@ export default {
         .catch(() => {
           alert('잠시후에 다시 시도해주세요.')
         })
-    }
+      } else alert('로그인이 필요한 서비스입니다.')
 
+    }
   },
+  
   computed: {
     ...mapState(['session', 'likedAnimalList','likedAnimalCnt']),
 

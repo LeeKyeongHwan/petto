@@ -159,6 +159,8 @@ export default {
         },
 
         addLikedAnimal(notice_no) {
+
+            if(this.$store.state.session) {
       
             const memberNo = this.$store.state.session.memberNo
             const noticeNo = notice_no
@@ -176,18 +178,27 @@ export default {
                 .catch(() => {
                     alert('잠시후에 다시 시도해주세요.')
                 })
+
+            } else alert('로그인이 필요한 서비스입니다.')
         },
 
         chkLikedOrNot(notice_no) {
 
-            for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
+            if(this.$store.state.session) {
+                for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
 
-                if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) return true
-            }
-            return false
+                    if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
+                        return true
+                    }
+                }
+                return false
+
+            } else return false
         },
 
         deleteLikedAnimal(notice_no) {
+
+            if(this.$store.state.session) {
         
             const memberNo = this.$store.state.session.memberNo
             const noticeNo = notice_no
@@ -207,6 +218,8 @@ export default {
                 .catch(() => {
                     alert('잠시후에 다시 시도해주세요.')
                 })
+
+            } else alert('로그인이 필요한 서비스입니다.')
         }
     },
 
