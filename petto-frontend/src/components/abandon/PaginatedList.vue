@@ -216,22 +216,22 @@ export default {
 
       if(this.$store.state.session) {
       
-      const memberNo = this.$store.state.session.memberNo
-      const noticeNo = notice_no
+        const memberNo = this.$store.state.session.memberNo
+        const noticeNo = notice_no
 
-      axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
-        .then(() => {
+        axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
+          .then(() => {
 
-          this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
+            this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
 
-          const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-          this.$store.state.animals[targetIndex].numberOfLiked ++
+            const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+            this.$store.state.animals[targetIndex].numberOfLiked ++
 
-        })
-        
-        .catch(() => {
-          alert('잠시후에 다시 시도해주세요.')
-        })
+          })
+          
+          .catch(() => {
+            alert('잠시후에 다시 시도해주세요.')
+          })
 
       } else alert('로그인이 필요한 서비스입니다.')
       
@@ -255,24 +255,24 @@ export default {
 
       if(this.$store.state.session) {
       
-      const memberNo = this.$store.state.session.memberNo
-      const noticeNo = notice_no
-      
-      axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(() => {
-          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
-          this.$store.state.likedAnimalList.splice(targetIndex, 1)
+        const memberNo = this.$store.state.session.memberNo
+        const noticeNo = notice_no
+        
+        axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(() => {
+            const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
+            this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
-          const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-          this.$store.state.animals[targetIndex2].numberOfLiked --
-        })
-        .catch(() => {
-          alert('잠시후에 다시 시도해주세요.')
-        })
+            const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+            this.$store.state.animals[targetIndex2].numberOfLiked --
+          })
+          .catch(() => {
+            alert('잠시후에 다시 시도해주세요.')
+          })
       } else alert('로그인이 필요한 서비스입니다.')
 
     }
