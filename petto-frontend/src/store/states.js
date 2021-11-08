@@ -7,6 +7,7 @@ export default {
 
   animals: [],
   animalsInfo: '',
+  olderList: [],
 
   likedAnimalList: [],
   likedAnimalCnt: [],
