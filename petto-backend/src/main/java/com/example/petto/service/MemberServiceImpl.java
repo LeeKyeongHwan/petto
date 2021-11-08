@@ -3,6 +3,7 @@ package com.example.petto.service;
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.utility_python.PythonRequest;
@@ -32,6 +33,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     LikedAnimalRepository likedAnimalRepository;
+
+    @Autowired
+    AnimalsRepository animalsRepository;
 
     @Override
     public boolean idDupliChk(String id) {
@@ -186,6 +190,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void addLikedAnimal(LikedAnimal likedAnimal) {
+        animalsRepository.addNumberOfLiked(likedAnimal.getNoticeNo());
         likedAnimalRepository.save(likedAnimal);
     }
 
@@ -197,6 +202,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteLikedAnimal(LikedAnimal likedAnimal) {
+        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
         likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
     }
 

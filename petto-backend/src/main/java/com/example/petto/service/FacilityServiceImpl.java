@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,19 +30,27 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public List<String> getFacilityNoAndAddr(String carenm) {
 
-        Facility facility = facilityRepository.findByFacilityName(carenm).get(0);
-        //log.info("facility: " + facility);
+        List<Optional<Facility>> tmpFacility = facilityRepository.findByFacilityName(carenm);
 
-        String facilityNo = String.valueOf(facility.getFacilityNo());
-        String facilityAddr = facility.getFacilityAddr();
-        String facilityName = facility.getFacilityName();
+        if(!tmpFacility.isEmpty()) {
 
-        List<String> list = new ArrayList<>();
+            Facility facility = tmpFacility.get(0).get();
 
-        list.add(facilityNo);
-        list.add(facilityAddr);
-        list.add((facilityName));
+            String facilityNo = String.valueOf(facility.getFacilityNo());
+            String facilityAddr = facility.getFacilityAddr();
+            String facilityName = facility.getFacilityName();
 
-        return list;
+            List<String> list = new ArrayList<>();
+
+            list.add(facilityNo);
+            list.add(facilityAddr);
+            list.add((facilityName));
+
+            return list;
+
+        } else {
+
+            return null;
+        }
     }
 }

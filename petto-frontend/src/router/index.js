@@ -18,8 +18,9 @@ import KakaoMap from "../views/map/KakaoMap.vue";
 
 import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
+import ExceptionPage from "../views/ExceptionPage.vue";
 
-Vue.use(VueRouter);
+Vue.use(VueRouter); 
 
 const routes = [
   {
@@ -91,8 +92,18 @@ const routes = [
     path: "/animalVoluntary",
     name: "AnimalVoluntary",
     component: AnimalVoluntary,
-
+  },
+  {
+    path: "/exception/:facilityName",
+    name: "ExceptionPage",
+    components: {
+      default: ExceptionPage
+    },
+    props: {
+      default: true
+    }
   }
+
 ];
 
 const router = new VueRouter({

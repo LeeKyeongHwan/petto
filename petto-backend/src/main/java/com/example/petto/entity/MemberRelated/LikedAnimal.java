@@ -19,10 +19,6 @@ public class LikedAnimal {
     @Column(name = "member_no", nullable = false)
     private Long memberNo;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 40, nullable = false)
     private String noticeNo;
-
-    @Column(length = 20, nullable = false)
-    private Long likedCnt;
-
 }

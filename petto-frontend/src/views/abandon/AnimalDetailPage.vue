@@ -79,7 +79,40 @@
         <br/>
         <br/>
 
-        <p class="normalText" style="color: black; margin-top: 20px;" @click="toFacilityInfo(animalsInfo.carenm)">보호소 바로가기</p>
+        <div style="margin-right: 30px; margin-bottom: 10px;">
+
+            <v-btn text class="normalText" style="color: black;" @click="toFacilityInfo(animalsInfo.carenm)">
+                보호소 바로가기
+            </v-btn>
+
+            &emsp;
+            &emsp;
+
+            <p class="normalText" style="display: inline-block; font-size: 15px;">{{ animalsInfo.numberOfLiked }}</p>
+            &nbsp;
+            <p class="normalText" style="display: inline-block; font-size: 12px; color: black;">명이 이 동물을 찜했어요!</p>
+
+            &emsp;
+            &emsp;
+            
+            <v-tooltip bottom>
+
+                <template v-slot:activator="{ on, attrs }">
+            
+                <font-awesome-icon v-show="chkLikedOrNot(animalsInfo.notice_no)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+                @click="deleteLikedAnimal(animalsInfo.notice_no)"/>
+
+                <font-awesome-icon v-show="!chkLikedOrNot(animalsInfo.notice_no)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+                @click="addLikedAnimal(animalsInfo.notice_no)"/>
+
+                </template>
+
+                <span v-show="chkLikedOrNot(animalsInfo.notice_no)">찜해제</span>
+
+                <span v-show="!chkLikedOrNot(animalsInfo.notice_no)">찜하기</span>
+
+            </v-tooltip>
+        </div>
     
     </div>
 </template>
@@ -103,24 +136,102 @@ export default {
         toFacilityInfo(carenm) {
             
             axios.get(`http://localhost:8888/petto/facility/getFacilityNoAndAddr/${carenm}`)
+
                 .then((res) => {
 
-                    this.$router.push({
-                        name: 'FacilityReadPage',
-                        params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
+                    if(res.data != '') {
 
-                    })
+                        this.$router.push({
+                            name: 'FacilityReadPage',
+                            params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
+                        })
+                    } else {
+                        this.$router.push({
+                            name: 'ExceptionPage',
+                            params: { 'facilityName': carenm }
+                        })
+                    }
                 })
                 .catch(() => {
                     alert('잠시후에 다시 시도해주세요.')
                 })
+        },
+
+        addLikedAnimal(notice_no) {
+
+            if(this.$store.state.session) {
+      
+                const memberNo = this.$store.state.session.memberNo
+                const noticeNo = notice_no
+
+                axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
+                    .then(() => {
+
+                        this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
+
+                        const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        this.$store.state.animals[targetIndex].numberOfLiked ++
+
+                        this.$store.state.animalsInfo.numberOfLiked ++
+
+                    })
+                    
+                    .catch(() => {
+                        alert('잠시후에 다시 시도해주세요.')
+                    })
+
+            } else alert('로그인이 필요한 서비스입니다.')
+        },
+
+        chkLikedOrNot(notice_no) {
+
+            if(this.$store.state.session) {
+                for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
+
+                    if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
+                        return true
+                    }
+                }
+                return false
+
+            } else return false
+        },
+
+        deleteLikedAnimal(notice_no) {
+
+            if(this.$store.state.session) {
+        
+                const memberNo = this.$store.state.session.memberNo
+                const noticeNo = notice_no
+                
+                axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(() => {
+                        const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
+                        this.$store.state.likedAnimalList.splice(targetIndex, 1)
+
+                        const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        this.$store.state.animals[targetIndex2].numberOfLiked --
+
+                        this.$store.state.animalsInfo.numberOfLiked --
+                    })
+                    .catch(() => {
+                        alert('잠시후에 다시 시도해주세요.')
+                    })
+
+            } else alert('로그인이 필요한 서비스입니다.')
         }
     },
+
     mounted() {
         this.fetchAnimalInfo(this.id)
     },
+
     computed: {
-        ...mapState(['animalsInfo'])
+        ...mapState(['animalsInfo', 'session'])
     }
 
 }
