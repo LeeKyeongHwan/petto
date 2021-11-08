@@ -20,7 +20,12 @@ public class AnimalsServiceImpl implements AnimalsService {
         return animalsRepository.findAll();}
 
     @Override
-    public Animals getAnimalsInfo(Integer id) {
+    public Animals getAnimalsInfo(String id) {
+
+        if(id.length() > 10) {
+            log.info("id.length() > 10 - " + id);
+            return animalsRepository.findByNoticeNo(id).get();
+        }
         return animalsRepository.findById(new Long(id)).get();
     }
 }

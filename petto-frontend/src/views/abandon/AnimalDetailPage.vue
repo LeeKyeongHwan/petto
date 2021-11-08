@@ -113,6 +113,11 @@
 
             </v-tooltip>
         </div>
+
+        <div id="latestSeenShower">
+            <br>
+            <p class="normalText" style="color: black;">최근에 본 유기동물</p>
+        </div>
     
     </div>
 </template>
@@ -129,9 +134,15 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            tmpLatestSeen: [],
+            DUPLI_PREVENTION_CHECK: 0 //
+        }
+    },
 
     methods: {
-        ...mapActions(['fetchAnimalInfo']),
+        ...mapActions(['fetchAnimalInfo', 'fetchLikedAnimalList']),
 
         toFacilityInfo(carenm) {
             
@@ -169,8 +180,8 @@ export default {
 
                         this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
 
-                        const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-                        this.$store.state.animals[targetIndex].numberOfLiked ++
+                        // const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)  // --> 이벤트버스로 처리
+                        // this.$store.state.animals[targetIndex].numberOfLiked ++
 
                         this.$store.state.animalsInfo.numberOfLiked ++
 
@@ -213,8 +224,8 @@ export default {
                         const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
                         this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
-                        const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-                        this.$store.state.animals[targetIndex2].numberOfLiked --
+                        // const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)  // --> 이벤트버스로 처리
+                        // this.$store.state.animals[targetIndex2].numberOfLiked -- 
 
                         this.$store.state.animalsInfo.numberOfLiked --
                     })
@@ -226,14 +237,66 @@ export default {
         }
     },
 
-    mounted() {
-        this.fetchAnimalInfo(this.id)
+    computed: {
+        ...mapState(['animalsInfo', 'session', 'likedAnimalList', 'animals']),
+
+        latestSeen1() {
+            return this.$cookies.get("latestSeen")
+        }
     },
 
-    computed: {
-        ...mapState(['animalsInfo', 'session'])
-    }
+    mounted() {
+        this.fetchAnimalInfo(this.id)
 
+        if(this.$cookies.get("user").id) {
+            this.$store.state.session = this.$cookies.get("user")
+            this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+        } 
+    },
+    
+    updated() {
+
+        //this.$cookies.remove("latestSeen");    
+
+        if(this.$store.state.animalsInfo) {
+
+            if(this.DUPLI_PREVENTION_CHECK == 0) {
+
+                var tmpObj = { noticeNo: this.$store.state.animalsInfo.notice_no, imgSrc: this.$store.state.animalsInfo.image }
+
+                if(!this.$cookies.get('latestSeen')) {
+
+                    this.tmpLatestSeen.push(tmpObj)
+                    
+                    this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
+
+                } else {
+
+                    this.tmpLatestSeen = JSON.parse(this.$cookies.get('latestSeen'))
+
+                    for(var i=0; i<this.tmpLatestSeen.length; i++) {
+
+                        if(this.tmpLatestSeen[i].noticeNo == this.$store.state.animalsInfo.notice_no) {
+
+                            this.tmpLatestSeen.splice(i, 1)
+
+                            this.tmpLatestSeen.push(tmpObj)
+
+                            this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
+
+                            return false
+                        }
+                    }
+
+                    this.tmpLatestSeen.push(tmpObj)
+
+                    this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
+                }
+                
+                this.DUPLI_PREVENTION_CHECK = 1
+            } 
+        }
+    }
 }
 
 </script>

@@ -9,7 +9,8 @@ export default {
   animalsInfo: '',
 
   likedAnimalList: [],
-  likedAnimalCnt: [],
 
-  voluntary: []
+  voluntary: [],
+
+  latestSeenAnimals: []
 };

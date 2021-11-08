@@ -42,6 +42,7 @@ export default {
               this.$cookies.set("user", res.data, "1h");
               //alert(JSON.stringify(this.$store.state.session))
               location.href = "/";
+              
             } else {
               alert("로그인 실패! - " + res.data);
               this.isLogin = false;
