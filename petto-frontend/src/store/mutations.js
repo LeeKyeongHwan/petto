@@ -9,7 +9,11 @@ import {
   FETCH_ANIMAL_INFO,
 
   FETCH_LIKED_ANIMAL_LIST,
+
+  FETCH_ORDER_ANIMAL_LIST,
+
   FETCH_LIKED_ANIMAL_CNT
+
   
 } from "./mutation-types";
 
@@ -41,7 +45,13 @@ export default {
   [FETCH_LIKED_ANIMAL_LIST] (state, payload) {
     state.likedAnimalList = payload;
   },
+
+  [FETCH_ORDER_ANIMAL_LIST](state, olderList) {
+    state.olderList = olderList;
+  },
+
   [FETCH_LIKED_ANIMAL_CNT] (state, payload) {
     state.likedAnimalCnt = payload;
   },
+
 };
