@@ -8,7 +8,7 @@ public interface AnimalsService {
 
     public List<Animals> list() throws Exception;
 
-    public Animals getAnimalsInfo(Integer id);
+    public Animals getAnimalsInfo(String id);
 
     public List<Animals> oldList() throws Exception;
 }
