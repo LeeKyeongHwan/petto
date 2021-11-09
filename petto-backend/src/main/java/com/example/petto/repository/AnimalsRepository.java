@@ -31,4 +31,3 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
     @Query("select an from Animals an where an.state = :state")
     List<Animals> findByState(String state);
 }
-
