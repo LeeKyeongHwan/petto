@@ -13,5 +13,8 @@ export default {
 
   voluntary: [],
 
-  latestSeenAnimals: []
+  latestSeenAnimals: [],
+
+  crawlInfo:''
+
 };
