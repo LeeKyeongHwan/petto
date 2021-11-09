@@ -55,13 +55,7 @@
 
         <section>
           <div class="container2">
-            <div id="stats">
-              <v-row align="center">
-              <ul style="width: 100vw;">
-                  <li style="margin: 0px 100px 0px 100px;"><v-icon x-large>pets</v-icon>유기동물 통계관련</li>
-              </ul>
-              </v-row>
-            </div>
+                    <statistics/>
           </div>
         </section>
         <section>
@@ -111,7 +105,12 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex';
+import Statistics from "@/components/crawling/Statistics.vue";
+
 export default {
+  components: {
+    Statistics,
+  },
   data() {
     return {
       layers: false,

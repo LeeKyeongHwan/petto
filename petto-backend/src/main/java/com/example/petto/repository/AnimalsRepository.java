@@ -27,10 +27,7 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Animals an set an.numberOfLiked = an.numberOfLiked - 1 where an.notice_no = :noticeNo")
     void subNumberOfLiked(String noticeNo);
-<<<<<<< HEAD
 
     @Query("select an from Animals an where an.state = :state")
     List<Animals> findByState(String state);
 }
-=======
->>>>>>> 585d98c64a66f300ffb70294a737db3e3f7b73ca
