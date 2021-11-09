@@ -63,13 +63,16 @@ export default {
       listNum: 0,
       LATEST_SEEN_SIZE: 3,
       //tmpList: [{ noticeNo: '', imgSrc: '' }]
-      tmpLatestSeen: []
+      tmpLatestSeen: [],
+
+      latestSeenDeleteCnt: 0
     }
   },
   computed: {
       ...mapState(['animals', 'latestSeenAnimals']),
 
       latestSeen() {
+        console.log(this.latestSeenDeleteCnt)
 
         if(this.$cookies.get("latestSeen")) {
 
@@ -115,6 +118,8 @@ export default {
       },
 
       delLatestSeen(noticeNo) {
+
+        this.latestSeenDeleteCnt++
 
         this.tmpLatestSeen = JSON.parse(this.$cookies.get('latestSeen'))
 
