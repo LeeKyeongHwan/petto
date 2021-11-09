@@ -10,5 +10,5 @@ public interface AnimalsService {
 
     public Animals getAnimalsInfo(String id);
 
-
+    public List<Animals> oldList() throws Exception;
 }
