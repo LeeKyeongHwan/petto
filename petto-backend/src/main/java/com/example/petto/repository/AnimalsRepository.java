@@ -13,6 +13,11 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
 
     Optional<Animals> findById(Long id);
 
+    //Optional<Animals> findByNoticeNo(String noticeNo); 엔티티의 변수명에 언더바를 넣으면 findBy로 찾을 수 없다.
+
+    @Query("select an from Animals an where an.notice_no = :noticeNo")
+    Optional<Animals> findByNoticeNo(String noticeNo);
+
     @Transactional
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Animals an set an.numberOfLiked = an.numberOfLiked + 1 where an.notice_no = :noticeNo")
@@ -22,4 +27,8 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Animals an set an.numberOfLiked = an.numberOfLiked - 1 where an.notice_no = :noticeNo")
     void subNumberOfLiked(String noticeNo);
+
+    @Query("select an from Animals an where an.state = :state")
+    List<Animals> findByState(String state);
 }
+

@@ -8,7 +8,7 @@
                 </template>
                 <v-card>
                   <v-toolbar color="white darken-3" flat height="50">
-                              <v-btn icon x-large @click="cancle()" style="positoin:absolute; left:23em;">
+                              <v-btn icon x-large @click="cancel()" style="positoin:absolute; left:23em;">
                                   <v-icon>clear</v-icon>
                               </v-btn>
                   </v-toolbar>
@@ -110,18 +110,27 @@
 
       </v-card>
     </v-row>
+    
     </v-container>
+
     <v-container>
+
       <div class="btn-cover">
+        
         <v-btn :disabled="pageNum === 0" @click="prevPage" icon text>
           <v-icon>chevron_left</v-icon>
         </v-btn>
+
         <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-        <v-btn  :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
+
+        <v-btn :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
           <v-icon>chevron_right</v-icon>
         </v-btn >
+
       </div>
+
     </v-container>
+
   </div>
 </template>
 
@@ -162,14 +171,16 @@ export default {
     prevPage () {
       this.pageNum -= 1;
     },
-    cancle() {
+    cancel() {
       this.searchDialog = false
     },
     toDetailPage(id) {
-      this.$router.push({
+
+      let routeData = this.$router.resolve({
         name: 'AnimalDetailPage',
-        params: { "id": id }
-      })
+        params: { 'id': id }
+      });window.open(routeData.href, '_blank')
+      
     },
     selectSearch() {
       
@@ -279,7 +290,7 @@ export default {
   },
   
   computed: {
-    ...mapState(['session', 'likedAnimalList','likedAnimalCnt']),
+    ...mapState(['session', 'likedAnimalList']),
 
     pageCount () {
       let listLeng = this.animals.length,
