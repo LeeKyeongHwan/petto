@@ -135,6 +135,7 @@
 </template>
 
 <script>
+//import EventBus from '@/eventBus.js'
 import axios from 'axios'
 import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
@@ -175,11 +176,15 @@ export default {
       this.searchDialog = false
     },
     toDetailPage(id) {
-
-      let routeData = this.$router.resolve({
+      // let routeData = this.$router.resolve({
+      //   name: 'AnimalDetailPage',
+      //   params: { 'id': id }
+      // });window.open(routeData.href, '_blank')
+      
+      this.$router.push({
         name: 'AnimalDetailPage',
-        params: { 'id': id }
-      });window.open(routeData.href, '_blank')
+        params: { id: id }
+      })
       
     },
     selectSearch() {
@@ -262,35 +267,33 @@ export default {
       } else return false
     },
 
-    deleteLikedAnimal(notice_no) {
+    async deleteLikedAnimal(notice_no) {
 
       if(this.$store.state.session) {
       
         const memberNo = this.$store.state.session.memberNo
         const noticeNo = notice_no
         
-        axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo })
           .then(() => {
-            const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
-            this.$store.state.likedAnimalList.splice(targetIndex, 1)
-
-            const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+            const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no == notice_no)
             this.$store.state.animals[targetIndex2].numberOfLiked --
+
+            const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo == notice_no) //*** likedAnimalList에는 noticeNo ***
+            this.$store.state.likedAnimalList.splice(targetIndex, 1)
           })
+          
           .catch(() => {
             alert('잠시후에 다시 시도해주세요.')
           })
+
       } else alert('로그인이 필요한 서비스입니다.')
 
     }
   },
   
   computed: {
-    ...mapState(['session', 'likedAnimalList']),
+    ...mapState(['session', 'likedAnimalList', 'animals']),
 
     pageCount () {
       let listLeng = this.animals.length,
