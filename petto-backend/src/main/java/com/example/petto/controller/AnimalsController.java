@@ -39,7 +39,7 @@ public class AnimalsController {
     }
 
     @GetMapping("/orderLists")
-    public ResponseEntity<List<Animals>> getOlderLists () throws Exception {
+    public ResponseEntity<List<Animals>> getOlderLists() throws Exception {
         log.info("getLists(): " + animalsService.oldList());
         return new ResponseEntity<>(animalsService.oldList(), HttpStatus.OK);
     }
