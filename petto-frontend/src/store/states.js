@@ -10,7 +10,11 @@ export default {
   olderList: [],
 
   likedAnimalList: [],
-  likedAnimalCnt: [],
 
-  voluntary: []
+  voluntary: [],
+
+  latestSeenAnimals: [],
+
+  crawlInfo:''
+
 };
