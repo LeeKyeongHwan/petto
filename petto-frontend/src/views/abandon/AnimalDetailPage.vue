@@ -1,5 +1,5 @@
 <template>
-    <div align="center" style="padding-top: 60px;">
+    <div align="center" style="padding-top: 60px;" >
 
         <p class="mainText">유기동물 정보</p>
 
@@ -132,9 +132,9 @@
                 <img :src="latestSeenAni.imgSrc" class="lateSeenThumbnail" @click="toDetailPage(latestSeenAni.noticeNo)"/>
 
                 <v-btn text x-small color="grey" class="delBtn" @click="delLatestSeen(latestSeenAni.noticeNo)">
-                <v-icon>
-                    cancel
-                </v-icon>
+                    <v-icon>
+                        cancel
+                    </v-icon>
                 </v-btn>
 
             </div>
@@ -184,8 +184,7 @@ export default {
     methods: {
         ...mapActions(['fetchAnimalInfo', 'fetchLikedAnimalList']),
 
-        toFacilityInfo(carenm) {
-            
+        toFacilityInfo(carenm) {       
             axios.get(`http://localhost:8888/petto/facility/getFacilityNoAndAddr/${carenm}`)
 
                 .then((res) => {

@@ -2,7 +2,7 @@
   <div>
     <h1>유기동물 리스트</h1>
 
-    <paginated-list v-if="animals" :animals="animals" style="position relative;"/>
+    <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" style="position relative;"/>
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
@@ -58,7 +58,12 @@ export default {
   components: {
     PaginatedList
   },
-  data () {
+  props: {
+    pageNum: {
+      type: Number
+    }
+  },
+  data() {
     return {
       pageArray: [],
       listNum: 0,
@@ -73,7 +78,6 @@ export default {
 
       latestSeen() {
         console.log(this.latestSeenDeleteCnt)
-
         if(this.$cookies.get("latestSeen")) {
 
           const start = this.listNum * this.LATEST_SEEN_SIZE
@@ -102,6 +106,11 @@ export default {
 
   mounted() {
       if(this.$store.state.animals == '') this.fetchAnimalList()
+
+      if(this.$cookies.get("user").id) {
+        this.$store.state.session = this.$cookies.get("user")
+        this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+      }
   },
 
   methods: {

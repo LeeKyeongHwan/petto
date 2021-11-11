@@ -121,7 +121,7 @@
           <v-icon>chevron_left</v-icon>
         </v-btn>
 
-        <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+        <span class="page-count">{{ parseInt(pageNum) + 1 }} / {{ pageCount }} 페이지</span>
 
         <v-btn :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
           <v-icon>chevron_right</v-icon>
@@ -144,7 +144,7 @@ export default {
   name: 'paginated-list',
   data () {
     return {
-      pageNum: 0,
+      //pageNum: 0,
       searchDialog: false,
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
       selectPlace: [],
@@ -161,16 +161,31 @@ export default {
       type: Number,
       required: false,
       default: 12
+    },
+    pageNum: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   methods: {
     ...mapActions(['fetchLikedAnimalList','fetchLikedAnimalCnt']),
 
-    nextPage () {
-      this.pageNum += 1;
+    nextPage() {
+      this.pageNum = parseInt(this.pageNum) + 1; //이걸 스트링으로 인식해서 1 -> 11 -> 111이렇게됨
+
+      this.$router.push({
+        name: 'AbandonedAnimal',
+        params: { pageNum: this.pageNum }
+      })
     },
-    prevPage () {
-      this.pageNum -= 1;
+    prevPage() {
+      this.pageNum = parseInt(this.pageNum) - 1;
+
+      this.$router.push({
+        name: 'AbandonedAnimal',
+        params: { pageNum: this.pageNum }
+      })
     },
     cancel() {
       this.searchDialog = false
@@ -225,6 +240,11 @@ export default {
                 }
               this.searchDialog = false
               this.pageNum = 0
+
+              this.$router.push({
+                name: 'AbandonedAnimal',
+                params: { pageNum: this.pageNum }
+              })
           })
     },
 
@@ -242,7 +262,6 @@ export default {
 
             const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
             this.$store.state.animals[targetIndex].numberOfLiked ++
-
           })
           
           .catch(() => {
