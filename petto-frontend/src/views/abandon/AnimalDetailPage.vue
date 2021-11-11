@@ -116,7 +116,43 @@
 
         <div id="latestSeenShower">
             <br>
+
             <p class="normalText" style="color: black;">최근에 본 유기동물</p>
+
+            <v-btn text class="upBtn" :disabled="listNum === 0" @click="goListUp">
+                <v-icon>
+                expand_less
+                </v-icon>
+            </v-btn>
+
+            <br>
+
+            <div v-for="(latestSeenAni, index) in latestSeen" :key="index">
+
+                <img :src="latestSeenAni.imgSrc" class="lateSeenThumbnail" @click="toDetailPage(latestSeenAni.noticeNo)"/>
+
+                <v-btn text x-small color="grey" class="delBtn" @click="delLatestSeen(latestSeenAni.noticeNo)">
+                <v-icon>
+                    cancel
+                </v-icon>
+                </v-btn>
+
+            </div>
+
+            <span class="listCnt">{{ listNum + 1 }} / {{ listCount }}</span>
+
+            &emsp; &ensp;
+
+            <br>
+
+            <v-btn text class="downBtn" :disabled="listNum >= listCount - 1"  @click="goListDown">
+                <v-icon>
+                expand_more
+                </v-icon>
+            </v-btn>
+
+            <span style="display: inline-block; width: 60px;"/>
+
         </div>
     
     </div>
@@ -137,7 +173,11 @@ export default {
     data() {
         return {
             tmpLatestSeen: [],
-            DUPLI_PREVENTION_CHECK: 0 //
+            listNum: 0,
+            LATEST_SEEN_SIZE: 3,
+            
+            latestSeenDeleteCnt: 0,
+            DUPLI_PREVENTION_CHECK: 0 
         }
     },
 
@@ -156,6 +196,7 @@ export default {
                             name: 'FacilityReadPage',
                             params: { "facilityNo": res.data[0], "facilityAddr": res.data[1] }
                         })
+                        
                     } else {
                         this.$router.push({
                             name: 'ExceptionPage',
@@ -180,11 +221,10 @@ export default {
 
                         this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
 
-                        // const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)  // --> 이벤트버스로 처리
-                        // this.$store.state.animals[targetIndex].numberOfLiked ++
+                        const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        this.$store.state.animals[targetIndex].numberOfLiked ++
 
                         this.$store.state.animalsInfo.numberOfLiked ++
-
                     })
                     
                     .catch(() => {
@@ -221,11 +261,11 @@ export default {
                     }
                 })
                     .then(() => {
-                        const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
+                        const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === notice_no) //*** likedAnimalList에는 noticeNo ***
                         this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
-                        // const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)  // --> 이벤트버스로 처리
-                        // this.$store.state.animals[targetIndex2].numberOfLiked -- 
+                        const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        this.$store.state.animals[targetIndex2].numberOfLiked -- 
 
                         this.$store.state.animalsInfo.numberOfLiked --
                     })
@@ -234,14 +274,64 @@ export default {
                     })
 
             } else alert('로그인이 필요한 서비스입니다.')
+        },
+
+        goListUp() {
+            this.listNum -= 1
+        },
+
+        goListDown() {
+            this.listNum += 1
+        },
+
+        toDetailPage(noticeNo) {
+            let routeData = this.$router.resolve({
+            name: 'AnimalDetailPage',
+            params: { id: noticeNo }
+            });window.open(routeData.href, '_blank')
+        },
+
+        delLatestSeen(noticeNo) {
+
+            this.latestSeenDeleteCnt++
+
+            this.tmpLatestSeen = JSON.parse(this.$cookies.get('latestSeen'))
+
+            const targetIndex = this.tmpLatestSeen.findIndex(v => v.noticeNo === noticeNo)
+            this.tmpLatestSeen.splice(targetIndex, 1)
+
+            this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
         }
     },
 
     computed: {
         ...mapState(['animalsInfo', 'session', 'likedAnimalList', 'animals']),
 
-        latestSeen1() {
-            return this.$cookies.get("latestSeen")
+        latestSeen() {
+            console.log(this.latestSeenDeleteCnt)
+
+            if(this.$cookies.get("latestSeen")) {
+
+                const start = this.listNum * this.LATEST_SEEN_SIZE
+                const end = start + this.LATEST_SEEN_SIZE;
+
+                const seenAnimalsArr = JSON.parse(this.$cookies.get("latestSeen"))
+
+                return seenAnimalsArr.reverse().slice(start, end)
+
+            } else return null
+        },
+
+        listCount() {
+            console.log(this.latestSeenDeleteCnt)
+            
+            let listLeng = JSON.parse(this.$cookies.get('latestSeen')).length
+
+            let page = Math.floor(listLeng / this.LATEST_SEEN_SIZE)
+
+            if(listLeng % this.LATEST_SEEN_SIZE > 0) page += 1;
+
+            return page;
         }
     },
 
@@ -292,7 +382,8 @@ export default {
 
                     this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
                 }
-                
+
+                this.latestSeenDeleteCnt ++
                 this.DUPLI_PREVENTION_CHECK = 1
             } 
         }

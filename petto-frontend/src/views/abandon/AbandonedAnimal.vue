@@ -2,7 +2,8 @@
   <div>
     <h1>유기동물 리스트</h1>
 
-    <paginated-list :animals="animals" style="position relative;"/>
+    <paginated-list v-if="animals" :animals="animals" style="position relative;"/>
+    <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
       <br>
@@ -62,7 +63,6 @@ export default {
       pageArray: [],
       listNum: 0,
       LATEST_SEEN_SIZE: 3,
-      //tmpList: [{ noticeNo: '', imgSrc: '' }]
       tmpLatestSeen: [],
 
       latestSeenDeleteCnt: 0
@@ -79,12 +79,15 @@ export default {
           const start = this.listNum * this.LATEST_SEEN_SIZE
           const end = start + this.LATEST_SEEN_SIZE;
 
-          return JSON.parse(this.$cookies.get("latestSeen")).slice(start, end)
+          const seenAnimalsArr = JSON.parse(this.$cookies.get("latestSeen"))
+
+          return seenAnimalsArr.reverse().slice(start, end)
 
         } else return null
       },
 
       listCount() {
+        console.log(this.latestSeenDeleteCnt)
         
         let listLeng = JSON.parse(this.$cookies.get('latestSeen')).length
 
@@ -96,9 +99,11 @@ export default {
       }
       
   },
-  mounted () {
-      if(this.$store.state.animals == '') this.fetchAnimalList() // ????
+
+  mounted() {
+      if(this.$store.state.animals == '') this.fetchAnimalList()
   },
+
   methods: {
       ...mapActions(['fetchAnimalList']),
 
