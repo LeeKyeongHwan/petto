@@ -35,6 +35,7 @@ export default {
   },
   
   [FETCH_ANIMAL_LIST] (state, animals) {
+    //alert(JSON.stringify(animals[1]))
     state.animals = animals;
   },
   

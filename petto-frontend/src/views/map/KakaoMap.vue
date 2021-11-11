@@ -512,11 +512,11 @@ export default {
       this.showSpecificStat = false
       this.showWholeStat = true
      
-      if(this.$store.state.animals == '') await this.fetchAnimalList()
+      if(this.$store.state.animals == '') await this.fetchAnimalList() //
 
       this.loading = true
 
-      setTimeout(() => { //이걸 해야 받아온 후에 지도에 마커가 정상적으로 맵핑됨
+      setTimeout(() => { 
 
         this.chkNumOfEachKind(this.$store.state.animals)
 

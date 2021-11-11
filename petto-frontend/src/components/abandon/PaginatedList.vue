@@ -8,7 +8,7 @@
                 </template>
                 <v-card>
                   <v-toolbar color="white darken-3" flat height="50">
-                              <v-btn icon x-large @click="cancle()" style="positoin:absolute; left:23em;">
+                              <v-btn icon x-large @click="cancel()" style="positoin:absolute; left:23em;">
                                   <v-icon>clear</v-icon>
                               </v-btn>
                   </v-toolbar>
@@ -110,22 +110,32 @@
 
       </v-card>
     </v-row>
+    
     </v-container>
+
     <v-container>
+
       <div class="btn-cover">
+        
         <v-btn :disabled="pageNum === 0" @click="prevPage" icon text>
           <v-icon>chevron_left</v-icon>
         </v-btn>
+
         <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-        <v-btn  :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
+
+        <v-btn :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
           <v-icon>chevron_right</v-icon>
         </v-btn >
+
       </div>
+
     </v-container>
+
   </div>
 </template>
 
 <script>
+//import EventBus from '@/eventBus.js'
 import axios from 'axios'
 import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
@@ -162,14 +172,20 @@ export default {
     prevPage () {
       this.pageNum -= 1;
     },
-    cancle() {
+    cancel() {
       this.searchDialog = false
     },
     toDetailPage(id) {
+      // let routeData = this.$router.resolve({
+      //   name: 'AnimalDetailPage',
+      //   params: { 'id': id }
+      // });window.open(routeData.href, '_blank')
+      
       this.$router.push({
         name: 'AnimalDetailPage',
-        params: { "id": id }
+        params: { id: id }
       })
+      
     },
     selectSearch() {
       
@@ -251,35 +267,33 @@ export default {
       } else return false
     },
 
-    deleteLikedAnimal(notice_no) {
+    async deleteLikedAnimal(notice_no) {
 
       if(this.$store.state.session) {
       
         const memberNo = this.$store.state.session.memberNo
         const noticeNo = notice_no
         
-        axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo })
           .then(() => {
-            const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.notice_no === notice_no)
-            this.$store.state.likedAnimalList.splice(targetIndex, 1)
-
-            const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+            const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no == notice_no)
             this.$store.state.animals[targetIndex2].numberOfLiked --
+
+            const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo == notice_no) //*** likedAnimalList에는 noticeNo ***
+            this.$store.state.likedAnimalList.splice(targetIndex, 1)
           })
+          
           .catch(() => {
             alert('잠시후에 다시 시도해주세요.')
           })
+
       } else alert('로그인이 필요한 서비스입니다.')
 
     }
   },
   
   computed: {
-    ...mapState(['session', 'likedAnimalList','likedAnimalCnt']),
+    ...mapState(['session', 'likedAnimalList', 'animals']),
 
     pageCount () {
       let listLeng = this.animals.length,
