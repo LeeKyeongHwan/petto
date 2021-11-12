@@ -13,11 +13,12 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_CNT,
+
+  FETCH_REPORT_LIST,
+
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD
-  
 
-  
 } from "./mutation-types";
 
 export default {
@@ -63,5 +64,9 @@ export default {
   [FETCH_VOLUNTARYBOARD] (state, voluntaryboard) {
     state.voluntaryboard = voluntaryboard
   },
+
+  [FETCH_REPORT_LIST] (state, payload) {
+    state.reportList = payload
+  }
 
 };

@@ -15,9 +15,13 @@ export default {
 
   latestSeenAnimals: [],
 
+
+  reportList: [],
+
   crawlInfo:'',
 
   voluntaryboards: [],
   voluntaryboard: null,
+
 
 };
