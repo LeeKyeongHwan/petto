@@ -20,7 +20,11 @@ import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
 
-Vue.use(VueRouter); 
+import ReportBoardPage from "../views/report/ReportBoardPage.vue";
+import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
+import ReportWritePage from "../views/report/ReportWritePage.vue";
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -59,7 +63,7 @@ const routes = [
     component: FacilityListPage,
   },
   {
-    path: "/facility/read/:facilityNo", 
+    path: "/facility/read/:facilityNo",
     name: "FacilityReadPage",
     components: {
       default: FacilityReadPage,
@@ -69,9 +73,14 @@ const routes = [
     },
   },
   {
-    path: "/abandonedAnimal",
+    path: "/abandonedAnimal/list/page=:pageNum",
     name: "AbandonedAnimal",
-    component: AbandonedAnimal,
+    components: {
+      default: AbandonedAnimal
+    },
+    props: {
+      default: true
+    }
   },
   {
     path: "/animalDetail/read/:id",
@@ -102,7 +111,32 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: "/reportBoard",
+    name: "ReportBoardPage",
+    component: ReportBoardPage,
+  },
+  {
+    path: "/reportBoard/list/keyword=:keyword",
+    name: "ReportBoardListPage",
+    components: {
+      default: ReportBoardListPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: "/reportBoard/write",
+    name: "ReportWritePage",
+    components: {
+      default: ReportWritePage
+    },
+    props: {
+      default: true
+    }
+  },
 
 ];
 

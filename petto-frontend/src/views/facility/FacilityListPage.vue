@@ -36,15 +36,15 @@
 
                 <template v-slot:item="{ item }"> 
 
-                        <tr @click="toReadPage(item.facilityNo, item.facilityAddr, item.facilityName)">
+                    <tr @click="toReadPage(item.facilityNo, item.facilityAddr, item.facilityName)">
 
-                            <td>{{ item.facilityName }}</td>
-                            <td>{{ item.facilityAddr }}</td>
-                            <td>{{ item.facilityTel }}</td>
-                            <td>{{ item.orgName }}</td>
-                            <td>{{ item.saveTrgtAnimal }}</td>
-                        </tr>
-                    </template>
+                        <td>{{ item.facilityName }}</td>
+                        <td>{{ item.facilityAddr }}</td>
+                        <td>{{ item.facilityTel }}</td>
+                        <td>{{ item.orgName }}</td>
+                        <td>{{ item.saveTrgtAnimal }}</td>
+                    </tr>
+                </template>
 
             </v-data-table>
             
@@ -63,26 +63,40 @@
 import { mapState } from 'vuex'
 export default {
     name: 'FacilityListPage',
+    props: {
+        // selectedAreas: {
+        //     type: Array,
+        //     default: () => {
+        //         return ''
+        //     }
+        // },
+        // selectedAnimals: {
+        //     type: Array,
+        //     default: () => {
+        //         return ''
+        //     }
+        // }
+    },
     data() {
         return {
             headers:
                 [
-                { text: '보호소명', value: 'facilityName' },
-                { text: '주소', value: 'facilityAddr' },
-                { text: '번호', value: 'facilityTel' },
-                { text: '지역', value: 'orgName' },
-                { text: '보호 동물', value: 'saveTrgtAnimal' }
+                    { text: '보호소명', value: 'facilityName' },
+                    { text: '주소', value: 'facilityAddr' },
+                    { text: '번호', value: 'facilityTel' },
+                    { text: '지역', value: 'orgName' },
+                    { text: '보호 동물', value: 'saveTrgtAnimal' }
                 ],
             
             searchKeyword: '',
 
-            areas: [ '서울', '경기', '인천', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '부산', '대구', '제주' ],
+            areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
             selectedAreas: [],
 
             animals: [ '개', '고양이', '기타' ],
             selectedAnimals: []
 
-            }
+        }
     },
     methods: {
         filteredList() {
@@ -133,14 +147,14 @@ export default {
                 }
             }
 
-            return fl
+            return fl.sort()
         },
         toReadPage(facilityNo, facilityAddr, facilityName) {
 
-            this.$router.push({
-                name: 'FacilityReadPage',
-                params: { facilityNo: facilityNo, facilityAddr: facilityAddr, facilityName: facilityName }
-            })
+            let routeData = this.$router.resolve({
+              name: 'FacilityReadPage',
+              params: { facilityNo: facilityNo, facilityAddr: facilityAddr, facilityName: facilityName }
+            });window.open(routeData.href, '_blank')
         }
     },
     mounted() {
