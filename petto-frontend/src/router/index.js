@@ -16,6 +16,8 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
+import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+
 import ExceptionPage from "../views/ExceptionPage.vue";
 
 import AnimalVoluntaryRegister from "../views/voluntary/AnimalVoluntaryRegister.vue"
@@ -23,7 +25,11 @@ import AnimalVoluntaryListPage from "../views/voluntary/AnimalVoluntaryListPage.
 import AnimalVoluntaryReadPage from "../views/voluntary/AnimalVoluntaryReadPage.vue"
 import AnimalVoluntaryModifyPage from "../views/voluntary/AnimalVoluntaryModifyPage.vue"
 
-Vue.use(VueRouter); 
+import ReportBoardPage from "../views/report/ReportBoardPage.vue";
+import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
+import ReportWritePage from "../views/report/ReportWritePage.vue";
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -92,6 +98,11 @@ const routes = [
     component: KakaoMap,
   },
   {
+    path: "/animalVoluntary",
+    name: "AnimalVoluntary",
+    component: AnimalVoluntary,
+  },
+  {
     path: "/exception/:facilityName",
     name: "ExceptionPage",
     components: {
@@ -130,6 +141,31 @@ const routes = [
     name: 'AnimalVoluntaryModifyPage',
     components: {
       default: AnimalVoluntaryModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: "/reportBoard",
+    name: "ReportBoardPage",
+    component: ReportBoardPage,
+  },
+  {
+    path: "/reportBoard/list/keyword=:keyword",
+    name: "ReportBoardListPage",
+    components: {
+      default: ReportBoardListPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: "/reportBoard/write",
+    name: "ReportWritePage",
+    components: {
+      default: ReportWritePage
     },
     props: {
       default: true

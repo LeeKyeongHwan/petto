@@ -20,7 +20,7 @@
         <div>
           <ul>
             <li><a href="#">소개</a></li>
-            <li><a href="/abandonedAnimal">유기동물</a></li>
+            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="#">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
             <li><a href="#">Q&A</a></li>
@@ -30,26 +30,26 @@
       </div>
 
       <section>
-       <div style="width: 100%; padding-top:6em;">
-            <h3 style="text-align:center; margin:0%;">입양해주세요 
-              <v-btn outlined color="orange" route :to="{ name: 'AbandonedAnimal' }" style="position:absolute; right:20%;">
-                <v-icon>navigate_next</v-icon>MORE</v-btn>
-            </h3>
+        <div style="width: 100%; padding-top:6em;">
+          <h3 style="text-align:center; margin:0%;">입양해주세요 
+            <v-btn outlined color="orange" route :to="{ name: 'AbandonedAnimal' }" style="position:absolute; right:20%;">
+              <v-icon>navigate_next</v-icon>MORE</v-btn>
+          </h3>
         </div>
           
-          <v-row justify="center">
-            <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
-                <div class="container">
-                    <div id="animal">
-                          <div v-for="animal in olderList" :key="animal.notice_no">
-                              <v-card height="200" class="grow">
-                                <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
-                              </v-card>            
-                          </div>
-                    </div>
-                </div>
-            </v-container>
-          </v-row>
+        <v-row justify="center">
+          <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
+              <div class="container">
+                  <div id="animal">
+                        <div v-for="animal in olderList" :key="animal.notice_no">
+                            <v-card height="200" class="grow">
+                              <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
+                            </v-card>            
+                        </div>
+                  </div>
+              </div>
+          </v-container>
+        </v-row>
       </section>
 
 
