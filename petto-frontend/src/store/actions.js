@@ -11,7 +11,9 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_LIST,
-  FETCH_LIKED_ANIMAL_CNT
+  FETCH_LIKED_ANIMAL_CNT,
+  FETCH_VOLUNTARYBOARD_LIST,
+  FETCH_VOLUNTARYBOARD
 
 } from "./mutation-types";
 
@@ -89,7 +91,19 @@ export default {
       .then(res => {
         commit(FETCH_LIKED_ANIMAL_CNT, res.data);
       })
-    }
+    },
+    fetchVoluntaryBoardList ({ commit }) {
+      return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
+              .then((res) => {
+                  commit(FETCH_VOLUNTARYBOARD_LIST, res.data)
+              })
+    },
+    fetchVoluntaryBoard ({ commit }, volunteerNo) {
+        return axios.get(`http://localhost:8888/petto/voluntaryBoard/${volunteerNo}`)
+                .then((res) => {
+                    commit(FETCH_VOLUNTARYBOARD, res.data)
+                })
+      },
 
   };
   

@@ -16,9 +16,12 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
-import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
-
 import ExceptionPage from "../views/ExceptionPage.vue";
+
+import AnimalVoluntaryRegister from "../views/voluntary/AnimalVoluntaryRegister.vue"
+import AnimalVoluntaryListPage from "../views/voluntary/AnimalVoluntaryListPage.vue"
+import AnimalVoluntaryReadPage from "../views/voluntary/AnimalVoluntaryReadPage.vue"
+import AnimalVoluntaryModifyPage from "../views/voluntary/AnimalVoluntaryModifyPage.vue"
 
 Vue.use(VueRouter); 
 
@@ -89,11 +92,6 @@ const routes = [
     component: KakaoMap,
   },
   {
-    path: "/animalVoluntary",
-    name: "AnimalVoluntary",
-    component: AnimalVoluntary,
-  },
-  {
     path: "/exception/:facilityName",
     name: "ExceptionPage",
     components: {
@@ -102,7 +100,41 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: '/voluntaryBoard',
+    name: 'AnimalVoluntaryListPage',
+    components: {
+      default: AnimalVoluntaryListPage
+    }
+  },
+  {
+    path: '/voluntaryBoard/create',
+    name: 'AnimalVoluntaryRegister',
+    components: {
+      default: AnimalVoluntaryRegister
+    }
+  },
+  {
+    path: '/voluntaryBoard/:volunteerNo',
+    name: 'AnimalVoluntaryReadPage',
+    components: {
+      default: AnimalVoluntaryReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/voluntaryBoard/:volunteerNo/edit',
+    name: 'AnimalVoluntaryModifyPage',
+    components: {
+      default: AnimalVoluntaryModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
 
 ];
 
