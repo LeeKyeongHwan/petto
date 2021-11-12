@@ -13,5 +13,7 @@ export default {
 
   voluntary: [],
 
-  latestSeenAnimals: []
+  latestSeenAnimals: [],
+
+  reportList: []
 };

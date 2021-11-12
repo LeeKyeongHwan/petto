@@ -32,12 +32,19 @@
 </template>
 
 <script>
+
 export default {
     methods: {
         chooseCategory(event) {
             const keyword = event.target.innerText
             
             this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
+        }
+    },
+    mounted() {
+        if(this.$cookies.get("user").id) {
+            this.$store.state.session = this.$cookies.get("user")
+            this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
         }
     }
 }

@@ -11,7 +11,9 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_LIST,
-  FETCH_LIKED_ANIMAL_CNT
+  FETCH_LIKED_ANIMAL_CNT,
+
+  FETCH_REPORT_LIST
 
 } from "./mutation-types";
 
@@ -89,7 +91,14 @@ export default {
       .then(res => {
         commit(FETCH_LIKED_ANIMAL_CNT, res.data);
       })
-    }
+  },
 
-  };
+  fetchReportList({ commit }) {
+    return axios.get('http://localhost:8888/petto/report/reportList')
+      .then((res) => {
+        commit(FETCH_REPORT_LIST, res.data)
+      })
+  }
+
+};
   

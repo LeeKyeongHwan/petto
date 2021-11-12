@@ -18,21 +18,24 @@
                     {{ btn }}
                 </v-btn>
 
-                <v-btn v-else class="normalText" style="font-size: 15px;" text large>
+                <v-btn v-else class="normalText" style="font-size: 15px;" text large @click="chooseCategory($event)">
                     {{ btn }}
                 </v-btn>
             </div>
 
         </span>
 
-        <div>
+        <v-container>
 
-        </div>
+
+        </v-container>
 
     </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
     props: {
         keyword: {
@@ -46,12 +49,31 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['fetchReportList']),
+
         toWritePage() {
-            this.$router.push({ name: 'ReportWritePage' })
+            if(this.$store.state.session) {
+                this.$router.push({ name: 'ReportWritePage' })
+
+            } else alert('로그인이 필요해요!')
+        },
+
+        chooseCategory(event) {
+            const keyword = event.target.innerText
+            
+            this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
         }
     },
-    mounted: {
+    mounted() {
+        this.$store.dispatch("fetchReportList")
 
+        if(this.$cookies.get("user").id) {
+            this.$store.state.session = this.$cookies.get("user")
+        }
+    },
+
+    computed: {
+        ...mapState(['reportList'])
     }
 }
 </script>
