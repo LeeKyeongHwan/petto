@@ -22,7 +22,7 @@
             <li><a href="#">소개</a></li>
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="#">제보</a></li>
-            <li><a href="/animalVoluntary">자원봉사</a></li>
+            <li><a href="/voluntaryBoard">자원봉사</a></li>
             <li><a href="#">Q&A</a></li>
           </ul>
         </div>
@@ -55,13 +55,7 @@
 
         <section>
           <div class="container2">
-            <div id="stats">
-              <v-row align="center">
-              <ul style="width: 100vw;">
-                  <li style="margin: 0px 100px 0px 100px;"><v-icon x-large>pets</v-icon>유기동물 통계관련</li>
-              </ul>
-              </v-row>
-            </div>
+                    <statistics/>
           </div>
         </section>
         <section>
@@ -111,7 +105,12 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex';
+import Statistics from "@/components/crawling/Statistics.vue";
+
 export default {
+  components: {
+    Statistics,
+  },
   data() {
     return {
       layers: false,

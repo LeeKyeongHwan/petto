@@ -13,7 +13,11 @@ import {
   FETCH_LIKED_ANIMAL_LIST,
   FETCH_LIKED_ANIMAL_CNT,
 
-  FETCH_REPORT_LIST
+  FETCH_REPORT_LIST,
+
+  FETCH_VOLUNTARYBOARD_LIST,
+  FETCH_VOLUNTARYBOARD
+
 
 } from "./mutation-types";
 
@@ -85,20 +89,28 @@ export default {
       })
   },
 
-
-  fetchLikedAnimalCnt({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/selectLikeCnt/${payload}`)
-      .then(res => {
-        commit(FETCH_LIKED_ANIMAL_CNT, res.data);
-      })
-  },
-
   fetchReportList({ commit }) {
     return axios.get('http://localhost:8888/petto/report/reportList')
       .then((res) => {
         commit(FETCH_REPORT_LIST, res.data)
       })
-  }
+  },
+
+    
+  fetchVoluntaryBoardList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
+            .then((res) => {
+                commit(FETCH_VOLUNTARYBOARD_LIST, res.data)
+            })
+  },
+  
+  fetchVoluntaryBoard ({ commit }, volunteerNo) {
+      return axios.get(`http://localhost:8888/petto/voluntaryBoard/${volunteerNo}`)
+              .then((res) => {
+                  commit(FETCH_VOLUNTARYBOARD, res.data)
+              })
+   },
+
 
 };
   
