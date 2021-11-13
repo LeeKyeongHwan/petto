@@ -65,6 +65,14 @@
                         class="normalText"
                     ></v-select>
 
+                    <div v-if="breed == '기타'" style="float: left; margin-left: 40px;">
+                        
+                        <label class="normalText" style="float: left; color: grey;">
+                            기타 종 명 &emsp;
+                            <input v-model="etcAnimal" style="width: 200px; color: black; margin-top: 12px;" required class="normalText"/>
+                        </label>
+                    </div>
+
                     <br>
                     <br>
                     <br>
@@ -155,6 +163,7 @@ export default {
             animals: [ '개', '고양이', '기타' ],
             date: '',
             breed: '',
+            etcAnimal: '',
             feature: '',
             keepingPlace: '',
             rules: [v => v.length <= 300 || '300자 이내 작성'],
@@ -171,6 +180,8 @@ export default {
         onSubmit() {
 
             if(this.$store.state.session) {
+
+                if(this.breed == '기타') this.breed = this.etcAnimal
                 
                 const whereHappened = this.city + ' ' + this.place
 

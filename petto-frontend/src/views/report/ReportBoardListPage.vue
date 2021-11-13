@@ -3,7 +3,7 @@
 
         <h1 style="margin-bottom: -80px;">{{ keyword }}게시판</h1>
 
-        <v-container>
+        <v-container style="display: inline-block;">
 
             <span>
 
@@ -32,18 +32,19 @@
             <br>
             <br>
 
-            <v-simple-table v-if="filterReportList">
+            <v-simple-table v-if="filterReportList" style="height: 250px;">
 
                 <tr v-for="(report, index) in filterReportList" :key="index" class="normalText" style="color: black;">
 
-                    <td style="width: 30%;">{{ report.title }}</td>
+                    <td style="width: 30%; font-size: 12px;">{{ report.title }}</td>
+                    <td style="width: 15%; font-size: 12px;">{{ report.regDate }}</td>
                     <td>{{ report.breed }}</td>
-                    <td style="width: 50%;">{{ report.whereHappened }}</td>
+                    <td style="width: 20%; font-size: 12px;">{{ report.whereHappened }}</td>
                     <td style="text-align: right;">게시자 &ensp; {{ report.writer }}</td>
                     
                 </tr>
 
-                <tr v-if="filterReportList.length == ''" class="normalText" style="color: black;">
+                <tr v-if="filterReportList.length == 0" class="normalText" style="color: black;">
                     올라온 공고가 아직 없습니다!
                 </tr>
 
@@ -55,13 +56,52 @@
 
             <v-pagination
                 v-model="page"
-                :length="4"
+                :length="reportListLength"
                 circle
                 color="#42b8d4"
                 style="background-color: white; box-shadow: 0px 0px white;"
             ></v-pagination>
 
         </v-container>
+
+        <div class="searchBox">
+
+            <v-select
+                v-model="choosenBreed"
+                :items="animals"
+                attach
+                chips
+                label="종"
+                style="width: 100px; float: left;"
+                class="normalText"
+            ></v-select>
+
+            <v-select
+                v-model="choosenArea"
+                :items="areas"
+                attach
+                chips
+                label="지역"
+                style="width: 130px; float: left;"
+                class="normalText"
+            ></v-select>
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <label class="normalText" style="color: grey;">
+                기준 시작일
+                <input type="date" v-model="startDate" style="width: 140px; color: black;" required class="normalText"/>
+            </label>
+
+            <label class="normalText" style="color: grey;">
+                기준 만료일
+                <input type="date" v-model="endDate" style="width: 140px; color: black;" required class="normalText"/>
+            </label>
+
+        </div>
 
     </div>
 </template>
@@ -79,7 +119,16 @@ export default {
     data() {
         return {
             btnList: [ '실종', '보호', '목격' ],
-            page: 1
+            animals: [ '전체', '개', '고양이', '기타' ],
+            page: 1,
+            category: this.keyword,
+            choosenBreed: '',
+            areas: [ '전국', '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
+            choosenArea: '',
+            startDate: '',
+            endDate: '',
+
+            tmpReportList: this.$store.state.reportList
         }
     },
     methods: {
@@ -111,32 +160,65 @@ export default {
 
         filterReportList() {
 
+            const start = (this.page - 1) * 5
+            const end = start + 5;
+            
             var reportList = []
 
-            if(this.keyword == '목격') {
+            for(var i=0; i<this.tmpReportList.length; i++) {
+
+                if(this.tmpReportList[i].category == this.category) reportList.push(this.tmpReportList[i])
+            }
+            return reportList.slice(start, end);
+        },
+
+        reportListLength() {
+
+            var length = 0
+
+            for(var i=0; i<this.tmpReportList.length; i++) {
+
+                const objArr = this.tmpReportList[i]
+
+                if(objArr.category == this.category) length ++
+            }
+            
+            var listLength = Math.floor(length / 5)
+
+            if (length % 5 > 0) listLength += 1;
+
+            return listLength
+        }
+    },
+    watch: {
+        choosenArea() {
+            if(this.choosenArea != '' && this.choosenArea != '전국') {
+
+                var tmpArr = []
 
                 for(var i=0; i<this.reportList.length; i++) {
 
-                    if(this.reportList[i].category == '목격') reportList.push(this.reportList[i])
+                    if(this.reportList[i].whereHappened.includes(this.choosenArea)) tmpArr.push(this.reportList[i])
                 }
-                return reportList
 
-            } else if(this.keyword == '보호') {
+                this.tmpReportList = tmpArr
 
-                for(var j=0; j<this.reportList.length; j++) {
+            } else this.tmpReportList = this.$store.state.reportList
+        },
 
-                    if(this.reportList[j].category == '보호') reportList.push(this.reportList[j])
+        choosenBreed() {
+            if(this.choosenBreed != '' && this.choosenBreed != '전체') {
+
+                var tmpArr = []
+
+                for(var i=0; i<this.reportList.length; i++) {
+
+                    if(this.reportList[i].breed == this.choosenBreed) tmpArr.push(this.reportList[i])
                 }
-                return reportList
 
-            } else {
+                this.tmpReportList = tmpArr
 
-                for(var k=0; k<this.reportList.length; k++) {
-
-                    if(this.reportList[k].category == '실종') reportList.push(this.reportList[k])
-                }
-                return reportList
-            }
+            } else this.tmpReportList = this.$store.state.reportList
         }
     }
 }
@@ -160,5 +242,19 @@ h1 {
 
 td:hover {
     color: #42b8d4;
+}
+</style>
+
+<style>
+
+.searchBox {
+    display: inline-block; 
+    position: fixed; 
+    right: 3%; 
+    border: 1px solid #42b8d4;
+    width: 200px;
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 20px;
 }
 </style>
