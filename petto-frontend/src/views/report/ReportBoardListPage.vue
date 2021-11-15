@@ -19,12 +19,16 @@
                 </v-btn>
 
                 <v-btn v-else class="normalText" style="font-size: 15px;" text large @click="chooseCategory($event)">
+                <v-btn v-else class="normalText" style="font-size: 15px;" text large>
                     {{ btn }}
                 </v-btn>
             </div>
 
         </span>
 
+        <div>
+
+        </div>
         <v-container>
 
 
@@ -49,6 +53,12 @@ export default {
         }
     },
     methods: {
+        toWritePage() {
+            this.$router.push({ name: 'ReportWritePage' })
+        }
+    },
+    mounted: {
+
         ...mapActions(['fetchReportList']),
 
         toWritePage() {
@@ -60,7 +70,7 @@ export default {
 
         chooseCategory(event) {
             const keyword = event.target.innerText
-            
+
             this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
         }
     },

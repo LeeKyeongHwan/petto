@@ -12,15 +12,28 @@ import {
 
   FETCH_ORDER_ANIMAL_LIST,
 
+  // FETCH_LIKED_ANIMAL_CNT,
+
   FETCH_REPORT_LIST,
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
 
   FETCH_MY_LIKED_ANIMAL_LIST,
-  FETCH_MY_BOARD_LIST,  
+  FETCH_MY_BOARD_LIST,
   FETCH_MEMBER_LIST,
 
+  FETCH_VOL_COMMENT
+  FETCH_VOL_COMMENT,
+
+  FETCH_MEMBER_LIST
+
+  FETCH_LIKED_ANIMAL_LIST,
+  FETCH_ORDER_ANIMAL_LIST,
+  FETCH_REPORT_LIST,
+
+  FETCH_VOLUNTARYBOARD_LIST,
+  FETCH_VOLUNTARYBOARD,
   FETCH_VOL_COMMENT
 
 } from "./mutation-types";
@@ -59,6 +72,9 @@ export default {
     state.olderList = olderList;
   },
 
+  // [FETCH_LIKED_ANIMAL_CNT] (state, payload) {
+  //   state.likedAnimalCnt = payload;
+  // },
   [FETCH_VOLUNTARYBOARD_LIST] (state, voluntaryboards) {
     state.voluntaryboards = voluntaryboards;
   },
@@ -69,19 +85,15 @@ export default {
   [FETCH_REPORT_LIST] (state, payload) {
     state.reportList = payload
   },
-
-  [FETCH_MY_LIKED_ANIMAL_LIST] (state, payload) {
-    state.myLikedAnimals = payload;
-  },
-  [FETCH_MY_BOARD_LIST] (state, payload) {
-    state.myBoardList = payload;
-  },
-
   [FETCH_VOL_COMMENT] (state, payload) {
     state.volComments = payload;
   },
+
+<<<<<<<<< Temporary merge branch 1
+=========
   [FETCH_MEMBER_LIST] (state, members) {
     state.members = members;
   }
-
+>>>>>>>>> Temporary merge branch 2
 };
+

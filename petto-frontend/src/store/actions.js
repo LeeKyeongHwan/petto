@@ -24,7 +24,6 @@ import {
   FETCH_VOL_COMMENT
 
 
-
 } from "./mutation-types";
 
 import axios from 'axios'
@@ -115,23 +114,7 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
-
-  },
-
-  fetchMyLikedAnimalList({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
-      .then(res => {
-        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
-      })
-  },
-
-  fetchMyBoardList({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
-      .then(res => {
-        commit(FETCH_MY_BOARD_LIST, res.data);
-      })
-    },
-
+   },
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
             .then((res) => {
@@ -139,12 +122,18 @@ export default {
                 console.log(res.data)
             })
   },
-  fetchMemberList ({ commit }) {
-    return axios.get('http://localhost:8888/petto/member/memberlists')
-            .then((res) => {
-                commit(FETCH_MEMBER_LIST, res.data)
-            })
-  }
+<<<<<<<<< Temporary merge branch 1
 
 };
+=========
+  
+      fetchMemberList ({ commit }) {
+        return axios.get('http://localhost:8888/petto/member/memberlists')
+                .then((res) => {
+                    commit(FETCH_MEMBER_LIST, res.data)
+                })
+      }
+
+  };
+>>>>>>>>> Temporary merge branch 2
   
