@@ -30,4 +30,7 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
 
     @Query("select an from Animals an where an.state = :state")
     List<Animals> findByState(String state);
+
+    @Query(value = "SELECT A.* FROM animals A inner join liked_animal B on A.notice_no = B.notice_no WHERE member_no = :memberNo", nativeQuery = true)
+    List<Animals> myLikedAnimals(long memberNo);
 }

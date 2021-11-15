@@ -12,12 +12,14 @@ import {
 
   FETCH_ORDER_ANIMAL_LIST,
 
-  FETCH_LIKED_ANIMAL_CNT,
-
   FETCH_REPORT_LIST,
 
   FETCH_VOLUNTARYBOARD_LIST,
-  FETCH_VOLUNTARYBOARD
+  FETCH_VOLUNTARYBOARD,
+
+  FETCH_MY_LIKED_ANIMAL_LIST,
+  FETCH_MY_BOARD_LIST  
+
 
 } from "./mutation-types";
 
@@ -55,9 +57,6 @@ export default {
     state.olderList = olderList;
   },
 
-  [FETCH_LIKED_ANIMAL_CNT] (state, payload) {
-    state.likedAnimalCnt = payload;
-  },
   [FETCH_VOLUNTARYBOARD_LIST] (state, voluntaryboards) {
     state.voluntaryboards = voluntaryboards;
   },
@@ -67,6 +66,15 @@ export default {
 
   [FETCH_REPORT_LIST] (state, payload) {
     state.reportList = payload
-  }
+  },
+
+  [FETCH_MY_LIKED_ANIMAL_LIST] (state, payload) {
+    state.myLikedAnimals = payload;
+  },
+  [FETCH_MY_BOARD_LIST] (state, payload) {
+    state.myBoardList = payload;
+  },
+
+  
 
 };
