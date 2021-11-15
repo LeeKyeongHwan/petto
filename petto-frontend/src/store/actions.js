@@ -19,9 +19,10 @@ import {
   FETCH_VOLUNTARYBOARD,
 
   FETCH_MY_LIKED_ANIMAL_LIST,
-  FETCH_MY_BOARD_LIST,
 
+  FETCH_MY_BOARD_LIST,
   FETCH_VOL_COMMENT
+
 
 
 } from "./mutation-types";
@@ -114,6 +115,26 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
+
+  },
+
+  fetchMyLikedAnimalList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
+      })
+  },
+
+  fetchMyBoardList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_BOARD_LIST, res.data);
+      })
+    }, 
+   
+
+
+
    },
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
@@ -122,10 +143,9 @@ export default {
                 console.log(res.data)
             })
   },
-<<<<<<<<< Temporary merge branch 1
 
 };
-=========
+
   
       fetchMemberList ({ commit }) {
         return axios.get('http://localhost:8888/petto/member/memberlists')
@@ -135,5 +155,5 @@ export default {
       }
 
   };
->>>>>>>>> Temporary merge branch 2
+
   

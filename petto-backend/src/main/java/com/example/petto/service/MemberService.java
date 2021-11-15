@@ -49,5 +49,4 @@ public interface MemberService {
 
     public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception;
 
-
 }

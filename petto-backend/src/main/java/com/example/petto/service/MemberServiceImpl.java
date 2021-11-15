@@ -214,8 +214,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void removeUser(Long memberNo) throws Exception {
         memberRepository.deleteById(memberNo);
-<<<<<<<<< Temporary merge branch 1
-=========
+
     }
 
     @Override
@@ -268,5 +267,17 @@ public class MemberServiceImpl implements MemberService {
         }
         return null;
     }
+
+        if (maybeMember.isEmpty())
+        { return false; }
+
+        Member User = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword()))
+        { return false; }
+
+        return true;
+    }
+
 }
 
