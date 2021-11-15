@@ -11,7 +11,6 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_LIST,
-  
 
   FETCH_REPORT_LIST,
 
@@ -20,6 +19,9 @@ import {
 
   FETCH_MY_LIKED_ANIMAL_LIST,
   FETCH_MY_BOARD_LIST
+
+  FETCH_VOL_COMMENT
+
 
 
 } from "./mutation-types";
@@ -112,6 +114,7 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
+
   },
 
   fetchMyLikedAnimalList({ commit }, payload) {
@@ -129,6 +132,16 @@ export default {
     }, 
    
 
+
+
+   },
+  fetchVolCommentList ({ commit }, volunteerNo) {
+    return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
+            .then((res) => {
+                commit(FETCH_VOL_COMMENT, res.data)
+                console.log(res.data)
+            })
+  },
 
 
 };

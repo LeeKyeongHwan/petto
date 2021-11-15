@@ -20,6 +20,7 @@ import {
   FETCH_MY_LIKED_ANIMAL_LIST,
   FETCH_MY_BOARD_LIST  
 
+  FETCH_VOL_COMMENT
 
 } from "./mutation-types";
 
@@ -75,6 +76,8 @@ export default {
     state.myBoardList = payload;
   },
 
-  
+  [FETCH_VOL_COMMENT] (state, payload) {
+    state.volComments = payload;
+  },
 
 };

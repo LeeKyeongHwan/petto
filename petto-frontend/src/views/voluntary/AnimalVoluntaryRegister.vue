@@ -11,9 +11,43 @@
 				<form class="col s12">
 					<div class="form-container">
 						<h5 style="text-align:center;">자원봉사</h5>
-							<v-text-field label="자원봉사명" outlined type="volTitle" v-model="volTitle"></v-text-field>
+							<v-text-field label="자원봉사명" outlined type="title" v-model="volTitle"></v-text-field>
 
-							<label>제목 이미지(500 * 200 사이즈 권장)
+                            <label>모집마감일
+                                <v-menu ref="menu"
+                                    :close-on-content-click="false"
+                                    :return-value.sync="date"
+                                    transition="scale-transition"
+                                    offset-y
+                                    min-width="auto">
+                                    <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        v-model="closingDate"
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        outlined
+                                        dense
+                                        type="date"></v-text-field>
+                                    </template>
+                                    <v-date-picker
+                                    v-model="closingDate"
+                                    no-title
+                                    scrollable
+                                    style="height:450px;">
+                                    <v-spacer></v-spacer>
+                                    <v-btn text color="orange" @click="menu = false">
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn text color="orange" @click="$refs.menu.save(date)">
+                                        OK
+                                    </v-btn>
+                                    </v-date-picker>
+                                </v-menu>
+                            </label>
+                            
+							<label>제목 이미지(800 * 200 사이즈 권장)
 								<v-file-input ref="files" @change="handleFileUpload" dense outlined></v-file-input>
 							</label>
 
@@ -23,7 +57,7 @@
 							</label>
 
 						<center>
-							<v-btn @click="submitFiles()" :disabled="!contentFiles || !files" outlined>작성하기</v-btn>
+							<v-btn @click="submitFiles()" :disabled="!contentFiles || !files" outlined style="margin-top:10%;">작성하기</v-btn>
 						</center>
 					</div>
 				</form>
@@ -40,6 +74,7 @@ export default {
             volTitle: '',
             files: '',
             contentFiles: '',
+            closingDate:''
         }
     },
     methods: {
@@ -53,6 +88,7 @@ export default {
          let formData = new FormData()
 
         formData.append('volTitle', this.volTitle)
+        formData.append('closingDate', this.closingDate)
         formData.append('fileList', this.files)
         formData.append('contentFileList', this.contentFiles)
 
