@@ -212,6 +212,20 @@ public class MemberController {
         memberService.removeUser(memberNo);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+
+    @PostMapping("/passwordChk")
+    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
+        log.info("passwordChk(): " + memberRequest);
+
+        boolean passwordChk = memberService.passwordChk(memberRequest);
+
+        log.info("passwordChk(): " + passwordChk);
+
+        return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
+    }
+
+
 }
 
 

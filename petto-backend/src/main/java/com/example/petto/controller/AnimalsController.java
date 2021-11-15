@@ -43,4 +43,11 @@ public class AnimalsController {
         log.info("getLists(): " + animalsService.oldList());
         return new ResponseEntity<>(animalsService.oldList(), HttpStatus.OK);
     }
+
+    @GetMapping("/myLikedAnimals/{memberNo}")
+    public ResponseEntity<List<Animals>> getMyLikedAnimals(@PathVariable("memberNo") Long memberNo) throws Exception {
+        log.info("memberNo == > "+ memberNo);
+        log.info("getMyLikedAnimals(): " + animalsService.myLikedAnimals(memberNo));
+        return new ResponseEntity<>(animalsService.myLikedAnimals(memberNo), HttpStatus.OK);
+    }
 }

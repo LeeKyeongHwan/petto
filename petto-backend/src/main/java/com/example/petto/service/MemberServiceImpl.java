@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -36,6 +37,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     AnimalsRepository animalsRepository;
+
+    @Autowired
+    BCryptPasswordEncoder decoder;
 
     @Override
     public boolean idDupliChk(String id) {
@@ -221,5 +225,20 @@ public class MemberServiceImpl implements MemberService {
         return null;
     }
 
+    @Override
+    public boolean passwordChk(MemberRequest memberRequest) {
+
+        Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
+
+        if (maybeMember.isEmpty())
+        { return false; }
+
+        Member User = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword()))
+        { return false; }
+
+        return true;
+    }
 }
 

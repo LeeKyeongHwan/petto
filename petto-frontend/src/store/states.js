@@ -22,6 +22,10 @@ export default {
 
   voluntaryboards: [],
   voluntaryboard: null,
+
+  myLikedAnimals: [],
+  myBoardList: [],
+
   volComments:[]
 
 };

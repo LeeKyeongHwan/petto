@@ -1,6 +1,7 @@
 <template>
     <div align="center" style="padding-top: 60px;">
-        <p class="normalText">생년월일과 가입시 입력했던 이메일을 입력해주세요.</p>
+        <!--<p class="normalText">생년월일과 가입시 입력했던 이메일을 입력해주세요.</p>-->
+        <h4><p class="normalText">내 정보 수정</p></h4>
         
         <info-modify v-if="userInfo" v-bind:userInfo="userInfo" @submit="onSubmit"/>
         <p v-else>정보를 불러오고있습니다. 잠시만 기다려주세요.</p>
@@ -36,7 +37,7 @@ export default {
         }
     },
     mounted() {
-        var userNo = 1 //추후에 변경
+        var userNo = this.$store.state.session.memberNo //추후에 변경
         this.fetchUserInfo(userNo)
     },
     computed: {
