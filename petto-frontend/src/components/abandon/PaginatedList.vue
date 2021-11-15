@@ -8,7 +8,7 @@
                 </template>
                 <v-card>
                   <v-toolbar color="white darken-3" flat height="50">
-                              <v-btn icon x-large @click="cancle()" style="positoin:absolute; left:23em;">
+                              <v-btn icon x-large @click="cancel()" style="positoin:absolute; left:23em;">
                                   <v-icon>clear</v-icon>
                               </v-btn>
                   </v-toolbar>
@@ -67,6 +67,10 @@
 
         <div style="float: right; margin-right: 30px; margin-bottom: 10px;">
 
+          <p class="normalText" style="display: inline-block; font-size: 15px;">{{ animal.numberOfLiked }}</p>
+          &nbsp;
+          <p class="normalText" style="display: inline-block; font-size: 12px; color: black;">명이 이 동물을 찜했어요!</p>
+
           <v-tooltip bottom>
 
             <template v-slot:activator="{ on, attrs }">
@@ -88,39 +92,50 @@
 
             <template v-slot:activator="{ on, attrs }">
           
-            <font-awesome-icon v-show="chkLikedOrNot(animal.id)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
-            @click="deleteLikedAnimal(animal.id)"/>
+            <font-awesome-icon v-show="chkLikedOrNot(animal.notice_no)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+            @click="deleteLikedAnimal(animal.notice_no)"/>
 
-            <font-awesome-icon v-show="!chkLikedOrNot(animal.id)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
-            @click="addLikedAnimal(animal.id)"/>
+            <font-awesome-icon v-show="!chkLikedOrNot(animal.notice_no)" :icon="['far','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
+            @click="addLikedAnimal(animal.notice_no)"/>
 
             </template>
 
-            <span v-show="chkLikedOrNot(animal.id)">찜해제</span>
+            <span v-show="chkLikedOrNot(animal.notice_no)">찜해제</span>
 
-            <span v-show="!chkLikedOrNot(animal.id)">찜하기</span>
+            <span v-show="!chkLikedOrNot(animal.notice_no)">찜하기</span>
 
           </v-tooltip>
+
         </div>
 
       </v-card>
     </v-row>
+    
     </v-container>
+
     <v-container>
+
       <div class="btn-cover">
+        
         <v-btn :disabled="pageNum === 0" @click="prevPage" icon text>
           <v-icon>chevron_left</v-icon>
         </v-btn>
-        <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-        <v-btn  :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
+
+        <span class="page-count">{{ parseInt(pageNum) + 1 }} / {{ pageCount }} 페이지</span>
+
+        <v-btn :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
           <v-icon>chevron_right</v-icon>
         </v-btn >
+
       </div>
+
     </v-container>
+
   </div>
 </template>
 
 <script>
+//import EventBus from '@/eventBus.js'
 import axios from 'axios'
 import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
@@ -129,9 +144,9 @@ export default {
   name: 'paginated-list',
   data () {
     return {
-      pageNum: 0,
+      //pageNum: 0,
       searchDialog: false,
-      areas: [ '서울', '경기', '인천', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '부산', '대구', '제주' ],
+      areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
       selectPlace: [],
       selectKinds: [],
       kinds: [ '개', '고양이', '기타' ],
@@ -146,112 +161,158 @@ export default {
       type: Number,
       required: false,
       default: 12
+    },
+    pageNum: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   methods: {
-    ...mapActions(['fetchLikedAnimalList']),
+    ...mapActions(['fetchLikedAnimalList','fetchLikedAnimalCnt']),
 
-    nextPage () {
-      this.pageNum += 1;
+    nextPage() {
+      this.pageNum = parseInt(this.pageNum) + 1; //이걸 스트링으로 인식해서 1 -> 11 -> 111이렇게됨
+
+      this.$router.push({
+        name: 'AbandonedAnimal',
+        params: { pageNum: this.pageNum }
+      })
     },
-    prevPage () {
-      this.pageNum -= 1;
+    prevPage() {
+      this.pageNum = parseInt(this.pageNum) - 1;
+
+      this.$router.push({
+        name: 'AbandonedAnimal',
+        params: { pageNum: this.pageNum }
+      })
     },
-    cancle() {
+    cancel() {
       this.searchDialog = false
     },
     toDetailPage(id) {
+      // let routeData = this.$router.resolve({
+      //   name: 'AnimalDetailPage',
+      //   params: { 'id': id }
+      // });window.open(routeData.href, '_blank')
+      
       this.$router.push({
         name: 'AnimalDetailPage',
-        params: { "id": id }
+        params: { id: id }
       })
+      
     },
     selectSearch() {
-    const { selectPlace, selectKinds } = this
-    return axios.get('http://localhost:8888/petto/animals/lists')
-            .then((res) => {
-              var ani = []
-              if(selectPlace.length > 0 && selectKinds.length > 0) {
-                var len = selectKinds.length + selectPlace.length
-                for(var i=0; i<res.data.length; i++) {
-                  for(var j=0; j< len; j++) {
-                    for(var o=0; o< len; o++)
-                    if((res.data[i].notice_no.includes(selectPlace[j]) && res.data[i].kind.includes(selectKinds[o]))) {
-                      ani.push(res.data[i])
-                      this.$store.commit(FETCH_ANIMAL_LIST, ani)
+      
+      const { selectPlace, selectKinds } = this
+      return axios.get('http://localhost:8888/petto/animals/lists')
+              .then((res) => {
+                var ani = []
+                if(selectPlace.length > 0 && selectKinds.length > 0) {
+                  var len = selectKinds.length + selectPlace.length
+                  for(var i=0; i<res.data.length; i++) {
+                    for(var j=0; j< len; j++) {
+                      for(var o=0; o< len; o++)
+                      if((res.data[i].notice_no.includes(selectPlace[j]) && res.data[i].kind.includes(selectKinds[o]))) {
+                        ani.push(res.data[i])
+                        this.$store.commit(FETCH_ANIMAL_LIST, ani)
+                      }
                     }
                   }
+                } else if(selectPlace.length > 0) {
+                    for(var k=0; k<res.data.length; k++) {
+                      for(var l=0; l< selectPlace.length; l++) {
+                        if(res.data[k].notice_no.includes(selectPlace[l])) {
+                          ani.push(res.data[k])
+                          this.$store.commit(FETCH_ANIMAL_LIST, ani)
+                        }
+                      }
+                    }
+                } else if(selectKinds.length > 0) {
+                    for(var m=0; m<res.data.length; m++) {
+                      for(var n=0; n< selectKinds.length; n++) {
+                        if(res.data[m].kind.includes(selectKinds[n])) {
+                          ani.push(res.data[m])
+                          this.$store.commit(FETCH_ANIMAL_LIST, ani)
+                        }
+                      }
+                    }
                 }
-              } else if(selectPlace.length > 0) {
-                  for(var k=0; k<res.data.length; k++) {
-                    for(var l=0; l< selectPlace.length; l++) {
-                      if(res.data[k].notice_no.includes(selectPlace[l])) {
-                        ani.push(res.data[k])
-                        this.$store.commit(FETCH_ANIMAL_LIST, ani)
-                      }
-                    }
-                  }
-              } else if(selectKinds.length > 0) {
-                  for(var m=0; m<res.data.length; m++) {
-                    for(var n=0; n< selectKinds.length; n++) {
-                      if(res.data[m].kind.includes(selectKinds[n])) {
-                        ani.push(res.data[m])
-                        this.$store.commit(FETCH_ANIMAL_LIST, ani)
-                      }
-                    }
-                  }
-              }
-            this.searchDialog = false
-        })
+              this.searchDialog = false
+              this.pageNum = 0
+
+              this.$router.push({
+                name: 'AbandonedAnimal',
+                params: { pageNum: this.pageNum }
+              })
+          })
     },
-    addLikedAnimal(id) {
+
+    addLikedAnimal(notice_no) {
+
+      if(this.$store.state.session) {
       
-      const memberNo = this.$store.state.session.memberNo
-      const noticeNo = id
+        const memberNo = this.$store.state.session.memberNo
+        const noticeNo = notice_no
 
-      axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
-        .then(() => {
+        axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
+          .then(() => {
 
-          this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
+            this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
 
-        })
-        .catch(() => {
-          alert('잠시후에 다시 시도해주세요.')
-        })
-    },
+            const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+            this.$store.state.animals[targetIndex].numberOfLiked ++
+          })
+          
+          .catch(() => {
+            alert('잠시후에 다시 시도해주세요.')
+          })
 
-    chkLikedOrNot(id) {
-      for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
-        if(id == this.$store.state.likedAnimalList[i].noticeNo) {
-          return true
-        }
-      }
-      return false
-    },
-
-    deleteLikedAnimal(id) {
+      } else alert('로그인이 필요한 서비스입니다.')
       
-      const memberNo = this.$store.state.session.memberNo
-      const noticeNo = id
+    },
 
-      axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo }, {
-        headers: {
-          'Content-Type': 'application/json'
+    chkLikedOrNot(notice_no) {
+
+      if(this.$store.state.session) {
+
+        for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
+          if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
+            return true
+          }
         }
-      })
-        .then(() => {
+        return false
 
-          const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === id)
-          this.$store.state.likedAnimalList.splice(targetIndex, 1)
+      } else return false
+    },
 
-        })
-        .catch(() => {
-          alert('잠시후에 다시 시도해주세요.')
-        })
+    async deleteLikedAnimal(notice_no) {
+
+      if(this.$store.state.session) {
+      
+        const memberNo = this.$store.state.session.memberNo
+        const noticeNo = notice_no
+        
+        axios.put('http://localhost:8888/petto/member/deleteLikedAnimal', { memberNo, noticeNo })
+          .then(() => {
+            const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no == notice_no)
+            this.$store.state.animals[targetIndex2].numberOfLiked --
+
+            const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo == notice_no) //*** likedAnimalList에는 noticeNo ***
+            this.$store.state.likedAnimalList.splice(targetIndex, 1)
+          })
+          
+          .catch(() => {
+            alert('잠시후에 다시 시도해주세요.')
+          })
+
+      } else alert('로그인이 필요한 서비스입니다.')
+
     }
   },
+  
   computed: {
-    ...mapState(['session', 'likedAnimalList']),
+    ...mapState(['session', 'likedAnimalList', 'animals']),
 
     pageCount () {
       let listLeng = this.animals.length,

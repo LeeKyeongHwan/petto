@@ -133,6 +133,9 @@ public class MemberController {
             Long memberNo = memberRepository.findById(memberRequest.getId()).get().getMemberNo();
             info.setMemberNo(memberNo);
 
+            String nickName = memberRepository.findById(memberRequest.getId()).get().getNickname();
+            info.setNickname(nickName);
+
             log.info("Session Info: " + info);
 
             session = request.getSession();
@@ -200,4 +203,25 @@ public class MemberController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+
+    @DeleteMapping("/{memberNo}")
+    public ResponseEntity<Void> removeUser(@PathVariable("memberNo") Long memberNo) throws Exception {
+        log.info("memberNo == " + memberNo);
+        memberService.deleteContainingMemberNo(memberNo);
+        memberService.removeUser(memberNo);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    //관리자?
+    @GetMapping("/memberlists")
+    public ResponseEntity lists() throws Exception {
+        log.info("Member Lists");
+
+        List<Member> members = memberService.list();
+
+        return new ResponseEntity<>(members, HttpStatus.OK);
+    }
 }
+
+
+

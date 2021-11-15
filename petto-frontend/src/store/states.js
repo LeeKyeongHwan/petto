@@ -7,8 +7,21 @@ export default {
 
   animals: [],
   animalsInfo: '',
+  olderList: [],
 
   likedAnimalList: [],
 
-  voluntary: []
+  voluntary: [],
+
+  latestSeenAnimals: [],
+
+
+  reportList: [],
+
+  crawlInfo:'',
+
+  voluntaryboards: [],
+  voluntaryboard: null,
+  volComments:[]
+
 };

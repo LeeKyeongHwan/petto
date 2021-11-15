@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="animals")
 public class Animals {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -66,5 +67,6 @@ public class Animals {
     @Column(length = 300, nullable = false)
     private String careaddr;
 
-
+    @Column(columnDefinition = "Integer default 0")
+    private Integer numberOfLiked;
 }

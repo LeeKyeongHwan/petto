@@ -8,8 +8,20 @@ import {
   FETCH_ANIMAL_LIST,
   FETCH_ANIMAL_INFO,
 
-  FETCH_LIKED_ANIMAL_LIST
-  
+  FETCH_LIKED_ANIMAL_LIST,
+
+  FETCH_ORDER_ANIMAL_LIST,
+
+  // FETCH_LIKED_ANIMAL_CNT,
+
+  FETCH_REPORT_LIST,
+
+  FETCH_VOLUNTARYBOARD_LIST,
+  FETCH_VOLUNTARYBOARD,
+  FETCH_VOL_COMMENT,
+
+  FETCH_MEMBER_LIST
+
 } from "./mutation-types";
 
 export default {
@@ -30,6 +42,7 @@ export default {
   },
   
   [FETCH_ANIMAL_LIST] (state, animals) {
+    //alert(JSON.stringify(animals[1]))
     state.animals = animals;
   },
   
@@ -40,4 +53,30 @@ export default {
   [FETCH_LIKED_ANIMAL_LIST] (state, payload) {
     state.likedAnimalList = payload;
   },
+
+  [FETCH_ORDER_ANIMAL_LIST](state, olderList) {
+    state.olderList = olderList;
+  },
+
+  // [FETCH_LIKED_ANIMAL_CNT] (state, payload) {
+  //   state.likedAnimalCnt = payload;
+  // },
+  [FETCH_VOLUNTARYBOARD_LIST] (state, voluntaryboards) {
+    state.voluntaryboards = voluntaryboards;
+  },
+  [FETCH_VOLUNTARYBOARD] (state, voluntaryboard) {
+    state.voluntaryboard = voluntaryboard
+  },
+
+  [FETCH_REPORT_LIST] (state, payload) {
+    state.reportList = payload
+  },
+  [FETCH_VOL_COMMENT] (state, payload) {
+    state.volComments = payload;
+  },
+
+  [FETCH_MEMBER_LIST] (state, members) {
+    state.members = members;
+  }
 };
+
