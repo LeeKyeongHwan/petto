@@ -1,18 +1,22 @@
 package com.example.petto.service;
 
+import com.example.petto.entity.VolBoardRelated.Comment;
 import com.example.petto.entity.VolunteerBoard;
+import com.example.petto.repository.CommentRepository;
 import com.example.petto.repository.VolunteerBoardRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,23 +28,35 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
     @Autowired
     private VolunteerBoardRepository volunteerBoardRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
+
     @Override
-    public void write(String volTitle, MultipartFile fileList,MultipartFile contentFileList) throws Exception {
+    public void write(String volTitle, String closingDate, MultipartFile fileList,MultipartFile contentFileList) throws Exception {
         VolunteerBoard title = new VolunteerBoard();
-        log.info("title : " + volTitle);
 
         title.setVolTitle(volTitle);
+        title.setClosingDate(closingDate);
+
+        String titlePath = "d:/petto_test/petto_all/test_frontend/src/assets/vol/title/";
+        String contentPath = "d:/petto_test/petto_all/test_frontend/src/assets/vol/content/";
+        File fileTitle = new File(titlePath);
+        File fileContent = new File(contentPath);
+
         UUID uuid = UUID.randomUUID();
 
         try {
+                if(!fileTitle.exists()) {
+                    fileTitle.mkdirs();
+                    fileContent.mkdirs();
+                }
+
                 if(fileList != null) {
                     String fileName = uuid + "_" + fileList.getOriginalFilename();
                     FileOutputStream writer = new FileOutputStream("d:/proj/petto/petto-frontend/src/assets/vol/title/" + fileName);
                     writer.write(fileList.getBytes());
-                    log.info("fileList.getBytes() : " + fileList.getBytes());
                     writer.close();
                     title.setFileName(fileName);
-
                 }
 
                 if(contentFileList != null) {
@@ -59,8 +75,10 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
 
     @Override
     public List<VolunteerBoard> list() throws Exception {
-        return volunteerBoardRepository.findAll();
+        List<VolunteerBoard> lists = volunteerBoardRepository.findAll();
+        Collections.reverse(lists);
 
+        return lists;
     }
 
     @Override
@@ -69,7 +87,6 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
         if(optional.isPresent()) {
             VolunteerBoard volunteerBoard = optional.get();
             volunteerBoardRepository.save(volunteerBoard);
-
             return volunteerBoard;
         } else {
             throw new NullPointerException();
@@ -77,7 +94,9 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
     }
 
     @Override
-    public VolunteerBoard modify(Long volunteerNo, String volTitle, MultipartFile fileList, MultipartFile contentFileList, VolunteerBoard volunteerBoard) throws Exception {
+    public VolunteerBoard modify(Long volunteerNo, String volTitle, String closingDate,
+                                 MultipartFile fileList, MultipartFile contentFileList, VolunteerBoard volunteerBoard) throws Exception {
+
         Optional<VolunteerBoard> modifyBoard = volunteerBoardRepository.findById(volunteerNo);
         VolunteerBoard modifyVol = modifyBoard.get();
         UUID uuid = UUID.randomUUID();
@@ -85,6 +104,11 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
         modifyBoard.ifPresent( changeBoard -> {
             changeBoard.setVolTitle(volTitle);
             volunteerBoard.setVolunteerNo(volunteerNo);
+            if(closingDate.isEmpty()) {
+                volunteerBoard.setClosingDate(modifyVol.getClosingDate());
+            } else {
+                changeBoard.setClosingDate(closingDate);
+            }
 
             try {
                 String newFileName = modifyVol.getFileName();
@@ -102,7 +126,7 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
                     Files.delete(fileTitle);
                 }
 
-                if( contentFileList ==null){
+                if( contentFileList == null){
                     volunteerBoard.setContentFileName(modifyVol.getContentFileName());
                 } else {
                     String contentFileName = uuid + "_" + contentFileList.getOriginalFilename();
@@ -126,6 +150,12 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
     @Override
     public void remove(Long volunteerNo) throws Exception {
         Optional<VolunteerBoard> delImg = volunteerBoardRepository.findById(volunteerNo);
+        List<Comment> boardComments = commentRepository.findByVolunteerNo(volunteerNo);
+
+        for( Comment comment : boardComments) {
+            commentRepository.deleteById(comment.getCommentNo());
+        }
+
         if(delImg.isPresent()) {
             VolunteerBoard delAll = delImg.get();
             String fileName = delAll.getFileName();

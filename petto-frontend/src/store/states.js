@@ -22,6 +22,6 @@ export default {
 
   voluntaryboards: [],
   voluntaryboard: null,
-
+  volComments:[]
 
 };
