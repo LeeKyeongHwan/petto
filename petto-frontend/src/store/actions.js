@@ -1,7 +1,6 @@
 import { 
   FETCH_USER_INFO, 
   FETCH_SESSION,
-  FETCH_MEMBER_LIST,
 
   //보호소 리스트, 개별 정보
   FETCH_FACILITY_LIST,
@@ -12,7 +11,6 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_LIST,
-  // FETCH_LIKED_ANIMAL_CNT,
 
   FETCH_REPORT_LIST,
 
@@ -64,7 +62,7 @@ export default {
   fetchAnimalList ({ commit }) {
     return axios.get('http://localhost:8888/petto/animals/lists')
             .then((res) => {
-                commit(FETCH_ANIMAL_LIST, res.data) //
+                commit(FETCH_ANIMAL_LIST, res.data)
       })
   },
 
@@ -98,14 +96,14 @@ export default {
       })
   },
 
-    
+
   fetchVoluntaryBoardList ({ commit }) {
     return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
             .then((res) => {
                 commit(FETCH_VOLUNTARYBOARD_LIST, res.data)
             })
   },
-  
+
   fetchVoluntaryBoard ({ commit }, volunteerNo) {
       return axios.get(`http://localhost:8888/petto/voluntaryBoard/${volunteerNo}`)
               .then((res) => {
@@ -119,7 +117,7 @@ export default {
                 console.log(res.data)
             })
   },
-  
+
       fetchMemberList ({ commit }) {
         return axios.get('http://localhost:8888/petto/member/memberlists')
                 .then((res) => {
@@ -128,4 +126,41 @@ export default {
       }
 
   };
-  
+
+  fetchOlderAnimalList({ commit }) {
+    return axios.get('http://localhost:8888/petto/animals/orderLists')
+      .then(res => {
+        commit(FETCH_ORDER_ANIMAL_LIST, res.data)
+      })
+  },
+
+  fetchReportList({ commit }) {
+    return axios.get('http://localhost:8888/petto/report/reportList')
+      .then((res) => {
+        commit(FETCH_REPORT_LIST, res.data)
+      })
+  },
+
+
+  fetchVoluntaryBoardList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
+            .then((res) => {
+                commit(FETCH_VOLUNTARYBOARD_LIST, res.data)
+            })
+  },
+
+  fetchVoluntaryBoard ({ commit }, volunteerNo) {
+      return axios.get(`http://localhost:8888/petto/voluntaryBoard/${volunteerNo}`)
+              .then((res) => {
+                  commit(FETCH_VOLUNTARYBOARD, res.data)
+              })
+   },
+  fetchVolCommentList ({ commit }, volunteerNo) {
+    return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
+            .then((res) => {
+                commit(FETCH_VOL_COMMENT, res.data)
+                console.log(res.data)
+            })
+  },
+
+};

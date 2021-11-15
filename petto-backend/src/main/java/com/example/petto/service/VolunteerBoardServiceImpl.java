@@ -67,6 +67,7 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
                 title.setContentFileName(contentFileName);
 
             }
+                }
         } catch (Exception e) {
             log.info("Error");
         }

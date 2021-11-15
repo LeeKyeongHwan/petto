@@ -3,7 +3,6 @@ package com.example.petto.service;
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
-import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.utility_python.PythonRequest;
@@ -190,7 +189,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void addLikedAnimal(LikedAnimal likedAnimal) {
-        animalsRepository.addNumberOfLiked(likedAnimal.getNoticeNo());
         likedAnimalRepository.save(likedAnimal);
     }
 
@@ -230,6 +228,23 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> list() throws Exception {
         List<Member> members = memberRepository.findAll();
         return members;
+        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
+        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
+    }
+
+    @Override
+    public void removeUser(Long memberNo) throws Exception {
+        memberRepository.deleteById(memberNo);
+    }
+
+    @Override
+    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception{
+        List<LikedAnimal> lists = likedAnimalRepository.findByMemberNo(memberNo);
+
+        for(LikedAnimal list : lists) {
+            likedAnimalRepository.deleteById(list.getLikedAnimalNo());
+        }
+        return null;
     }
 }
 

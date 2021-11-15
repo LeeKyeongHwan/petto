@@ -212,6 +212,13 @@ public class MemberController {
         memberService.removeUser(memberNo);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+    @DeleteMapping("/{memberNo}")
+    public ResponseEntity<Void> removeUser(@PathVariable("memberNo") Long memberNo) throws Exception {
+        log.info("memberNo == " + memberNo);
+        memberService.deleteContainingMemberNo(memberNo);
+        memberService.removeUser(memberNo);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
     //관리자?
     @GetMapping("/memberlists")
     public ResponseEntity lists() throws Exception {

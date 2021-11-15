@@ -12,7 +12,7 @@
                 <router-link :to="{ name: 'AnimalVoluntaryReadPage',
                                     params: { volunteerNo: voluntaryboard.volunteerNo.toString() } }">
                     <div class="closedEvent">
-                 <!--     <img :src="require(`@/assets/vol/title/${voluntaryboard.fileName}`)"  -->
+                      <img :src="require(`@/assets/vol/title/${voluntaryboard.fileName}`)"
                       style="width:800px; height:200px;">
                     </div>
                 </router-link>
@@ -21,13 +21,12 @@
             <section v-else>
                 <router-link :to="{ name: 'AnimalVoluntaryReadPage',
                                     params: { volunteerNo: voluntaryboard.volunteerNo.toString() } }">
-                  <!--  <img :src="require(`@/assets/vol/title/${voluntaryboard.fileName}`)" 
-                        style="width:800px; height:200px;"/> -->
+                    <img :src="require(`@/assets/vol/title/${voluntaryboard.fileName}`)"
+                        style="width:800px; height:200px;"/>
                 </router-link>
             </section>
 
-          <!--  <section><p style="text-align:right; font-size:14px;"> ( 봉사 모집기한 : ~ {{ voluntaryboard.closingDate }} )</p></section> -->
- 
+            <section><p style="text-align:right; font-size:14px;"> ( 봉사 모집기한 : ~ {{ voluntaryboard.closingDate }} )</p></section>
             <v-card-subtitle style="padding:0px 0px 10px 0px;"><b><h5>{{ voluntaryboard.volTitle }}</h5></b></v-card-subtitle>
 
         </v-card>

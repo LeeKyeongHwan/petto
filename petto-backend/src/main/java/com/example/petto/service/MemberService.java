@@ -42,4 +42,9 @@ public interface MemberService {
     public List<LikedAnimal> selectLikeCnt() throws Exception;
     // 관리자?
     List<Member> list() throws Exception;
+
+    public void removeUser(Long memberNo) throws Exception;
+
+    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception;
+
 }

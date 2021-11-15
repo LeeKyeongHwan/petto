@@ -28,11 +28,17 @@
         <div>
 
         </div>
+        <v-container>
+
+
+        </v-container>
 
     </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
     props: {
         keyword: {
@@ -52,6 +58,31 @@ export default {
     },
     mounted: {
 
+        ...mapActions(['fetchReportList']),
+
+        toWritePage() {
+            if(this.$store.state.session) {
+                this.$router.push({ name: 'ReportWritePage' })
+
+            } else alert('로그인이 필요해요!')
+        },
+
+        chooseCategory(event) {
+            const keyword = event.target.innerText
+
+            this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
+        }
+    },
+    mounted() {
+        this.$store.dispatch("fetchReportList")
+
+        if(this.$cookies.get("user").id) {
+            this.$store.state.session = this.$cookies.get("user")
+        }
+    },
+
+    computed: {
+        ...mapState(['reportList'])
     }
 }
 </script>

@@ -404,7 +404,7 @@ export default {
         }
         if (this.whichAnimal.includes("etc")) tmpArr.push("그 외")
         let tmpArrSecond = JSON.stringify(tmpArr)
-        this.petsRaised = tmpArrSecond.replace(/\[/gi, "").replace(/\]/gi, "").replace(/"/gi, ""),
+        this.petsRaised = tmpArrSecond.replace(/\[/gi, "").replace(/\]/gi, "").replace(/"/gi, "")
   
         this.$refs.first.next()
     },

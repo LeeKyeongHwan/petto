@@ -38,8 +38,8 @@ public class CommentController {
     public ResponseEntity<Comment> modify(@PathVariable("commentNo") Long commentNo,
                                           @Validated @RequestBody Comment comment) throws Exception {
 
-        commentService.modify(commentNo,comment);
-        return new ResponseEntity<>(comment,HttpStatus.OK);
+        commentService.modify(commentNo, comment);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentNo}")
@@ -48,6 +48,4 @@ public class CommentController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
-
 }
