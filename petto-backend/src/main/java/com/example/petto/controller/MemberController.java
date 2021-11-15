@@ -133,6 +133,9 @@ public class MemberController {
             Long memberNo = memberRepository.findById(memberRequest.getId()).get().getMemberNo();
             info.setMemberNo(memberNo);
 
+            String nickName = memberRepository.findById(memberRequest.getId()).get().getNickname();
+            info.setNickname(nickName);
+
             log.info("Session Info: " + info);
 
             session = request.getSession();

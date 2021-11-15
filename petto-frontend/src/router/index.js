@@ -16,7 +16,7 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
-import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+// import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
 
@@ -97,11 +97,11 @@ const routes = [
     name: "KakaoMap",
     component: KakaoMap,
   },
-  {
-    path: "/animalVoluntary",
-    name: "AnimalVoluntary",
-    component: AnimalVoluntary,
-  },
+  // {
+  //   path: "/animalVoluntary",
+  //   name: "AnimalVoluntary",
+  //   component: AnimalVoluntary,
+  // },
   {
     path: "/exception/:facilityName",
     name: "ExceptionPage",

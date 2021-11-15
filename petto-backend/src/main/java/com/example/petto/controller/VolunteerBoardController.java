@@ -23,11 +23,12 @@ public class VolunteerBoardController {
 
     @PostMapping("/file")
     @ResponseBody
-    public ResponseEntity<VolunteerBoard> register(@RequestParam("volTitle") String volTitle, @RequestParam("fileList") MultipartFile fileList,
+    public ResponseEntity<VolunteerBoard> register(@RequestParam("volTitle") String volTitle, @RequestParam("closingDate") String closingDate,
+                                                   @RequestParam("fileList") MultipartFile fileList,
                                                    @RequestParam("contentFileList") MultipartFile contentFileList ) throws Exception{
 
         log.info("requestUploadFile(): Processing");
-        volunteerBoardService.write(volTitle, fileList,contentFileList);
+        volunteerBoardService.write(volTitle, closingDate, fileList, contentFileList);
         return new ResponseEntity<VolunteerBoard>(HttpStatus.OK);
 
     }
@@ -47,10 +48,12 @@ public class VolunteerBoardController {
 
     @PutMapping("/{volunteerNo}")
     public ResponseEntity<VolunteerBoard> modify(@PathVariable("volunteerNo") Long volunteerNo, VolunteerBoard volunteerBoard,
-                                                 @RequestParam("volTitle") String volTitle, @RequestParam(value = "fileList",required = false) MultipartFile fileList,
+                                                 @RequestParam(value = "volTitle", required = false) String volTitle,
+                                                 @RequestParam(value = "closingDate",required = false) String closingDate,
+                                                 @RequestParam(value = "fileList",required = false) MultipartFile fileList,
                                                  @RequestParam(value = "contentFileList",required = false) MultipartFile contentFileList ) throws Exception {
 
-        volunteerBoardService.modify(volunteerNo,volTitle, fileList, contentFileList, volunteerBoard);
+        volunteerBoardService.modify(volunteerNo, volTitle, closingDate, fileList, contentFileList, volunteerBoard);
         return new ResponseEntity<>(volunteerBoard,HttpStatus.OK);
     }
 
