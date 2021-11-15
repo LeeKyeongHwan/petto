@@ -42,7 +42,7 @@ import { mapState, mapActions } from "vuex";
 
 
 export default {
-  name: "Number",
+  name: "Statistics",
   created(){      
       axios.post("http://localhost:5000/pawinhandCrawling")
         .then(res => {

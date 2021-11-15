@@ -16,6 +16,7 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
+
 // import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
@@ -28,6 +29,11 @@ import AnimalVoluntaryModifyPage from "../views/voluntary/AnimalVoluntaryModifyP
 import ReportBoardPage from "../views/report/ReportBoardPage.vue";
 import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
 import ReportWritePage from "../views/report/ReportWritePage.vue";
+
+import MyLikedAnimals from "../views/member/MyLikedAnimals.vue";
+import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
+import MyProfile from "../views/member/MyProfile.vue";
+import MyboardPage from "../views/member/MyboardPage.vue";
 
 Vue.use(VueRouter);
 
@@ -97,11 +103,13 @@ const routes = [
     name: "KakaoMap",
     component: KakaoMap,
   },
+
   // {
   //   path: "/animalVoluntary",
   //   name: "AnimalVoluntary",
   //   component: AnimalVoluntary,
   // },
+
   {
     path: "/exception/:facilityName",
     name: "ExceptionPage",
@@ -171,6 +179,29 @@ const routes = [
       default: true
     }
   },
+  {
+    path: "/myLikedAnimals",
+    name: "MyLikedAnimals",
+    components: {
+      default: MyLikedAnimals
+    },
+  },
+  {
+    path: "/passwordCheckPage",
+    name: "PasswordCheckPage",
+    component: PasswordCheckPage,
+  },
+  {
+    path: "/myProfile",
+    name: "MyProfile",
+    component: MyProfile,
+  },
+  {
+    path: "/myBoard",
+    name: "MyboardPage",
+    component: MyboardPage,
+  },
+
 
 ];
 

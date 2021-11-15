@@ -1,9 +1,8 @@
 package com.example.petto.entity;
 
-//import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.entity.MemberRelated.LikedAnimal;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -70,7 +69,7 @@ public class Member {
         this.nickname = nickname;
     }
 
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    //@JoinColumn(name = "member_no")
-    //private Set<LikedAnimal> memberIdentityList = new HashSet<LikedAnimal>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "member_no")
+    private Set<LikedAnimal> memberIdentityList = new HashSet<LikedAnimal>();
 }

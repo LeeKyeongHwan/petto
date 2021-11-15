@@ -16,10 +16,25 @@
           <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
           <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
             >JOIN US</v-btn>
+          <v-app-bar-nav-icon plain color="white" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+          <v-navigation-drawer app v-model="nav_drawer" temporary>
+            <v-list nav dense>
+                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                    <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
+                        <v-list-item-action>
+                            <v-icon left>{{ link.icon }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ link.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
         </div>
         <div>
           <ul>
-            <li><a href="/aboutpage">소개</a></li>
+            <li><a href="#">소개</a></li>
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="#">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
@@ -114,7 +129,14 @@ export default {
   data() {
     return {
       layers: false,
-      isLogin: false
+      isLogin: false,
+      nav_drawer: false,
+      group: false,
+      links: [
+                { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
+                { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
+                { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' }
+            ]
     }
   },
   methods: {
@@ -169,7 +191,12 @@ export default {
   },
   computed: {
       ...mapState(['olderList'])
-  }
+  },
+  watch: {
+     group () {
+       this.nav_drawer = false
+     }
+   }
 };
 </script>
 

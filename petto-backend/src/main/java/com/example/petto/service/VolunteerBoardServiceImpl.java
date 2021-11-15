@@ -46,27 +46,27 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
         UUID uuid = UUID.randomUUID();
 
         try {
-            if(!fileTitle.exists()) {
-                fileTitle.mkdirs();
-                fileContent.mkdirs();
-            }
+                if(!fileTitle.exists()) {
+                    fileTitle.mkdirs();
+                    fileContent.mkdirs();
+                }
 
-            if(fileList != null) {
-                String fileName = uuid + "_" + fileList.getOriginalFilename();
-                FileOutputStream writer = new FileOutputStream("d:/proj/petto/petto-frontend/src/assets/vol/title/" + fileName);
-                writer.write(fileList.getBytes());
-                writer.close();
-                title.setFileName(fileName);
-            }
+                if(fileList != null) {
+                    String fileName = uuid + "_" + fileList.getOriginalFilename();
+                    FileOutputStream writer = new FileOutputStream("d:/proj/petto/petto-frontend/src/assets/vol/title/" + fileName);
+                    writer.write(fileList.getBytes());
+                    writer.close();
+                    title.setFileName(fileName);
+                }
 
-            if(contentFileList != null) {
-                String contentFileName = uuid + "_" + contentFileList.getOriginalFilename();
-                FileOutputStream writer = new FileOutputStream("d:/proj/petto/petto-frontend/src/assets/vol/content/" + contentFileName);
-                writer.write(contentFileList.getBytes());
-                writer.close();
-                title.setContentFileName(contentFileName);
+                if(contentFileList != null) {
+                    String contentFileName = uuid + "_" + contentFileList.getOriginalFilename();
+                    FileOutputStream writer = new FileOutputStream("d:/proj/petto/petto-frontend/src/assets/vol/content/" + contentFileName);
+                    writer.write(contentFileList.getBytes());
+                    writer.close();
+                    title.setContentFileName(contentFileName);
 
-            }
+                }
         } catch (Exception e) {
             log.info("Error");
         }

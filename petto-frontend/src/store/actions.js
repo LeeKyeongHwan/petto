@@ -12,13 +12,17 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_LIKED_ANIMAL_LIST,
-  // FETCH_LIKED_ANIMAL_CNT,
 
   FETCH_REPORT_LIST,
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
+
+  FETCH_MY_LIKED_ANIMAL_LIST,
+  FETCH_MY_BOARD_LIST,
+
   FETCH_VOL_COMMENT
+
 
 
 } from "./mutation-types";
@@ -111,7 +115,23 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
-   },
+
+  },
+
+  fetchMyLikedAnimalList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
+      })
+  },
+
+  fetchMyBoardList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_BOARD_LIST, res.data);
+      })
+    },
+
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
             .then((res) => {
@@ -119,13 +139,12 @@ export default {
                 console.log(res.data)
             })
   },
-  
-      fetchMemberList ({ commit }) {
-        return axios.get('http://localhost:8888/petto/member/memberlists')
-                .then((res) => {
-                    commit(FETCH_MEMBER_LIST, res.data)
-                })
-      }
+  fetchMemberList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/member/memberlists')
+            .then((res) => {
+                commit(FETCH_MEMBER_LIST, res.data)
+            })
+  }
 
-  };
+};
   
