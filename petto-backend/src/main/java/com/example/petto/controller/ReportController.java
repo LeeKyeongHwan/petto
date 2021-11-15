@@ -27,9 +27,9 @@ public class ReportController {
 
     @PostMapping("/sendAnimalPics")
     public ResponseEntity<Boolean> sendAnimalPics(@RequestParam("animalPics") List<MultipartFile> animalPicsList,
-                                               @RequestParam("category") String category,
-                                               @RequestParam("id") String id,
-                                               @RequestParam("dateId") String dateId) {
+                                                  @RequestParam("category") String category,
+                                                  @RequestParam("id") String id,
+                                                  @RequestParam("dateId") String dateId) {
 
         log.info("sendAnimalPics(): " + animalPicsList + ", " + category + ", " + id + ", " + dateId);
 

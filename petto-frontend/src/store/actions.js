@@ -1,6 +1,7 @@
 import { 
   FETCH_USER_INFO, 
   FETCH_SESSION,
+  FETCH_MEMBER_LIST,
 
   //보호소 리스트, 개별 정보
   FETCH_FACILITY_LIST,
@@ -18,8 +19,8 @@ import {
   FETCH_VOLUNTARYBOARD,
 
   FETCH_MY_LIKED_ANIMAL_LIST,
-  FETCH_MY_BOARD_LIST
 
+  FETCH_MY_BOARD_LIST,
   FETCH_VOL_COMMENT
 
 
@@ -143,6 +144,16 @@ export default {
             })
   },
 
-
 };
+
+  
+      fetchMemberList ({ commit }) {
+        return axios.get('http://localhost:8888/petto/member/memberlists')
+                .then((res) => {
+                    commit(FETCH_MEMBER_LIST, res.data)
+                })
+      }
+
+  };
+
   

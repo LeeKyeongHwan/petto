@@ -5,6 +5,7 @@ import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
 import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
+import com.example.petto.repository.MemberAuthRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -213,6 +214,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void removeUser(Long memberNo) throws Exception {
         memberRepository.deleteById(memberNo);
+
     }
 
     @Override
@@ -230,6 +232,42 @@ public class MemberServiceImpl implements MemberService {
 
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
+        if (maybeMember.isEmpty()) {
+            return false;
+        }
+
+        Member User = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<Member> list() throws Exception {
+        List<Member> members = memberRepository.findAll();
+        return members;
+        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
+        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
+    }
+
+    @Override
+    public void removeUser(Long memberNo) throws Exception {
+        memberRepository.deleteById(memberNo);
+    }
+
+    @Override
+    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception{
+        List<LikedAnimal> lists = likedAnimalRepository.findByMemberNo(memberNo);
+
+        for(LikedAnimal list : lists) {
+            likedAnimalRepository.deleteById(list.getLikedAnimalNo());
+        }
+        return null;
+    }
+
         if (maybeMember.isEmpty())
         { return false; }
 
@@ -240,5 +278,6 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
     }
+
 }
 
