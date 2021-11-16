@@ -29,6 +29,8 @@ import AnimalVoluntaryModifyPage from "../views/voluntary/AnimalVoluntaryModifyP
 import ReportBoardPage from "../views/report/ReportBoardPage.vue";
 import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
 import ReportWritePage from "../views/report/ReportWritePage.vue";
+import ReportReadPage from "../views/report/ReportReadPage.vue";
+import ReportModifyPage from "../views/report/ReportModifyPage.vue";
 
 import MyLikedAnimals from "../views/member/MyLikedAnimals.vue";
 import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
@@ -189,6 +191,13 @@ const routes = [
     }
   },
   {
+    path: "/reportBoard/read/:reportNo",
+    name: "ReportReadPage",
+    components: {
+      default: ReportReadPage
+   }
+  },
+   {
     path: "/myLikedAnimals",
     name: "MyLikedAnimals",
     components: {
@@ -228,6 +237,13 @@ const routes = [
     }
   },
   {
+    path: "/reportBoard/modify/id=:id/:reportNo",
+    name: "ReportModifyPage",
+    components: {
+      default: ReportModifyPage
+    }
+  },
+  {
     path: '/admin/:memberNo/edit',
     name: 'AdminMemberModifyPage',
     components: {
@@ -237,8 +253,6 @@ const routes = [
       default: true
     }
   }
-
-
 ];
 
 const router = new VueRouter({

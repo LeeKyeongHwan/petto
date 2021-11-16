@@ -13,6 +13,7 @@ import {
   FETCH_ORDER_ANIMAL_LIST,
 
   FETCH_REPORT_LIST,
+  FETCH_REPORT,
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
@@ -25,7 +26,6 @@ import {
   FETCH_VOL_COMMENT,
   FETCH_ADMIN_MEMBER_LIST,
   FETCH_ADMIN_MEMBER
-
 
 } from "./mutation-types";
 
@@ -72,6 +72,10 @@ export default {
 
   [FETCH_REPORT_LIST] (state, payload) {
     state.reportList = payload
+  },
+
+  [FETCH_REPORT] (state, payload) {
+    state.report = payload
   },
 
   [FETCH_MY_LIKED_ANIMAL_LIST] (state, payload) {
