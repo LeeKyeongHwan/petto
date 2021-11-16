@@ -39,7 +39,7 @@ public class MemberController {
     public ResponseEntity<Boolean> idDupliChk(@PathVariable("id") String id) {
         log.info("idDupliChk(): " + id);
 
-        boolean NoDupliId =  memberService.idDupliChk(id);
+        boolean NoDupliId = memberService.idDupliChk(id);
 
         return new ResponseEntity<Boolean>(NoDupliId, HttpStatus.OK);
     }
@@ -48,7 +48,7 @@ public class MemberController {
     public ResponseEntity<Boolean> nicknameDupliChk(@PathVariable("nickname") String nickname) {
         log.info("nicknameDupliChk(): " + nickname);
 
-        boolean NoDupliNickname =  memberService.nicknameDupliChk(nickname);
+        boolean NoDupliNickname = memberService.nicknameDupliChk(nickname);
 
         return new ResponseEntity<Boolean>(NoDupliNickname, HttpStatus.OK);
     }
@@ -67,7 +67,7 @@ public class MemberController {
     public ResponseEntity<String> checkValidEmail(@RequestParam("email") String email, @RequestParam("id") String id,
                                                   @RequestParam("birthday") String birthday) {
 
-        if(!id.equals("")) {
+        if (!id.equals("")) {
             log.info("checkValidEmail(): " + email + ", " + id);
 
             String confidentialCode = memberService.checkValidEmailForPw(email, id);
@@ -81,7 +81,7 @@ public class MemberController {
             boolean isEmailExists = memberService.checkValidEmail(email, birthday);
 
             String EmailExists = "NotEmailExists";
-            if(isEmailExists) EmailExists = "EmailExists";
+            if (isEmailExists) EmailExists = "EmailExists";
 
             return new ResponseEntity<String>(EmailExists, HttpStatus.OK);
         }
@@ -132,6 +132,12 @@ public class MemberController {
 
             Long memberNo = memberRepository.findById(memberRequest.getId()).get().getMemberNo();
             info.setMemberNo(memberNo);
+
+            String nickName = memberRepository.findById(memberRequest.getId()).get().getNickname();
+            info.setNickname(nickName);
+
+            String auth = memberRepository.findById(memberRequest.getId()).get().getAuth();
+            info.setAuth(auth);
 
             log.info("Session Info: " + info);
 
@@ -210,20 +216,26 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    //관리자?
+//    @GetMapping("/memberlists")
+//    public ResponseEntity lists() throws Exception {
+//        log.info("Member Lists");
 
-    @PostMapping("/passwordChk")
-    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
-        log.info("passwordChk(): " + memberRequest);
 
-        boolean passwordChk = memberService.passwordChk(memberRequest);
-
-        log.info("passwordChk(): " + passwordChk);
-
-        return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
-    }
+//    @PostMapping("/passwordChk")
+//    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
+//        log.info("passwordChk(): " + memberRequest);
+//
+//        boolean passwordChk = memberService.passwordChk(memberRequest);
+//
+//        log.info("passwordChk(): " + passwordChk);
+//
+//        return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
+//    }
 
 
 }
+
 
 
 

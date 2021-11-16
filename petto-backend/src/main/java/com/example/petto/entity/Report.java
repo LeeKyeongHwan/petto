@@ -55,6 +55,9 @@ public class Report {
     @Column(length = 30, nullable = true)
     private String imgUploadedTime;
 
+    @Column(length = 10, nullable = true)
+    private String imgUploadedCnt;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @CreationTimestamp
     private Date regDate;

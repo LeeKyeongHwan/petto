@@ -9,6 +9,8 @@
             
             <form @submit.prevent="onSubmit">
                 <div>
+                <span>
+                <!-- <div> -->
                     <v-select
                         v-model="keyword"
                         :items="items"
@@ -18,14 +20,18 @@
                         style="width: 120px; display: inline-block; float: left;"
                         class="normalText"
                     ></v-select>
-                    
+
+                    <input v-model="title" style="width: 78%; color: black; float: right; margin-top: 12px;" class="normalText"/>
+
+                    <br>
+                    <br>
                     <input v-model="title" style="width: 70%; color: black; float: right; margin-top: 12px;" required class="normalText"/>
 
                     <br>
                     <br>
                     <br>
                     <br>
-                    
+
                     <v-select
                         v-model="city"
                         :items="areas"
@@ -49,7 +55,7 @@
                         해당일 &emsp;
                         <input type="date" v-model="date" style="width: 140px; color: black; margin-top: 12px;" required class="normalText"/>
                     </label>
-                    
+
                     <br>
                     <br>
                     <br>
@@ -64,6 +70,14 @@
                         style="width: 100px; float: left;"
                         class="normalText"
                     ></v-select>
+
+                    <div v-if="breed == '기타'" style="float: left; margin-left: 40px;">
+                        
+                        <label class="normalText" style="float: left; color: grey;">
+                            기타 종 명 &emsp;
+                            <input v-model="etcAnimal" style="width: 200px; color: black; margin-top: 12px;" required class="normalText"/>
+                        </label>
+                    </div>
 
                     <br>
                     <br>
@@ -99,6 +113,12 @@
                     clear-icon="mdi-close-circle"
                     class="normalText"
                     color="#42b8d4"
+                    label="작성 내용"
+                    style="width: 950px;"
+                    height="10%;"
+                    auto-grow/>
+
+                </span>
                     label="상세 내용"
                     style="width: 950px;"
                     height="10%;"
@@ -155,6 +175,7 @@ export default {
             animals: [ '개', '고양이', '기타' ],
             date: '',
             breed: '',
+            etcAnimal: '',
             feature: '',
             keepingPlace: '',
             rules: [v => v.length <= 300 || '300자 이내 작성'],
@@ -165,19 +186,27 @@ export default {
         goBack() {
             window.history.go(-1)
         },
+        // onSubmit() {
+        //     const form = { keyword: this.keyword, title: this.title, content: this.content }
+
+        //     this.$emit('submit', form)
+        // },
         handleFileUpload() {
             this.pics = this.$refs.files.files
         },
         onSubmit() {
 
             if(this.$store.state.session) {
+
+                if(this.breed == '기타') this.breed = this.etcAnimal
                 
                 const whereHappened = this.city + ' ' + this.place
 
                 const form = { category: this.keyword, title: this.title, writer: this.$store.state.session.id , whereHappened: whereHappened,
                 whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content }
-                
+
                 if(this.pics.length > 0) {
+
                     let formData = new FormData()
 
                     for(var i=0; i<this.pics.length; i++) {
@@ -197,6 +226,7 @@ export default {
                             if(res.data) {
 
                                 form.imgUploadedTime = dateId
+                                form.imgUploadedCnt = this.pics.length
 
                                 this.$emit('submit', form)
                             }

@@ -16,4 +16,5 @@ public class MemberRequest {
     private String birthday;
     private String petsRaised;
     private String nickname;
+    private String auth;
 }

@@ -8,6 +8,16 @@ public interface ReportService {
 
     public void register(Report report);
 
+    public List<Report> getReportList();
+
+    public Report read(Integer reportNo);
+
+    public void makeReportExpired(Integer reportNo);
+
+    public void deleteReport(Integer reportNo);
+
+    public void reportModify(Report report);
+
     public List<Report> myBoardList(String id) throws Exception;
 
 }

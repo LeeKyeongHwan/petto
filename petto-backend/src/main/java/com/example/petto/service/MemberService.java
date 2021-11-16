@@ -41,4 +41,9 @@ public interface MemberService {
 
     public boolean passwordChk(MemberRequest memberRequest) throws Exception;
 
+//    public List<LikedAnimal> selectLikeCnt() throws Exception;
+    // 관리자?
+//    List<Member> list() throws Exception;
+
+
 }
