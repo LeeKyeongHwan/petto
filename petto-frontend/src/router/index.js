@@ -35,6 +35,10 @@ import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
 import MyProfile from "../views/member/MyProfile.vue";
 import MyboardPage from "../views/member/MyboardPage.vue";
 
+import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
+import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
+import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -84,9 +88,14 @@ const routes = [
     },
   },
   {
-    path: "/abandonedAnimal",
-    name: "AbandonedAnimal",
-    component: AbandonedAnimal,
+    path: '/abandonedAnimal/list/:page=:pageNum',
+    name: 'AbandonedAnimal',
+    components: {
+      default: AbandonedAnimal
+    },
+    props: {
+      default: true
+    }
   },
   {
     path: "/animalDetail/read/:id",
@@ -201,6 +210,33 @@ const routes = [
     name: "MyboardPage",
     component: MyboardPage,
   },
+  {
+    path: '/admin',
+    name: 'AdminMemberListPage',
+    components: {
+      default: AdminMemberListPage
+    }
+  },
+  {
+    path: '/admin/:memberNo',
+    name: 'AdminMemberReadPage',
+    components: {
+      default: AdminMemberReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/admin/:memberNo/edit',
+    name: 'AdminMemberModifyPage',
+    components: {
+      default: AdminMemberModifyPage
+    },
+    props: {
+      default: true
+    }
+  }
 
 
 ];

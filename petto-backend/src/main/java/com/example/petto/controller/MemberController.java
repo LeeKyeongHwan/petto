@@ -136,6 +136,9 @@ public class MemberController {
             String nickName = memberRepository.findById(memberRequest.getId()).get().getNickname();
             info.setNickname(nickName);
 
+            String auth = memberRepository.findById(memberRequest.getId()).get().getAuth();
+            info.setAuth(auth);
+
             log.info("Session Info: " + info);
 
             session = request.getSession();
@@ -214,32 +217,21 @@ public class MemberController {
     }
 
     //관리자?
-    @GetMapping("/memberlists")
-    public ResponseEntity lists() throws Exception {
-        log.info("Member Lists");
+//    @GetMapping("/memberlists")
+//    public ResponseEntity lists() throws Exception {
+//        log.info("Member Lists");
 
-        @PostMapping("/passwordChk")
-        public ResponseEntity<Boolean> passwordChk (@Validated @RequestBody MemberRequest memberRequest) throws Exception {
-            log.info("passwordChk(): " + memberRequest);
 
-            boolean passwordChk = memberService.passwordChk(memberRequest);
-
-            log.info("passwordChk(): " + passwordChk);
-
-            return new ResponseEntity<Boolean>(passwordChk, HttpStatus.OK);
-        }
-    }
-
-    @PostMapping("/passwordChk")
-    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
-        log.info("passwordChk(): " + memberRequest);
-
-        boolean passwordChk = memberService.passwordChk(memberRequest);
-
-        log.info("passwordChk(): " + passwordChk);
-
-        return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
-    }
+//    @PostMapping("/passwordChk")
+//    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
+//        log.info("passwordChk(): " + memberRequest);
+//
+//        boolean passwordChk = memberService.passwordChk(memberRequest);
+//
+//        log.info("passwordChk(): " + passwordChk);
+//
+//        return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
+//    }
 
 
 }

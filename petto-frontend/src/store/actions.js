@@ -21,7 +21,10 @@ import {
   FETCH_MY_LIKED_ANIMAL_LIST,
 
   FETCH_MY_BOARD_LIST,
-  FETCH_VOL_COMMENT
+  FETCH_VOL_COMMENT,
+
+  FETCH_ADMIN_MEMBER_LIST,
+  FETCH_ADMIN_MEMBER
 
 
 
@@ -131,29 +134,30 @@ export default {
         commit(FETCH_MY_BOARD_LIST, res.data);
       })
     }, 
-   
-
-
-
-   },
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
+      .then((res) => {
+          commit(FETCH_VOL_COMMENT, res.data)
+      })
+  },
+  fetchMemberList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/member/memberlists')
             .then((res) => {
-                commit(FETCH_VOL_COMMENT, res.data)
-                console.log(res.data)
+                commit(FETCH_MEMBER_LIST, res.data)
             })
   },
-
+  fetchAdminMemberList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/lists')
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER_LIST, res.data)
+            })
+  },
+  fetchAdminMember ({ commit }, memberNo) {
+    return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER, res.data)
+            })
+  },
 };
-
-  
-      fetchMemberList ({ commit }) {
-        return axios.get('http://localhost:8888/petto/member/memberlists')
-                .then((res) => {
-                    commit(FETCH_MEMBER_LIST, res.data)
-                })
-      }
-
-  };
 
   

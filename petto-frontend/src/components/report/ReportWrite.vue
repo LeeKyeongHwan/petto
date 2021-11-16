@@ -10,7 +10,7 @@
             <form @submit.prevent="onSubmit">
                 <div>
                 <span>
-                <div>
+                <!-- <div> -->
                     <v-select
                         v-model="keyword"
                         :items="items"
@@ -160,7 +160,6 @@ export default {
             keyword: '',
             items: [ '실종', '보호', '목격' ],
             title: '제목',
-            content: ''
             content: '',
             city: '',
             areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
@@ -178,10 +177,11 @@ export default {
         goBack() {
             window.history.go(-1)
         },
-        onSubmit() {
-            const form = { keyword: this.keyword, title: this.title, content: this.content }
+        // onSubmit() {
+        //     const form = { keyword: this.keyword, title: this.title, content: this.content }
 
-            this.$emit('submit', form)
+        //     this.$emit('submit', form)
+        // },
         handleFileUpload() {
             this.pics = this.$refs.files.files
         },

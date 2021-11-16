@@ -26,6 +26,9 @@ export default {
   myLikedAnimals: [],
   myBoardList: [],
 
-  volComments:[]
+  volComments:[],
+
+  adminMembers: [],
+  adminMember: null,
 
 };

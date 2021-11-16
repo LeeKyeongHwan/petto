@@ -16,4 +16,5 @@ public class UserInfo implements Serializable {
     private Long memberNo;
     private String id;
     private String nickname;
+    private String auth;
 }
