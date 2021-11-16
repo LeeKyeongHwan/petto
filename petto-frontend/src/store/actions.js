@@ -14,7 +14,14 @@ import {
   FETCH_LIKED_ANIMAL_CNT,
 
   FETCH_REPORT_LIST,
+<<<<<<< HEAD
   FETCH_REPORT
+=======
+
+  FETCH_VOLUNTARYBOARD_LIST,
+  FETCH_VOLUNTARYBOARD
+
+>>>>>>> a8487e228affa59932871dc21201c8244358c180
 
 } from "./mutation-types";
 
@@ -86,14 +93,6 @@ export default {
       })
   },
 
-
-  fetchLikedAnimalCnt({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/selectLikeCnt/${payload}`)
-      .then(res => {
-        commit(FETCH_LIKED_ANIMAL_CNT, res.data);
-      })
-  },
-
   fetchReportList({ commit }) {
     return axios.get('http://localhost:8888/petto/report/reportList')
       .then((res) => {
@@ -101,6 +100,7 @@ export default {
       })
   },
 
+<<<<<<< HEAD
   fetchReport({ commit }, payload) {
     return axios.get(`http://localhost:8888/petto/report/reportRead/${payload}`)
       .then((res) => {
@@ -115,6 +115,23 @@ export default {
         }
       })
   }
+=======
+    
+  fetchVoluntaryBoardList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
+            .then((res) => {
+                commit(FETCH_VOLUNTARYBOARD_LIST, res.data)
+            })
+  },
+  
+  fetchVoluntaryBoard ({ commit }, volunteerNo) {
+      return axios.get(`http://localhost:8888/petto/voluntaryBoard/${volunteerNo}`)
+              .then((res) => {
+                  commit(FETCH_VOLUNTARYBOARD, res.data)
+              })
+   },
+
+>>>>>>> a8487e228affa59932871dc21201c8244358c180
 
 };
   

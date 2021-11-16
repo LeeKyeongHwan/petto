@@ -20,6 +20,11 @@ import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
 
+import AnimalVoluntaryRegister from "../views/voluntary/AnimalVoluntaryRegister.vue"
+import AnimalVoluntaryListPage from "../views/voluntary/AnimalVoluntaryListPage.vue"
+import AnimalVoluntaryReadPage from "../views/voluntary/AnimalVoluntaryReadPage.vue"
+import AnimalVoluntaryModifyPage from "../views/voluntary/AnimalVoluntaryModifyPage.vue"
+
 import ReportBoardPage from "../views/report/ReportBoardPage.vue";
 import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
 import ReportWritePage from "../views/report/ReportWritePage.vue";
@@ -65,7 +70,7 @@ const routes = [
     component: FacilityListPage,
   },
   {
-    path: "/facility/read/:facilityNo",
+    path: "/facility/read/:facilityNo", 
     name: "FacilityReadPage",
     components: {
       default: FacilityReadPage,
@@ -75,14 +80,9 @@ const routes = [
     },
   },
   {
-    path: "/abandonedAnimal/list/page=:pageNum",
+    path: "/abandonedAnimal",
     name: "AbandonedAnimal",
-    components: {
-      default: AbandonedAnimal
-    },
-    props: {
-      default: true
-    }
+    component: AbandonedAnimal,
   },
   {
     path: "/animalDetail/read/:id",
@@ -109,6 +109,40 @@ const routes = [
     name: "ExceptionPage",
     components: {
       default: ExceptionPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/voluntaryBoard',
+    name: 'AnimalVoluntaryListPage',
+    components: {
+      default: AnimalVoluntaryListPage
+    }
+  },
+  {
+    path: '/voluntaryBoard/create',
+    name: 'AnimalVoluntaryRegister',
+    components: {
+      default: AnimalVoluntaryRegister
+    }
+  },
+  {
+    path: '/voluntaryBoard/:volunteerNo',
+    name: 'AnimalVoluntaryReadPage',
+    components: {
+      default: AnimalVoluntaryReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/voluntaryBoard/:volunteerNo/edit',
+    name: 'AnimalVoluntaryModifyPage',
+    components: {
+      default: AnimalVoluntaryModifyPage
     },
     props: {
       default: true
