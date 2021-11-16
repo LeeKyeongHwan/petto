@@ -17,4 +17,7 @@ public interface ReportService {
     public void deleteReport(Integer reportNo);
 
     public void reportModify(Report report);
+
+    public List<Report> myBoardList(String id) throws Exception;
+
 }

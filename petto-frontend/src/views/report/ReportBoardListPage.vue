@@ -153,6 +153,12 @@ export default {
         }
     },
     methods: {
+        // toWritePage() {
+        //     this.$router.push({ name: 'ReportWritePage' })
+        // },
+    // },
+    // mounted: {
+
         ...mapActions(['fetchReportList']),
 
         toReadPage(reportNo) {
@@ -171,7 +177,7 @@ export default {
 
         chooseCategory(event) {
             const keyword = event.target.innerText
-            
+
             this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
         },
 

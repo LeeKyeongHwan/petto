@@ -3,6 +3,10 @@
 
         <report-write @submit="onSubmit"/>
 
+        <report-write/>
+
+        <report-write @submit="onSubmit"/>
+
     </div>
 </template>
 

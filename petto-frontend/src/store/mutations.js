@@ -12,16 +12,20 @@ import {
 
   FETCH_ORDER_ANIMAL_LIST,
 
-  FETCH_LIKED_ANIMAL_CNT,
-
   FETCH_REPORT_LIST,
-<<<<<<< HEAD
-  FETCH_REPORT
-=======
+  FETCH_REPORT,
 
   FETCH_VOLUNTARYBOARD_LIST,
-  FETCH_VOLUNTARYBOARD
->>>>>>> a8487e228affa59932871dc21201c8244358c180
+  FETCH_VOLUNTARYBOARD,
+
+  FETCH_MY_LIKED_ANIMAL_LIST,
+
+  FETCH_MY_BOARD_LIST,
+  FETCH_MEMBER_LIST,
+
+  FETCH_VOL_COMMENT,
+  FETCH_ADMIN_MEMBER_LIST,
+  FETCH_ADMIN_MEMBER
 
 } from "./mutation-types";
 
@@ -59,9 +63,6 @@ export default {
     state.olderList = olderList;
   },
 
-  [FETCH_LIKED_ANIMAL_CNT] (state, payload) {
-    state.likedAnimalCnt = payload;
-  },
   [FETCH_VOLUNTARYBOARD_LIST] (state, voluntaryboards) {
     state.voluntaryboards = voluntaryboards;
   },
@@ -75,6 +76,27 @@ export default {
 
   [FETCH_REPORT] (state, payload) {
     state.report = payload
-  }
+  },
+
+  [FETCH_MY_LIKED_ANIMAL_LIST] (state, payload) {
+    state.myLikedAnimals = payload;
+  },
+  [FETCH_MY_BOARD_LIST] (state, payload) {
+    state.myBoardList = payload;
+  },
+
+  [FETCH_VOL_COMMENT] (state, payload) {
+    state.volComments = payload;
+  },
+  [FETCH_MEMBER_LIST] (state, members) {
+    state.members = members;
+  },
+  [FETCH_ADMIN_MEMBER_LIST] (state, adminMembers) {
+    state.adminMembers = adminMembers;
+  },
+  [FETCH_ADMIN_MEMBER] (state, adminMember) {
+    state.adminMember = adminMember
+  },
 
 };
+

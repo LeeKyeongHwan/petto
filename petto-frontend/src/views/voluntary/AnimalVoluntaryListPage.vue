@@ -5,12 +5,12 @@
         </v-container>
         <v-divider></v-divider>
 
-        <animal-voluntary-list :voluntaryboards="voluntaryboards"/>
+        <v-container class="justify" style="text-align:right;">
+            <v-btn color="orange" outlined route :to="{ name: 'AnimalVoluntaryRegister' }"
+                style="margin:3% 0% 3%; 0%">봉사등록</v-btn>
+        </v-container>
 
-        <center>
-            <v-btn color="blue" outlined route :to="{ name: 'AnimalVoluntaryRegister' }"
-                style="margin-bottom:3%">글쓰기</v-btn>
-        </center>
+        <animal-voluntary-list :voluntaryboards="voluntaryboards"/>
     </div>  
 </template>
 
@@ -26,6 +26,7 @@ export default {
     data() {
         return {
             volTitle: '',
+            pageArray: []
         }
     },
     computed: {

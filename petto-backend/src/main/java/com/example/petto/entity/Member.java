@@ -49,6 +49,9 @@ public class Member {
     @Column(length = 30, nullable = false)
     private String nickname;
 
+    @Column(length = 20, nullable = false)
+    private String auth;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @CreationTimestamp
     private Date regDate;
@@ -58,7 +61,7 @@ public class Member {
     private Date updDate;
 
     public Member(String id, String password, String email, String phoneNumber, String name, String birthday,
-                   String petsRaised, String nickname) {
+                  String petsRaised, String nickname, String auth) {
         this.id = id;
         this.password = password;
         this.email = email;
@@ -67,6 +70,7 @@ public class Member {
         this.birthday = birthday;
         this.petsRaised = petsRaised;
         this.nickname = nickname;
+        this.auth = auth;
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

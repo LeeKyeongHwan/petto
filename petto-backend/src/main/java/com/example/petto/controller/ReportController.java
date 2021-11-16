@@ -1,5 +1,6 @@
 package com.example.petto.controller;
 
+import com.example.petto.entity.Animals;
 import com.example.petto.entity.Report;
 import com.example.petto.service.report.ReportService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +29,9 @@ public class ReportController {
 
     @PostMapping("/sendAnimalPics")
     public ResponseEntity<Boolean> sendAnimalPics(@RequestParam("animalPics") List<MultipartFile> animalPicsList,
-                                               @RequestParam("category") String category,
-                                               @RequestParam("id") String id,
-                                               @RequestParam("dateId") String dateId) {
+                                                  @RequestParam("category") String category,
+                                                  @RequestParam("id") String id,
+                                                  @RequestParam("dateId") String dateId) {
 
         log.info("sendAnimalPics(): " + animalPicsList + ", " + category + ", " + id + ", " + dateId);
 
@@ -237,3 +238,13 @@ public class ReportController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
+
+    @GetMapping("/myBoardLists/{id}")
+    public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id") String id) throws Exception {
+        log.info("id == > "+ id);
+        log.info("getMyBoardLists(): " + reportService.myBoardList(id));
+        return new ResponseEntity<>(reportService.myBoardList(id), HttpStatus.OK);
+    }
+
+}
+

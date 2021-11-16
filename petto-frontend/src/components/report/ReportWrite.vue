@@ -9,6 +9,8 @@
             
             <form @submit.prevent="onSubmit">
                 <div>
+                <span>
+                <!-- <div> -->
                     <v-select
                         v-model="keyword"
                         :items="items"
@@ -18,14 +20,18 @@
                         style="width: 120px; display: inline-block; float: left;"
                         class="normalText"
                     ></v-select>
-                    
+
+                    <input v-model="title" style="width: 78%; color: black; float: right; margin-top: 12px;" class="normalText"/>
+
+                    <br>
+                    <br>
                     <input v-model="title" style="width: 70%; color: black; float: right; margin-top: 12px;" required class="normalText"/>
 
                     <br>
                     <br>
                     <br>
                     <br>
-                    
+
                     <v-select
                         v-model="city"
                         :items="areas"
@@ -49,7 +55,7 @@
                         해당일 &emsp;
                         <input type="date" v-model="date" style="width: 140px; color: black; margin-top: 12px;" required class="normalText"/>
                     </label>
-                    
+
                     <br>
                     <br>
                     <br>
@@ -107,6 +113,12 @@
                     clear-icon="mdi-close-circle"
                     class="normalText"
                     color="#42b8d4"
+                    label="작성 내용"
+                    style="width: 950px;"
+                    height="10%;"
+                    auto-grow/>
+
+                </span>
                     label="상세 내용"
                     style="width: 950px;"
                     height="10%;"
@@ -174,6 +186,11 @@ export default {
         goBack() {
             window.history.go(-1)
         },
+        // onSubmit() {
+        //     const form = { keyword: this.keyword, title: this.title, content: this.content }
+
+        //     this.$emit('submit', form)
+        // },
         handleFileUpload() {
             this.pics = this.$refs.files.files
         },
@@ -187,7 +204,7 @@ export default {
 
                 const form = { category: this.keyword, title: this.title, writer: this.$store.state.session.id , whereHappened: whereHappened,
                 whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content }
-                
+
                 if(this.pics.length > 0) {
 
                     let formData = new FormData()

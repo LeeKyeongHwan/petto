@@ -18,7 +18,7 @@ public class ReportServiceImpl implements ReportService {
     public void register(Report report) {
         reportRepository.save(report);
     }
-
+  
     public List<Report> getReportList() {
         return reportRepository.findAll();
     }
@@ -40,9 +40,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public void reportModify(Report report) {
-
-
-
         reportRepository.save(report);
     }
+
+    @Override
+    public List<Report> myBoardList(String id) throws Exception {
+        return reportRepository.myBoardList(id);
+    }
+  
 }

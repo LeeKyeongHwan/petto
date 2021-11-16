@@ -16,7 +16,8 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
-import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+
+// import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
 
@@ -30,6 +31,15 @@ import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
 import ReportWritePage from "../views/report/ReportWritePage.vue";
 import ReportReadPage from "../views/report/ReportReadPage.vue";
 import ReportModifyPage from "../views/report/ReportModifyPage.vue";
+
+import MyLikedAnimals from "../views/member/MyLikedAnimals.vue";
+import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
+import MyProfile from "../views/member/MyProfile.vue";
+import MyboardPage from "../views/member/MyboardPage.vue";
+
+import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
+import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
+import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
 
 Vue.use(VueRouter);
 
@@ -80,9 +90,14 @@ const routes = [
     },
   },
   {
-    path: "/abandonedAnimal",
-    name: "AbandonedAnimal",
-    component: AbandonedAnimal,
+    path: '/abandonedAnimal/list/:page=:pageNum',
+    name: 'AbandonedAnimal',
+    components: {
+      default: AbandonedAnimal
+    },
+    props: {
+      default: true
+    }
   },
   {
     path: "/animalDetail/read/:id",
@@ -99,11 +114,13 @@ const routes = [
     name: "KakaoMap",
     component: KakaoMap,
   },
-  {
-    path: "/animalVoluntary",
-    name: "AnimalVoluntary",
-    component: AnimalVoluntary,
-  },
+
+  // {
+  //   path: "/animalVoluntary",
+  //   name: "AnimalVoluntary",
+  //   component: AnimalVoluntary,
+  // },
+
   {
     path: "/exception/:facilityName",
     name: "ExceptionPage",
@@ -178,6 +195,42 @@ const routes = [
     name: "ReportReadPage",
     components: {
       default: ReportReadPage
+   }
+  },
+   {
+    path: "/myLikedAnimals",
+    name: "MyLikedAnimals",
+    components: {
+      default: MyLikedAnimals
+    },
+  },
+  {
+    path: "/passwordCheckPage",
+    name: "PasswordCheckPage",
+    component: PasswordCheckPage,
+  },
+  {
+    path: "/myProfile",
+    name: "MyProfile",
+    component: MyProfile,
+  },
+  {
+    path: "/myBoard",
+    name: "MyboardPage",
+    component: MyboardPage,
+  },
+  {
+    path: '/admin',
+    name: 'AdminMemberListPage',
+    components: {
+      default: AdminMemberListPage
+    }
+  },
+  {
+    path: '/admin/:memberNo',
+    name: 'AdminMemberReadPage',
+    components: {
+      default: AdminMemberReadPage
     },
     props: {
       default: true
@@ -188,13 +241,18 @@ const routes = [
     name: "ReportModifyPage",
     components: {
       default: ReportModifyPage
+    }
+  },
+  {
+    path: '/admin/:memberNo/edit',
+    name: 'AdminMemberModifyPage',
+    components: {
+      default: AdminMemberModifyPage
     },
     props: {
       default: true
     }
-  },
-
-
+  }
 ];
 
 const router = new VueRouter({
