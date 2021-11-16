@@ -12,7 +12,6 @@
             :to="{ name: 'MemberLoginPage' }"
             >LOGIN</v-btn>
           
-          <v-btn plain color="white" v-if="isLogin" @click="onDelete">회원탈퇴</v-btn>
           <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
           <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
             >JOIN US</v-btn>
@@ -22,7 +21,7 @@
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
                         <v-list-item-action>
-                            <v-icon left>{{ link.icon }}</v-icon>
+                            <v-icon style="width:60px; !important ">{{ link.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>{{ link.text }}</v-list-item-title>
@@ -118,7 +117,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions, mapState } from 'vuex';
 import Statistics from "@/components/crawling/Statistics.vue";
 
@@ -151,25 +149,9 @@ export default {
       this.$cookies.remove("user");
       this.isLogin = false;
       this.$store.state.session = null;
+      this.$router.push({ name: 'PettoHome' })
     },
-    //회원탈퇴
-    onDelete () {
-            const memberNo = this.$store.state.session.memberNo
-            axios.delete(`http://localhost:8888/petto/member/${memberNo}`)
-                .then(() => {
-                    alert('계정을 삭제했습니다.')
-                    this.isLogin = false
-                    // 현재 버튼이 메인페이지에 있어서 router.push 메인페이지하면 콘솔에러 뜸
-                    // 나중에 마이페이지로 버튼 옮겼을때 재활성화
-                    // this.$router.push({ name: 'PettoHome' })
-                    this.$store.state.session = null
-                    this.$cookies.remove("user")                    
-                })
-               .catch(res => {
-                    alert(res.response.data.message)
-                })
-        },
-        ...mapActions(['fetchOlderAnimalList']),
+    ...mapActions(['fetchOlderAnimalList']),
       toDetailPage(id) {
       this.$router.push({
         name: 'AnimalDetailPage',

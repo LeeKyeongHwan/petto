@@ -31,6 +31,7 @@ import ReportWritePage from "../views/report/ReportWritePage.vue";
 
 import MyLikedAnimals from "../views/member/MyLikedAnimals.vue";
 import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
+import PasswordCheckWithdrawalPage from "../views/member/PasswordCheckWithdrawalPage.vue";
 import MyProfile from "../views/member/MyProfile.vue";
 import MyboardPage from "../views/member/MyboardPage.vue";
 
@@ -184,6 +185,11 @@ const routes = [
     component: PasswordCheckPage,
   },
   {
+    path: "/passwordCheckWithdrawalPage",
+    name: "PasswordCheckWithdrawalPage",
+    component: PasswordCheckWithdrawalPage,
+  },
+  {
     path: "/myProfile",
     name: "MyProfile",
     component: MyProfile,
@@ -193,8 +199,6 @@ const routes = [
     name: "MyboardPage",
     component: MyboardPage,
   },
-
-
 ];
 
 const router = new VueRouter({
