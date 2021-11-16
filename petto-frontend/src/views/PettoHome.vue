@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <div id="main">
       <div id="header">
         <a href="/pettohome" class="logo"><h1>petto</h1></a>
@@ -114,7 +114,7 @@
                 </v-card>
               </div>
           </div>
-  </div>
+  </div> -->
   <div>
     <div id="main">
       <div id="header">
@@ -136,11 +136,10 @@
         <div>
           <ul>
             <li><a href="#">소개</a></li>
-            <li><a href="#">소개</a></li>
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
-            <li><a href="#">제보</a></li>
+            <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="#">Q&A</a></li>
+            <li><a href="/map">지도</a></li>
           </ul>
         </div>
       </div>

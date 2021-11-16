@@ -153,10 +153,10 @@ export default {
     }
   },
   props: {
-    animals: {
-      type: Array,
-      required: true
-    },
+    // animals: {
+    //   type: Array,
+    //   required: true
+    // },
     pageSize: {
       type: Number,
       required: false,
@@ -333,6 +333,7 @@ export default {
       this.$store.state.session = this.$cookies.get("user")
       this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
     }
+    
   }
 }
 </script>

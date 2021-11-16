@@ -18,10 +18,10 @@
                     {{ btn }}
                 </v-btn>
 
-                <v-btn v-else class="normalText" style="font-size: 15px;" text large @click="chooseCategory($event)">
-                <v-btn v-else class="normalText" style="font-size: 15px;" text large>
+                <!-- <v-btn v-else class="normalText" style="font-size: 15px;" text large @click="chooseCategory($event)"> -->
+                <!-- <v-btn v-else class="normalText" style="font-size: 15px;" text large>
                     {{ btn }}
-                </v-btn>
+                </v-btn> -->
             </div>
 
         </span>
@@ -53,11 +53,11 @@ export default {
         }
     },
     methods: {
-        toWritePage() {
-            this.$router.push({ name: 'ReportWritePage' })
-        }
-    },
-    mounted: {
+        // toWritePage() {
+        //     this.$router.push({ name: 'ReportWritePage' })
+        // },
+    // },
+    // mounted: {
 
         ...mapActions(['fetchReportList']),
 

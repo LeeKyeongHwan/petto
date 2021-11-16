@@ -137,8 +137,6 @@ p{
   top: 0em;
   right: 0em;
 }
-<<<<<<<<< Temporary merge branch 1
+
 </style>
-=========
-</style>
->>>>>>>>> Temporary merge branch 2
+

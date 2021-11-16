@@ -41,12 +41,9 @@ public interface MemberService {
 
     public boolean passwordChk(MemberRequest memberRequest) throws Exception;
 
-    public List<LikedAnimal> selectLikeCnt() throws Exception;
+//    public List<LikedAnimal> selectLikeCnt() throws Exception;
     // 관리자?
-    List<Member> list() throws Exception;
+//    List<Member> list() throws Exception;
 
-    public void removeUser(Long memberNo) throws Exception;
-
-    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception;
 
 }

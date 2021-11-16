@@ -5,20 +5,14 @@ import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
 import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
-import com.example.petto.repository.MemberAuthRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -69,8 +63,9 @@ public class MemberServiceImpl implements MemberService {
         String birthday = memberRequest.getBirthday();
         String petsRaised = memberRequest.getPetsRaised();
         String nickname = memberRequest.getNickname();
+        String auth = memberRequest.getAuth();
 
-        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
+        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname, auth);
 
         memberRepository.save(member);
     }
@@ -244,40 +239,16 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
     }
+//
+//    @Override
+//    public List<Member> list() throws Exception {
+//        List<Member> members = memberRepository.findAll();
+//        return members;
+//        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
+//        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
+//    }
+//
 
-    @Override
-    public List<Member> list() throws Exception {
-        List<Member> members = memberRepository.findAll();
-        return members;
-        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
-        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
-    }
-
-    @Override
-    public void removeUser(Long memberNo) throws Exception {
-        memberRepository.deleteById(memberNo);
-    }
-
-    @Override
-    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception{
-        List<LikedAnimal> lists = likedAnimalRepository.findByMemberNo(memberNo);
-
-        for(LikedAnimal list : lists) {
-            likedAnimalRepository.deleteById(list.getLikedAnimalNo());
-        }
-        return null;
-    }
-
-        if (maybeMember.isEmpty())
-        { return false; }
-
-        Member User = maybeMember.get();
-
-        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword()))
-        { return false; }
-
-        return true;
-    }
 
 }
 
