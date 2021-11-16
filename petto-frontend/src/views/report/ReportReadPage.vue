@@ -16,7 +16,7 @@ export default {
     },
     props: {
         reportNo: {
-            type: String,
+            type: Number,
             required: true
         }
     },
