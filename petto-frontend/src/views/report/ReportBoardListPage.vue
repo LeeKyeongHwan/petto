@@ -153,15 +153,11 @@ export default {
         }
     },
     methods: {
-        // toWritePage() {
-        //     this.$router.push({ name: 'ReportWritePage' })
-        // },
-    // },
-    // mounted: {
 
         ...mapActions(['fetchReportList']),
 
         toReadPage(reportNo) {
+
             let routeData = this.$router.resolve({
                 name: 'ReportReadPage',
                 params: { 'reportNo': reportNo }
