@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 import PaginatedList from '@/components/abandon/PaginatedList'
 import {mapActions, mapState} from 'vuex'
 

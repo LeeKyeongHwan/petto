@@ -34,13 +34,21 @@
 
             <v-simple-table v-if="filterReportList" style="height: 250px;">
 
-                <tr v-for="(report, index) in filterReportList" :key="index" class="normalText" style="color: black;">
+                <tr v-for="(report, index) in filterReportList" :key="index" class="normalText" style="color: black;" @click="toReadPage(report.reportNo)">
 
-                    <td style="width: 30%; font-size: 12px;">{{ report.title }}</td>
-                    <td style="width: 15%; font-size: 12px;">{{ report.regDate }}</td>
-                    <td>{{ report.breed }}</td>
+                    <td v-if="!report.expired" style="width: 30%; font-size: 12px;">{{ report.title }}</td>
+                    <td v-else-if="report.expired" style="width: 30%; font-size: 12px;">만료된 공고</td>
+
+                    <td>
+                        <span style="font-size:10px;">종:&ensp;</span>{{ report.breed }}</td>
+
                     <td style="width: 20%; font-size: 12px;">{{ report.whereHappened }}</td>
-                    <td style="text-align: right;">게시자 &ensp; {{ report.writer }}</td>
+
+                    <td style="width: 12%;">
+                        <span style="font-size:10px;">게시자:&ensp;</span> {{ report.writer }}</td>
+
+                    <td style="width: 12a%; text-align: right;">
+                        <span style="font-size:10px;">발생일:&ensp;</span>{{ report.whenHappened }}</td>
                     
                 </tr>
 
@@ -101,6 +109,19 @@
                 <input type="date" v-model="endDate" style="width: 140px; color: black;" required class="normalText"/>
             </label>
 
+            <br>
+            <br>
+
+            <span>
+                <v-btn text small outlined class="normalText" @click="sortList" style="margin-right: 10px;">
+                    검색
+                </v-btn>
+                
+                <v-btn text small outlined class="normalText" @click="initList">
+                    초기화
+                </v-btn>
+            </span>
+
         </div>
 
     </div>
@@ -128,11 +149,18 @@ export default {
             startDate: '',
             endDate: '',
 
-            tmpReportList: this.$store.state.reportList
+            reportListRepository: this.$store.state.reportList
         }
     },
     methods: {
         ...mapActions(['fetchReportList']),
+
+        toReadPage(reportNo) {
+            let routeData = this.$router.resolve({
+                name: 'ReportReadPage',
+                params: { 'reportNo': reportNo }
+            });window.open(routeData.href, '_blank')
+        },
 
         toWritePage() {
             if(this.$store.state.session) {
@@ -145,6 +173,62 @@ export default {
             const keyword = event.target.innerText
             
             this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
+        },
+
+        initList() {
+
+            this.$store.state.reportList = this.reportListRepository
+        },
+
+        sortList() { 
+            this.page = 1
+
+            this.$store.state.reportList = this.reportListRepository
+
+            var tmpList = []
+
+            let isAreaChoosen = false
+            let isBreedChoosen = false
+            let isDateChoosen = false 
+
+            if(this.choosenArea != '' && this.choosenArea != '전국') isAreaChoosen = true
+            if(this.choosenBreed != '' && this.choosenBreed != '전체') isBreedChoosen = true
+            if(this.startDate != '' || this.endDate != '') isDateChoosen = true
+
+            for(var i=0; i<this.$store.state.reportList.length; i++) {
+
+                if(isAreaChoosen) {
+
+                    if(!this.reportList[i].whereHappened.includes(this.choosenArea)) continue;
+                }
+
+                if(isBreedChoosen) {
+
+                    if(this.choosenBreed == '기타' && this.reportList[i].breed != '개' && this.reportList[i].breed != '고양이');
+
+                    else if(this.reportList[i].breed != this.choosenBreed) continue;
+                }
+
+                if(isDateChoosen) {
+
+                    if(this.startDate == '') {
+
+                        if(this.endDate < this.reportList[i].whenHappened) continue;
+
+                    } else if(this.endDate == '') {
+
+                        alert('검색 기준 만료 날짜를 선택해주세요.')
+                        return false;
+
+                    } else
+         
+                    if(this.startDate > this.reportList[i].whenHappened || this.endDate < this.reportList[i].whenHappened) continue;
+                }
+
+                tmpList.push(this.reportList[i]) 
+            }
+
+            this.$store.state.reportList = tmpList
         }
     },
     mounted() {
@@ -156,7 +240,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['reportList']),
+        ...mapState(['reportList', 'session']),
 
         filterReportList() {
 
@@ -165,9 +249,9 @@ export default {
             
             var reportList = []
 
-            for(var i=0; i<this.tmpReportList.length; i++) {
+            for(var i=0; i<this.reportList.length; i++) {
 
-                if(this.tmpReportList[i].category == this.category) reportList.push(this.tmpReportList[i])
+                if(this.reportList[i].category == this.category) reportList.push(this.reportList[i])
             }
             return reportList.slice(start, end);
         },
@@ -176,9 +260,9 @@ export default {
 
             var length = 0
 
-            for(var i=0; i<this.tmpReportList.length; i++) {
+            for(var i=0; i<this.reportList.length; i++) {
 
-                const objArr = this.tmpReportList[i]
+                const objArr = this.reportList[i]
 
                 if(objArr.category == this.category) length ++
             }
@@ -188,37 +272,6 @@ export default {
             if (length % 5 > 0) listLength += 1;
 
             return listLength
-        }
-    },
-    watch: {
-        choosenArea() {
-            if(this.choosenArea != '' && this.choosenArea != '전국') {
-
-                var tmpArr = []
-
-                for(var i=0; i<this.reportList.length; i++) {
-
-                    if(this.reportList[i].whereHappened.includes(this.choosenArea)) tmpArr.push(this.reportList[i])
-                }
-
-                this.tmpReportList = tmpArr
-
-            } else this.tmpReportList = this.$store.state.reportList
-        },
-
-        choosenBreed() {
-            if(this.choosenBreed != '' && this.choosenBreed != '전체') {
-
-                var tmpArr = []
-
-                for(var i=0; i<this.reportList.length; i++) {
-
-                    if(this.reportList[i].breed == this.choosenBreed) tmpArr.push(this.reportList[i])
-                }
-
-                this.tmpReportList = tmpArr
-
-            } else this.tmpReportList = this.$store.state.reportList
         }
     }
 }

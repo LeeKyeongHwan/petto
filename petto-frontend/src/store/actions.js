@@ -13,7 +13,8 @@ import {
   FETCH_LIKED_ANIMAL_LIST,
   FETCH_LIKED_ANIMAL_CNT,
 
-  FETCH_REPORT_LIST
+  FETCH_REPORT_LIST,
+  FETCH_REPORT
 
 } from "./mutation-types";
 
@@ -97,6 +98,21 @@ export default {
     return axios.get('http://localhost:8888/petto/report/reportList')
       .then((res) => {
         commit(FETCH_REPORT_LIST, res.data)
+      })
+  },
+
+  fetchReport({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/reportRead/${payload}`)
+      .then((res) => {
+        if(!res.data) {
+          
+          alert('이미 삭제되었거나 없는 공고입니다!')
+          window.close()
+        }
+        else {
+          //alert(JSON.stringify(res.data))
+          commit(FETCH_REPORT, res.data)
+        }
       })
   }
 

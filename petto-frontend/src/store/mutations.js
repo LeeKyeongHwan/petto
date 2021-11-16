@@ -14,7 +14,8 @@ import {
 
   FETCH_LIKED_ANIMAL_CNT,
 
-  FETCH_REPORT_LIST
+  FETCH_REPORT_LIST,
+  FETCH_REPORT
 
   
 } from "./mutation-types";
@@ -59,6 +60,10 @@ export default {
 
   [FETCH_REPORT_LIST] (state, payload) {
     state.reportList = payload
+  },
+
+  [FETCH_REPORT] (state, payload) {
+    state.report = payload
   }
 
 };

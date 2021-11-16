@@ -23,6 +23,8 @@ import ExceptionPage from "../views/ExceptionPage.vue";
 import ReportBoardPage from "../views/report/ReportBoardPage.vue";
 import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
 import ReportWritePage from "../views/report/ReportWritePage.vue";
+import ReportReadPage from "../views/report/ReportReadPage.vue";
+import ReportModifyPage from "../views/report/ReportModifyPage.vue";
 
 Vue.use(VueRouter);
 
@@ -137,6 +139,27 @@ const routes = [
       default: true
     }
   },
+  {
+    path: "/reportBoard/read/:reportNo",
+    name: "ReportReadPage",
+    components: {
+      default: ReportReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: "/reportBoard/modify/id=:id/:reportNo",
+    name: "ReportModifyPage",
+    components: {
+      default: ReportModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
+
 
 ];
 
