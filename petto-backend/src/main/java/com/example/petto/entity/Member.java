@@ -75,5 +75,5 @@ public class Member {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "member_no")
-    private Set<LikedAnimal> memberIdentityList = new HashSet<LikedAnimal>();
+    private Set<LikedAnimal> likedAnimals = new HashSet<LikedAnimal>();
 }

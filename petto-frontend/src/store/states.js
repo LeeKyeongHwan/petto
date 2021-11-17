@@ -18,6 +18,8 @@ export default {
   reportList: [],
   report: '',
 
+  replyList: [],
+
   crawlInfo:'',
 
   voluntaryboards: [],

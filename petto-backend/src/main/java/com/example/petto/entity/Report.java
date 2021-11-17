@@ -1,20 +1,24 @@
 package com.example.petto.entity;
 
+import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.entity.ReportRelated.Reply;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
-import java.util.Date;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name="petto_report")
 @Transactional
+@DynamicUpdate
 public class Report {
 
     @Id
@@ -65,4 +69,12 @@ public class Report {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @UpdateTimestamp
     private Date updDate;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) //, orphanRemoval = true 이거때면 report_no가 null이됨
+    @JoinColumn(name = "report_no") //,updatable = false, insertable = false
+    private List<Reply> replies = new ArrayList<Reply>();
+
+    public void addReplies(Reply reply) {
+        replies.add(reply);
+    }
 }
