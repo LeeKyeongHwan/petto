@@ -3,9 +3,11 @@ package com.example.petto.service;
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
 import com.example.petto.repository.MemberRepository;
+import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -35,6 +38,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     BCryptPasswordEncoder decoder;
+
+    @Autowired
+    UpdateAlarmRepository updateAlarmRepository;
 
     @Override
     public boolean idDupliChk(String id) {
@@ -127,11 +133,11 @@ public class MemberServiceImpl implements MemberService {
         String password = passwordEncoder.encode(memberRequest.getPassword());
 
         memberRepository.changePassword(id, password);
-
     }
 
     @Override
-    public boolean login(MemberRequest memberRequest) throws Exception {
+    @Transactional
+    public boolean login(MemberRequest memberRequest) {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
         log.info("member: " + maybeMember);
@@ -154,7 +160,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean checkIdValidation(String id) throws Exception {
+    public boolean checkIdValidation(String id) {
         Optional<Member> maybeMember = memberRepository.findById(id);
 
         if (maybeMember == null)
@@ -165,14 +171,6 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
 
-    }
-
-    @Override
-    public Member getUserInfo(Integer userNo) {
-
-        Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
-
-        return member;
     }
 
     @Override
@@ -238,6 +236,16 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return true;
+    }
+
+    @Override
+    public void updateAlarm(UpdateAlarm updateAlarm) {
+        updateAlarmRepository.save(updateAlarm);
+    }
+
+    @Override
+    public void deleteAlarms(Long alarmNo) {
+        updateAlarmRepository.deleteByAlarmNo(alarmNo);
     }
 //
 //    @Override

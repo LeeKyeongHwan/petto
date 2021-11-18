@@ -117,6 +117,22 @@ export default {
                         setTimeout(() => {
                             this.$store.dispatch("fetchReplyList", this.reportNo)
                         }, 100)
+
+                        //////////////////// 댓글 작성 후 알람 생성
+
+                        if(writer == this.report.writer) return false
+
+                        const id = this.report.writer
+                        const commentator = this.$store.state.session.id
+                        const title = this.report.title
+                        const typeOfPost = '공고 게시판'
+                        const postNo = this.report.reportNo
+
+                        axios.post('http://localhost:8888/petto/member/update_alarm', { reportNo, id, commentator, title, typeOfPost, postNo })
+                            .catch(err => {
+                                console.log(err.massage)
+                            })
+
                     })
                     .catch((err) => {
                         alert(err)
