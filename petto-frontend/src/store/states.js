@@ -18,6 +18,8 @@ export default {
   reportList: [],
   report: '',
 
+  replyList: [],
+
   crawlInfo:'',
 
   voluntaryboards: [],
@@ -30,6 +32,5 @@ export default {
 
   adminMembers: [],
   adminMember: null,
-
 
 };

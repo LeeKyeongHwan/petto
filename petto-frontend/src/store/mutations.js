@@ -15,6 +15,8 @@ import {
   FETCH_REPORT_LIST,
   FETCH_REPORT,
 
+  FETCH_REPLY_LIST,
+
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
 
@@ -96,6 +98,10 @@ export default {
   },
   [FETCH_ADMIN_MEMBER] (state, adminMember) {
     state.adminMember = adminMember
+  },
+
+  [FETCH_REPLY_LIST] (state, payload) {
+    state.replyList = payload
   },
 
 };

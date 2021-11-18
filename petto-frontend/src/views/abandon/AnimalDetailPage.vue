@@ -284,10 +284,15 @@ export default {
         },
 
         toDetailPage(noticeNo) {
-            let routeData = this.$router.resolve({
-            name: 'AnimalDetailPage',
-            params: { id: noticeNo }
-            });window.open(routeData.href, '_blank')
+            // let routeData = this.$router.resolve({
+            // name: 'AnimalDetailPage',
+            // params: { id: noticeNo }
+            // });window.open(routeData.href, '_blank')
+
+            this.$router.push({
+                name: 'AnimalDetailPage',
+                params: { id: noticeNo }
+            })
         },
 
         delLatestSeen(noticeNo) {

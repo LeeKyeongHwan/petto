@@ -90,8 +90,8 @@ const routes = [
     },
   },
   {
-    path: '/abandonedAnimal/list/:page=:pageNum',
-    name: 'AbandonedAnimal',
+    path: "/abandonedAnimal/list/page=:pageNum",
+    name: "AbandonedAnimal",
     components: {
       default: AbandonedAnimal
     },
@@ -195,7 +195,10 @@ const routes = [
     name: "ReportReadPage",
     components: {
       default: ReportReadPage
-   }
+    },
+    props: {
+      default: true
+    }
   },
    {
     path: "/myLikedAnimals",
@@ -246,6 +249,9 @@ const routes = [
     name: "ReportModifyPage",
     components: {
       default: ReportModifyPage
+    },
+    props: {
+      default: true
     }
   },
   {

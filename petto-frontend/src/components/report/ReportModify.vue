@@ -254,6 +254,7 @@ export default {
                 axios.put('http://localhost:8888/petto/report/modifyPics', formData)
                     .then((res) => {
                         alert(res.data) //서버에서 받은 숫자 cnt
+                        alert(this.report.reportNo)
 
                         if(this.breed == '기타') this.breed = this.etcAnimal
                 

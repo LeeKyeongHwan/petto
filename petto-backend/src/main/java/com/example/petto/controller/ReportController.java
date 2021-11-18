@@ -2,6 +2,7 @@ package com.example.petto.controller;
 
 import com.example.petto.entity.Animals;
 import com.example.petto.entity.Report;
+import com.example.petto.entity.ReportRelated.Reply;
 import com.example.petto.service.report.ReportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -241,9 +242,40 @@ public class ReportController {
     @GetMapping("/myBoardLists/{id}")
     public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id")String id) throws Exception {
         log.info("id == > "+ id);
-        log.info("getMyBoardLists(): " + reportService.myBoardList(id));
+        log.info("getMyBoardLists(): ");
+
         return new ResponseEntity<>(reportService.myBoardList(id), HttpStatus.OK);
     }
 
+    @PostMapping("/saveReply")
+    public ResponseEntity<Void> saveReply(@Validated @RequestBody Reply reply) {
+        log.info("saveReply: " + reply);
+
+        reportService.saveReply(reply);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/getReplies/{reportNo}")
+    public ResponseEntity<List<Reply>> getReplies(@PathVariable("reportNo") Integer reportNo) {
+        log.info("getReplies(): " + reportNo);
+
+        return new ResponseEntity<List<Reply>>(reportService.getReplyList(reportNo), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteReply/{replyNo}")
+    public ResponseEntity<Void> deleteReply(@PathVariable("replyNo") Integer replyNo) {
+        log.info("deleteReply: " + replyNo);
+
+        reportService.deleteReply(replyNo);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PutMapping("/modifyReply")
+    public ResponseEntity<Void> modifyReply(@Validated @RequestBody Reply reply) {
+        log.info("deleteReply: " + reply);
+
+        reportService.modifyReply(reply);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
 

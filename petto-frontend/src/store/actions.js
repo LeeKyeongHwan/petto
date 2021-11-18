@@ -16,6 +16,8 @@ import {
   FETCH_REPORT_LIST,
   FETCH_REPORT,
 
+  FETCH_REPLY_LIST,
+
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
@@ -169,6 +171,13 @@ export default {
     return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
             .then((res) => {
                 commit(FETCH_ADMIN_MEMBER, res.data)
+            })
+  },
+
+  fetchReplyList ({ commit }, reportNo) {
+    return axios.get(`http://localhost:8888/petto/report/getReplies/${reportNo}`)
+            .then((res) => {
+                commit(FETCH_REPLY_LIST, res.data)
             })
   },
 };
