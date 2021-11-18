@@ -1,4 +1,4 @@
-package com.example.petto.entity.VolBoardRelated;
+package com.example.petto.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -12,22 +12,28 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="comment")
-public class Comment {
+@Table(name="petto_qna")
+public class QnA {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_no")
-    private Long commentNo;
+    @Column(name = "qna_no")
+    private Long qnaNo;
 
-    @Column(name = "volunteer_no", nullable = false)
-    private Long volunteerNo;
+    @Column(length = 100, nullable = false)
+    private String title;
 
     @Column(length = 50, nullable = false)
     private String writer;
 
     @Column(columnDefinition = "TEXT")
-    private String comment;
+    private String content;
+
+    @Column(length = 20, nullable = false)
+    private String answerState;
+
+    @Column(columnDefinition = "TEXT")
+    private String adminAnswer;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @CreationTimestamp

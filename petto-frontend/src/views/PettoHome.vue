@@ -37,7 +37,7 @@
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="#">Q&A</a></li>
+            <li><a href="/qnalist">Q&A</a></li>
           </ul>
         </div>
       </div>
@@ -133,9 +133,10 @@ export default {
       links: [
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
-                { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' }
+                { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
+                { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' }
             ]
-    }
+         }
   },
   methods: {
     Close() {

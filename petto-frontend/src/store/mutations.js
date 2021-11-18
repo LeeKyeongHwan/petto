@@ -15,6 +15,8 @@ import {
   FETCH_REPORT_LIST,
   FETCH_REPORT,
 
+  FETCH_REPLY_LIST,
+
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
 
@@ -25,7 +27,11 @@ import {
 
   FETCH_VOL_COMMENT,
   FETCH_ADMIN_MEMBER_LIST,
-  FETCH_ADMIN_MEMBER
+  FETCH_ADMIN_MEMBER,
+
+  FETCH_QNA_LIST,
+  FETCH_QNA,
+  FETCH_MY_QNA_LIST
 
 } from "./mutation-types";
 
@@ -97,6 +103,20 @@ export default {
   [FETCH_ADMIN_MEMBER] (state, adminMember) {
     state.adminMember = adminMember
   },
+
+  [FETCH_REPLY_LIST] (state, payload) {
+    state.replyList = payload
+  },
+  [FETCH_QNA_LIST] (state, qnaboards) {
+    state.qnaboards = qnaboards;
+  },
+  [FETCH_QNA] (state, qnaboard) {
+    state.qnaboard = qnaboard
+  },
+
+  [FETCH_MY_QNA_LIST] (state, myQnaList) {
+    state.myQnaList = myQnaList
+  }
 
 };
 

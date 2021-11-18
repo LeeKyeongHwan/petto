@@ -16,6 +16,8 @@ import {
   FETCH_REPORT_LIST,
   FETCH_REPORT,
 
+  FETCH_REPLY_LIST,
+
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
@@ -26,7 +28,11 @@ import {
   FETCH_VOL_COMMENT,
 
   FETCH_ADMIN_MEMBER_LIST,
-  FETCH_ADMIN_MEMBER
+  FETCH_ADMIN_MEMBER,
+
+  FETCH_QNA_LIST,
+  FETCH_QNA,
+  FETCH_MY_QNA_LIST
 
 } from "./mutation-types";
 
@@ -171,6 +177,32 @@ export default {
                 commit(FETCH_ADMIN_MEMBER, res.data)
             })
   },
+
+  fetchReplyList ({ commit }, reportNo) {
+    return axios.get(`http://localhost:8888/petto/report/getReplies/${reportNo}`)
+            .then((res) => {
+                commit(FETCH_REPLY_LIST, res.data)
+            })
+  },
+  fetchQnAList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/qna/lists')
+            .then((res) => {
+                commit(FETCH_QNA_LIST, res.data)
+            })
+  },
+  
+  fetchQnA ({ commit }, qnaNo) {
+      return axios.get(`http://localhost:8888/petto/qna/${qnaNo}`)
+              .then((res) => {
+                  commit(FETCH_QNA, res.data)
+              })
+  },
+  fetchMyQnAList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/qna/myQnaList/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_QNA_LIST, res.data);
+      })
+  }, 
 };
 
   
