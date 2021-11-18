@@ -237,10 +237,9 @@ public class ReportController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-}
 
     @GetMapping("/myBoardLists/{id}")
-    public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id") String id) throws Exception {
+    public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id")String id) throws Exception {
         log.info("id == > "+ id);
         log.info("getMyBoardLists(): " + reportService.myBoardList(id));
         return new ResponseEntity<>(reportService.myBoardList(id), HttpStatus.OK);

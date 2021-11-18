@@ -1,6 +1,6 @@
 <template>
     <v-container>
-         <h4 style="text-align:center; padding: 3%;"><p class="normalText">내가 쓴 게시물</p></h4>
+         <h4 style="text-align:center; padding: 3%;"><p class="normalText">내가 작성한 게시물</p></h4>
          <v-simple-table>
              <thead>
                 <tr>

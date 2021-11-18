@@ -49,7 +49,7 @@
             <div style="margin-top: 120px; margin-left: 60px; margin-bottom: 40px;" >
 
                 <v-btn text class="btnText" color="blue" style="font-size:16px;" href="passwordCheckPage">
-                    수정
+                    정보 수정
                 </v-btn>
                 <v-btn text class="btnText" color="red" style="font-size:16px;" href="passwordCheckWithdrawalPage">
                     탈퇴

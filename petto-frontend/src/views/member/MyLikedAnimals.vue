@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </v-container>
-                <v-pagination length= "numofpage" v-model="curpagenum"> </v-pagination>
+                <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
             </v-row>
         </div>
     </section>
@@ -29,7 +29,6 @@ export default {
     name:'MyLikedAnimals',
     data () {
     return {
-    
       curpagenum : 1,
       datapage : 12
     }
