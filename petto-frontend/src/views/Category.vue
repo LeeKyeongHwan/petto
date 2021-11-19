@@ -41,6 +41,8 @@ export default {
       this.$cookies.remove("user");
       this.isLogin = false;
       this.$store.state.session = null;
+      this.$router.push({ name: 'PettoHome' })
+      alert('로그아웃 되었습니다.')
     },
   },
   mounted() {

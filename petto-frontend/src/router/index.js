@@ -16,8 +16,7 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
-
-// import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+//import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
 
@@ -34,6 +33,7 @@ import ReportModifyPage from "../views/report/ReportModifyPage.vue";
 
 import MyLikedAnimals from "../views/member/MyLikedAnimals.vue";
 import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
+import PasswordCheckWithdrawalPage from "../views/member/PasswordCheckWithdrawalPage.vue";
 import MyProfile from "../views/member/MyProfile.vue";
 import MyboardPage from "../views/member/MyboardPage.vue";
 
@@ -211,6 +211,11 @@ const routes = [
     path: "/passwordCheckPage",
     name: "PasswordCheckPage",
     component: PasswordCheckPage,
+  },
+  {
+    path: "/passwordCheckWithdrawalPage",
+    name: "PasswordCheckWithdrawalPage",
+    component: PasswordCheckWithdrawalPage,
   },
   {
     path: "/myProfile",
