@@ -3,7 +3,9 @@ package com.example.petto.controller;
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import com.example.petto.repository.MemberRepository;
+import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.service.MemberService;
 import com.example.petto.session.UserInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
@@ -34,6 +37,9 @@ public class MemberController {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    UpdateAlarmRepository updateAlarmRepository;
 
     @PostMapping("/idDupliChk/{id}")
     public ResponseEntity<Boolean> idDupliChk(@PathVariable("id") String id) {
@@ -96,15 +102,6 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @GetMapping("/getUserInfo/{userNo}")
-    public ResponseEntity<Member> getUserInfo(@PathVariable("userNo") Integer userNo) {
-        log.info("getUserInfo(): " + userNo);
-
-        Member memberInfo = memberService.getUserInfo(userNo);
-
-        return new ResponseEntity<Member>(memberInfo, HttpStatus.OK);
-    }
-
     @PutMapping("/modifyUserInfo")
     public ResponseEntity<Void> modifyUserInfo(@Validated @RequestBody Member member) {
         log.info("modifyUserInfo(): " + member);
@@ -115,10 +112,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserInfo> jpaLogin(
-            @RequestBody MemberRequest memberRequest,
-            HttpServletRequest request
-    ) throws Exception {
+    @Transactional
+    public ResponseEntity<UserInfo> login(@RequestBody MemberRequest memberRequest, HttpServletRequest request) throws Exception {
 
         log.info("login() - id: " + memberRequest.getId() + ", password: " + memberRequest.getPassword());
 
@@ -128,21 +123,28 @@ public class MemberController {
             log.info("Login Success");
 
             info = new UserInfo();
-            info.setId(memberRequest.getId());
+            String id = memberRequest.getId();
+            info.setId(id);
 
-            Long memberNo = memberRepository.findById(memberRequest.getId()).get().getMemberNo();
+            Member tmpMember = memberRepository.findById(memberRequest.getId()).get();
+
+            Long memberNo = tmpMember.getMemberNo();
             info.setMemberNo(memberNo);
 
-            String nickName = memberRepository.findById(memberRequest.getId()).get().getNickname();
+            String nickName = tmpMember.getNickname();
             info.setNickname(nickName);
 
-            String auth = memberRepository.findById(memberRequest.getId()).get().getAuth();
+            String auth = tmpMember.getAuth();
             info.setAuth(auth);
 
             log.info("Session Info: " + info);
 
             session = request.getSession();
             session.setAttribute("member", info);
+
+            List<UpdateAlarm> updateAlarmList = updateAlarmRepository.findById(id);
+            info.setUpdateAlarmList(updateAlarmList);
+
         } else {
             log.info("Login Failure");
             info = null;
@@ -213,6 +215,24 @@ public class MemberController {
         log.info("memberNo == " + memberNo);
         memberService.deleteContainingMemberNo(memberNo);
         memberService.removeUser(memberNo);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("/update_alarm")
+    public ResponseEntity<Void> updateAlarm(@Validated @RequestBody UpdateAlarm updateAlarm) {
+        log.info("updateAlarm: " + updateAlarm);
+
+        memberService.updateAlarm(updateAlarm);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete_alarm/{alarmNo}")
+    public ResponseEntity<Void> deleteAlarm(@PathVariable("alarmNo") Long alarmNo) {
+        log.info("deleteAlarm: " + alarmNo);
+
+        memberService.deleteAlarms(alarmNo);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

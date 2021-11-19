@@ -166,7 +166,7 @@ export default {
         },
 
         toWritePage() {
-            if(this.$store.state.session) {
+            if(this.$store.state.session != null) {
                 this.$router.push({ name: 'ReportWritePage' })
 
             } else alert('로그인이 필요해요!')

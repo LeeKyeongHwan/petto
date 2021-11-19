@@ -73,7 +73,7 @@ export default {
     ...mapActions(['fetchAnimalList']),
   },
   mounted () {
-      this.fetchAnimalList()
+      //this.fetchAnimalList()
   },
   
 

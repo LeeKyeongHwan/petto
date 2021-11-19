@@ -35,7 +35,7 @@
           <ul>
             <li><a href="/aboutpage">소개</a></li>
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
-            <li><a href="/reportBoard">제보</a></li>
+            <li><a href="#">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
             <li><a href="#">Q&A</a></li>
           </ul>
@@ -113,16 +113,157 @@
                 </v-card>
               </div>
           </div>
+  </div> -->
+  <div>
+    <div id="main">
+      <div id="header">
+        <a href="/pettohome" class="logo"><h1>petto</h1></a>
+
+        <div class="header-top">
+
+          <v-tooltip bottom v-if="isLogin">
+
+            <template v-slot:activator="{ on, attrs }">
+            
+            <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
+              <alarm-dialog :session="session"/>
+            </div>
+
+            <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
+              <v-icon color="grey">
+                add_alert
+              </v-icon>
+            </v-btn>
+
+            </template>
+
+            <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
+
+            <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
+
+          </v-tooltip>
+
+          &emsp;
+
+          <v-btn plain color="white" v-if="isLogin" @click="logout">
+            로그 아웃
+          </v-btn>
+
+          <v-btn plain color="white" v-if="isLogin" @click="onDelete">
+            회원 탈퇴
+          </v-btn>
+
+          <v-btn
+            plain
+            color="white"
+            v-if="!isLogin"
+            router
+            :to="{ name: 'MemberLoginPage' }"
+            >로그인
+          </v-btn>
+
+          <v-btn plain color="white" v-if="!isLogin" router :to="{ name: 'SignupPage' }">
+            JOIN US
+          </v-btn>
+
+        </div>
+
+        <div>
+          <ul>
+            <li><a href="#">소개</a></li>
+            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li
+            <li><a href="/reportBoard">제보</a></li>
+            <li><a href="/voluntaryBoard">자원봉사</a></li>
+            <li><a href="#">Q&A</a></li>
+          </ul>
+        </div>
+      </div>
+      </div>
+
+      <section>
+        <div style="width: 100%; padding-top:6em;">
+          <h3 style="text-align:center; margin:0%;">입양해주세요
+            <v-btn outlined color="orange" route :to="{ name: 'AbandonedAnimal' }" style="position:absolute; right:20%;">
+              <v-icon>navigate_next</v-icon>MORE</v-btn>
+          </h3>
+        </div>
+
+        <v-row justify="center">
+          <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
+              <div class="container">
+                  <div id="animal">
+                        <div v-for="animal in olderList" :key="animal.notice_no">
+                            <v-card height="200" class="grow">
+                              <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
+                            </v-card>
+                        </div>
+                  </div>
+              </div>
+          </v-container>
+        </v-row>
+      </section>
+
+
+        <section>
+          <div class="container2">
+
+            <statistics/>
+            
+          </div>
+        </section>
+        <section>
+          <div class="container3">
+            <div id="youtube">
+              <h3>petto 유튜브</h3>
+                  <ul>
+                      <li><iframe src="https://www.youtube.com/embed/BtjKQUW8Eg0?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/3HimGmjD73k?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/vrPm4SFRviY?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/R-b2LwMCYC8?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/EVrx-UfXS8o?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/CMI2TdvLMBE?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/nBdpJIN9QEU?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/4on_v7ZebSw?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/0anYp7gZJ3w?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/wy2qwD_xx9k?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/qllzIfMSMMc?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                  </ul>
+            </div>
+          </div>
+        </section>
+
+          <div>
+            <div>
+                <v-card v-if="layers">
+                  <div id="layer">
+                    <img src="@/assets/img/popup.png" alt="자원봉사" />
+                    <v-btn class="close" @click="Close()" small icon
+                      ><v-icon>close</v-icon></v-btn
+                    >
+                    <v-btn
+                      class="img-link"
+                      color="#feecae"
+                      depressed
+                      width="200"
+                      height="40"
+                      >자세히보기</v-btn>
+                    <v-btn class="today-close" @click="TodayClose()" plain>오늘 하루 보지 않기</v-btn>
+                  </div>
+                </v-card>
+              </div>
+          </div>
   </div> 
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import Statistics from "@/components/crawling/Statistics.vue";
+import AlarmDialog from '../components/dialogue/AlarmDialog.vue';
 
 export default {
   components: {
     Statistics,
+    AlarmDialog
   },
   data() {
     return {
@@ -173,7 +314,11 @@ export default {
     // console.log(this.$store.state.olderList)
   },
   computed: {
-      ...mapState(['olderList'])
+      ...mapState(['olderList', 'session']),
+
+      updatedNewsNum() {
+        return this.session.updateAlarmList.length
+      }
   },
   watch: {
      group () {
