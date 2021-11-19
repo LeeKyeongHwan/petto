@@ -40,13 +40,12 @@ public interface MemberService {
     public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception;
 
     public boolean passwordChk(MemberRequest memberRequest) throws Exception;
-
     public void updateAlarm(UpdateAlarm updateAlarm);
 
     public void deleteAlarms(Long alarmNo);
 
 //    public List<LikedAnimal> selectLikeCnt() throws Exception;
-    // 관리자?
+ // 관리자?
 //    List<Member> list() throws Exception;
 
 
