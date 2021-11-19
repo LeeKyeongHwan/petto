@@ -1,6 +1,4 @@
 <template>
-<<<<<<< HEAD
-=======
   <div>
     <div id="main">
       <div id="header">
@@ -9,7 +7,7 @@
           <v-btn
             plain
             color="white"
-            v-if="!isLogin"
+          C:\group_project\petto\petto-frontend\src\components\abandon\PaginatedList.vue  v-if="!isLogin"
             router
             :to="{ name: 'MemberLoginPage' }"
             >LOGIN</v-btn>
@@ -116,7 +114,7 @@
               </div>
           </div>
   </div> -->
->>>>>>> f0d581e149e3183be437ed03e51688f7e2b345be
+
   <div>
     <div id="main">
       <div id="header">
@@ -179,7 +177,7 @@
         <div>
           <ul>
             <li><a href="#">소개</a></li>
-            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li
+            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
             <li><a href="#">Q&A</a></li>
