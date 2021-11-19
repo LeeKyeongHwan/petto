@@ -1,5 +1,4 @@
 import { 
-  FETCH_USER_INFO, 
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 
@@ -17,7 +16,6 @@ import {
   FETCH_REPORT,
 
   FETCH_REPLY_LIST,
-
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
@@ -65,13 +63,6 @@ export default {
   // Session
   fetchSession({ commit }) {
     commit(FETCH_SESSION);
-  },
-  
-  fetchUserInfo({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
-      .then((res) => {
-        commit(FETCH_USER_INFO, res.data)
-      })
   },
 
   fetchAnimalList ({ commit }) {

@@ -2,8 +2,8 @@ package com.example.petto.service.report;
 
 import com.example.petto.entity.Report;
 import com.example.petto.entity.ReportRelated.Reply;
-import com.example.petto.repository.report.ReplyRepository;
-import com.example.petto.repository.report.ReportRepository;
+import com.example.petto.repository.reportRelated.ReplyRepository;
+import com.example.petto.repository.reportRelated.ReportRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,16 +1,17 @@
 package com.example.petto.entity;
 
 import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -18,14 +19,14 @@ import java.util.Set;
 @Entity
 @Table(name="petto_member")
 @Transactional
-public class Member {
+public class Member implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_no")
     private Long memberNo;
 
-    @Column(length = 50, nullable = false)
+    @Column(name = "id", length = 50, nullable = false)
     private String id;
 
     @Column(length = 100, nullable = false)
@@ -73,7 +74,11 @@ public class Member {
         this.auth = auth;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "member_no")
-    private Set<LikedAnimal> likedAnimals = new HashSet<LikedAnimal>();
+    private List<LikedAnimal> likedAnimals = new ArrayList<LikedAnimal>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private List<UpdateAlarm> updateAlarmList = new ArrayList<UpdateAlarm>();
 }

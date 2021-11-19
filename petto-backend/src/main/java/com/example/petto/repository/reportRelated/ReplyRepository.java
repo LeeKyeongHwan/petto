@@ -1,4 +1,4 @@
-package com.example.petto.repository.report;
+package com.example.petto.repository.reportRelated;
 
 import com.example.petto.entity.ReportRelated.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
