@@ -13,4 +13,6 @@ public interface AnimalsService {
     public List<Animals> oldList() throws Exception;
 
     public List<Animals> myLikedAnimals(long memberNo) throws Exception;
+
+    public Long getNumOfAnimals();
 }

@@ -8,6 +8,7 @@ import {
   FETCH_ANIMAL_INFO,
 
   FETCH_LIKED_ANIMAL_LIST,
+  FETCH_NUM_OF_ANIMALS,
 
   FETCH_ORDER_ANIMAL_LIST,
 
@@ -55,6 +56,10 @@ export default {
 
   [FETCH_LIKED_ANIMAL_LIST] (state, payload) {
     state.likedAnimalList = payload;
+  },
+
+  [FETCH_NUM_OF_ANIMALS] (state, payload) {
+    state.numOfAnimals = payload;
   },
 
   [FETCH_ORDER_ANIMAL_LIST](state, olderList) {

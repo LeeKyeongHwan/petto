@@ -205,9 +205,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void removeUser(Long memberNo) throws Exception {
-        memberRepository.deleteById(memberNo);
+        Optional<Member> maybeMember = memberRepository.findByMemberNo(memberNo);
 
+        updateAlarmRepository.deleteById(maybeMember.get().getId());
+        memberRepository.deleteById(memberNo);
     }
 
     @Override

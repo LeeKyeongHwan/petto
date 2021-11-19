@@ -1,5 +1,5 @@
 <template>
-  <!--<div>
+  <div>
     <div id="main">
       <div id="header">
         <a href="/pettohome" class="logo"><h1>petto</h1></a>
@@ -7,7 +7,7 @@
           <v-btn
             plain
             color="white"
-            v-if="!isLogin"
+          C:\group_project\petto\petto-frontend\src\components\abandon\PaginatedList.vue  v-if="!isLogin"
             router
             :to="{ name: 'MemberLoginPage' }"
             >LOGIN</v-btn>
@@ -114,10 +114,16 @@
               </div>
           </div>
   </div> -->
+
   <div>
     <div id="main">
       <div id="header">
-        <a href="/pettohome" class="logo"><h1>petto</h1></a>
+
+        <router-link :to="{ name: 'PettoHome' }">
+          <h1 class="logo">
+            petto
+          </h1>
+        </router-link>
 
         <div class="header-top">
 
