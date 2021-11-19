@@ -1,5 +1,4 @@
 import { 
-  FETCH_USER_INFO, 
   FETCH_SESSION,
   
   FETCH_FACILITY_LIST,
@@ -14,6 +13,8 @@ import {
 
   FETCH_REPORT_LIST,
   FETCH_REPORT,
+
+  FETCH_REPLY_LIST,
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
@@ -30,9 +31,6 @@ import {
 } from "./mutation-types";
 
 export default {
-  [FETCH_USER_INFO] (state, payload) {
-    state.userInfo = payload;
-  },
   //세션
   [FETCH_SESSION] (state) {
     state.session = this.$cookies.get();
@@ -96,6 +94,10 @@ export default {
   },
   [FETCH_ADMIN_MEMBER] (state, adminMember) {
     state.adminMember = adminMember
+  },
+
+  [FETCH_REPLY_LIST] (state, payload) {
+    state.replyList = payload
   },
 
 };

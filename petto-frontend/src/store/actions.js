@@ -1,5 +1,4 @@
 import { 
-  FETCH_USER_INFO, 
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 
@@ -16,6 +15,7 @@ import {
   FETCH_REPORT_LIST,
   FETCH_REPORT,
 
+  FETCH_REPLY_LIST,
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
@@ -59,13 +59,6 @@ export default {
   // Session
   fetchSession({ commit }) {
     commit(FETCH_SESSION);
-  },
-  
-  fetchUserInfo({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
-      .then((res) => {
-        commit(FETCH_USER_INFO, res.data)
-      })
   },
 
   fetchAnimalList ({ commit }) {
@@ -169,6 +162,13 @@ export default {
     return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
             .then((res) => {
                 commit(FETCH_ADMIN_MEMBER, res.data)
+            })
+  },
+
+  fetchReplyList ({ commit }, reportNo) {
+    return axios.get(`http://localhost:8888/petto/report/getReplies/${reportNo}`)
+            .then((res) => {
+                commit(FETCH_REPLY_LIST, res.data)
             })
   },
 };

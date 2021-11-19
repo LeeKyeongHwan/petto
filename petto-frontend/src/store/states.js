@@ -15,9 +15,10 @@ export default {
 
   latestSeenAnimals: [],
 
-
   reportList: [],
   report: '',
+
+  replyList: [],
 
   crawlInfo:'',
 
@@ -32,4 +33,5 @@ export default {
   adminMembers: [],
   adminMember: null,
 
+>>>>>>> a8487e228affa59932871dc21201c8244358c180
 };

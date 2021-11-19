@@ -8,9 +8,7 @@
         <v-container style="width: 51%;">
             
             <form @submit.prevent="onSubmit">
-                <div>
-                <span>
-                <!-- <div> -->
+              
                     <v-select
                         v-model="keyword"
                         :items="items"
@@ -21,10 +19,6 @@
                         class="normalText"
                     ></v-select>
 
-                    <input v-model="title" style="width: 78%; color: black; float: right; margin-top: 12px;" class="normalText"/>
-
-                    <br>
-                    <br>
                     <input v-model="title" style="width: 70%; color: black; float: right; margin-top: 12px;" required class="normalText"/>
 
                     <br>
@@ -117,16 +111,6 @@
                     style="width: 950px;"
                     height="10%;"
                     auto-grow/>
-
-                </span>
-                    label="상세 내용"
-                    style="width: 950px;"
-                    height="10%;"
-                    :rules="rules"
-                    counter
-                    auto-grow/>
-
-                </div>
 
                 <br>
                 <br>

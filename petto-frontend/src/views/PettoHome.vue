@@ -1,5 +1,5 @@
 <template>
-  <!-- <div>
+  <div>
     <div id="main">
       <div id="header">
         <a href="/pettohome" class="logo"><h1>petto</h1></a>
@@ -11,8 +11,7 @@
             router
             :to="{ name: 'MemberLoginPage' }"
             >LOGIN</v-btn>
-          
-          <v-btn plain color="white" v-if="isLogin" @click="onDelete">회원탈퇴</v-btn>
+
           <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
           <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
             >JOIN US</v-btn>
@@ -119,27 +118,63 @@
     <div id="main">
       <div id="header">
         <a href="/pettohome" class="logo"><h1>petto</h1></a>
+
         <div class="header-top">
+
+          <v-tooltip bottom v-if="isLogin">
+
+            <template v-slot:activator="{ on, attrs }">
+            
+            <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
+              <alarm-dialog :session="session"/>
+            </div>
+
+            <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
+              <v-icon color="grey">
+                add_alert
+              </v-icon>
+            </v-btn>
+
+            </template>
+
+            <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
+
+            <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
+
+          </v-tooltip>
+
+          &emsp;
+
+          <v-btn plain color="white" v-if="isLogin" @click="logout">
+            로그 아웃
+          </v-btn>
+
+          <v-btn plain color="white" v-if="isLogin" @click="onDelete">
+            회원 탈퇴
+          </v-btn>
+
           <v-btn
             plain
             color="white"
             v-if="!isLogin"
             router
             :to="{ name: 'MemberLoginPage' }"
-            >LOGIN</v-btn>
+            >로그인
+          </v-btn>
 
-          <v-btn plain color="white" v-if="isLogin" @click="onDelete">회원탈퇴</v-btn>
-          <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
-          <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
-            >JOIN US</v-btn>
+          <v-btn plain color="white" v-if="!isLogin" router :to="{ name: 'SignupPage' }">
+            JOIN US
+          </v-btn>
+
         </div>
+
         <div>
           <ul>
             <li><a href="#">소개</a></li>
-            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
+            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li
             <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="/map">지도</a></li>
+            <li><a href="#">Q&A</a></li>
           </ul>
         </div>
       </div>
@@ -171,7 +206,9 @@
 
         <section>
           <div class="container2">
-                    <statistics/>
+
+            <statistics/>
+            
           </div>
         </section>
         <section>
@@ -215,17 +252,18 @@
                 </v-card>
               </div>
           </div>
-  </div>
+  </div> 
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions, mapState } from 'vuex';
 import Statistics from "@/components/crawling/Statistics.vue";
+import AlarmDialog from '../components/dialogue/AlarmDialog.vue';
 
 export default {
   components: {
     Statistics,
+    AlarmDialog
   },
   data() {
     return {
@@ -252,25 +290,10 @@ export default {
       this.$cookies.remove("user");
       this.isLogin = false;
       this.$store.state.session = null;
+      this.$router.push({ name: 'PettoHome' })
+      alert('로그아웃 되었습니다.')
     },
-    //회원탈퇴
-    onDelete () {
-            const memberNo = this.$store.state.session.memberNo
-            axios.delete(`http://localhost:8888/petto/member/${memberNo}`)
-                .then(() => {
-                    alert('계정을 삭제했습니다.')
-                    this.isLogin = false
-                    // 현재 버튼이 메인페이지에 있어서 router.push 메인페이지하면 콘솔에러 뜸
-                    // 나중에 마이페이지로 버튼 옮겼을때 재활성화
-                    // this.$router.push({ name: 'PettoHome' })
-                    this.$store.state.session = null
-                    this.$cookies.remove("user")
-                })
-               .catch(res => {
-                    alert(res.response.data.message)
-                })
-        },
-        ...mapActions(['fetchOlderAnimalList']),
+    ...mapActions(['fetchOlderAnimalList']),
       toDetailPage(id) {
       this.$router.push({
         name: 'AnimalDetailPage',
@@ -291,7 +314,11 @@ export default {
     // console.log(this.$store.state.olderList)
   },
   computed: {
-      ...mapState(['olderList'])
+      ...mapState(['olderList', 'session']),
+
+      updatedNewsNum() {
+        return this.session.updateAlarmList.length
+      }
   },
   watch: {
      group () {

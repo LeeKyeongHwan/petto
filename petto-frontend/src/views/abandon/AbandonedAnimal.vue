@@ -3,7 +3,6 @@
     <h1>유기동물 리스트</h1>
 
     <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" style="position relative;"/>
-    <!-- <paginated-list v-if="animals" :animals="animals" style="position relative;"/> -->
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
@@ -60,11 +59,11 @@ export default {
   components: {
     PaginatedList
   },
-  // props: {
-  //   pageNum: {
-  //     type: Number
-  //   }
-  // },
+  props: {
+    pageNum: {
+      type: Number
+    }
+  },
   data() {
     return {
       pageArray: [],
@@ -79,7 +78,8 @@ export default {
       ...mapState(['animals', 'latestSeenAnimals']),
 
       latestSeen() {
-        // console.log(this.latestSeenDeleteCnt)
+        console.log(this.latestSeenDeleteCnt)
+
         if(this.$cookies.get("latestSeen")) {
 
           const start = this.listNum * this.LATEST_SEEN_SIZE
@@ -93,7 +93,7 @@ export default {
       },
 
       listCount() {
-        // console.log(this.latestSeenDeleteCnt)
+        console.log(this.latestSeenDeleteCnt)
         
         let listLeng = JSON.parse(this.$cookies.get('latestSeen')).length
 
@@ -127,10 +127,15 @@ export default {
       },
 
       toDetailPage(noticeNo) {
-        let routeData = this.$router.resolve({
-        name: 'AnimalDetailPage',
-        params: { id: noticeNo }
-        });window.open(routeData.href, '_blank')
+        // let routeData = this.$router.resolve({
+        // name: 'AnimalDetailPage',
+        // params: { id: noticeNo }
+        // });window.open(routeData.href, '_blank')
+
+        this.$router.push({
+          name: 'AnimalDetailPage',
+          params: { id: noticeNo }
+        })
       },
 
       delLatestSeen(noticeNo) {

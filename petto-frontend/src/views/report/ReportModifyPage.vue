@@ -48,6 +48,7 @@ export default {
         ...mapState(['report'])
     },
     mounted() {
+        
         if(this.$cookies.get('user').id == this.id) {
             this.$store.dispatch("fetchReport", this.reportNo)
         }

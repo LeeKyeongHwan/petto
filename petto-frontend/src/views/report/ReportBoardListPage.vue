@@ -36,19 +36,20 @@
 
                 <tr v-for="(report, index) in filterReportList" :key="index" class="normalText" style="color: black;" @click="toReadPage(report.reportNo)">
 
-                    <td v-if="!report.expired" style="width: 30%; font-size: 12px;">{{ report.title }}</td>
+                    <td v-if="!report.expired" style="width: 35%; font-size: 12px;">{{ report.title }}</td>
                     <td v-else-if="report.expired" style="width: 30%; font-size: 12px;">만료된 공고</td>
 
+
+                    <td style="width: 35%; font-size: 12px;">{{ report.whereHappened }}</td>
+
                     <td>
-                        <span style="font-size:10px;">종:&ensp;</span>{{ report.breed }}</td>
+                        <span style="width: 10%; font-size:10px;">종:&ensp;</span>{{ report.breed }}</td>
 
-                    <td style="width: 20%; font-size: 12px;">{{ report.whereHappened }}</td>
+                    <td style="width: 10%;">
+                        <span style="font-size: 10px;">게시자:&ensp;</span> {{ report.writer }}</td>
 
-                    <td style="width: 12%;">
-                        <span style="font-size:10px;">게시자:&ensp;</span> {{ report.writer }}</td>
-
-                    <td style="width: 12a%; text-align: right;">
-                        <span style="font-size:10px;">발생일:&ensp;</span>{{ report.whenHappened }}</td>
+                    <td style="width: 12%; text-align: right;">
+                        <span style="font-size: 10px;">발생일:&ensp;</span>{{ report.whenHappened }}</td>
                     
                 </tr>
 
@@ -153,15 +154,11 @@ export default {
         }
     },
     methods: {
-        // toWritePage() {
-        //     this.$router.push({ name: 'ReportWritePage' })
-        // },
-    // },
-    // mounted: {
 
         ...mapActions(['fetchReportList']),
 
         toReadPage(reportNo) {
+
             let routeData = this.$router.resolve({
                 name: 'ReportReadPage',
                 params: { 'reportNo': reportNo }
@@ -169,7 +166,7 @@ export default {
         },
 
         toWritePage() {
-            if(this.$store.state.session) {
+            if(this.$store.state.session != null) {
                 this.$router.push({ name: 'ReportWritePage' })
 
             } else alert('로그인이 필요해요!')
