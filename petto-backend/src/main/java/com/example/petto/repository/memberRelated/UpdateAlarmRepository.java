@@ -16,4 +16,8 @@ public interface UpdateAlarmRepository extends JpaRepository<UpdateAlarm, Long> 
     @Transactional
     @Modifying
     void deleteByAlarmNo(Long alarmNo);
+
+    @Transactional
+    @Modifying
+    void deleteById(String id);
 }

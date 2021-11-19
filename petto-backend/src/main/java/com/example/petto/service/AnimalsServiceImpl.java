@@ -48,4 +48,9 @@ public class AnimalsServiceImpl implements AnimalsService {
     public List<Animals> myLikedAnimals(long memberNo) throws Exception {
         return animalsRepository.myLikedAnimals(memberNo);
     }
+
+    @Override
+    public Long getNumOfAnimals() {
+        return animalsRepository.count();
+    }
 }

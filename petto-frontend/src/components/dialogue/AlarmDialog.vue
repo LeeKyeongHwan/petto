@@ -23,18 +23,18 @@
             <v-card-text>
                 <!-- <v-layout wrap> 이게 있으면 세로로 안나옴 -->
 
-                <span v-for="(alarm, idx) in session.updateAlarmList" :key="idx">
-                    <p style="display: inline-block; width: 300px; font-size: 12px;" @click="toDetailPage(alarm.postNo)">
+                <ul v-for="(alarm, idx) in session.updateAlarmList" :key="idx">
+                    <li style="display: inline-block; width: 300px; font-size: 12px;" @click="toDetailPage(alarm.postNo)">
 
                         {{ alarm.commentator }}님이 {{ alarm.regDate }}시에 '{{ alarm.title }}' 글에 답변했어요! 
                         <br>
-                    </p>
+                    </li>
                     <v-btn text x-small style="float: right;" @click="deleteAlaram(alarm.alarmNo, idx)">
                         <v-icon color="#D5D5D5">
                             cancel
                         </v-icon>
                     </v-btn>
-                </span>
+                </ul>
                         
                 <!-- </v-layout> -->
             </v-card-text>

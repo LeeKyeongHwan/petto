@@ -50,4 +50,13 @@ public class AnimalsController {
         log.info("getMyLikedAnimals(): " + animalsService.myLikedAnimals(memberNo));
         return new ResponseEntity<>(animalsService.myLikedAnimals(memberNo), HttpStatus.OK);
     }
+
+    @GetMapping("/numOfAnimals")
+    public ResponseEntity<Long> getNumOfAnimals() {
+        log.info("getNumOfAnimals: ");
+
+        Long numOfAnimals = animalsService.getNumOfAnimals();
+
+        return new ResponseEntity<Long>(numOfAnimals, HttpStatus.OK);
+    }
 }

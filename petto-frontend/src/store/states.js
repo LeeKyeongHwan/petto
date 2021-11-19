@@ -9,6 +9,7 @@ export default {
   olderList: [],
 
   likedAnimalList: [],
+  numOfAnimals: 0,
 
   voluntary: [],
 
