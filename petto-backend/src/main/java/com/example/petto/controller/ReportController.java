@@ -240,7 +240,7 @@ public class ReportController {
     }
 
     @GetMapping("/myBoardLists/{id}")
-    public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id") String id) throws Exception {
+    public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id")String id) throws Exception {
         log.info("id == > "+ id);
         log.info("getMyBoardLists(): ");
 
