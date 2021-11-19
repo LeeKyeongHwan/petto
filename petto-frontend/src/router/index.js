@@ -90,7 +90,7 @@ const routes = [
     },
   },
   {
-    path: '/abandonedAnimal/list/:page=:pageNum',
+    path: '/abandonedAnimal/list/page=:pageNum',
     name: 'AbandonedAnimal',
     components: {
       default: AbandonedAnimal

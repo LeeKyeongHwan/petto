@@ -2,8 +2,8 @@
   <div>
     <h1>유기동물 리스트</h1>
 
-    <!-- <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" style="position relative;"/> -->
-    <paginated-list v-if="animals" :animals="animals" style="position relative;"/>
+    <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" style="position relative;"/>
+    <!-- <paginated-list v-if="animals" :animals="animals" style="position relative;"/> -->
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">

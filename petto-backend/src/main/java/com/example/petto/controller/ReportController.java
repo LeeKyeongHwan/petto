@@ -237,7 +237,7 @@ public class ReportController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-}
+
 
     @GetMapping("/myBoardLists/{id}")
     public ResponseEntity<List<Report>> getMyBoardLists(@PathVariable("id") String id) throws Exception {
