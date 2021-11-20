@@ -41,6 +41,12 @@ import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
 import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
 import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
 
+import QnaListPage from "../views/qna/QnaListPage.vue";
+import QnaModifyPage from "../views/qna/QnaModifyPage.vue";
+import QnaReadPage from "../views/qna/QnaReadPage.vue";
+import QnaWritePage from "../views/qna/QnaWritePage.vue";
+import MyQna from "../views/member/MyQna.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -263,7 +269,47 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: "/qnalist",
+    name: "QnaListPage",
+    component: QnaListPage,
+  },
+  {
+    path: "/qnalist/:qnaNo/edit",
+    name: "QnaModifyPage",
+    components: {
+      default: QnaModifyPage,
+    },
+    props: {
+      default: true,
+    },
+  },
+  {
+    path: "/qna/:qnaNo",
+    name: "QnaReadPage",
+    components: {
+      default: QnaReadPage,
+    },
+    props: {
+      default: true,
+    },
+  },
+  {
+    path: "/qna/Write",
+    name: "QnaWritePage",
+    component: QnaWritePage,
+  },
+  {
+    path: "/qna/Write",
+    name: "QnaWritePage",
+    component: QnaWritePage,
+  },
+  {
+    path: "/myqna",
+    name: "MyQna",
+    component: MyQna,
+  },
 ];
 
 const router = new VueRouter({
