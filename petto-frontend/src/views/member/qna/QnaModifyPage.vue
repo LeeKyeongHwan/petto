@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import QnaModify from '@/components/qna/QnaModify'
+import QnaModify from '@/components/member/qna/QnaModify'
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 export default {

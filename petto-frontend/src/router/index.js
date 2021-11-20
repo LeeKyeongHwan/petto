@@ -41,11 +41,16 @@ import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
 import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
 import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
 
-import QnaListPage from "../views/qna/QnaListPage.vue";
-import QnaModifyPage from "../views/qna/QnaModifyPage.vue";
-import QnaReadPage from "../views/qna/QnaReadPage.vue";
-import QnaWritePage from "../views/qna/QnaWritePage.vue";
-import MyQna from "../views/member/MyQna.vue";
+import QnaListPage from "../views/admin/qna/QnaListPage.vue";
+
+import QnaModifyPage from "../views/member/qna/QnaModifyPage.vue";
+import QnaReadPage from "../views/member/qna/QnaReadPage.vue";
+import QnaWritePage from "../views/member/qna/QnaWritePage.vue";
+import MyQna from "../views/member/qna/MyQna.vue";
+
+
+import AdminQnaReadPage from "../views/admin/qna/AdminQnaReadPage.vue";
+
 
 Vue.use(VueRouter);
 
@@ -271,11 +276,6 @@ const routes = [
     }
   },
   {
-    path: "/qnalist",
-    name: "QnaListPage",
-    component: QnaListPage,
-  },
-  {
     path: "/qnalist/:qnaNo/edit",
     name: "QnaModifyPage",
     components: {
@@ -310,6 +310,22 @@ const routes = [
     name: "MyQna",
     component: MyQna,
   },
+  // 관리자 qna
+  {
+    path: "/qnalist",
+    name: "QnaListPage",
+    component: QnaListPage,
+  },
+  {
+    path: '/admin/qna/:qnaNo',
+    name: 'AdminQnaReadPage',
+    components: {
+      default: AdminQnaReadPage
+    },
+    props: {
+      default: true
+    }
+  }
 ];
 
 const router = new VueRouter({

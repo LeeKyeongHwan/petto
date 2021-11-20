@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import QnaRead from '@/components/qna/QnaRead.vue'
+import QnaRead from '@/components/member/qna/QnaRead.vue'
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 

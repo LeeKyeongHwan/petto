@@ -18,5 +18,12 @@ public interface QnAService {
 
     public List<QnA> myQnaList(String id) throws Exception;
 
+    //
+    public List<QnA> qnaList() throws Exception;
+
+    public QnA qnaRead(Long qnaNo) throws Exception;
+
+    public QnA qnaAnswers(Long qnaNo, QnA qnA) throws Exception;
+
 
 }

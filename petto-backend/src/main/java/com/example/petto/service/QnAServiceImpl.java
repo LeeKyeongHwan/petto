@@ -60,5 +60,41 @@ public class QnAServiceImpl implements QnAService {
 
     }
 
+    //
+
+    @Override
+    public List<QnA> qnaList() throws Exception {
+        List<QnA> latest = repository.findAll();
+        Collections.reverse(latest);
+
+        return latest;
+    }
+
+    @Override
+    public QnA qnaRead(Long qnaNo) throws Exception{
+        Optional<QnA> qnADetail = repository.findById(qnaNo);
+        if(qnADetail.isPresent()) {
+            QnA qnA = qnADetail.get();
+            log.info("qnaList() :  " + qnA );
+            return qnA;
+        } else {
+            throw new NullPointerException();
+        }
+    }
+
+    @Override
+    public QnA qnaAnswers(Long qnaNo,QnA qnA) throws Exception {
+        Optional<QnA> qnAEdit = repository.findById(qnaNo);
+
+        qnAEdit.ifPresent( changeAnswer ->{
+            changeAnswer.setAnswerState(qnA.getAnswerState());
+            changeAnswer.setAdminAnswer(qnA.getAdminAnswer());
+            qnA.setQnaNo(qnaNo);
+            repository.save(changeAnswer);
+        });
+
+        return qnA;
+    }
+
 
 }
