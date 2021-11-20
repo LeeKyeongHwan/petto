@@ -14,7 +14,7 @@
                     </tr>
                     <tr>
                         <td>제목</td>
-                        <td><input type="text" v-model="qnaboard.title"></td>
+                        <td><input type="text" v-model="title"></td>
                     </tr>
                     <tr>
                         <td>작성자</td>
@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         <td>본문</td>
-                        <td><textarea cols="50" rows="20" v-model="qnaboard.content"></textarea></td>
+                        <td><textarea cols="50" rows="20" v-model="content"></textarea></td>
                     </tr>
                 </table>
             </v-container>

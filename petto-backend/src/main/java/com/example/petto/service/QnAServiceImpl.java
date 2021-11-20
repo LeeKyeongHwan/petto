@@ -2,11 +2,13 @@ package com.example.petto.service;
 
 
 import com.example.petto.entity.QnA;
+import com.example.petto.entity.VolunteerBoard;
 import com.example.petto.repository.QnARepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +21,12 @@ public class QnAServiceImpl implements QnAService {
 
     @Override
     public List<QnA> list() throws Exception {
-        return repository.findAll();
+
+        List<QnA> lists = repository.findAll();
+        Collections.reverse(lists);
+
+        return lists;
+
     }
 
     @Override
@@ -45,7 +52,12 @@ public class QnAServiceImpl implements QnAService {
 
     @Override
     public List<QnA> myQnaList(String id) throws Exception {
-        return repository.myQnaList(id);
+
+        List<QnA> mylists = repository.myQnaList(id);
+        Collections.reverse(mylists);
+
+        return mylists;
+
     }
 
 

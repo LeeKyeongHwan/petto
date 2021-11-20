@@ -27,9 +27,10 @@ export default {
     methods: {
         ...mapActions(['fetchQnA']),
         onSubmit (payload) {
+            
             const { qnaNo, title, writer, content,regDate, answerState, adminAnswer } = payload
             
-            axios.put(`http://localhost:8888/petto/qna/modify`, { qnaNo, title,writer, content, regDate, answerState, adminAnswer })
+            axios.put(`http://localhost:8888/petto/qna/modify`, { qnaNo, title, writer, content, regDate, answerState, adminAnswer })
                     .then( ()=> {
                         alert('수정 성공!')
                         this.$router.push({

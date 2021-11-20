@@ -149,10 +149,6 @@
             로그 아웃
           </v-btn>
 
-          <v-btn plain color="white" v-if="isLogin" @click="onDelete">
-            회원 탈퇴
-          </v-btn>
-
           <v-btn
             plain
             color="white"
@@ -165,7 +161,21 @@
           <v-btn plain color="white" v-if="!isLogin" router :to="{ name: 'SignupPage' }">
             JOIN US
           </v-btn>
-
+          <v-app-bar-nav-icon plain color="white" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+          <v-navigation-drawer app v-model="nav_drawer" temporary>
+            <v-list nav dense>
+                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                    <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
+                        <v-list-item-action>
+                            <v-icon left>{{ link.icon }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ link.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
         </div>
 
         <div>
@@ -174,7 +184,7 @@
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="#">Q&A</a></li>
+            <li><a href="/qnalist">Q&A</a></li>
           </ul>
         </div>
       </div>
