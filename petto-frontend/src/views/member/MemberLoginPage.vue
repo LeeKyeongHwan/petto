@@ -40,12 +40,9 @@ export default {
               this.isLogin = true;
               this.$store.state.session = res.data;
               this.$cookies.set("user", res.data, "12h");
+            
+              this.$router.push({name: 'PettoHome'})
               
-              if(res.data.auth == '관리자'){
-                this.$router.push({name: 'AuthPage'})
-              } else {
-                this.$router.push({name: 'Home'})
-              }
 
             } else {
               alert("로그인 실패! - " + res.data);

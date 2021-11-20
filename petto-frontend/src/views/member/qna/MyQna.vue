@@ -4,14 +4,16 @@
          <v-simple-table>
              <thead>
                 <tr>
-                <th class="text-left" style="width: 100px; " >no</th>
+                <!-- <th class="text-left" style="width: 100px; " >no</th> -->
+                <th class="text-left" style="width: 100px; " >답변상태</th>
                 <th class="text-left" style="width: 150px;">제목</th>
                 <th class="text-left" style="width: 300px;">등록일자</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="myQnaList in calData" :key="myQnaList.qnaNo">
-                <td >{{ myQnaList.qnaNo}}</td>
+                <!-- <td >{{ myQnaList.qnaNo}}</td> -->
+                <td >{{ myQnaList.answerState}}</td>
                 <td @click="toDetailPage(myQnaList.qnaNo)" style="cursor: pointer;">{{ myQnaList.title}}</td>
                 <td>{{ myQnaList.regDate}}</td>
                 </tr>

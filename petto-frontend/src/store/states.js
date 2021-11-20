@@ -35,7 +35,11 @@ export default {
   adminMember: null,
 
   myQnaList: [],
+
   qnaboards: [],
   qnaboard: null,
+  //
+  adminQnAList: [],
+  adminQnA: null
 
 };

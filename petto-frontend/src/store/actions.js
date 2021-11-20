@@ -30,7 +30,11 @@ import {
 
   FETCH_QNA_LIST,
   FETCH_QNA,
-  FETCH_MY_QNA_LIST
+  FETCH_MY_QNA_LIST,
+
+  //
+  FETCH_ADMIN_QNA_LIST,
+  FETCH_ADMIN_QNA
 
 } from "./mutation-types";
 
@@ -194,6 +198,19 @@ export default {
         commit(FETCH_MY_QNA_LIST, res.data);
       })
   }, 
+  //
+  fetchAdminQnAList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/qna/lists')
+            .then((res) => {
+                commit(FETCH_ADMIN_QNA_LIST, res.data)
+            })
+  },
+  fetchAdminQnA ({ commit }, qnaNo) {
+    return axios.get(`http://localhost:8888/petto/admin/qna/${qnaNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_QNA, res.data)
+            })
+  },
 };
 
   

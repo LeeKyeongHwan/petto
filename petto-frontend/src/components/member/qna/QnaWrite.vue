@@ -30,15 +30,15 @@ export default {
             title: '제목을 작성하세요.',
             writer: '', 
             content: '본문을 작성하면 됩니다.',
-            answerState: '',
-            adminAnswer: ''
+            // answerState: '',
+            // adminAnswer: ''
         }
     },
     methods: {
         onSubmit () {
-            const { title, content,answerState, adminAnswer } = this
+            const { title, content } = this
             const { writer } = this.$store.state.session.id
-            this.$emit('submit', { title, writer, content, answerState, adminAnswer })
+            this.$emit('submit', { title, writer, content })
         }
     },
 

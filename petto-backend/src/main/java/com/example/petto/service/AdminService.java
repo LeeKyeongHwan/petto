@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AdminService {
 
-    public List<Member> list( ) throws Exception;
+    public List<Member> memberList( ) throws Exception;
 
     public Member read(Long memberNo) throws Exception;
 

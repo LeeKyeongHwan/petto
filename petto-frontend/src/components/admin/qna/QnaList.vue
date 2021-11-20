@@ -1,9 +1,9 @@
-<template>
+<!--<template>
   <div>
     <v-container>
       <table border="1">
         <tr>
-          <th align="center" width="80">No</th>
+          <th align="center" width="80">답변상태</th>
           <th align="center" width="320">제목</th>
           <th align="center" width="100">작성자</th>
           <th align="center" width="240">등록일자</th>
@@ -17,6 +17,7 @@
 
         <tr v-else v-for="qnaboard in calData" :key="qnaboard.qnadNo">
           <td align="center">{{ qnaboard.qnaNo }}</td>
+          <td align="center">{{ qnaboard.answerState }}</td>
           <td align="left">
             <router-link :to="{ name: 'QnaReadPage', params: { qnaNo: qnaboard.qnaNo.toString() } }">
               {{ qnaboard.title }}
@@ -64,4 +65,4 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped>-->

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!--<div>
     <div id="main">
       <div id="header">
         <a href="/pettohome" class="logo"><h1>petto</h1></a>
@@ -113,7 +113,7 @@
                 </v-card>
               </div>
           </div>
-  </div> -->
+  </div>-->
 
   <div>
     <div id="main">
@@ -152,7 +152,7 @@
           &emsp;
 
           <v-btn plain color="white" v-if="isLogin" @click="logout">
-            로그 아웃
+            LOGOUT
           </v-btn>
 
           <v-btn
@@ -161,12 +161,14 @@
             v-if="!isLogin"
             router
             :to="{ name: 'MemberLoginPage' }"
-            >로그인
+            >LOGIN
           </v-btn>
 
           <v-btn plain color="white" v-if="!isLogin" router :to="{ name: 'SignupPage' }">
             JOIN US
           </v-btn>
+
+
           <v-app-bar-nav-icon plain color="white" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
           <v-navigation-drawer app v-model="nav_drawer" temporary>
             <v-list nav dense>
@@ -182,6 +184,23 @@
                 </v-list-item-group>
             </v-list>
           </v-navigation-drawer>
+
+           <!-- <v-app-bar-nav-icon plain color="white" v-if="isLogin && this.auth != '개인'" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+          <v-navigation-drawer app v-model="nav_drawer" temporary>
+            <v-list nav dense>
+                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                    <v-list-item v-for="adminLink in adminLinks" :key="adminLink.name" router :to="adminLink.route">
+                        <v-list-item-action>
+                            <v-icon left>{{ adminLink.icon }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ adminLink.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer> -->
+
         </div>
 
         <div>
@@ -190,7 +209,7 @@
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="/qnalist">Q&A</a></li>
+            <li><a href="/map">지도</a></li>
           </ul>
         </div>
       </div>
@@ -287,13 +306,18 @@ export default {
       isLogin: false,
       nav_drawer: false,
       group: false,
+      auth: this.$cookies.get("user").auth,
       links: [
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
                 { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
                 { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' }
-            ]
-         }
+            ],
+      adminLinks: [
+          { icon: 'people', text: '회원관리', name: 'my_board', route: '/admin' },
+          { icon: 'help_outline', text: '1:1 문의관리', name: 'QnA', route: '/qnalist' }
+      ]
+    }
   },
   methods: {
     Close() {
@@ -328,7 +352,7 @@ export default {
       this.isLogin = true;
     }
     this.fetchOlderAnimalList()
-    // console.log(this.$store.state.olderList)
+    console.log(this.auth)
   },
   computed: {
       ...mapState(['olderList', 'session']),

@@ -10,7 +10,7 @@
             </tr>
             <tr v-if="!adminMembers || (Array.isArray(adminMembers) && adminMembers.length === 0)">
                 <td colspan="4">
-                    현재 등록된 게시물이 없습니다!
+                    현재 등록된 회원이 없습니다!
                 </td>
             </tr>
             <tr v-else v-for="adminMember in adminMembers" :key="adminMember.memberNo">

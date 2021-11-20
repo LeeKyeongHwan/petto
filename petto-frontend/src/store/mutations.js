@@ -31,7 +31,10 @@ import {
 
   FETCH_QNA_LIST,
   FETCH_QNA,
-  FETCH_MY_QNA_LIST
+  FETCH_MY_QNA_LIST,
+
+  FETCH_ADMIN_QNA_LIST,
+  FETCH_ADMIN_QNA
 
 } from "./mutation-types";
 
@@ -111,12 +114,20 @@ export default {
   [FETCH_QNA_LIST] (state, qnaboards) {
     state.qnaboards = qnaboards;
   },
+  //
   [FETCH_QNA] (state, qnaboard) {
     state.qnaboard = qnaboard
   },
 
   [FETCH_MY_QNA_LIST] (state, myQnaList) {
     state.myQnaList = myQnaList
+  },
+  //
+  [FETCH_ADMIN_QNA_LIST] (state, adminQnAList) {
+    state.adminQnAList = adminQnAList;
+  },
+  [FETCH_ADMIN_QNA] (state, adminQnA) {
+    state.adminQnA = adminQnA
   }
 
 };
