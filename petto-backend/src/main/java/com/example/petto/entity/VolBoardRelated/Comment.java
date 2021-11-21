@@ -20,7 +20,6 @@ public class Comment {
     @Column(name = "comment_no")
     private Long commentNo;
 
-
     @Column(name = "volunteer_no", nullable = false)
     private Long volunteerNo;
 

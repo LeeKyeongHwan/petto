@@ -46,10 +46,6 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
         UUID uuid = UUID.randomUUID();
 
         try {
-                if(!fileTitle.exists()) {
-                    fileTitle.mkdirs();
-                    fileContent.mkdirs();
-                }
             if(!fileTitle.exists()) {
                 fileTitle.mkdirs();
                 fileContent.mkdirs();

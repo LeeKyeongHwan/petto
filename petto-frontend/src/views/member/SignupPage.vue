@@ -335,7 +335,8 @@ export default {
           petsRaised: '', //
           nickname: '',
           confirmedNickname: '',
-          isDupliNickChecked: false
+          isDupliNickChecked: false,
+          auth: '개인'
       }
   },
   methods: {
@@ -432,7 +433,8 @@ export default {
         const birthday = this.birthday
         const petsRaised = this.petsRaised
         const nickname = this.nickname
-        axios.post('http://localhost:8888/petto/member/signup', { id, password, email, phoneNumber, name, birthday, petsRaised, nickname })
+        const auth = this.auth
+        axios.post('http://localhost:8888/petto/member/signup', { id, password, email, phoneNumber, name, birthday, petsRaised, nickname, auth })
             .then(() => {
                 alert('가입이 완료되었습니다!')
                 this.$router.push({

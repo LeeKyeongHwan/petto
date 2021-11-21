@@ -16,8 +16,7 @@ import AnimalDetailPage from "../views/abandon/AnimalDetailPage.vue";
 
 import KakaoMap from "../views/map/KakaoMap.vue";
 
-
-// import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
+//import AnimalVoluntary from "../views/voluntary/AnimalVoluntary.vue";
 
 import ExceptionPage from "../views/ExceptionPage.vue";
 
@@ -29,11 +28,31 @@ import AnimalVoluntaryModifyPage from "../views/voluntary/AnimalVoluntaryModifyP
 import ReportBoardPage from "../views/report/ReportBoardPage.vue";
 import ReportBoardListPage from "../views/report/ReportBoardListPage.vue";
 import ReportWritePage from "../views/report/ReportWritePage.vue";
+import ReportReadPage from "../views/report/ReportReadPage.vue";
+import ReportModifyPage from "../views/report/ReportModifyPage.vue";
 
 import MyLikedAnimals from "../views/member/MyLikedAnimals.vue";
 import PasswordCheckPage from "../views/member/PasswordCheckPage.vue";
+import PasswordCheckWithdrawalPage from "../views/member/PasswordCheckWithdrawalPage.vue";
 import MyProfile from "../views/member/MyProfile.vue";
 import MyboardPage from "../views/member/MyboardPage.vue";
+
+import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
+import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
+import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
+
+import QnaListPage from "../views/admin/qna/QnaListPage.vue";
+
+import QnaModifyPage from "../views/member/qna/QnaModifyPage.vue";
+import QnaReadPage from "../views/member/qna/QnaReadPage.vue";
+import QnaWritePage from "../views/member/qna/QnaWritePage.vue";
+import MyQna from "../views/member/qna/MyQna.vue";
+
+
+import AdminQnaReadPage from "../views/admin/qna/AdminQnaReadPage.vue";
+
+import AboutPage from '@/views/about/AboutPage.vue';
+
 
 Vue.use(VueRouter);
 
@@ -84,9 +103,14 @@ const routes = [
     },
   },
   {
-    path: "/abandonedAnimal",
+    path: "/abandonedAnimal/list/page=:pageNum",
     name: "AbandonedAnimal",
-    component: AbandonedAnimal,
+    components: {
+      default: AbandonedAnimal
+    },
+    props: {
+      default: true
+    }
   },
   {
     path: "/animalDetail/read/:id",
@@ -180,6 +204,16 @@ const routes = [
     }
   },
   {
+    path: "/reportBoard/read/:reportNo",
+    name: "ReportReadPage",
+    components: {
+      default: ReportReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+   {
     path: "/myLikedAnimals",
     name: "MyLikedAnimals",
     components: {
@@ -192,6 +226,11 @@ const routes = [
     component: PasswordCheckPage,
   },
   {
+    path: "/passwordCheckWithdrawalPage",
+    name: "PasswordCheckWithdrawalPage",
+    component: PasswordCheckWithdrawalPage,
+  },
+  {
     path: "/myProfile",
     name: "MyProfile",
     component: MyProfile,
@@ -201,8 +240,99 @@ const routes = [
     name: "MyboardPage",
     component: MyboardPage,
   },
-
-
+  {
+    path: '/admin',
+    name: 'AdminMemberListPage',
+    components: {
+      default: AdminMemberListPage
+    }
+  },
+  {
+    path: '/admin/:memberNo',
+    name: 'AdminMemberReadPage',
+    components: {
+      default: AdminMemberReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: "/reportBoard/modify/id=:id/:reportNo",
+    name: "ReportModifyPage",
+    components: {
+      default: ReportModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/admin/:memberNo/edit',
+    name: 'AdminMemberModifyPage',
+    components: {
+      default: AdminMemberModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: "/aboutPage",
+    name: "AboutPage",
+    component: AboutPage,
+  },
+  {
+    path: "/qnalist/:qnaNo/edit",
+    name: "QnaModifyPage",
+    components: {
+      default: QnaModifyPage,
+    },
+    props: {
+      default: true,
+    },
+  },
+  {
+    path: "/qna/:qnaNo",
+    name: "QnaReadPage",
+    components: {
+      default: QnaReadPage,
+    },
+    props: {
+      default: true,
+    },
+  },
+  {
+    path: "/qna/Write",
+    name: "QnaWritePage",
+    component: QnaWritePage,
+  },
+  {
+    path: "/qna/Write",
+    name: "QnaWritePage",
+    component: QnaWritePage,
+  },
+  {
+    path: "/myqna",
+    name: "MyQna",
+    component: MyQna,
+  },
+  // 관리자 qna
+  {
+    path: "/qnalist",
+    name: "QnaListPage",
+    component: QnaListPage,
+  },
+  {
+    path: '/admin/qna/:qnaNo',
+    name: 'AdminQnaReadPage',
+    components: {
+      default: AdminQnaReadPage
+    },
+    props: {
+      default: true
+    }
+  }
 ];
 
 const router = new VueRouter({

@@ -19,10 +19,10 @@
             <div>
                 <ul>
                     <li><a href="#">소개</a></li>
-                    <li><a href="/abandonedAnimal">유기동물</a></li>
+                    <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
                     <li><a href="/reportBoard">제보</a></li>
                     <li><a href="/voluntaryBoard">자원봉사</a></li>
-                    <li><a href="#">Q&A</a></li>
+                    <li><a href="/map">지도</a></li>
                 </ul>
             </div>
         </div>
@@ -41,6 +41,8 @@ export default {
       this.$cookies.remove("user");
       this.isLogin = false;
       this.$store.state.session = null;
+      this.$router.push({ name: 'PettoHome' })
+      alert('로그아웃 되었습니다.')
     },
   },
   mounted() {

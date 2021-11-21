@@ -3,31 +3,37 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-6">
-            <h6>About</h6>
-            <p class="text-justify">Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative  to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm.</p>
+            <h7>CUSTOMER CENTER</h7>
+            <p class="text-justify"> 
+              <h5>TEL:02-123-4567 </h5>
+              <i>월~금<br>
+                AM 10:00 ~ PM 05:30<br>
+                SAT/SUN/HOLIDAY OFF<br>
+                
+            
+              </i>
+            
           </div>
 
           <div class="col-xs-6 col-md-3">
-            <h6>Categories</h6>
-            <ul class="footer-links">
-              <li><a href="#">C</a></li>
-              <li><a href="#">UI Design</a></li>
-              <li><a href="#">PHP</a></li>
-              <li><a href="#">Java</a></li>
-              <li><a href="#">Android</a></li>
-              <li><a href="#">Templates</a></li>
+            <h6>PETTO SNS</h6>          
+            <ul class="footer-links">                 
+              <a href="#"> <img width="50" height="50"  src="@/assets/footer/Facebook.png"></a>
+              <a href="#"> <img width="50" height="50" src="@/assets/footer/Instagram.png"></a>
+              <a href="#"> <img width="50" height="50" src="@/assets/footer/KakaoTalk.png"></a>
+              <a href="#"> <img width="50" height="50" src="@/assets/footer/Twitter.png"></a>
             </ul>
-          </div>
+            </div>
 
           <div class="col-xs-6 col-md-3">
             <h6>Quick Links</h6>
-            <ul class="footer-links">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact Us</a></li>
-              <li><a href="#">Contribute</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Sitemap</a></li>
-            </ul>
+            <ul class="footer-links">             
+            <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
+            <li><a href="/reportBoard">제보</a></li>
+            <li><a href="/voluntaryBoard">자원봉사</a></li>
+            <li><a href="/map">지도</a></li>
+          </ul>
+          
           </div>
         </div>
         <hr>
@@ -35,8 +41,14 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-sm-6 col-xs-12">
-            <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
-         <a href="#">Scanfcode</a>.
+            <p class="copyright-text"> 
+              <!-- &copy;
+              <a href="#"> </a>
+               -->     
+               <a href="#"> <img width="20" height="20" src="@/assets/footer/bang.png"></a>        
+              저희 PETTO는 현재 후원을 받지 않고 있습니다.            
+
+        
             </p>
           </div>
 
@@ -83,7 +95,9 @@
 .footer-links
 {
   padding-left:0;
-  list-style:none
+  list-style:none;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
 .footer-links li
 {
@@ -118,6 +132,8 @@
 }
 .copyright-text
 {
+  font-size: large;
+  color: #ff0000;
   margin:0
 }
 @media (max-width:991px)
@@ -209,4 +225,5 @@
     font-weight:600
   }
 }
+
 </style>

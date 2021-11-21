@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 import PaginatedList from '@/components/abandon/PaginatedList'
 import {mapActions, mapState} from 'vuex'
 
@@ -78,6 +79,7 @@ export default {
 
       latestSeen() {
         console.log(this.latestSeenDeleteCnt)
+
         if(this.$cookies.get("latestSeen")) {
 
           const start = this.listNum * this.LATEST_SEEN_SIZE
@@ -125,10 +127,15 @@ export default {
       },
 
       toDetailPage(noticeNo) {
-        let routeData = this.$router.resolve({
-        name: 'AnimalDetailPage',
-        params: { id: noticeNo }
-        });window.open(routeData.href, '_blank')
+        // let routeData = this.$router.resolve({
+        // name: 'AnimalDetailPage',
+        // params: { id: noticeNo }
+        // });window.open(routeData.href, '_blank')
+
+        this.$router.push({
+          name: 'AnimalDetailPage',
+          params: { id: noticeNo }
+        })
       },
 
       delLatestSeen(noticeNo) {

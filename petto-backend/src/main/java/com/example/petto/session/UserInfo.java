@@ -1,10 +1,12 @@
 package com.example.petto.session;
 
+import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Data
@@ -16,4 +18,6 @@ public class UserInfo implements Serializable {
     private Long memberNo;
     private String id;
     private String nickname;
+    private String auth;
+    private List<UpdateAlarm> updateAlarmList;
 }

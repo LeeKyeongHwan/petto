@@ -179,6 +179,7 @@ export default {
         params: { pageNum: this.pageNum }
       })
     },
+
     prevPage() {
       this.pageNum = parseInt(this.pageNum) - 1;
 
@@ -187,9 +188,11 @@ export default {
         params: { pageNum: this.pageNum }
       })
     },
+
     cancel() {
       this.searchDialog = false
     },
+
     toDetailPage(id) {
       // let routeData = this.$router.resolve({
       //   name: 'AnimalDetailPage',
@@ -202,6 +205,7 @@ export default {
       })
       
     },
+    
     selectSearch() {
       
       const { selectPlace, selectKinds } = this
@@ -333,6 +337,7 @@ export default {
       this.$store.state.session = this.$cookies.get("user")
       this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
     }
+    
   }
 }
 </script>

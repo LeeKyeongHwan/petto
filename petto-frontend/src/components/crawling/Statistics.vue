@@ -7,7 +7,7 @@
                 <div class="projectFactsWrap ">
                       <div class="item wow fadeInUpBig animated animated" style="visibility: visible;">
                         <i><v-icon>pets</v-icon></i>
-                        <p id="number1" class="number">{{animals.length}}</p>
+                        <p id="number1" class="number">{{ numOfAnimals }}</p>
                         <span></span>
                         <p>유기동물 수</p>
                     </div>
@@ -38,7 +38,8 @@
 <script>
 
 import axios from "axios";
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
+import { FETCH_NUM_OF_ANIMALS } from '@/store/mutation-types'
 
 
 export default {
@@ -66,14 +67,19 @@ export default {
         });
   },
   computed: {
-    ...mapState({crawlInfo: state => state.crawlInfo,}),
-    ...mapState(['animals'])
+    ...mapState({crawlInfo: state => state.crawlInfo, 
+                numOfAnimals: state => state.numOfAnimals})
   },
-  methods: {
-    ...mapActions(['fetchAnimalList']),
-  },
+
   mounted () {
-      this.fetchAnimalList()
+      axios.get('http://localhost:8888/petto/animals/numOfAnimals')
+        .then((res) => {
+         
+          this.$store.commit(FETCH_NUM_OF_ANIMALS, res.data)
+        })
+        .catch((err) => {
+          console.log(err.message)
+        })
   },
   
 

@@ -1,5 +1,4 @@
 import { 
-  FETCH_USER_INFO, 
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 
@@ -14,15 +13,28 @@ import {
   FETCH_LIKED_ANIMAL_LIST,
 
   FETCH_REPORT_LIST,
+  FETCH_REPORT,
+
+  FETCH_REPLY_LIST,
 
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
 
   FETCH_MY_LIKED_ANIMAL_LIST,
+
   FETCH_MY_BOARD_LIST,
+  FETCH_VOL_COMMENT,
 
-  FETCH_VOL_COMMENT
+  FETCH_ADMIN_MEMBER_LIST,
+  FETCH_ADMIN_MEMBER,
 
+  FETCH_QNA_LIST,
+  FETCH_QNA,
+  FETCH_MY_QNA_LIST,
+
+  //
+  FETCH_ADMIN_QNA_LIST,
+  FETCH_ADMIN_QNA
 
 } from "./mutation-types";
 
@@ -55,13 +67,6 @@ export default {
   // Session
   fetchSession({ commit }) {
     commit(FETCH_SESSION);
-  },
-  
-  fetchUserInfo({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
-      .then((res) => {
-        commit(FETCH_USER_INFO, res.data)
-      })
   },
 
   fetchAnimalList ({ commit }) {
@@ -101,6 +106,20 @@ export default {
       })
   },
 
+  fetchReport({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/reportRead/${payload}`)
+      .then((res) => {
+        if(!res.data) {
+          
+          alert('이미 삭제되었거나 없는 공고입니다!')
+          window.close()
+        }
+        else {
+          //alert(JSON.stringify(res.data))
+          commit(FETCH_REPORT, res.data)
+        }
+      })
+  },
     
   fetchVoluntaryBoardList ({ commit }) {
     return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
@@ -114,26 +133,84 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
-   },
+  },
+
+  fetchMyLikedAnimalList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
+      })
+  },
+
+  fetchMyBoardList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_BOARD_LIST, res.data);
+      })
+    }, 
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
+      .then((res) => {
+          commit(FETCH_VOL_COMMENT, res.data)
+      })
+  },
+  fetchMemberList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/member/memberlists')
             .then((res) => {
-                commit(FETCH_VOL_COMMENT, res.data)
-                console.log(res.data)
+                commit(FETCH_MEMBER_LIST, res.data)
             })
   },
-<<<<<<<<< Temporary merge branch 1
+  fetchAdminMemberList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/lists')
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER_LIST, res.data)
+            })
+  },
+  fetchAdminMember ({ commit }, memberNo) {
+    return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER, res.data)
+            })
+  },
 
-};
-=========
+  fetchReplyList ({ commit }, reportNo) {
+    return axios.get(`http://localhost:8888/petto/report/getReplies/${reportNo}`)
+            .then((res) => {
+                commit(FETCH_REPLY_LIST, res.data)
+            })
+  },
+  fetchQnAList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/qna/lists')
+            .then((res) => {
+                commit(FETCH_QNA_LIST, res.data)
+            })
+  },
   
-      fetchMemberList ({ commit }) {
-        return axios.get('http://localhost:8888/petto/member/memberlists')
-                .then((res) => {
-                    commit(FETCH_MEMBER_LIST, res.data)
-                })
-      }
+  fetchQnA ({ commit }, qnaNo) {
+      return axios.get(`http://localhost:8888/petto/qna/${qnaNo}`)
+              .then((res) => {
+                  commit(FETCH_QNA, res.data)
+              })
+  },
+  fetchMyQnAList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/qna/myQnaList/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_QNA_LIST, res.data);
+      })
+  }, 
+  //
+  fetchAdminQnAList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/qna/lists')
+            .then((res) => {
+                commit(FETCH_ADMIN_QNA_LIST, res.data)
+            })
+  },
+  fetchAdminQnA ({ commit }, qnaNo) {
+    return axios.get(`http://localhost:8888/petto/admin/qna/${qnaNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_QNA, res.data)
+            })
+  },
+};
 
-  };
->>>>>>>>> Temporary merge branch 2
   

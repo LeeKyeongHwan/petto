@@ -8,9 +8,7 @@
         <v-container style="width: 51%;">
             
             <form @submit.prevent="onSubmit">
-                <div>
-                <span>
-                <div>
+              
                     <v-select
                         v-model="keyword"
                         :items="items"
@@ -21,10 +19,6 @@
                         class="normalText"
                     ></v-select>
 
-                    <input v-model="title" style="width: 78%; color: black; float: right; margin-top: 12px;" class="normalText"/>
-
-                    <br>
-                    <br>
                     <input v-model="title" style="width: 70%; color: black; float: right; margin-top: 12px;" required class="normalText"/>
 
                     <br>
@@ -71,6 +65,14 @@
                         class="normalText"
                     ></v-select>
 
+                    <div v-if="breed == '기타'" style="float: left; margin-left: 40px;">
+                        
+                        <label class="normalText" style="float: left; color: grey;">
+                            기타 종 명 &emsp;
+                            <input v-model="etcAnimal" style="width: 200px; color: black; margin-top: 12px;" required class="normalText"/>
+                        </label>
+                    </div>
+
                     <br>
                     <br>
                     <br>
@@ -109,16 +111,6 @@
                     style="width: 950px;"
                     height="10%;"
                     auto-grow/>
-
-                </span>
-                    label="상세 내용"
-                    style="width: 950px;"
-                    height="10%;"
-                    :rules="rules"
-                    counter
-                    auto-grow/>
-
-                </div>
 
                 <br>
                 <br>
@@ -160,7 +152,6 @@ export default {
             keyword: '',
             items: [ '실종', '보호', '목격' ],
             title: '제목',
-            content: ''
             content: '',
             city: '',
             areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
@@ -168,6 +159,7 @@ export default {
             animals: [ '개', '고양이', '기타' ],
             date: '',
             breed: '',
+            etcAnimal: '',
             feature: '',
             keepingPlace: '',
             rules: [v => v.length <= 300 || '300자 이내 작성'],
@@ -178,10 +170,11 @@ export default {
         goBack() {
             window.history.go(-1)
         },
-        onSubmit() {
-            const form = { keyword: this.keyword, title: this.title, content: this.content }
+        // onSubmit() {
+        //     const form = { keyword: this.keyword, title: this.title, content: this.content }
 
-            this.$emit('submit', form)
+        //     this.$emit('submit', form)
+        // },
         handleFileUpload() {
             this.pics = this.$refs.files.files
         },
@@ -189,12 +182,15 @@ export default {
 
             if(this.$store.state.session) {
 
+                if(this.breed == '기타') this.breed = this.etcAnimal
+                
                 const whereHappened = this.city + ' ' + this.place
 
                 const form = { category: this.keyword, title: this.title, writer: this.$store.state.session.id , whereHappened: whereHappened,
                 whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content }
 
                 if(this.pics.length > 0) {
+
                     let formData = new FormData()
 
                     for(var i=0; i<this.pics.length; i++) {
@@ -214,6 +210,7 @@ export default {
                             if(res.data) {
 
                                 form.imgUploadedTime = dateId
+                                form.imgUploadedCnt = this.pics.length
 
                                 this.$emit('submit', form)
                             }

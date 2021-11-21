@@ -39,17 +39,11 @@ export default {
               alert("로그인 성공! - " + JSON.stringify(res.data));
               this.isLogin = true;
               this.$store.state.session = res.data;
-              this.$cookies.set("user", res.data, "1h");
-              //alert(JSON.stringify(this.$store.state.session))
-              location.href = "/";
+              this.$cookies.set("user", res.data, "12h");
+            
+              this.$router.push({name: 'PettoHome'})
+              
 
-
-               this.fetchUserInfo(id)
-                        if (res.data.auth == '관리자'){
-                           this.$router.push({name: 'AuthPage'})
-                       }else{
-                        this.$router.push({name: 'Home'})
-                       }
             } else {
               alert("로그인 실패! - " + res.data);
               this.isLogin = false;
@@ -64,6 +58,7 @@ export default {
         );
       }
     },
+    
     logout() {
       this.$cookies.remove("user");
       this.isLogin = false;

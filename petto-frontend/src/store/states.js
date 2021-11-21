@@ -10,13 +10,16 @@ export default {
   olderList: [],
 
   likedAnimalList: [],
+  numOfAnimals: 0,
 
   voluntary: [],
 
   latestSeenAnimals: [],
 
-
   reportList: [],
+  report: '',
+
+  replyList: [],
 
   crawlInfo:'',
 
@@ -26,6 +29,17 @@ export default {
   myLikedAnimals: [],
   myBoardList: [],
 
-  volComments:[]
+  volComments:[],
+
+  adminMembers: [],
+  adminMember: null,
+
+  myQnaList: [],
+
+  qnaboards: [],
+  qnaboard: null,
+  //
+  adminQnAList: [],
+  adminQnA: null
 
 };

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!--<div>
     <div id="main">
       <div id="header">
         <a href="/pettohome" class="logo"><h1>petto</h1></a>
@@ -7,12 +7,11 @@
           <v-btn
             plain
             color="white"
-            v-if="!isLogin"
+          C:\group_project\petto\petto-frontend\src\components\abandon\PaginatedList.vue  v-if="!isLogin"
             router
             :to="{ name: 'MemberLoginPage' }"
             >LOGIN</v-btn>
-          
-          <v-btn plain color="white" v-if="isLogin" @click="onDelete">회원탈퇴</v-btn>
+
           <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
           <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
             >JOIN US</v-btn>
@@ -38,7 +37,7 @@
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
             <li><a href="#">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="#">Q&A</a></li>
+            <li><a href="/qnalist">Q&A</a></li>
           </ul>
         </div>
       </div>
@@ -114,33 +113,103 @@
                 </v-card>
               </div>
           </div>
-  </div>
+  </div>-->
+
   <div>
     <div id="main">
       <div id="header">
-        <a href="/pettohome" class="logo"><h1>petto</h1></a>
+
+        <router-link :to="{ name: 'PettoHome' }">
+          <h1 class="logo">
+            petto
+          </h1>
+        </router-link>
+
         <div class="header-top">
+
+          <v-tooltip bottom v-if="isLogin">
+
+            <template v-slot:activator="{ on, attrs }">
+            
+            <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
+              <alarm-dialog :session="session"/>
+            </div>
+
+            <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
+              <v-icon color="grey">
+                add_alert
+              </v-icon>
+            </v-btn>
+
+            </template>
+
+            <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
+
+            <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
+
+          </v-tooltip>
+
+          &emsp;
+
+          <v-btn plain color="white" v-if="isLogin" @click="logout">
+            LOGOUT
+          </v-btn>
+
           <v-btn
             plain
             color="white"
             v-if="!isLogin"
             router
             :to="{ name: 'MemberLoginPage' }"
-            >LOGIN</v-btn>
+            >LOGIN
+          </v-btn>
 
-          <v-btn plain color="white" v-if="isLogin" @click="onDelete">회원탈퇴</v-btn>
-          <v-btn plain color="white" v-if="isLogin" @click="logout">LOGOUT</v-btn>
-          <v-btn plain color="white" router :to="{ name: 'SignupPage' }"
-            >JOIN US</v-btn>
+          <v-btn plain color="white" v-if="!isLogin" router :to="{ name: 'SignupPage' }">
+            JOIN US
+          </v-btn>
+
+
+          <v-app-bar-nav-icon plain color="white" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+          <v-navigation-drawer app v-model="nav_drawer" temporary>
+            <v-list nav dense>
+                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                    <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
+                        <v-list-item-action>
+                            <v-icon left>{{ link.icon }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ link.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
+
+           <!-- <v-app-bar-nav-icon plain color="white" v-if="isLogin && this.auth != '개인'" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+          <v-navigation-drawer app v-model="nav_drawer" temporary>
+            <v-list nav dense>
+                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                    <v-list-item v-for="adminLink in adminLinks" :key="adminLink.name" router :to="adminLink.route">
+                        <v-list-item-action>
+                            <v-icon left>{{ adminLink.icon }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ adminLink.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer> -->
+
         </div>
+
         <div>
           <ul>
             <li><a href="#">소개</a></li>
-            <li><a href="#">소개</a></li>
             <li><a href="/abandonedAnimal/list/page=0">유기동물</a></li>
-            <li><a href="#">제보</a></li>
+            <li><a href="/reportBoard">제보</a></li>
             <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="#">Q&A</a></li>
+            <li><a href="/map">지도</a></li>
           </ul>
         </div>
       </div>
@@ -172,7 +241,9 @@
 
         <section>
           <div class="container2">
-                    <statistics/>
+
+            <statistics/>
+            
           </div>
         </section>
         <section>
@@ -216,17 +287,18 @@
                 </v-card>
               </div>
           </div>
-  </div>
+  </div> 
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions, mapState } from 'vuex';
 import Statistics from "@/components/crawling/Statistics.vue";
+import AlarmDialog from '../components/dialogue/AlarmDialog.vue';
 
 export default {
   components: {
     Statistics,
+    AlarmDialog
   },
   data() {
     return {
@@ -234,11 +306,17 @@ export default {
       isLogin: false,
       nav_drawer: false,
       group: false,
+      auth: this.$cookies.get("user").auth,
       links: [
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
-                { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' }
-            ]
+                { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
+                { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' }
+            ],
+      adminLinks: [
+          { icon: 'people', text: '회원관리', name: 'my_board', route: '/admin' },
+          { icon: 'help_outline', text: '1:1 문의관리', name: 'QnA', route: '/qnalist' }
+      ]
     }
   },
   methods: {
@@ -253,25 +331,10 @@ export default {
       this.$cookies.remove("user");
       this.isLogin = false;
       this.$store.state.session = null;
+      this.$router.push({ name: 'PettoHome' })
+      alert('로그아웃 되었습니다.')
     },
-    //회원탈퇴
-    onDelete () {
-            const memberNo = this.$store.state.session.memberNo
-            axios.delete(`http://localhost:8888/petto/member/${memberNo}`)
-                .then(() => {
-                    alert('계정을 삭제했습니다.')
-                    this.isLogin = false
-                    // 현재 버튼이 메인페이지에 있어서 router.push 메인페이지하면 콘솔에러 뜸
-                    // 나중에 마이페이지로 버튼 옮겼을때 재활성화
-                    // this.$router.push({ name: 'PettoHome' })
-                    this.$store.state.session = null
-                    this.$cookies.remove("user")
-                })
-               .catch(res => {
-                    alert(res.response.data.message)
-                })
-        },
-        ...mapActions(['fetchOlderAnimalList']),
+    ...mapActions(['fetchOlderAnimalList']),
       toDetailPage(id) {
       this.$router.push({
         name: 'AnimalDetailPage',
@@ -289,10 +352,14 @@ export default {
       this.isLogin = true;
     }
     this.fetchOlderAnimalList()
-    // console.log(this.$store.state.olderList)
+    console.log(this.auth)
   },
   computed: {
-      ...mapState(['olderList'])
+      ...mapState(['olderList', 'session']),
+
+      updatedNewsNum() {
+        return this.session.updateAlarmList.length
+      }
   },
   watch: {
      group () {

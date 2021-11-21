@@ -3,22 +3,19 @@ package com.example.petto.service;
 import com.example.petto.controller.request.MemberRequest;
 import com.example.petto.entity.Member;
 import com.example.petto.entity.MemberRelated.LikedAnimal;
+import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
-import com.example.petto.repository.MemberAuthRepository;
 import com.example.petto.repository.MemberRepository;
+import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -41,6 +38,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     BCryptPasswordEncoder decoder;
+
+    @Autowired
+    UpdateAlarmRepository updateAlarmRepository;
 
     @Override
     public boolean idDupliChk(String id) {
@@ -69,8 +69,9 @@ public class MemberServiceImpl implements MemberService {
         String birthday = memberRequest.getBirthday();
         String petsRaised = memberRequest.getPetsRaised();
         String nickname = memberRequest.getNickname();
+        String auth = memberRequest.getAuth();
 
-        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname);
+        Member member = new Member(id, password, email, phoneNumber, name, birthday, petsRaised, nickname, auth);
 
         memberRepository.save(member);
     }
@@ -132,11 +133,11 @@ public class MemberServiceImpl implements MemberService {
         String password = passwordEncoder.encode(memberRequest.getPassword());
 
         memberRepository.changePassword(id, password);
-
     }
 
     @Override
-    public boolean login(MemberRequest memberRequest) throws Exception {
+    @Transactional
+    public boolean login(MemberRequest memberRequest) {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
         log.info("member: " + maybeMember);
@@ -159,7 +160,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean checkIdValidation(String id) throws Exception {
+    public boolean checkIdValidation(String id) {
         Optional<Member> maybeMember = memberRepository.findById(id);
 
         if (maybeMember == null)
@@ -170,14 +171,6 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
 
-    }
-
-    @Override
-    public Member getUserInfo(Integer userNo) {
-
-        Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
-
-        return member;
     }
 
     @Override
@@ -212,10 +205,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void removeUser(Long memberNo) throws Exception {
+        Optional<Member> maybeMember = memberRepository.findByMemberNo(memberNo);
+
+        updateAlarmRepository.deleteById(maybeMember.get().getId());
         memberRepository.deleteById(memberNo);
-<<<<<<<<< Temporary merge branch 1
-=========
     }
 
     @Override
@@ -247,26 +242,24 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> list() throws Exception {
-        List<Member> members = memberRepository.findAll();
-        return members;
-        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
-        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
+    public void updateAlarm(UpdateAlarm updateAlarm) {
+        updateAlarmRepository.save(updateAlarm);
     }
 
     @Override
-    public void removeUser(Long memberNo) throws Exception {
-        memberRepository.deleteById(memberNo);
+    public void deleteAlarms(Long alarmNo) {
+        updateAlarmRepository.deleteByAlarmNo(alarmNo);
     }
+//
+//    @Override
+//    public List<Member> list() throws Exception {
+//        List<Member> members = memberRepository.findAll();
+//        return members;
+//        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
+//        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
+//    }
+//
 
-    @Override
-    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception{
-        List<LikedAnimal> lists = likedAnimalRepository.findByMemberNo(memberNo);
 
-        for(LikedAnimal list : lists) {
-            likedAnimalRepository.deleteById(list.getLikedAnimalNo());
-        }
-        return null;
-    }
 }
 
