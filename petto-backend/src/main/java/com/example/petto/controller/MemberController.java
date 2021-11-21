@@ -252,32 +252,6 @@ public class MemberController {
 
        return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
     }
-
-        memberService.updateAlarm(updateAlarm);
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete_alarm/{alarmNo}")
-    public ResponseEntity<Void> deleteAlarm(@PathVariable("alarmNo") Long alarmNo) {
-        log.info("deleteAlarm: " + alarmNo);
-
-        memberService.deleteAlarms(alarmNo);
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-    @PostMapping("/passwordChk")
-    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
-        log.info("passwordChk(): " + memberRequest);
-
-      boolean passwordChk = memberService.passwordChk(memberRequest);
-
-       log.info("passwordChk(): " + passwordChk);
-
-       return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
-    }
-
-
 }
 
 
