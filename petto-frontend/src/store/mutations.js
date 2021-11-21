@@ -1,4 +1,4 @@
-import { 
+import {
   FETCH_SESSION,
   
   FETCH_FACILITY_LIST,
@@ -33,6 +33,16 @@ import {
   FETCH_QNA,
   FETCH_MY_QNA_LIST,
 
+  FETCH_LIKED_ANIMAL_LIST,
+  FETCH_ORDER_ANIMAL_LIST,
+  FETCH_REPORT_LIST,
+
+  FETCH_VOLUNTARYBOARD_LIST,
+  FETCH_VOLUNTARYBOARD,
+
+  FETCH_MY_BOARD_LIST
+
+  FETCH_VOL_COMMENT
   FETCH_ADMIN_QNA_LIST,
   FETCH_ADMIN_QNA
 
@@ -83,6 +93,14 @@ export default {
   [FETCH_REPORT_LIST] (state, payload) {
     state.reportList = payload
   },
+
+  [FETCH_MY_LIKED_ANIMAL_LIST] (state, payload) {
+    state.myLikedAnimals = payload;
+  },
+  [FETCH_MY_BOARD_LIST] (state, payload) {
+    state.myBoardList = payload;
+  },
+
 
   [FETCH_REPORT] (state, payload) {
     state.report = payload

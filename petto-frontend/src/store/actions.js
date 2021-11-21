@@ -1,4 +1,4 @@
-import { 
+import {
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 
@@ -35,6 +35,7 @@ import {
   //
   FETCH_ADMIN_QNA_LIST,
   FETCH_ADMIN_QNA
+
 
 } from "./mutation-types";
 
@@ -110,7 +111,7 @@ export default {
     return axios.get(`http://localhost:8888/petto/report/reportRead/${payload}`)
       .then((res) => {
         if(!res.data) {
-          
+
           alert('이미 삭제되었거나 없는 공고입니다!')
           window.close()
         }
@@ -120,7 +121,7 @@ export default {
         }
       })
   },
-    
+
   fetchVoluntaryBoardList ({ commit }) {
     return axios.get('http://localhost:8888/petto/voluntaryBoard/lists')
             .then((res) => {
@@ -147,7 +148,28 @@ export default {
       .then(res => {
         commit(FETCH_MY_BOARD_LIST, res.data);
       })
-    }, 
+    },
+
+  },
+
+  fetchMyLikedAnimalList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
+      })
+  },
+
+  fetchMyBoardList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_BOARD_LIST, res.data);
+      })
+    },
+
+
+
+
+   },
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
       .then((res) => {
@@ -185,7 +207,7 @@ export default {
                 commit(FETCH_QNA_LIST, res.data)
             })
   },
-  
+
   fetchQnA ({ commit }, qnaNo) {
       return axios.get(`http://localhost:8888/petto/qna/${qnaNo}`)
               .then((res) => {
@@ -197,7 +219,7 @@ export default {
       .then(res => {
         commit(FETCH_MY_QNA_LIST, res.data);
       })
-  }, 
+  },
   //
   fetchAdminQnAList ({ commit }) {
     return axios.get('http://localhost:8888/petto/admin/qna/lists')
@@ -213,4 +235,16 @@ export default {
   },
 };
 
-  
+
+};
+
+
+      fetchMemberList ({ commit }) {
+        return axios.get('http://localhost:8888/petto/member/memberlists')
+                .then((res) => {
+                    commit(FETCH_MEMBER_LIST, res.data)
+                })
+      }
+
+  };
+

@@ -53,6 +53,10 @@
                 </v-btn>
                 <v-btn text class="btnText" color="red" style="font-size:16px;" href="passwordCheckWithdrawalPage">
                     탈퇴
+            <div style="margin-top: 120px; margin-left: 60px;">
+
+                <v-btn text class="btnText" href="passwordCheckPage">
+                    수정
                 </v-btn>
 
             </div>

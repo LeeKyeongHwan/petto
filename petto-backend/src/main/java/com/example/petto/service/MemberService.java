@@ -48,5 +48,4 @@ public interface MemberService {
  // 관리자?
 //    List<Member> list() throws Exception;
 
-
 }
