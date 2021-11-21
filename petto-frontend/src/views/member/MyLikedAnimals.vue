@@ -30,11 +30,23 @@
                             <v-card height="200" class="grow">
                                 <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
                             </v-card>
+        </div>
+        <div class="text-center">    
+            <v-row justify="center">
+                <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
+                    <div class="container">
+                        <div id="animal">
+                            <div v-for="animal in calData" :key="animal.notice_no">
+                                <v-card height="200" class="grow">
+                                    <img :src="animal.image" style="cursor:pointer" width="230" height="230" @click="toDetailPage(animal.id)"/>
+                                </v-card>   
+                            </div>
                         </div>
                     </div>
-                </div>
-            </v-container>
-        </v-row>
+                </v-container>
+                <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
+            </v-row>
+        </div>
     </section>
 </template>  
 
@@ -53,6 +65,12 @@ export default {
 import { mapActions, mapState } from 'vuex';
 export default {
     name:'MyLikedAnimals',
+    data () {
+    return {
+      curpagenum : 1,
+      datapage : 12
+    }
+    },
     methods:{
     ...mapActions(['fetchMyLikedAnimalList']),
 
@@ -73,12 +91,12 @@ export default {
     
     computed: {
     ...mapState(['myLikedAnimals']),
-
     startOffset() {
       return ((this.curpagenum - 1) * this.datapage);
     },
     endOffset() {
       return (this.startOffset + this.datapage);
+
     },
     numofpage() {
         return Math.ceil(this.myLikedAnimals.length / this.datapage);
@@ -89,9 +107,13 @@ export default {
   },
         ...mapState(['myLikedAnimals'])
     },
-
-
-    
+    numofpage() {
+        return Math.ceil(this.myLikedAnimals.length / this.datapage);
+    },
+    calData() {
+      return this.myLikedAnimals.slice(this.startOffset, this.endOffset);
+    }    
+  },    
 }
 </script>
 

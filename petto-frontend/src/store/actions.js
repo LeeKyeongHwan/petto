@@ -1,4 +1,5 @@
 import {
+
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 
@@ -32,10 +33,8 @@ import {
   FETCH_QNA,
   FETCH_MY_QNA_LIST,
 
-  //
   FETCH_ADMIN_QNA_LIST,
   FETCH_ADMIN_QNA
-
 
 } from "./mutation-types";
 
@@ -134,21 +133,6 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
-  },
-
-  fetchMyLikedAnimalList({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
-      .then(res => {
-        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
-      })
-  },
-
-  fetchMyBoardList({ commit }, payload) {
-    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
-      .then(res => {
-        commit(FETCH_MY_BOARD_LIST, res.data);
-      })
-    },
 
   },
 
@@ -166,10 +150,22 @@ export default {
       })
     },
 
+  },
 
+  fetchMyLikedAnimalList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/animals/myLikedAnimals/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_LIKED_ANIMAL_LIST, res.data);
+      })
+  },
 
+  fetchMyBoardList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/report/myBoardLists/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_BOARD_LIST, res.data);
+      })
+    }, 
 
-   },
   fetchVolCommentList ({ commit }, volunteerNo) {
     return axios.get(`http://localhost:8888/petto/comments/lists/${volunteerNo}`)
       .then((res) => {
@@ -179,7 +175,18 @@ export default {
   fetchMemberList ({ commit }) {
     return axios.get('http://localhost:8888/petto/member/memberlists')
             .then((res) => {
-                commit(FETCH_MEMBER_LIST, res.data)
+            })
+  },
+  fetchAdminMemberList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/lists')
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER_LIST, res.data)
+            })
+  },
+  fetchAdminMember ({ commit }, memberNo) {
+    return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER, res.data)
             })
   },
   fetchAdminMemberList ({ commit }) {
@@ -234,11 +241,6 @@ export default {
             })
   },
 };
-
-
-};
-
-
       fetchMemberList ({ commit }) {
         return axios.get('http://localhost:8888/petto/member/memberlists')
                 .then((res) => {
@@ -247,4 +249,44 @@ export default {
       }
 
   };
+  fetchReplyList ({ commit }, reportNo) {
+    return axios.get(`http://localhost:8888/petto/report/getReplies/${reportNo}`)
+            .then((res) => {
+                commit(FETCH_REPLY_LIST, res.data)
+            })
+  },
+  fetchQnAList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/qna/lists')
+            .then((res) => {
+                commit(FETCH_QNA_LIST, res.data)
+            })
+  },
+  
+  fetchQnA ({ commit }, qnaNo) {
+      return axios.get(`http://localhost:8888/petto/qna/${qnaNo}`)
+              .then((res) => {
+                  commit(FETCH_QNA, res.data)
+              })
+  },
+  fetchMyQnAList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/qna/myQnaList/${payload}`)
+      .then(res => {
+        commit(FETCH_MY_QNA_LIST, res.data);
+      })
+  }, 
+  //
+  fetchAdminQnAList ({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/qna/lists')
+            .then((res) => {
+                commit(FETCH_ADMIN_QNA_LIST, res.data)
+            })
+  },
+  fetchAdminQnA ({ commit }, qnaNo) {
+    return axios.get(`http://localhost:8888/petto/admin/qna/${qnaNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_QNA, res.data)
+            })
+  },
+};
+
 

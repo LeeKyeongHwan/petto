@@ -6,19 +6,14 @@ import com.example.petto.entity.MemberRelated.LikedAnimal;
 import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
-import com.example.petto.repository.MemberAuthRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -217,6 +212,8 @@ public class MemberServiceImpl implements MemberService {
         updateAlarmRepository.deleteById(maybeMember.get().getId());
         memberRepository.deleteById(memberNo);
 
+        updateAlarmRepository.deleteById(maybeMember.get().getId());
+        memberRepository.deleteById(memberNo);
     }
 
     @Override
@@ -265,7 +262,6 @@ public class MemberServiceImpl implements MemberService {
 //        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
 //    }
 //
-
         if (maybeMember.isEmpty())
         { return false; }
 
