@@ -262,16 +262,5 @@ public class MemberServiceImpl implements MemberService {
 //        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
 //    }
 //
-        if (maybeMember.isEmpty())
-        { return false; }
-
-        Member User = maybeMember.get();
-
-        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword()))
-        { return false; }
-
-        return true;
-    }
-
 }
 

@@ -2,7 +2,7 @@
   <div>
     <h1>유기동물 리스트</h1>
 
-    <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" style="position relative;"/>
+    <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" :place="place" :kind="kind" style="position relative;"/>
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
@@ -61,7 +61,19 @@ export default {
   },
   props: {
     pageNum: {
-      type: Number
+      type: Number,
+      required: false,
+      default: 0
+    },
+    place: {
+      type: Array,
+      required: false,
+      default: null
+    },
+    kind: {
+      type: Array,
+      required: false,
+      default: null
     }
   },
   data() {
@@ -107,7 +119,13 @@ export default {
   },
 
   mounted() {
-      if(this.$store.state.animals == '') this.fetchAnimalList()
+      let formData = new FormData()
+
+      formData.append('selectedPlace', this.place)
+      formData.append('selectedKinds', this.kind)
+
+      //if(this.$store.state.animals == '') 
+      this.fetchFIlteredAniList(formData)
 
       if(this.$cookies.get("user").id) {
         this.$store.state.session = this.$cookies.get("user")
@@ -116,7 +134,7 @@ export default {
   },
 
   methods: {
-      ...mapActions(['fetchAnimalList']),
+      ...mapActions(['fetchAnimalList', 'fetchFIlteredAniList']),
 
       goListUp() {
         this.listNum -= 1

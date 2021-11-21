@@ -15,4 +15,6 @@ public interface AnimalsService {
     public List<Animals> myLikedAnimals(long memberNo) throws Exception;
 
     public Long getNumOfAnimals();
+
+    public List<Animals> filterAnimals(String[] selectedPlace, String[] selectedKinds);
 }
