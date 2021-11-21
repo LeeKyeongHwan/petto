@@ -211,6 +211,9 @@ public class MemberServiceImpl implements MemberService {
 
         updateAlarmRepository.deleteById(maybeMember.get().getId());
         memberRepository.deleteById(memberNo);
+
+        updateAlarmRepository.deleteById(maybeMember.get().getId());
+        memberRepository.deleteById(memberNo);
     }
 
     @Override
@@ -259,7 +262,16 @@ public class MemberServiceImpl implements MemberService {
 //        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
 //    }
 //
+        if (maybeMember.isEmpty())
+        { return false; }
 
+        Member User = maybeMember.get();
+
+        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword()))
+        { return false; }
+
+        return true;
+    }
 
 }
 

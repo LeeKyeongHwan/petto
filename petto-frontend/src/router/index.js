@@ -52,6 +52,9 @@ import MyQna from "../views/member/qna/MyQna.vue";
 import AdminQnaReadPage from "../views/admin/qna/AdminQnaReadPage.vue";
 
 
+import AboutPage from '@/views/about/AboutPage.vue';
+
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -276,6 +279,13 @@ const routes = [
     }
   },
   {
+
+    path: "/aboutPage",
+    name: "AboutPage",
+    component: AboutPage,
+  },
+  {
+
     path: "/qnalist/:qnaNo/edit",
     name: "QnaModifyPage",
     components: {

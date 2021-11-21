@@ -43,10 +43,4 @@ public interface MemberService {
     public void updateAlarm(UpdateAlarm updateAlarm);
 
     public void deleteAlarms(Long alarmNo);
-
-//    public List<LikedAnimal> selectLikeCnt() throws Exception;
- // 관리자?
-//    List<Member> list() throws Exception;
-
-
 }
