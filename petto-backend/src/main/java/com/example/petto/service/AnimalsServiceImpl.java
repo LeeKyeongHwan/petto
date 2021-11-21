@@ -19,7 +19,8 @@ public class AnimalsServiceImpl implements AnimalsService {
 
     @Override
     public List<Animals> list() throws Exception {
-        return animalsRepository.findAll();}
+        return animalsRepository.findAll();
+    }
 
     @Override
     public Animals getAnimalsInfo(String id) {
@@ -45,12 +46,56 @@ public class AnimalsServiceImpl implements AnimalsService {
     }
 
     @Override
-    public List<Animals> myLikedAnimals(long memberNo) throws Exception {
+    public List<Animals> myLikedAnimals(long memberNo) {
         return animalsRepository.myLikedAnimals(memberNo);
     }
 
     @Override
     public Long getNumOfAnimals() {
         return animalsRepository.count();
+    }
+
+    @Override
+    public List<Animals> filterAnimals(String[] selectedPlace, String[] selectedKinds) {
+
+        List<Animals> tmpList = animalsRepository.findAll();
+
+        if(selectedPlace[0].matches("none") && selectedKinds[0].matches("none")) return tmpList;
+
+        if(selectedPlace[0].matches("none")) return filter(tmpList, selectedKinds); //null로 하면 안됨
+        else if(selectedKinds[0].matches("none")) return filter(tmpList, selectedPlace);
+
+        return filter(filter(tmpList, selectedKinds), selectedPlace);
+    }
+
+    private List<Animals> filter(List<Animals> animalsList, String[] keywordList) {
+
+        List<Animals> list = new ArrayList<Animals>();
+        boolean isPlaceKeyword = true;
+
+        for(int i=0; i<keywordList.length; i++) {
+            if(keywordList[i].contains("개") || keywordList[i].contains("고양이") || keywordList[i].contains("기타")) {
+                isPlaceKeyword = false;
+            }
+        }
+
+        if(isPlaceKeyword) {
+            for (int i = 0; i < animalsList.size(); i++) {
+
+                for (int j = 0; j < keywordList.length; j++) {
+
+                    if(animalsList.get(i).getCareaddr().contains(keywordList[j])) list.add(animalsList.get(i));
+                }
+            }
+        } else {
+            for (int i = 0; i < animalsList.size(); i++) {
+
+                for (int j = 0; j < keywordList.length; j++) {
+
+                    if(animalsList.get(i).getKind().contains(keywordList[j])) list.add(animalsList.get(i));
+                }
+            }
+        }
+        return list;
     }
 }

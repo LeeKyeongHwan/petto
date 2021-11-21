@@ -2,21 +2,24 @@
   <div>
     <div>
       <v-layout class="search-btn">
+
             <v-dialog v-model="searchDialog" persistent max-width="400px">
+
                 <template v-slot:activator="{ on }">
                     <v-btn icon x-large v-on="on"><v-icon>search</v-icon></v-btn>        
                 </template>
+
                 <v-card>
-                  <v-toolbar color="white darken-3" flat height="50">
-                              <v-btn icon x-large @click="cancel()" style="positoin:absolute; left:23em;">
-                                  <v-icon>clear</v-icon>
-                              </v-btn>
+                  <v-toolbar color="white darken-3" flat height="70">
+                    <v-btn icon x-large @click="cancel()" style="positoin:absolute; left:23em;">
+                        <v-icon>clear</v-icon>
+                    </v-btn>
                   </v-toolbar>
                   <v-card-text >
                       <v-select
                         v-model="selectPlace"
                         :items="areas"
-                        label="모든 지역"
+                        label="지역 선택"
                         multiple
                         attach
                         chips
@@ -26,7 +29,7 @@
                       <v-select
                           v-model="selectKinds"
                           :items="kinds"
-                          label="모든 품종"
+                          label="종 선택"
                           multiple 
                           attach
                           chips
@@ -44,6 +47,27 @@
             </v-dialog>
           </v-layout>
     </div>
+
+    <v-row style="justify-content: center;">
+
+      <p class="normalText" style="color: grey;">선택 지역</p>
+      &emsp;
+      <p class="normalText" v-if="place == 'none'">없음</p>
+      <p class="normalText" v-else>{{ place }}</p>
+      &emsp; &emsp;
+      <p class="normalText" style="color: grey;">선택 종</p>
+      &emsp;
+      <p class="normalText" v-if="kind == 'none'">없음</p>
+      <p class="normalText" v-else>{{ kind }}</p>
+
+      &emsp; &emsp; &emsp;
+
+      <v-btn text class="normalText" style="color: black; margin-top: -15px;" x-large @click="showAll">
+        전체보기
+      </v-btn>
+
+    </v-row>
+
     <v-container style="width:100%;">
     <v-row>
       <v-card v-for="animal in paginatedData" :key="animal.notice_no" class="list-card"> 
@@ -51,7 +75,7 @@
             <img :src="animal.image" width="350" height="300"/>
             <div class="title">
                 <div>
-                <h4 @click="toDetailPage(animal.id)">상세보기 <v-icon color="white">keyboard_arrow_right</v-icon></h4>
+                  <h4 @click="toDetailPage(animal.id)">상세보기 <v-icon color="white">keyboard_arrow_right</v-icon></h4>
                 </div>
             </div>
             <figcaption>
@@ -84,7 +108,7 @@
             </v-btn>
             </template>
 
-            <span>상세 정보 보기</span>
+            <span>상세 정보 보기 {{ pageNum }}</span>
 
           </v-tooltip>
           
@@ -121,7 +145,7 @@
           <v-icon>chevron_left</v-icon>
         </v-btn>
 
-        <span class="page-count">{{ parseInt(pageNum) + 1 }} / {{ pageCount }} 페이지</span>
+        <span class="page-count">{{ parseInt(pageNum) }} / {{ pageCount }} 페이지</span>
 
         <v-btn :disabled="pageNum >= pageCount - 1" @click="nextPage" icon text>
           <v-icon>chevron_right</v-icon>
@@ -137,7 +161,7 @@
 <script>
 //import EventBus from '@/eventBus.js'
 import axios from 'axios'
-import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
+//import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -147,11 +171,12 @@ export default {
       //pageNum: 0,
       searchDialog: false,
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
-      selectPlace: [],
-      selectKinds: [],
+      //selectPlace: [],
+      //selectKinds: [],
       kinds: [ '개', '고양이', '기타' ],
     }
   },
+
   props: {
     animals: {
       type: Array,
@@ -164,12 +189,20 @@ export default {
     },
     pageNum: {
       type: Number,
-      required: false,
-      default: 0
+      required: true
+    },
+    place: {
+      type: String,
+      required: false
+    },
+    kind: {
+      type: String,
+      required: false
     }
   },
+
   methods: {
-    ...mapActions(['fetchLikedAnimalList','fetchLikedAnimalCnt']),
+    ...mapActions(['fetchLikedAnimalList', 'fetchLikedAnimalCnt']),
 
     nextPage() {
       this.pageNum = parseInt(this.pageNum) + 1; //이걸 스트링으로 인식해서 1 -> 11 -> 111이렇게됨
@@ -207,49 +240,32 @@ export default {
     },
     
     selectSearch() {
-      
-      const { selectPlace, selectKinds } = this
-      return axios.get('http://localhost:8888/petto/animals/lists')
-              .then((res) => {
-                var ani = []
-                if(selectPlace.length > 0 && selectKinds.length > 0) {
-                  var len = selectKinds.length + selectPlace.length
-                  for(var i=0; i<res.data.length; i++) {
-                    for(var j=0; j< len; j++) {
-                      for(var o=0; o< len; o++)
-                      if((res.data[i].notice_no.includes(selectPlace[j]) && res.data[i].kind.includes(selectKinds[o]))) {
-                        ani.push(res.data[i])
-                        this.$store.commit(FETCH_ANIMAL_LIST, ani)
-                      }
-                    }
-                  }
-                } else if(selectPlace.length > 0) {
-                    for(var k=0; k<res.data.length; k++) {
-                      for(var l=0; l< selectPlace.length; l++) {
-                        if(res.data[k].notice_no.includes(selectPlace[l])) {
-                          ani.push(res.data[k])
-                          this.$store.commit(FETCH_ANIMAL_LIST, ani)
-                        }
-                      }
-                    }
-                } else if(selectKinds.length > 0) {
-                    for(var m=0; m<res.data.length; m++) {
-                      for(var n=0; n< selectKinds.length; n++) {
-                        if(res.data[m].kind.includes(selectKinds[n])) {
-                          ani.push(res.data[m])
-                          this.$store.commit(FETCH_ANIMAL_LIST, ani)
-                        }
-                      }
-                    }
-                }
-              this.searchDialog = false
-              this.pageNum = 0
 
-              this.$router.push({
-                name: 'AbandonedAnimal',
-                params: { pageNum: this.pageNum }
-              })
-          })
+      if(this.selectPlace == '' && this.selectKinds == '') alert('최소 하나 이상의 조건을 설정해주세요!')
+
+      else {
+        
+        let selectPlace = this.selectPlace
+        let selectKinds = this.selectKinds
+
+        if(selectPlace == undefined) selectPlace = 'none'
+        if(selectKinds == undefined) selectKinds = 'none'
+                
+        this.searchDialog = false
+        this.pageNum = 0
+
+        this.$router.push({
+          name: 'AbandonedAnimal',
+          params: { pageNum: this.pageNum, place: selectPlace.toString(), kind: selectKinds.toString() }
+        })
+      }
+    },
+
+    showAll() {
+      this.$router.push({
+        name: 'AbandonedAnimal',
+        params: { pageNum: 0, place: 'none', kind: 'none' }
+      })
     },
 
     addLikedAnimal(notice_no) {
@@ -290,7 +306,7 @@ export default {
       } else return false
     },
 
-    async deleteLikedAnimal(notice_no) {
+    deleteLikedAnimal(notice_no) {
 
       if(this.$store.state.session) {
       
@@ -311,33 +327,25 @@ export default {
           })
 
       } else alert('로그인이 필요한 서비스입니다.')
-
     }
   },
   
   computed: {
     ...mapState(['session', 'likedAnimalList', 'animals']),
 
-    pageCount () {
+    pageCount() {
       let listLeng = this.animals.length,
           listSize = this.pageSize,
           page = Math.floor(listLeng / listSize);
-      if (listLeng % listSize > 0) page += 1;
+      if(listLeng % listSize > 0) page += 1;
 
       return page;
     },
-    paginatedData () {
+    paginatedData() {
       const start = this.pageNum * this.pageSize,
             end = start + this.pageSize;
       return this.animals.slice(start, end);
     }
-  },
-  mounted() {
-    if(this.$cookies.get("user").id) {
-      this.$store.state.session = this.$cookies.get("user")
-      this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
-    }
-    
   }
 }
 </script>

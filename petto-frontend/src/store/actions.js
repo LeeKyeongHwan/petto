@@ -68,11 +68,18 @@ export default {
   fetchSession({ commit }) {
     commit(FETCH_SESSION);
   },
-
+  
   fetchAnimalList ({ commit }) {
-    return axios.get('http://localhost:8888/petto/animals/lists')
+    return axios.get('http://localhost:8888/petto/animals/lists')  
             .then((res) => {
-                commit(FETCH_ANIMAL_LIST, res.data) //
+              commit(FETCH_ANIMAL_LIST, res.data) //
+      })
+  },
+
+  fetchFIlteredAniList ({ commit }, payload) {
+    return axios.post('http://localhost:8888/petto/animals/filterList', payload)  
+            .then((res) => {
+              commit(FETCH_ANIMAL_LIST, res.data) //
       })
   },
 
