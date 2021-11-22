@@ -1,5 +1,6 @@
 package com.example.petto.service.report;
 
+import com.example.petto.entity.QnA;
 import com.example.petto.entity.Report;
 import com.example.petto.entity.ReportRelated.Reply;
 import com.example.petto.repository.reportRelated.ReplyRepository;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -68,6 +70,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<Report> myBoardList(String id) throws Exception {
+
         return reportRepository.myBoardList(id);
     }
 
