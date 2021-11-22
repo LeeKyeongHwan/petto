@@ -27,7 +27,7 @@ import {
   FETCH_VOL_COMMENT,
 
   FETCH_ADMIN_MEMBER_LIST,
-  //FETCH_ADMIN_MEMBER,
+  FETCH_ADMIN_MEMBER,
 
   FETCH_QNA_LIST,
   FETCH_QNA,
@@ -170,7 +170,12 @@ export default {
                 commit(FETCH_ADMIN_MEMBER_LIST, res.data)
             })
   },
-
+  fetchAdminMember ({ commit }, memberNo) {
+    return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER, res.data)
+            })
+  },
   fetchReplyList ({ commit }, reportNo) {
     return axios.get(`http://localhost:8888/petto/report/getReplies/${reportNo}`)
             .then((res) => {
