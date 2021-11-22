@@ -177,7 +177,6 @@ public class MemberController {
 
             return new ResponseEntity<Boolean>(isLogin, HttpStatus.OK);
         }
-
         return new ResponseEntity<Boolean>(isLogin, HttpStatus.OK);
     }
 
