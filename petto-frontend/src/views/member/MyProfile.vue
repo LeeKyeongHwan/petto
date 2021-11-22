@@ -20,7 +20,7 @@ export default {
         ...mapActions(['fetchUserInfo']),
     },
     mounted() {
-        var userNo =this.$store.state.session.memberNo //추후에 변경
+        var userNo = this.$store.state.session.memberNo //추후에 변경
         this.fetchUserInfo(userNo)
 
         if(this.$cookies.get("user").id) {

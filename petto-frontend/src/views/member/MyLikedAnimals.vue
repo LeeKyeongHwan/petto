@@ -1,6 +1,7 @@
 <template>
     <section>
-        <div class="text-center">    
+        <div class="text-center">   
+          <h4 style="text-align:center; padding: 3%;"><p class="normalText">내가 찜한 동물</p></h4> 
             <v-row justify="center">
                 <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
                     <div class="container">
