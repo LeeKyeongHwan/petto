@@ -174,6 +174,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member getUserInfo(Integer userNo) {
+
+        Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
+
+        return member;
+    }
+
+    @Override
     public void modifyUserInfo(Member member) {
 
         String id = member.getId();
