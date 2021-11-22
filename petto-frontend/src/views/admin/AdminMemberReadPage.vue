@@ -32,7 +32,7 @@ export default {
     computed: {
         ...mapState(['adminMember'])
     },
-    created () {
+    mounted() {
         this.fetchAdminMember(this.memberNo)
                 .catch(err => {
                     alert(err.response.data.message)

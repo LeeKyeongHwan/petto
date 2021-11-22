@@ -111,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
 
     private StringBuffer makeConfidentialCode() {
 
-        Random rnd =new Random();
+        Random rnd = new Random();
 
         StringBuffer buf =new StringBuffer();
 
@@ -136,7 +136,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public boolean login(MemberRequest memberRequest) {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
