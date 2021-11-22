@@ -1,5 +1,5 @@
 import {
-
+  FETCH_USER_INFO,
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 
@@ -21,13 +21,13 @@ import {
   FETCH_VOLUNTARYBOARD_LIST,
   FETCH_VOLUNTARYBOARD,
 
-  FETCH_MY_LIKED_ANIMAL_LIST,//
+  FETCH_MY_LIKED_ANIMAL_LIST,
 
   FETCH_MY_BOARD_LIST,
   FETCH_VOL_COMMENT,
 
   FETCH_ADMIN_MEMBER_LIST,
-  //FETCH_ADMIN_MEMBER,
+  FETCH_ADMIN_MEMBER,
 
   FETCH_QNA_LIST,
   FETCH_QNA,
@@ -44,11 +44,18 @@ import cookies from 'vue-cookies'
 
 export default {
   async TodayPopUp(){
-      if(cookies.isKey("TodayPopUpClose") == false){
-        cookies.set("TodayPopUpClose", "todayClose","1d")
-        console.log(cookies.get("TodayPopUpClose"))
-      }
-    },
+    if(cookies.isKey("TodayPopUpClose") == false){
+      cookies.set("TodayPopUpClose", "todayClose","1d")
+      console.log(cookies.get("TodayPopUpClose"))
+    }
+  },
+
+  fetchUserInfo({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/member/getUserInfo/${payload}`)
+      .then((res) => {
+        commit(FETCH_USER_INFO, res.data)
+      })
+  },
 
   fetchFacilityList({ commit }) {
     return axios.get('http://localhost:8888/petto/facility/getFacilityList')
@@ -168,6 +175,13 @@ export default {
     return axios.get('http://localhost:8888/petto/admin/lists')
             .then((res) => {
                 commit(FETCH_ADMIN_MEMBER_LIST, res.data)
+            })
+  },
+
+  fetchAdminMember ({ commit }, memberNo) {
+    return axios.get(`http://localhost:8888/petto/admin/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ADMIN_MEMBER, res.data)
             })
   },
 
