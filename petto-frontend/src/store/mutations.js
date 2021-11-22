@@ -1,4 +1,5 @@
 import { 
+  FETCH_USER_INFO,
   FETCH_SESSION,
   
   FETCH_FACILITY_LIST,
@@ -42,6 +43,10 @@ export default {
   //세션
   [FETCH_SESSION] (state) {
     state.session = this.$cookies.get();
+  },
+
+  [FETCH_USER_INFO] (state, payload) {
+    state.userInfo = payload
   },
 
   [FETCH_FACILITY_LIST] (state, payload) {
