@@ -177,7 +177,7 @@ public class MemberServiceImpl implements MemberService {
     public Member getUserInfo(Integer userNo) {
 
         Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
-
+            log.info("login():" +memberRepository.findByMemberNo(new Long(userNo)).get() );
         return member;
     }
 

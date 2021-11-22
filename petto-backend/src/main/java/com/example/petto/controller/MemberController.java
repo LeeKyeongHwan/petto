@@ -102,6 +102,7 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @Transactional
     @GetMapping("/getUserInfo/{userNo}")
     public ResponseEntity<Member> getUserInfo(@PathVariable("userNo") Integer userNo) {
         log.info("getUserInfo(): " + userNo);

@@ -22,17 +22,16 @@
                                     min-width="auto">
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="closingDate"
+                                        v-model="date"
                                         prepend-icon="mdi-calendar"
                                         readonly
                                         v-bind="attrs"
                                         v-on="on"
                                         outlined
-                                        dense
-                                        type="date"></v-text-field>
+                                        dense></v-text-field>
                                     </template>
                                     <v-date-picker
-                                    v-model="closingDate"
+                                    v-model="date"
                                     no-title
                                     scrollable
                                     style="height:450px;">
@@ -47,14 +46,17 @@
                                 </v-menu>
                             </label>
                             
-							<label>제목 이미지(800 * 200 사이즈 권장)
-								<v-file-input ref="files" @change="handleFileUpload" dense outlined></v-file-input>
-							</label>
+							<section>
+                                <label>Title-Files
+                                    <input type="file" id="files" ref="files" name="file" v-on:change="handleFileUpload()">
+                                </label>
+                            </section>
 
-
-							<label>내용 이미지
-								<v-file-input ref="contentFiles" @change="handleContentFileUpload" dense outlined></v-file-input>
-							</label>
+                            <section>
+                                <label>content-Files
+                                    <input type="file" id="files" ref="contentFiles" name="contentFiles" @change="handleContentFileUpload()">
+                                </label>
+                            </section>  
 
 						<center>
 							<v-btn @click="submitFiles()" :disabled="!contentFiles || !files" outlined style="margin-top:10%;">작성하기</v-btn>
@@ -74,23 +76,24 @@ export default {
             volTitle: '',
             files: '',
             contentFiles: '',
-            closingDate:''
+            date:'',
+            access: ''
         }
     },
     methods: {
-        handleFileUpload(file) {
-            this.files = file
+        handleFileUpload () {
+            this.files = this.$refs.files.files
         },
-        handleContentFileUpload(file) {
-            this.contentFiles = file
+        handleContentFileUpload() {
+            this.contentFiles = this.$refs.contentFiles.files
         },
         submitFiles () {
          let formData = new FormData()
 
         formData.append('volTitle', this.volTitle)
-        formData.append('closingDate', this.closingDate)
-        formData.append('fileList', this.files)
-        formData.append('contentFileList', this.contentFiles)
+        formData.append('closingDate', this.date)
+        formData.append('fileList', this.files[0])
+        formData.append('contentFileList', this.contentFiles[0])
 
         axios.post('http://localhost:8888/petto/voluntaryBoard/file', formData, {
             headers: {
@@ -107,8 +110,24 @@ export default {
         .catch (res => {
             this.response = res.message
         }) 
+    }
+	},
+    mounted() {
+        if(this.$cookies.isKey('user') == true){
+            this.access = this.$cookies.get('user').auth
+            if(this.access != '관리자'){
+                alert('권한이 필요한 서비스입니다')
+                this.$router.push({
+                name:'PettoHome',
+                })
+            }
+        } else {
+            alert('권한이 필요한 서비스입니다')
+            this.$router.push({
+            name:'PettoHome',
+            })
+        }
     },
-	}
 }
 </script>
 

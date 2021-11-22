@@ -2,6 +2,7 @@
     <section>
         <div class="text-center">   
           <h4 style="text-align:center; padding: 3%;"><p class="normalText">내가 찜한 동물</p></h4> 
+          <h6><p v-if="myLikedAnimals.length == 0">찜한 동물이 없습니다.</p> </h6>
             <v-row justify="center">
                 <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
                     <div class="container">
@@ -89,7 +90,10 @@ export default {
 
 #animal{
   width: 100%;
+  
 }
+  
+
 
 #animal div{
   display:inline-block;
@@ -102,5 +106,12 @@ export default {
 	&:hover {
         transform: scale(1.1);
     }
+    
+}
+
+#v-card:hover {
+  filter: brightness(120%);
+  -webkit-filter: brightness(120%);
+  
 }
 </style>

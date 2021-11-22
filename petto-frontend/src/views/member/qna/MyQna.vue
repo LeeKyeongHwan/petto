@@ -19,7 +19,8 @@
                 </tr>
             </tbody>
          </v-simple-table>
-         <v-btn style="rihgt"><router-link :to="{ name: 'QnaWritePage' }">글쓰기</router-link></v-btn>
+         <p style="text-align:center; margin:20px;" v-if="myQnaList.length == 0">문의 내역이 없습니다. </p>       
+         <v-btn style="float: right;"><router-link :to="{ name: 'QnaWritePage' }">글쓰기</router-link></v-btn>
          <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
     </v-container>
 </template>  
