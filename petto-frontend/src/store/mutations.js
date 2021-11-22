@@ -34,7 +34,9 @@ import {
   FETCH_MY_QNA_LIST,
 
   FETCH_ADMIN_QNA_LIST,
-  FETCH_ADMIN_QNA
+  FETCH_ADMIN_QNA,
+
+
 
 } from "./mutation-types";
 
@@ -140,7 +142,8 @@ export default {
   },
   [FETCH_ADMIN_QNA] (state, adminQnA) {
     state.adminQnA = adminQnA
-  }
+  },
+
 
 };
 
