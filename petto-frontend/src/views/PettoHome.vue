@@ -151,9 +151,9 @@
 
           &emsp;
 
-          <v-btn plain color="white" v-if="isLogin" @click="logout">
+          <!-- <v-btn plain color="white" v-if="isLogin" @click="logout">
             LOGOUT
-          </v-btn>
+          </v-btn> -->
 
           <v-btn
             plain
@@ -170,7 +170,7 @@
 
 
           <v-app-bar-nav-icon plain color="white" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
-          <v-navigation-drawer app v-model="nav_drawer" temporary>
+          <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
@@ -178,28 +178,30 @@
                             <v-icon left>{{ link.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title>{{ link.text }}</v-list-item-title>
+                            <v-list-item-title v-if="link.name == 'logout'" @click="logout()">{{ link.text }}</v-list-item-title>
+                            <v-list-item-title v-else>{{ link.text }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
           </v-navigation-drawer>
 
-           <!-- <v-app-bar-nav-icon plain color="white" v-if="isLogin && this.auth != '개인'" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
-          <v-navigation-drawer app v-model="nav_drawer" temporary>
+          <v-navigation-drawer app v-model="nav_drawer" temporary v-else>
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-                    <v-list-item v-for="adminLink in adminLinks" :key="adminLink.name" router :to="adminLink.route">
+                    <v-list-item v-for="admin in adminLinks" :key="admin.name" router :to="admin.route">
                         <v-list-item-action>
-                            <v-icon left>{{ adminLink.icon }}</v-icon>
+                            <v-icon left>{{ admin.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title>{{ adminLink.text }}</v-list-item-title>
+                            <v-list-item-title v-if="admin.text == '로그아웃'" @click="logout()">{{ admin.text }}</v-list-item-title>
+                            <v-list-item-title v-else>{{ admin.text }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
-          </v-navigation-drawer> -->
+          </v-navigation-drawer>
+
 
         </div>
 
@@ -311,11 +313,13 @@ export default {
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
                 { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
-                { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' }
-            ],
+                { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' },
+                { icon: 'input', text: '로그아웃', name: 'logout'}
+      ],
       adminLinks: [
           { icon: 'people', text: '회원관리', name: 'my_board', route: '/admin' },
-          { icon: 'help_outline', text: '1:1 문의관리', name: 'QnA', route: '/qnalist' }
+          { icon: 'help_outline', text: '1:1 문의관리', name: 'QnA', route: '/qnalist' },
+          { icon: 'input', text: '로그아웃', name: 'logout'}
       ]
     }
   },
@@ -343,16 +347,18 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$cookies.isKey("TodayPopUpClose"));
-    if (this.$cookies.isKey("TodayPopUpClose") === false) {
+    // console.log(this.$cookies.isKey("TodayPopUpClose"));
+    if (this.$cookies.isKey("TodayPopUpClose") == false) {
       this.layers = true;
     }
-    this.$store.state.session = this.$cookies.get("user");
-    if (this.$store.state.session != null) {
-      this.isLogin = true;
+    if( this.$cookies.isKey("user") == true) {
+      // this.auth = this.$cookies.get("user").auth
+      this.$store.state.session = this.$cookies.get("user");
+      if (this.$store.state.session != null) {
+        this.isLogin = true;
+    }
     }
     this.fetchOlderAnimalList()
-    console.log(this.auth)
   },
   computed: {
       ...mapState(['olderList', 'session']),
@@ -499,7 +505,7 @@ h1 {
 // 유기동물 api 오래된 순
 
 .container{
-  width: 100vw;
+  width: 90%;
   margin-top: 5%;
   margin-bottom: 10%;
   position: relative;

@@ -1,5 +1,5 @@
 import {
-  FETCH_USER_INFO,
+
   FETCH_SESSION,
   FETCH_MEMBER_LIST,
 

@@ -92,6 +92,7 @@ export default {
             answers: ['전체','답변대기','답변완료'],
             selectLatest: [],
             selectAnswerState: [],
+            access:''
 
         }
     },
@@ -136,10 +137,18 @@ export default {
         }
     },
     mounted() {
-        if( this.$cookies.get("user").auth != '관리자'){
-            alert('권한이 필요한 서비스입니다.')
-            this.$router.push({
+        if(this.$cookies.isKey('user') == true){
+            this.access = this.$cookies.get('user').auth
+            if(this.access != '관리자'){
+                alert('권한이 필요한 서비스입니다')
+                this.$router.push({
                 name:'PettoHome',
+                })
+            }
+        } else {
+            alert('권한이 필요한 서비스입니다')
+            this.$router.push({
+            name:'PettoHome',
             })
         }
         this.$store.dispatch("fetchAdminQnAList")

@@ -16,13 +16,13 @@
                              <label>모집마감일
                                 <v-menu ref="menu"
                                     :close-on-content-click="false"
-                                    :return-value.sync="closingDate"
+                                    :return-value.sync="date"
                                     transition="scale-transition"
                                     offset-y
                                     min-width="auto">
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="closingDate"
+                                        v-model="date"
                                         prepend-icon="mdi-calendar"
                                         readonly
                                         v-bind="attrs"
@@ -47,14 +47,17 @@
                                 </v-menu>
                             </label>
 
-							<label>제목 이미지(800 * 200 사이즈 권장)
-								<v-file-input ref="files" @change="handleFileUpload" dense outlined></v-file-input>
-							</label>
+							<section>
+                                <label>Title-Files
+                                    <input type="file" id="files" ref="files" name="file" v-on:change="handleFileUpload()">
+                                </label>
+                            </section>
 
-
-							<label>내용 이미지
-								<v-file-input ref="contentFiles" @change="handleContentFileUpload" dense outlined></v-file-input>
-							</label>
+                            <section>
+                                <label>content-Files
+                                    <input type="file" id="files" ref="contentFiles" name="contentFiles" v-on:change="handleContentFileUpload()">
+                                </label>
+                            </section> 
 
 
 							<center style="margin-top:10%;"> 
@@ -86,7 +89,8 @@ export default {
             volTitle:'',
             files: '',
             contentFiles: '',
-            closingDate: ''
+            date: '',
+            access:''
         }
     },
     props: {
@@ -100,27 +104,27 @@ export default {
     },
     methods: {
         ...mapActions(['fetchVoluntaryBoard']),
-        handleFileUpload(file) {
-            this.files = file
+        handleFileUpload () {
+            this.files = this.$refs.files.files
         },
-        handleContentFileUpload(file) {
-            this.contentFiles = file
+        handleContentFileUpload() {
+            this.contentFiles = this.$refs.contentFiles.files
         },
         onSubmit () {
             let formData = new FormData()
             formData.append('volTitle', this.volTitle)
-            formData.append('closingDate', this.closingDate)
+            formData.append('closingDate', this.date)
 
             if(this.files == ''){
                 formData.append('fileList', this.voluntaryboard.fileName)
             } else {
-                formData.append('fileList', this.files)
+                formData.append('fileList', this.files[0])
             }
 
             if(this.contentFiles == ''){
                 formData.append('contentFileList', this.voluntaryboard.contentFileName)
             } else {
-                formData.append('contentFileList', this.contentFiles)
+                formData.append('contentFileList', this.contentFiles[0])
             }
 
             axios.put(`http://localhost:8888/petto/voluntaryBoard/${this.volunteerNo}`,  formData, {
@@ -138,6 +142,22 @@ export default {
             })
                 .catch(err => {
                 alert(err.response.data.message)
+            })
+        }
+    },
+    mounted() {
+        if(this.$cookies.isKey('user') == true){
+            this.access = this.$cookies.get('user').auth
+            if(this.access != '관리자'){
+                alert('권한이 필요한 서비스입니다')
+                this.$router.push({
+                name:'PettoHome',
+                })
+            }
+        } else {
+            alert('권한이 필요한 서비스입니다')
+            this.$router.push({
+            name:'PettoHome',
             })
         }
     },
