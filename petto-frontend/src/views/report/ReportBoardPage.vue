@@ -44,7 +44,6 @@ export default {
     mounted() {
         if(this.$cookies.get("user").id) {
             this.$store.state.session = this.$cookies.get("user")
-            this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
         }
     }
 }
