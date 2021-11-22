@@ -2,6 +2,7 @@ package com.example.petto.service;
 
 
 import com.example.petto.entity.Member;
+import com.example.petto.repository.LikedAnimalRepository;
 import com.example.petto.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Member read(Long memberNo) throws Exception {
         Optional<Member> memberDetail = memberRepository.findById(memberNo);
+
         if(memberDetail.isPresent()) {
             Member member = memberDetail.get();
             memberRepository.save(member);
@@ -35,7 +37,6 @@ public class AdminServiceImpl implements AdminService {
         } else {
             throw new NullPointerException();
         }
-
     }
 
     @Override
