@@ -27,6 +27,8 @@ public interface MemberService {
 
     public void changePassword(MemberRequest memberRequest);
 
+    public Member getUserInfo(Integer userNo);
+
     public void modifyUserInfo(Member member);
 
     public void addLikedAnimal(LikedAnimal likedAnimal);

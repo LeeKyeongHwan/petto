@@ -102,6 +102,15 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @GetMapping("/getUserInfo/{userNo}")
+    public ResponseEntity<Member> getUserInfo(@PathVariable("userNo") Integer userNo) {
+        log.info("getUserInfo(): " + userNo);
+
+        Member memberInfo = memberService.getUserInfo(userNo);
+
+        return new ResponseEntity<Member>(memberInfo, HttpStatus.OK);
+    }
+
     @PutMapping("/modifyUserInfo")
     public ResponseEntity<Void> modifyUserInfo(@Validated @RequestBody Member member) {
         log.info("modifyUserInfo(): " + member);
