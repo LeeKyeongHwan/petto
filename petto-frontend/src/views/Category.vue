@@ -110,7 +110,7 @@ export default {
       isLogin: false,
       nav_drawer: false,
       group: false,
-      auth: this.$cookies.get("user").auth,
+      auth: '',
       links: [
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
@@ -137,6 +137,7 @@ export default {
   mounted() {
     if( this.$cookies.isKey("user") == true) {
       this.$store.state.session = this.$cookies.get("user");
+      this.auth = this.$cookies.get("user").auth
       if (this.$store.state.session != null) {
         this.isLogin = true;
     }
@@ -185,7 +186,9 @@ export default {
   min-height: 100%;
   display: flex;
   color: white;
-  margin-bottom: 10%;
+  margin-bottom: 11%;
+  background-color: rgb(255, 249, 240);
+  border-bottom: dotted 6px rgb(243, 222, 189);
 }
 
 #header {
