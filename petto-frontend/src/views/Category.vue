@@ -3,11 +3,13 @@
     <div id="main">
       <div id="header">
 
-        <router-link :to="{ name: 'PettoHome' }">
-          <h1 class="logo">
-            petto
-          </h1>
-        </router-link>
+        <div style="width: 300px;">
+          <router-link :to="{ name: 'PettoHome' }">
+            <h1 class="logo">
+              petto
+            </h1>
+          </router-link>
+        </div>
 
         <div class="header-top">
           <v-tooltip bottom v-if="isLogin">
@@ -29,9 +31,9 @@
 
           &emsp;
 
-          <!-- <v-btn plain color="white" v-if="isLogin" @click="logout">
+          <v-btn plain color="white" v-if="isLogin" @click="logout">
             LOGOUT
-          </v-btn> -->
+          </v-btn>
 
           <v-btn
             plain

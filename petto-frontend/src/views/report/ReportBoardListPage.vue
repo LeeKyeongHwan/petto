@@ -313,4 +313,8 @@ td:hover {
     padding: 20px 30px;
     border-radius: 20px;
 }
+
+tr {
+    cursor: pointer;
+}
 </style>
