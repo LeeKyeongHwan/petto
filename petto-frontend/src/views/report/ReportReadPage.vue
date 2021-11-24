@@ -221,7 +221,7 @@ export default {
 
         if(this.$cookies.get("user").id) {
             this.$store.state.session = this.$cookies.get("user")
-            this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+            // this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
         } 
     }
 }
