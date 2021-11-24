@@ -176,4 +176,14 @@ public class VolunteerBoardServiceImpl implements VolunteerBoardService{
             }
         }
     }
+
+    @Override
+    public List<Comment> deleteContainingVolunteerNo(Long volunteerNo) throws Exception{
+        List<Comment> lists = commentRepository.findByVolunteerNo(volunteerNo);
+
+        for(Comment list : lists) {
+            commentRepository.deleteById(list.getCommentNo());
+        }
+        return null;
+    }
 }
