@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-6">
-            <h7>CUSTOMER CENTER</h7>
+            <h6>CUSTOMER CENTER</h6>
             <p class="text-justify"> 
               <h5>TEL:02-123-4567 </h5>
               <i>월~금<br>

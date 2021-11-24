@@ -148,7 +148,7 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
 
-         Member loginMember = maybeMember.get();
+        Member loginMember = maybeMember.get();
 
         if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
         {
@@ -177,7 +177,7 @@ public class MemberServiceImpl implements MemberService {
     public Member getUserInfo(Integer userNo) {
 
         Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
-            log.info("login():" +memberRepository.findByMemberNo(new Long(userNo)).get() );
+
         return member;
     }
 
@@ -271,4 +271,5 @@ public class MemberServiceImpl implements MemberService {
 //    }
 //
 }
+
 

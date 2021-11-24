@@ -87,7 +87,7 @@ public class AdminController {
 
     @PutMapping("/qna/{qnaNo}")
     public ResponseEntity<QnA> answers(@PathVariable("qnaNo") Long qnaNo,
-                                      @Validated @RequestBody QnA qnA ) throws Exception {
+                                       @Validated @RequestBody QnA qnA ) throws Exception {
         qnAService.qnaAnswers(qnaNo,qnA);
         return new ResponseEntity<>(qnA, HttpStatus.OK);
     }

@@ -55,12 +55,28 @@
                 <v-btn text class="btnText" color="red" style="font-size:16px;" href="passwordCheckWithdrawalPage">
                     탈퇴
                 </v-btn>
+            <div style="margin-top: 120px; margin-left: 60px;">
 
+
+                <v-btn text class="btnText" color="blue" style="font-size:16px;" href="passwordCheckPage">
+                    정보 수정
+                </v-btn>
+                <v-btn text class="btnText" color="red" style="font-size:16px;" href="passwordCheckWithdrawalPage">
+                    탈퇴
+
+                <v-btn text class="btnText" color="blue" style="font-size:16px;" href="passwordCheckPage">
+                    정보 수정
+                </v-btn>
+                <v-btn text class="btnText" color="red" style="font-size:16px;" href="passwordCheckWithdrawalPage">
+                    탈퇴
+                </v-btn>
+            </div>
             </div>
 
         </form>
 
     </div>
+
 </template>
 
 <script>
