@@ -7,7 +7,8 @@
 
         <v-container class="justify" style="text-align:right;">
             <v-btn color="orange" outlined route :to="{ name: 'AnimalVoluntaryRegister' }"
-                style="margin:3% 0% 3%; 0%">봉사등록</v-btn>
+                style="margin:3% 0% 3%; 0%"
+                v-if="this.access == '관리자'">봉사등록</v-btn>
         </v-container>
 
         <animal-voluntary-list :voluntaryboards="voluntaryboards"/>
@@ -26,21 +27,25 @@ export default {
     data() {
         return {
             volTitle: '',
-            pageArray: []
+            pageArray: [],
+            access:''
         }
     },
     computed: {
         ...mapState(['voluntaryboards'])
     },
     mounted () {
+        if(this.$cookies.isKey("user") == true) {
+            this.access = this.$cookies.get("user").auth
+        } else {
+            this.access = '비회원'
+        }
         this.fetchVoluntaryBoardList()
     },
     methods: {
         ...mapActions(['fetchVoluntaryBoardList']),
 
     }
-
 }
 </script>
-
 
