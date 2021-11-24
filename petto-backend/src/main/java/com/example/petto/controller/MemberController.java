@@ -102,6 +102,7 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @Transactional
     @GetMapping("/getUserInfo/{userNo}")
     public ResponseEntity<Member> getUserInfo(@PathVariable("userNo") Integer userNo) {
         log.info("getUserInfo(): " + userNo);
@@ -243,12 +244,6 @@ public class MemberController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
-    //관리자?
-//    @GetMapping("/memberlists")
-//    public ResponseEntity lists() throws Exception {
-//        log.info("Member Lists");
-
 
     @PostMapping("/passwordChk")
     public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
