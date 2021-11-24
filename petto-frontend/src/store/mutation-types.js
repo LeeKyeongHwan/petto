@@ -1,4 +1,4 @@
-export const FETCH_USER_INFO = "FETCH_USER_INFO";
+
 export const FETCH_SESSION = "FETCH_SESSION";
 
 export const FETCH_FACILITY_LIST = 'FETCH_FACILITY_LIST'
@@ -35,3 +35,7 @@ export const  FETCH_MY_QNA_LIST = ' FETCH_MY_QNA_LIST'
 
 export const FETCH_ADMIN_QNA_LIST = 'FETCH_ADMIN_QNA_LIST'
 export const FETCH_ADMIN_QNA = 'FETCH_ADMIN_QNA'
+
+export const FETCH_USER_INFO = 'FETCH_USER_INFO'
+
+

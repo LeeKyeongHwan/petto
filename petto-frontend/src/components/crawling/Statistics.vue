@@ -112,6 +112,13 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockqu
   direction: ltr;
 }
 
+h3{
+    font-size: 2vw;
+    color: black;
+    font-family: "GowunDodum-Regular";
+    margin: 0% 0% 1% 1%;
+}
+
 .sectionClass {
   padding: 20px 0px 50px 0px;
   position: relative;

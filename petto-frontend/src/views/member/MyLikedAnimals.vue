@@ -1,6 +1,8 @@
 <template>
     <section>
-        <div class="text-center">
+        <div class="text-center">   
+          <h4 style="text-align:center; padding: 3%;"><p class="normalText">내가 찜한 동물</p></h4> 
+          <h6><p v-if="myLikedAnimals.length == 0">찜한 동물이 없습니다.</p> </h6>
             <v-row justify="center">
                 <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
                     <div class="container">
@@ -8,7 +10,7 @@
                             <div v-for="animal in calData" :key="animal.notice_no">
                                 <v-card height="200" class="grow">
                                     <img :src="animal.image" style="cursor:pointer" width="230" height="230" @click="toDetailPage(animal.id)"/>
-                                </v-card>
+                                </v-card>   
                             </div>
                         </div>
                     </div>
@@ -16,49 +18,11 @@
                 <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"></v-pagination>
             </v-row>
         </div>
-            <h3 style="text-align:center; margin:0%;"> 내가 찜한  동물 </h3>
-        </div>
-
-        <v-row justify="center">
-            <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
-                <div class="container">
-                    <div id="animal">
-                        <div v-for="animal in myLikedAnimals" :key="animal.notice_no">
-                            <v-card height="200" class="grow">
-                                <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
-                            </v-card>
-        </div>
-        <div class="text-center">
-            <v-row justify="center">
-                <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
-                    <div class="container">
-                        <div id="animal">
-                            <div v-for="animal in calData" :key="animal.notice_no">
-                                <v-card height="200" class="grow">
-                                    <img :src="animal.image" style="cursor:pointer" width="230" height="230" @click="toDetailPage(animal.id)"/>
-                                </v-card>
-                            </div>
-                        </div>
-                    </div>
-                </v-container>
-                <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
-            </v-row>
-        </div>
     </section>
 </template>  
 
 <script>
 
-//import axios from 'axios'
-import { mapActions, mapState } from 'vuex';
-export default {
-    name:'MyLikedAnimals',
-    data () {
-    return {
-      curpagenum : 1,
-      datapage : 12
-    }
-    },
 //import axios from 'axios'
 import { mapActions, mapState } from 'vuex';
 export default {
@@ -96,7 +60,6 @@ export default {
 
     endOffset() {
       return (this.startOffset + this.datapage);
-
     },
 
     numofpage() {
@@ -106,17 +69,7 @@ export default {
     calData() {
       return this.myLikedAnimals.slice(this.startOffset, this.endOffset);
     }
-  },
-        ...mapState(['myLikedAnimals'])
-    },
-    numofpage() {
-        return Math.ceil(this.myLikedAnimals.length / this.datapage);
-    },
-    calData() {
-      return this.myLikedAnimals.slice(this.startOffset, this.endOffset);
-    }
-  },
-  }
+  } 
 }
 </script>
 
@@ -137,7 +90,10 @@ export default {
 
 #animal{
   width: 100%;
+  
 }
+  
+
 
 #animal div{
   display:inline-block;
@@ -150,5 +106,12 @@ export default {
 	&:hover {
         transform: scale(1.1);
     }
+    
+}
+
+#v-card:hover {
+  filter: brightness(120%);
+  -webkit-filter: brightness(120%);
+  
 }
 </style>

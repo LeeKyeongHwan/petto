@@ -47,10 +47,17 @@ export default {
     },
     data() {
         return {
-            user:this.$cookies.get("user").nickname,
+            user:'',
             isEdit: true,
             comment:'',
             vols:''
+        }
+    },
+    mounted() {
+        if(this.$cookies.isKey("user") == true){
+            this.user = this.$cookies.get("user").nickname
+        } else {
+            this.user = '비회원'
         }
     },
     methods: {
