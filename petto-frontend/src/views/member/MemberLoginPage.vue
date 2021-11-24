@@ -27,7 +27,7 @@ export default {
     ...mapState(["session"]),
   },
   methods: {
-    ...mapActions(["fetchSession"]),
+    ...mapActions(["fetchSession", 'updateAlarmList']),
 
     onSubmit(payload) {
       if (this.$store.state.session == null) {
@@ -36,13 +36,15 @@ export default {
           .post("http://localhost:8888/petto/member/login", { id, password })
           .then(res => {
             if (res.data != "") {
+
               alert("로그인 성공! - " + JSON.stringify(res.data));
+          
               this.isLogin = true;
               this.$store.state.session = res.data;
+              delete this.session.updateAlarmList;
+
               this.$cookies.set("user", res.data, "12h");
-            
               this.$router.push({name: 'PettoHome'})
-              
 
             } else {
               alert("로그인 실패! - " + res.data);

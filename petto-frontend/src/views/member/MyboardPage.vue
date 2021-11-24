@@ -44,7 +44,18 @@ export default {
         },
     },
     mounted(){
-        this.fetchMyBoardList(this.$store.state.session.id)    
+        this.fetchMyBoardList(this.$store.state.session.id) 
+
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
+        }
     },
 
     computed: {

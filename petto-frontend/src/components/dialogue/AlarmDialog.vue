@@ -23,7 +23,7 @@
             <v-card-text>
                 <!-- <v-layout wrap> 이게 있으면 세로로 안나옴 -->
 
-                <ul v-for="(alarm, idx) in session.updateAlarmList" :key="idx">
+                <ul v-for="(alarm, idx) in updateAlarmList" :key="idx">
                     <li style="display: inline-block; width: 300px; font-size: 12px;" @click="toDetailPage(alarm.postNo)">
 
                         {{ alarm.commentator }}님이 {{ alarm.regDate }}시에 '{{ alarm.title }}' 글에 답변했어요! 
@@ -42,6 +42,10 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
 
+                <v-btn text @click="deleteAllAlarms" class="normalText">
+                    전체 삭제
+                </v-btn>
+
                 <v-btn text @click="cancel" class="normalText">
                     닫기
                 </v-btn>
@@ -59,8 +63,8 @@ import axios from 'axios'
 export default {
     name: 'AlarmDialog',
     props: {
-        session: {
-            type: Object,
+        updateAlarmList: {
+            type: Array,
             required: true
         }
     },
@@ -88,11 +92,23 @@ export default {
 
             axios.delete(`http://localhost:8888/petto/member/delete_alarm/${alarmNo}`)
                 .then(() => {
-
-                    this.session.updateAlarmList.splice(idx, 1)
+                    this.updateAlarmList.splice(idx, 1)
                 })
                 .catch(err => {
                     console.log(err.message)
+                })
+        },
+
+        deleteAllAlarms() {
+
+            const id = this.$store.state.session.id
+            
+            axios.delete(`http://localhost:8888/petto/member/deleteAllAlarms/${id}`)
+                .then(() => {
+                    this.updateAlarmList = []
+                })
+                .catch(err => {
+                    console.log(err.response.message)
                 })
         }
     }

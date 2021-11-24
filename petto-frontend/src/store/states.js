@@ -20,6 +20,7 @@ export default {
   report: '',
 
   replyList: [],
+  updateAlarmList: [],
 
   crawlInfo:'',
 
@@ -40,6 +41,8 @@ export default {
   qnaboard: null,
   //
   adminQnAList: [],
-  adminQnA: null
+  adminQnA: null,
+
+  isLoggedIn: false
 
 };

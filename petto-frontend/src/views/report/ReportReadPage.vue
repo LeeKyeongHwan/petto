@@ -130,7 +130,7 @@ export default {
 
                         axios.post('http://localhost:8888/petto/member/update_alarm', { reportNo, id, commentator, title, typeOfPost, postNo })
                             .catch(err => {
-                                console.log(err.massage)
+                                console.log(err.response.massage)
                             })
 
                     })
@@ -219,10 +219,16 @@ export default {
         this.$store.dispatch("fetchReport", this.reportNo)
         this.$store.dispatch("fetchReplyList", this.reportNo)
 
-        if(this.$cookies.get("user").id) {
-            this.$store.state.session = this.$cookies.get("user")
-            this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
-        } 
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
+        }
     }
 }
 </script>

@@ -52,7 +52,6 @@ public class AdminServiceImpl implements AdminService {
         return member;
     }
 
-
     @Override
     public void remove(Long memberNo) throws Exception {
         memberRepository.deleteById(memberNo);

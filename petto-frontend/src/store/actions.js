@@ -34,7 +34,9 @@ import {
   FETCH_MY_QNA_LIST,
 
   FETCH_ADMIN_QNA_LIST,
-  FETCH_ADMIN_QNA
+  FETCH_ADMIN_QNA,
+
+  FETCH_ALARM_LIST
 
 } from "./mutation-types";
 
@@ -147,7 +149,6 @@ export default {
               .then((res) => {
                   commit(FETCH_VOLUNTARYBOARD, res.data)
               })
-
   },
 
   fetchMyLikedAnimalList({ commit }, payload) {
@@ -233,6 +234,13 @@ export default {
                 commit(FETCH_MEMBER_LIST, res.data)
             })
   },
+
+  fetchAlarmList({ commit }, payload) {
+    return axios.get(`http://localhost:8888/petto/member/updateAlarmList/${payload}`)
+            .then((res) => {
+                commit(FETCH_ALARM_LIST, res.data)
+            })
+  }
 
 };
 
