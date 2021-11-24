@@ -7,7 +7,7 @@
                 <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
                     <div class="container">
                         <div id="animal">
-                            <div v-for="animal in calData" :key="animal.notice_no">
+                            <div v-for="(animal, index) in calData" :key="index">
                                 <v-card height="200" class="grow">
                                     <img :src="animal.image" style="cursor:pointer" width="230" height="230" @click="toDetailPage(animal.id)"/>
                                 </v-card>   
