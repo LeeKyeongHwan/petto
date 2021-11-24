@@ -102,6 +102,15 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @GetMapping("/getUserInfo/{userNo}")
+    public ResponseEntity<Member> getUserInfo(@PathVariable("userNo") Integer userNo) {
+        log.info("getUserInfo(): " + userNo);
+
+        Member memberInfo = memberService.getUserInfo(userNo);
+
+        return new ResponseEntity<Member>(memberInfo, HttpStatus.OK);
+    }
+
     @PutMapping("/modifyUserInfo")
     public ResponseEntity<Void> modifyUserInfo(@Validated @RequestBody Member member) {
         log.info("modifyUserInfo(): " + member);
@@ -168,7 +177,6 @@ public class MemberController {
 
             return new ResponseEntity<Boolean>(isLogin, HttpStatus.OK);
         }
-
         return new ResponseEntity<Boolean>(isLogin, HttpStatus.OK);
     }
 
@@ -246,29 +254,13 @@ public class MemberController {
     public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
         log.info("passwordChk(): " + memberRequest);
 
-      boolean passwordChk = memberService.passwordChk(memberRequest);
-
-       log.info("passwordChk(): " + passwordChk);
-
-       return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
-    }
-
-
-
-    @PostMapping("/passwordChk")
-    public ResponseEntity<Boolean> passwordChk(@Validated @RequestBody MemberRequest memberRequest) throws Exception {
-        log.info("passwordChk(): " + memberRequest);
-
         boolean passwordChk = memberService.passwordChk(memberRequest);
 
         log.info("passwordChk(): " + passwordChk);
 
         return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
     }
-
-
 }
-
 
 
 

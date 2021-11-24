@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MemberService {
 
-    @Transactional
+    //@Transactional --> 컨트롤러에만 해주면됨
     public boolean login(MemberRequest memberRequest) throws Exception;
 
     public boolean idDupliChk(String id);
@@ -26,6 +26,8 @@ public interface MemberService {
     public String checkValidEmailForPw(String email, String id);
 
     public void changePassword(MemberRequest memberRequest);
+
+    public Member getUserInfo(Integer userNo);
 
     public void modifyUserInfo(Member member);
 
@@ -43,9 +45,4 @@ public interface MemberService {
     public void updateAlarm(UpdateAlarm updateAlarm);
 
     public void deleteAlarms(Long alarmNo);
-
-//    public List<LikedAnimal> selectLikeCnt() throws Exception;
- // 관리자?
-//    List<Member> list() throws Exception;
-
 }

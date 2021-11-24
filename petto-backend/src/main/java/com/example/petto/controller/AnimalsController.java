@@ -8,11 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,5 +56,16 @@ public class AnimalsController {
         Long numOfAnimals = animalsService.getNumOfAnimals();
 
         return new ResponseEntity<Long>(numOfAnimals, HttpStatus.OK);
+    }
+
+    @PostMapping("/filterList")
+    public ResponseEntity<List<Animals>> getFilterList(@RequestParam("selectedPlace") String[] selectedPlace,
+                                                       @RequestParam("selectedKinds") String[] selectedKinds) {
+
+        log.info("getFilterList: " + selectedPlace + ", " + selectedKinds);
+
+        List<Animals> filteredAnimals = animalsService.filterAnimals(selectedPlace, selectedKinds);
+
+        return new ResponseEntity<List<Animals>>(filteredAnimals, HttpStatus.OK);
     }
 }

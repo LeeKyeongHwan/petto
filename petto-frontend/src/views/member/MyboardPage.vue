@@ -7,11 +7,17 @@
                 <th class="text-left" style="width: 100px; " >no</th>
                 <th class="text-left" style="width: 150px;">카테고리</th>
                 <th class="text-left" style="width: 300px;">제목</th>
+                        </tr>
+            </thead>
+            </v-simple-table>
          <h3>내가 쓴 게시물</h3>
+
          <v-simple-table>
              <thead>
                 <tr>
-                <th class="text-left">제목</th>
+                <th class="text-left" style="width: 100px; " >no</th>
+                <th class="text-left" style="width: 150px;">카테고리</th>
+                <th class="text-left" style="width: 300px;">제목</th>
                 </tr>
             </thead>
             <tbody>

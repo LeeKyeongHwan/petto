@@ -6,19 +6,14 @@ import com.example.petto.entity.MemberRelated.LikedAnimal;
 import com.example.petto.entity.MemberRelated.UpdateAlarm;
 import com.example.petto.repository.AnimalsRepository;
 import com.example.petto.repository.LikedAnimalRepository;
-import com.example.petto.repository.MemberAuthRepository;
 import com.example.petto.repository.MemberRepository;
 import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -116,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
 
     private StringBuffer makeConfidentialCode() {
 
-        Random rnd =new Random();
+        Random rnd = new Random();
 
         StringBuffer buf =new StringBuffer();
 
@@ -141,7 +136,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public boolean login(MemberRequest memberRequest) {
         Optional<Member> maybeMember = memberRepository.findById(memberRequest.getId());
 
@@ -153,7 +148,7 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
 
-         Member loginMember = maybeMember.get();
+        Member loginMember = maybeMember.get();
 
         if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
         {
@@ -176,6 +171,14 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
 
+    }
+
+    @Override
+    public Member getUserInfo(Integer userNo) {
+
+        Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
+
+        return member;
     }
 
     @Override
@@ -217,6 +220,8 @@ public class MemberServiceImpl implements MemberService {
         updateAlarmRepository.deleteById(maybeMember.get().getId());
         memberRepository.deleteById(memberNo);
 
+        updateAlarmRepository.deleteById(maybeMember.get().getId());
+        memberRepository.deleteById(memberNo);
     }
 
     @Override
@@ -265,17 +270,4 @@ public class MemberServiceImpl implements MemberService {
 //        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
 //    }
 //
-
-        if (maybeMember.isEmpty())
-        { return false; }
-
-        Member User = maybeMember.get();
-
-        if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword()))
-        { return false; }
-
-        return true;
-    }
-
 }
-

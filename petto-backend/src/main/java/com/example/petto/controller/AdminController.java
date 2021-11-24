@@ -4,6 +4,7 @@ import com.example.petto.entity.Member;
 import com.example.petto.entity.QnA;
 import com.example.petto.service.AdminService;
 import com.example.petto.service.QnAService;
+import com.example.petto.session.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,9 +36,23 @@ public class AdminController {
         return new ResponseEntity<>(adminService.memberList(), HttpStatus.OK);
     }
 
+    @Transactional
     @GetMapping("/{memberNo}")
     public ResponseEntity<Member> read(@PathVariable("memberNo") Long memberNo) throws Exception {
-        Member member = adminService.read(memberNo);
+        Member tmp = adminService.read(memberNo);
+
+        Member member = new Member();
+
+        member.setId(tmp.getId());
+        member.setMemberNo(tmp.getMemberNo());
+        member.setAuth(tmp.getAuth());
+        member.setEmail(tmp.getEmail());
+        member.setPhoneNumber(tmp.getPhoneNumber());
+        member.setName(tmp.getName());
+        member.setBirthday(tmp.getBirthday());
+        member.setPetsRaised(tmp.getPetsRaised());
+        member.setRegDate(tmp.getRegDate());
+        member.setNickname(tmp.getNickname());
 
         return new ResponseEntity<Member>(member, HttpStatus.OK);
     }
@@ -72,7 +87,7 @@ public class AdminController {
 
     @PutMapping("/qna/{qnaNo}")
     public ResponseEntity<QnA> answers(@PathVariable("qnaNo") Long qnaNo,
-                                      @Validated @RequestBody QnA qnA ) throws Exception {
+                                       @Validated @RequestBody QnA qnA ) throws Exception {
         qnAService.qnaAnswers(qnaNo,qnA);
         return new ResponseEntity<>(qnA, HttpStatus.OK);
     }

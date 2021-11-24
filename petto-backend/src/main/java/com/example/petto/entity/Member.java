@@ -78,7 +78,7 @@ public class Member implements Serializable {
     @JoinColumn(name = "member_no")
     private List<LikedAnimal> likedAnimals = new ArrayList<LikedAnimal>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private List<UpdateAlarm> updateAlarmList = new ArrayList<UpdateAlarm>();
 }

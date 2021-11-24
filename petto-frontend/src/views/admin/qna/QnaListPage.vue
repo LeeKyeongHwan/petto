@@ -1,35 +1,6 @@
-<!--<template>
-  <div id="qnaboard" align="center">
-    <h2>1:1 문의 (관리자)</h2>
-    <qna-list :qnaboards="qnaboards"/>
-  </div>
-</template>
-
-<script>
-import { mapActions,mapState } from 'vuex'
-import QnaList from '@/components/admin/qna/QnaList.vue'
-export default {
-    name: 'QnAListPage',
-    components:{
-        QnaList
-
-    },
-    computed: {
-        ...mapState(['qnaboards'])
-    },
-    mounted () {
-        this.fetchQnAList()
-    },
-    methods: {
-        ...mapActions(['fetchQnAList']),
-    }
-}
-</script>-->
-
 <template>
-    <div align="center" style="margin:50px">
+    <div align="center" style="margin:5%;">
         <h3>문의글 목록</h3>
-        <!--  -->
 
          <v-card-text style="text-align:right; padding-right:10em;">
             <v-select
@@ -62,11 +33,12 @@ export default {
                >
 
                 <template v-slot:item="{ item }"> 
-                        <tr @click="toReadPage(item.qnaNo)">
-                            <td>{{ item.answerState }}</td>
-                            <td>{{ item.title }}</td>
-                            <td>{{ item.writer }}</td>
-                            <td>{{ item.regDate }}</td>
+                        <tr @click="toReadPage(item.qnaNo)" style="overflow:hidden;">
+                            <v-chip :color="getColor(item.answerState)" class="ma-2 answer-view"> 
+                            <td><p>{{ item.answerState }}</p></td></v-chip>
+                            <td><p>{{ item.title }}</p></td>
+                            <td><p>{{ item.writer }}</p></td>
+                            <td><p>{{ item.regDate }}</p></td>
                         </tr>
                 </template>
 
@@ -83,7 +55,7 @@ export default {
         return {
             headers:
                 [   
-                    { text: '문의상태', value: 'answer' },
+                    { text: '문의상태', align: 'center', value: 'answer' },
                     { text: '제목', value: 'title' },
                     { text: '작성자', value: 'writer' },
                     { text: '날짜', value: 'regDate' },
@@ -92,10 +64,15 @@ export default {
             answers: ['전체','답변대기','답변완료'],
             selectLatest: [],
             selectAnswerState: [],
+            access:''
 
         }
     },
     methods: {
+        getColor (answer) {
+            if (answer =='답변완료') return 'green'
+            else if (answer == '답변대기') return 'orange'
+        },
         list() {
             if(this.selectLatest == '' && this.selectAnswerState == '') {
                 return this.$store.state.adminQnAList
@@ -136,10 +113,18 @@ export default {
         }
     },
     mounted() {
-        if( this.$cookies.get("user").auth != '관리자'){
-            alert('권한이 필요한 서비스입니다.')
-            this.$router.push({
+        if(this.$cookies.isKey('user') == true){
+            this.access = this.$cookies.get('user').auth
+            if(this.access != '관리자'){
+                alert('권한이 필요한 서비스입니다')
+                this.$router.push({
                 name:'PettoHome',
+                })
+            }
+        } else {
+            alert('권한이 필요한 서비스입니다')
+            this.$router.push({
+            name:'PettoHome',
             })
         }
         this.$store.dispatch("fetchAdminQnAList")
@@ -150,3 +135,32 @@ export default {
     
 }
 </script>
+
+<style scoped>
+@font-face {
+    font-family: 'ChosunSm';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.1/ChosunSm.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MapoGoldenPier';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h3{
+    font-family: 'ChosunSm';
+}
+p{
+    font-family: 'MapoGoldenPier';
+    font-size: 15px;
+    margin: 0;
+}
+
+.answer-view{
+    color: white;
+    margin-top:3%;
+}
+</style>
+    
