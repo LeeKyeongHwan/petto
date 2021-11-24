@@ -1,10 +1,11 @@
 <template>
-    <div align="center">
+    <div align="center" style="margin:5% 0% 15% 0%;">
         <admin-qna-read v-if="adminQnA" :adminQnA="adminQnA"/>
         <p v-else>로딩중 ...... </p>
-        <v-btn route :to="{ name: 'QnaListPage' }">
+        
+        <!-- <v-btn route :to="{ name: 'QnaListPage' }">
             목록보기
-        </v-btn>
+        </v-btn> -->
 
     </div>
 </template>

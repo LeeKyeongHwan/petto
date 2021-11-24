@@ -640,7 +640,7 @@ h4{
     position: absolute;
     left: 0;
     z-index: 1;
-    width: 200px;
+    width: 130px;
     padding: 0;
     opacity: 0;
     visibility: hidden;

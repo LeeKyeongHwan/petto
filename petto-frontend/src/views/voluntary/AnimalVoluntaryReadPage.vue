@@ -15,11 +15,11 @@
             class="ma-2 white--text" route :to="{ name: 'AnimalVoluntaryListPage' }">
             목록보기
             </v-btn> 
-            <v-btn type="submit" color="orange darken-2"
+            <v-btn type="submit" color="orange darken-2" v-if="this.access == '관리자'"
             class="ma-2 white--text" route :to="{ name: 'AnimalVoluntaryModifyPage', params: { volunteerNo } }">
             게시글 수정
             </v-btn>
-            <v-btn color="orange darken-2" outlined
+            <v-btn color="orange darken-2" outlined v-if="this.access == '관리자'"
             class="ma-2 white--text" @click="onDelete">
             게시글 삭제
             </v-btn>
@@ -62,12 +62,16 @@ export default {
             comment: '',
             userInfo: this.$cookies.isKey("user"),
             writer: '',
+            access:''
         }
     } ,
     mounted() {
-        if(this.$cookies.get("user")) {
+        if(this.userInfo == true) {
             this.$store.state.session = this.$cookies.get("user")
-        } 
+            this.access = this.$cookies.get("user").auth
+        } else {
+            this.access = '비회원'
+        }
         this.fetchVolCommentList(this.volunteerNo)
     },
     components: {
