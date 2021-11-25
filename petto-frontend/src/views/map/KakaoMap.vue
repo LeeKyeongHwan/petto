@@ -314,10 +314,21 @@ export default {
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=07c4540ad9492806ee3339221fbf2965&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     }
+
+    if(this.$cookies.isKey("user")) {
+
+        this.$store.state.session = this.$cookies.get("user");
+        
+        if(this.$store.state.session != null) {
+
+            this.$store.dispatch('fetchAlarmList', this.session.id)
+            this.$store.state.isLoggedIn = true;
+        }
+    }
   },
 
   computed: {
-    ...mapState(['animals', 'facilityList'])
+    ...mapState(['animals', 'facilityList', 'isLoggedIn', 'session'])
   },
 
   methods: {

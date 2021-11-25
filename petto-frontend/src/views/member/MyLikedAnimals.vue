@@ -34,25 +34,32 @@ export default {
     }
     },
     methods:{
-    ...mapActions(['fetchMyLikedAnimalList']),
+      ...mapActions(['fetchMyLikedAnimalList']),
 
-    toDetailPage(id) {
-    this.$router.push({
-    name: 'AnimalDetailPage',
-    params: { "id": id }
-        })
-        },
+      toDetailPage(id) {
+        this.$router.push({
+        name: 'AnimalDetailPage',
+        params: { "id": id }
+            })
+          },
     },
     mounted(){
         this.fetchMyLikedAnimalList(this.$store.state.session.memberNo) 
         
-        if(this.$cookies.get("user").id) {
-            this.$store.state.session = this.$cookies.get("user")
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
         }
     },
     
     computed: {
-    ...mapState(['myLikedAnimals']),
+    ...mapState(['myLikedAnimals', 'isLoggedIn']),
 
     startOffset() {
       return ((this.curpagenum - 1) * this.datapage);

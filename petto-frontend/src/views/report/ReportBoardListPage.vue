@@ -237,13 +237,20 @@ export default {
     mounted() {
         this.$store.dispatch("fetchReportList")
 
-        if(this.$cookies.get("user").id) {
-            this.$store.state.session = this.$cookies.get("user")
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
         }
     },
 
     computed: {
-        ...mapState(['reportList', 'session']),
+        ...mapState(['reportList', 'session', 'isLoggedIn']),
 
         filterReportList() {
 

@@ -44,7 +44,7 @@
             <template v-slot:activator="{ on, attrs }">
             
             <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
-              <alarm-dialog :session="session"/>
+              <alarm-dialog :updateAlarmList="updateAlarmList"/>
             </div>
 
             <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
@@ -80,9 +80,9 @@
             JOIN US
           </v-btn>
 
-
           <v-app-bar-nav-icon plain color="white" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
-          <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
+
+          <v-navigation-drawer app v-model="nav_drawer" temporary v-if="this.auth == '개인'">
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
@@ -141,17 +141,16 @@
           <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
               <div class="container">
                   <div id="animal">
-                        <div v-for="animal in olderList" :key="animal.notice_no">
-                            <v-card height="200" class="grow">
-                              <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
-                            </v-card>
-                        </div>
+                    <div v-for="animal in olderList" :key="animal.notice_no">
+                        <v-card height="200" class="grow">
+                          <img :src="animal.image" width="230" height="230" @click="toDetailPage(animal.id)"/>
+                        </v-card>
+                    </div>
                   </div>
               </div>
           </v-container>
         </v-row>
       </section>
-
 
         <section>
           <div class="container2">
@@ -160,12 +159,13 @@
             
           </div>
         </section>
+
         <section>
           <div class="container3">
             <div id="youtube">
               <h3>petto 유튜브</h3>
                   <ul>
-                      <li><iframe src="https://www.youtube.com/embed/BtjKQUW8Eg0?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <!-- <li><iframe src="https://www.youtube.com/embed/BtjKQUW8Eg0?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
                       <li><iframe src="https://www.youtube.com/embed/3HimGmjD73k?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
                       <li><iframe src="https://www.youtube.com/embed/vrPm4SFRviY?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
                       <li><iframe src="https://www.youtube.com/embed/R-b2LwMCYC8?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
@@ -175,7 +175,7 @@
                       <li><iframe src="https://www.youtube.com/embed/4on_v7ZebSw?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
                       <li><iframe src="https://www.youtube.com/embed/0anYp7gZJ3w?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
                       <li><iframe src="https://www.youtube.com/embed/wy2qwD_xx9k?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
-                      <li><iframe src="https://www.youtube.com/embed/qllzIfMSMMc?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li>
+                      <li><iframe src="https://www.youtube.com/embed/qllzIfMSMMc?list=PLPXeAXyrXJPBzLIA0cCdHNUG-XfOZyMqV"></iframe></li> -->
                   </ul>
             </div>
           </div>
@@ -214,13 +214,16 @@ export default {
     Statistics,
     AlarmDialog
   },
+  props: {
+    
+  },
   data() {
     return {
       layers: false,
       isLogin: false,
       nav_drawer: false,
       group: false,
-      auth: this.$cookies.get("user").auth,
+      auth: '',
       links: [
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
@@ -250,7 +253,7 @@ export default {
       this.$router.push({ name: 'PettoHome' })
       alert('로그아웃 되었습니다.')
     },
-    ...mapActions(['fetchOlderAnimalList']),
+    ...mapActions(['fetchOlderAnimalList', 'fetchAlarmList']),
       toDetailPage(id) {
       this.$router.push({
         name: 'AnimalDetailPage',
@@ -263,20 +266,28 @@ export default {
     if (this.$cookies.isKey("TodayPopUpClose") == false) {
       this.layers = true;
     }
+
+    if(this.$cookies.isKey("user")) {
     if( this.$cookies.isKey("user") == true) {
-      // this.auth = this.$cookies.get("user").auth
+      this.auth = this.$cookies.get("user").auth
       this.$store.state.session = this.$cookies.get("user");
-      if (this.$store.state.session != null) {
+
+      if(this.$store.state.session != null) {
+        this.$store.dispatch('fetchAlarmList', this.session.id)
+
         this.isLogin = true;
+      }
+    } else {
+      this.auth = '비회원'
     }
     }
     this.fetchOlderAnimalList()
   },
   computed: {
-      ...mapState(['olderList', 'session']),
+      ...mapState(['olderList', 'session', 'updateAlarmList']),
 
       updatedNewsNum() {
-        return this.session.updateAlarmList.length
+        return this.$store.state.updateAlarmList.length
       }
   },
   watch: {
