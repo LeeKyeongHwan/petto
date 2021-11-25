@@ -106,13 +106,25 @@ export default {
             if (answer =='답변완료') return 'green'
             else if (answer == '답변대기') return 'orange'
         },
-        complete () {
+        complete() {
             const { qnaNo } = this.adminQnA
             const { radioGroup, adminAnswer } = this
             const answerState = radioGroup == 0 ? '답변완료' : '답변대기'
             console.log(answerState)
             axios.put(`http://localhost:8888/petto/admin/qna/${qnaNo}`, { answerState, adminAnswer })
                     .then(() => {
+                        
+                        const id = this.adminQnA.writer
+                        const commentator = '관리자'
+                        const title = this.adminQnA.title
+                        const typeOfPost = 'Q&A'
+                        const postNo = this.adminQnA.qnaNo
+
+                        axios.post('http://localhost:8888/petto/member/update_alarm', { id, commentator, title, typeOfPost, postNo })
+                            .catch(err => {
+                                console.log(err.response.massage)
+                            })
+                            
                         alert('답변을 작성했습니다.')
                         this.$router.push({
                             name: 'QnaListPage'

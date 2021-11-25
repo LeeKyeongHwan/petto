@@ -37,7 +37,7 @@ import {
   FETCH_ADMIN_QNA_LIST,
   FETCH_ADMIN_QNA,
 
-
+  FETCH_ALARM_LIST
 
 } from "./mutation-types";
 
@@ -149,5 +149,8 @@ export default {
     state.adminQnA = adminQnA
   },
 
+  [FETCH_ALARM_LIST] (state, payload) {
+    state.updateAlarmList = payload
+  }
 
 };

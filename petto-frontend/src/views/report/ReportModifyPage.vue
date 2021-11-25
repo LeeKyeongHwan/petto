@@ -48,13 +48,23 @@ export default {
         ...mapState(['report'])
     },
     mounted() {
-        
         if(this.$cookies.get('user').id == this.id) {
             this.$store.dispatch("fetchReport", this.reportNo)
         }
         else {
             alert('권한이 없습니다!')
             window.close()
+        }
+
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
         }
     }
 }
