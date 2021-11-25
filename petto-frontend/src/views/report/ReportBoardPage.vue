@@ -32,9 +32,12 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 
 export default {
     methods: {
+        ...mapActions(['fetchAlarmList']),
+
         chooseCategory(event) {
             const keyword = event.target.innerText
             this.$router.push({ name: 'ReportBoardListPage', params: { 'keyword': keyword } })
@@ -52,6 +55,9 @@ export default {
                 this.$store.state.isLoggedIn = true;
             }
         }
+    },
+    computed: {
+        ...mapState(['session', 'isLoggedIn'])
     }
 }
 </script>

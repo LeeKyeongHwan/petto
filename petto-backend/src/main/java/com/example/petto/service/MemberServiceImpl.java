@@ -260,6 +260,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<UpdateAlarm> getUpdateAlarmList(String id) {
+
+        Optional<Member> member = memberRepository.findById(id);
+
+        if(member.isPresent()) {
+            if(member.get().getAuth().matches("관리자")) return updateAlarmRepository.findById("관리자");
+            else ;
+        }
         return updateAlarmRepository.findById(id);
     }
 
