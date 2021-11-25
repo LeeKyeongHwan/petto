@@ -37,7 +37,7 @@ export default {
         }
     },
     mounted() {
-        var userNo = this.$store.state.session.memberNo //추후에 변경
+        var userNo = this.$store.state.session.memberNo 
         this.fetchUserInfo(userNo)
     },
     computed: {
