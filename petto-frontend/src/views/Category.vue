@@ -6,7 +6,6 @@
         <div style="width: 300px;">
           <router-link :to="{ name: 'PettoHome' }">
             <h1 class="logo">
-              petto
             </h1>
           </router-link>
         </div>
@@ -15,7 +14,7 @@
           <v-tooltip bottom v-if="isLoggedIn">
             <template v-slot:activator="{ on, attrs }">
               <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
-                <alarm-dialog :session="session"/>
+                <alarm-dialog :updateAlarmList="updateAlarmList"/>
               </div>
 
               <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">

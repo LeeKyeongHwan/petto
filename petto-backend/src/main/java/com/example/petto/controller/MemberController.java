@@ -181,7 +181,6 @@ public class MemberController {
         return new ResponseEntity<Boolean>(isLogin, HttpStatus.OK);
     }
 
-
     @PostMapping("/removeSession")
     public ResponseEntity<Boolean> removeSession(HttpServletRequest request) throws Exception {
         Boolean mustFalse = false;
