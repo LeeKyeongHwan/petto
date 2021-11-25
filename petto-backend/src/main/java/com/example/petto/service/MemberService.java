@@ -42,7 +42,12 @@ public interface MemberService {
     public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception;
 
     public boolean passwordChk(MemberRequest memberRequest) throws Exception;
+
     public void updateAlarm(UpdateAlarm updateAlarm);
 
-    public void deleteAlarms(Long alarmNo);
+    public void deleteAlarm(Long alarmNo);
+
+    public List<UpdateAlarm> getUpdateAlarmList(String id);
+
+    public void deleteAllAlarms(String id);
 }

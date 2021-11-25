@@ -12,7 +12,7 @@
         </div>
 
         <div class="header-top">
-          <v-tooltip bottom v-if="isLogin">
+          <v-tooltip bottom v-if="isLoggedIn">
             <template v-slot:activator="{ on, attrs }">
             <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
               <alarm-dialog :session="session"/>
@@ -31,25 +31,24 @@
 
           &emsp;
 
-          <v-btn plain color="white" v-if="isLogin" @click="logout">
+          <v-btn plain color="white" v-if="isLoggedIn" @click="logout">
             LOGOUT
           </v-btn>
 
           <v-btn
             plain
             color="orange"
-            v-if="!isLogin"
+            v-if="!isLoggedIn"
             router
             :to="{ name: 'MemberLoginPage' }"
             >LOGIN
           </v-btn>
 
-          <v-btn plain color="orange" v-if="!isLogin" router :to="{ name: 'SignupPage' }">
+          <v-btn plain color="orange" v-if="!isLoggedIn" router :to="{ name: 'SignupPage' }">
             JOIN US
           </v-btn>
 
-
-          <v-app-bar-nav-icon plain color="orange" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon plain color="orange" v-if="isLoggedIn" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
           <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
@@ -109,16 +108,16 @@ export default {
   },
   data() {
     return {
-      isLogin: false,
+      //isLogin: false,
       nav_drawer: false,
       group: false,
       auth: '',
       links: [
-                { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
-                { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
-                { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
-                { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' },
-                { icon: 'input', text: '로그아웃', name: 'logout'}
+          { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
+          { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
+          { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
+          { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' },
+          { icon: 'input', text: '로그아웃', name: 'logout'}
       ],
       adminLinks: [
           { icon: 'people', text: '회원관리', name: 'my_board', route: '/admin' },
@@ -127,6 +126,7 @@ export default {
       ]
     }
   },
+
   methods: {
     logout() {
       this.$cookies.remove("user");
@@ -136,19 +136,11 @@ export default {
       alert('로그아웃 되었습니다.')
     }
   },
-  mounted() {
-    if( this.$cookies.isKey("user") == true) {
-      this.$store.state.session = this.$cookies.get("user");
-      this.auth = this.$cookies.get("user").auth
-      if (this.$store.state.session != null) {
-        this.isLogin = true;
-    }
-    }
-  },
+
   computed: {
-      ...mapState(['session']),
+      ...mapState(['updateAlarmList', 'isLoggedIn']),
       updatedNewsNum() {
-        return this.session.updateAlarmList.length
+        return this.updateAlarmList.length
       }
   },
   watch: {
