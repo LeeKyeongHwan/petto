@@ -1,5 +1,6 @@
 package com.example.petto.service;
 
+import com.example.petto.entity.VolBoardRelated.Comment;
 import com.example.petto.entity.VolunteerBoard;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,5 +19,7 @@ public interface VolunteerBoardService {
                                  MultipartFile fileList, MultipartFile contentFileList,VolunteerBoard volunteerBoard) throws Exception;
 
     public void remove(Long volunteerNo) throws Exception;
+
+    public List<Comment> deleteContainingVolunteerNo(Long volunteerNo) throws Exception;
 
 }

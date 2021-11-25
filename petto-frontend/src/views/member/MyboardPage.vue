@@ -14,7 +14,10 @@
                 <tr v-for="(myBoardList, idx) of calData" :key="idx">
                 <td >{{ myBoardList.reportNo}}</td>
                 <td>{{ myBoardList.category}}</td>
-                <td @click="toDetailPage(myBoardList.reportNo)" style="cursor: pointer;">{{ myBoardList.title}}</td>
+                <td><router-link :to="{ name: 'ReportReadPage',
+                                    params: { reportNo: myBoardList.reportNo.toString() } }"> 
+                        {{ myBoardList.title}}
+                    </router-link></td>
                 </tr>
             </tbody>
          </v-simple-table>
@@ -36,12 +39,6 @@ export default {
     methods:{
     ...mapActions(['fetchMyBoardList']),
 
-    toDetailPage(reportNo) {
-    this.$router.push({
-    name: 'ReportReadPage',
-    params: { "reportNo": reportNo }
-        })
-        },
     },
     mounted(){
         this.fetchMyBoardList(this.$store.state.session.id) 
