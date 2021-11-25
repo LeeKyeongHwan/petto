@@ -1,8 +1,14 @@
 <template>
   <div>
+    <v-container class="justify-center">
+    <v-btn outlined style="margin:5%;" route :to="{name:'AbandonedAnimal'}">
+      유기동물</v-btn>
+    <v-btn outlined route :to="{name: 'FacilityListPage'}" >보호소 </v-btn>
+    </v-container>
     <h1>유기동물 리스트</h1>
 
-    <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" :place="place" :kind="kind" style="position relative;"/>
+    <!-- <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" :place="place" :kind="kind" style="position relative;"/> -->
+    <paginated-list v-if="animals" :animals="animals" :initPageNum="parseInt(pageNum)" :place="place" :kind="kind" style="position relative;"/>
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
@@ -61,17 +67,17 @@ export default {
   },
   props: {
     pageNum: {
-      type: Number,
+      type: [Number,String],
       required: false,
       default: 0
     },
     place: {
-      type: Array,
+      type: [String],
       required: false,
       default: null
     },
     kind: {
-      type: Array,
+      type: [String],
       required: false,
       default: null
     }
@@ -90,8 +96,7 @@ export default {
       ...mapState(['animals', 'latestSeenAnimals', 'isLoggedIn', 'session']),
 
       latestSeen() {
-        console.log(this.latestSeenDeleteCnt)
-
+        // console.log(this.latestSeenDeleteCnt)
         if(this.$cookies.get("latestSeen")) {
 
           const start = this.listNum * this.LATEST_SEEN_SIZE
@@ -105,7 +110,7 @@ export default {
       },
 
       listCount() {
-        console.log(this.latestSeenDeleteCnt)
+        // console.log(this.latestSeenDeleteCnt)
         
         let listLeng = JSON.parse(this.$cookies.get('latestSeen')).length
 
@@ -130,7 +135,7 @@ export default {
       if(this.$cookies.isKey("user")) {
 
         this.$store.state.session = this.$cookies.get("user");
-        
+
         if(this.$store.state.session != null) {
           this.$store.dispatch('fetchAlarmList', this.session.id)
           this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
@@ -190,7 +195,7 @@ h1 {
     font-family: 'GowunDodum-Regular';
     font-size: 30px;
     text-align: center;
-    padding: 5% 0% 5% 0%;
+    padding: 0% 0% 5% 0%;
 }
 </style>
 

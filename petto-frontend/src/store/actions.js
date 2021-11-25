@@ -98,7 +98,7 @@ export default {
                 commit(FETCH_LIKED_ANIMAL_LIST, res.data)
       })
   },
-
+  
   fetchAnimalInfo({ commit }, payload) {
     return axios.get(`http://localhost:8888/petto/animals/getAnimalsInfo/${payload}`)
       .then(res => {
