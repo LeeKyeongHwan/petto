@@ -10,21 +10,20 @@
             </h1>
           </router-link>
         </div>
-
         <div class="header-top">
+          
           <v-tooltip bottom v-if="isLoggedIn">
             <template v-slot:activator="{ on, attrs }">
-            <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
-              <alarm-dialog :session="session"/>
-            </div>
+              <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
+                <alarm-dialog :session="session"/>
+              </div>
 
-            <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
-              <v-icon color="grey">
-                add_alert
-              </v-icon>
-            </v-btn>
+              <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
+                <v-icon color="grey">
+                  add_alert
+                </v-icon>
+              </v-btn>
             </template>
-
             <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
             <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
           </v-tooltip>
@@ -80,7 +79,6 @@
                 </v-list-item-group>
             </v-list>
           </v-navigation-drawer>
-
 
         </div>
 

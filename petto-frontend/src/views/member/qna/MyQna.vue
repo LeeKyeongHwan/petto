@@ -40,38 +40,47 @@ export default {
     }
     },
     methods:{
+<<<<<<< HEAD
+    ...mapActions(['fetchMyQnAList', 'fetchAlarmList']),
+
+    toDetailPage(qnaNo) {
+    this.$router.push({
+    name: 'QnaReadPage',
+    params: { "qnaNo": qnaNo }
+        })
+        },
+=======
     ...mapActions(['fetchMyQnAList']),
+>>>>>>> 0934491cb5070de12848396a6f7db374fc3f2903
     },
     mounted(){
-        this.fetchMyLikedAnimalList(this.$store.state.session.memberNo) 
-        
         if(this.$cookies.isKey("user")) {
 
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.session.id)
-                this.fetchMyQnAList(this.$store.state.session.id)    
-
+                this.fetchMyQnAList(this.$store.state.session.id)
                 this.$store.state.isLoggedIn = true;
             }
         }
     },
 
     computed: {
-        ...mapState(['myQnaList']),
-    startOffset() {
-      return ((this.curpagenum - 1) * this.datapage);
-    },
-    endOffset() {
-      return (this.startOffset + this.datapage);
-    },
-    numofpage() {
-        return Math.ceil(this.myQnaList.length / this.datapage);
-    },
-    calData() {
-      return this.myQnaList.slice(this.startOffset, this.endOffset);
-    }    
+        ...mapState(['myQnaList', 'session']),
+        
+        startOffset() {
+            return ((this.curpagenum - 1) * this.datapage);
+        },
+        endOffset() {
+            return (this.startOffset + this.datapage);
+        },
+        numofpage() {
+            return Math.ceil(this.myQnaList.length / this.datapage);
+        },
+        calData() {
+            return this.myQnaList.slice(this.startOffset, this.endOffset);
+        }    
     },
 
 
