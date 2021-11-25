@@ -24,11 +24,24 @@
                 <!-- <v-layout wrap> 이게 있으면 세로로 안나옴 -->
 
                 <ul v-for="(alarm, idx) in updateAlarmList" :key="idx">
-                    <li style="display: inline-block; width: 300px; font-size: 12px;" @click="toDetailPage(alarm.postNo)">
+                    <!-- <li v-if="alarm.id === '관리자'" style="display: inline-block; width: 300px; font-size: 12px;" @click="toAnswerPage(alarm.postNo)">
+
+                        {{ alarm.commentator }}회원님이 Q&A '{{ alarm.title }}' 글을 작성했어요!
+                        <br>
+                    </li>
+
+                    <li v-else-if="alarm.commentator === '관리자'" style="display: inline-block; width: 300px; font-size: 12px;" @click="toQnAPage(alarm.postNo)">
+
+                        {{ alarm.commentator }}가 회원님의 Q&A '{{ alarm.title }}' 글에 답변했어요! 
+                        <br>
+                    </li>
+
+                    <li v-else style="display: inline-block; width: 300px; font-size: 12px;" @click="toDetailPage(alarm.postNo)">
 
                         {{ alarm.commentator }}님이 {{ alarm.regDate }}시에 '{{ alarm.title }}' 글에 답변했어요! 
                         <br>
-                    </li>
+                    </li> -->
+
                     <v-btn text x-small style="float: right;" @click="deleteAlaram(alarm.alarmNo, idx)">
                         <v-icon color="#D5D5D5">
                             cancel
@@ -79,11 +92,29 @@ export default {
             this.dialog = false
         },
 
+        toAnswerPage(postNo) {
+
+            let routeData = this.$router.resolve({
+                name: 'AdminQnaReadPage',
+                params: { qnaNo: postNo }
+            })
+            window.open(routeData.href, '_blank')
+        },
+
         toDetailPage(postNo) {
 
             let routeData = this.$router.resolve({
                 name: 'ReportReadPage',
                 params: { reportNo: postNo }
+            })
+            window.open(routeData.href, '_blank')
+        },
+
+        toQnAPage(postNo) {
+
+            let routeData = this.$router.resolve({
+                name: 'QnaReadPage',
+                params: { qnaNo: postNo }
             })
             window.open(routeData.href, '_blank')
         },

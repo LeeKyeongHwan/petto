@@ -87,7 +87,7 @@ export default {
     }
   },
   computed: {
-      ...mapState(['animals', 'latestSeenAnimals']),
+      ...mapState(['animals', 'latestSeenAnimals', 'isLoggedIn', 'session']),
 
       latestSeen() {
         console.log(this.latestSeenDeleteCnt)
@@ -127,14 +127,20 @@ export default {
       //if(this.$store.state.animals == '') 
       this.fetchFIlteredAniList(formData)
 
-      if(this.$cookies.get("user").id) {
-        this.$store.state.session = this.$cookies.get("user")
-        this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+      if(this.$cookies.isKey("user")) {
+
+        this.$store.state.session = this.$cookies.get("user");
+        
+        if(this.$store.state.session != null) {
+          this.$store.dispatch('fetchAlarmList', this.session.id)
+          this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+          this.$store.state.isLoggedIn = true;
+        }
       }
   },
 
   methods: {
-      ...mapActions(['fetchAnimalList', 'fetchFIlteredAniList']),
+      ...mapActions(['fetchAnimalList', 'fetchFIlteredAniList', 'fetchLikedAnimalList']),
 
       goListUp() {
         this.listNum -= 1

@@ -73,10 +73,8 @@ public class AnimalsServiceImpl implements AnimalsService {
         List<Animals> list = new ArrayList<Animals>();
         boolean isPlaceKeyword = true;
 
-        for(int i=0; i<keywordList.length; i++) {
-            if(keywordList[i].contains("개") || keywordList[i].contains("고양이") || keywordList[i].contains("기타")) {
-                isPlaceKeyword = false;
-            }
+        for(String keyword : keywordList) {
+            if(keyword.contains("개") || keyword.contains("고양이") || keyword.contains("기타")) isPlaceKeyword = false;
         }
 
         if(isPlaceKeyword) {

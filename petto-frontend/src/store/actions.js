@@ -95,7 +95,6 @@ export default {
   fetchLikedAnimalList ({ commit }, payload) {
     return axios.get(`http://localhost:8888/petto/member/likedAnimalList/${payload}`)
             .then((res) => {
-                //alert(JSON.stringify(res.data))
                 commit(FETCH_LIKED_ANIMAL_LIST, res.data)
       })
   },
@@ -238,6 +237,7 @@ export default {
   fetchAlarmList({ commit }, payload) {
     return axios.get(`http://localhost:8888/petto/member/updateAlarmList/${payload}`)
             .then((res) => {
+              alert(res.data)
                 commit(FETCH_ALARM_LIST, res.data)
             })
   }

@@ -40,15 +40,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Member edit(Long memberNo,Member member) throws Exception {
+    public Member edit(Long memberNo, Member member) throws Exception {
         Optional<Member> adminEdit = memberRepository.findById(memberNo);
 
-        adminEdit.ifPresent( changeInfo ->{
+        adminEdit.ifPresent( changeInfo -> {
             changeInfo.setAuth(member.getAuth());
             member.setMemberNo(memberNo);
             memberRepository.save(changeInfo);
         });
-
         return member;
     }
 
