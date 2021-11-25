@@ -60,6 +60,7 @@ public class VolunteerBoardController {
     @DeleteMapping("/{volunteerNo}")
     public ResponseEntity<Void> remove(@PathVariable("volunteerNo") Long volunteerNo) throws Exception {
         volunteerBoardService.remove(volunteerNo);
+        volunteerBoardService.deleteContainingVolunteerNo(volunteerNo);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

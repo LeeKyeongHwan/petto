@@ -223,7 +223,7 @@ export default {
       isLogin: false,
       nav_drawer: false,
       group: false,
-      auth: this.$cookies.get("user").auth,
+      auth: '',
       links: [
                 { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
                 { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
@@ -266,7 +266,10 @@ export default {
     if (this.$cookies.isKey("TodayPopUpClose") == false) {
       this.layers = true;
     }
+
     if(this.$cookies.isKey("user")) {
+    if( this.$cookies.isKey("user") == true) {
+      this.auth = this.$cookies.get("user").auth
       this.$store.state.session = this.$cookies.get("user");
 
       if(this.$store.state.session != null) {
@@ -274,6 +277,9 @@ export default {
 
         this.isLogin = true;
       }
+    } else {
+      this.auth = '비회원'
+    }
     }
     this.fetchOlderAnimalList()
   },

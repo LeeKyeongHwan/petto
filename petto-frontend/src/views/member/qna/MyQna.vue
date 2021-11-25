@@ -14,7 +14,11 @@
                 <tr v-for="myQnaList in calData" :key="myQnaList.qnaNo">
                 <!-- <td >{{ myQnaList.qnaNo}}</td> -->
                 <td >{{ myQnaList.answerState}}</td>
-                <td @click="toDetailPage(myQnaList.qnaNo)" style="cursor: pointer;">{{ myQnaList.title}}</td>
+                <!-- <td @click="toDetailPage(myQnaList.qnaNo)" style="cursor: pointer;">{{ myQnaList.title}}</td> -->
+                   <td style="color:black;"><router-link :to="{ name: 'QnaReadPage',
+                                    params: { qnaNo: myQnaList.qnaNo.toString() } }"> 
+                        {{ myQnaList.title }}
+                    </router-link></td>
                 <td>{{ myQnaList.regDate}}</td>
                 </tr>
             </tbody>
@@ -36,6 +40,7 @@ export default {
     }
     },
     methods:{
+<<<<<<< HEAD
     ...mapActions(['fetchMyQnAList', 'fetchAlarmList']),
 
     toDetailPage(qnaNo) {
@@ -44,6 +49,9 @@ export default {
     params: { "qnaNo": qnaNo }
         })
         },
+=======
+    ...mapActions(['fetchMyQnAList']),
+>>>>>>> 0934491cb5070de12848396a6f7db374fc3f2903
     },
     mounted(){
         if(this.$cookies.isKey("user")) {

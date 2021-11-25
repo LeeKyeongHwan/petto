@@ -80,7 +80,6 @@
             </v-list>
           </v-navigation-drawer>
 
-
         </div>
 
         <div>
