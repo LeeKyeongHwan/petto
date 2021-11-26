@@ -40,7 +40,6 @@ export default {
     }
     },
     methods:{
-<<<<<<< HEAD
     ...mapActions(['fetchMyQnAList', 'fetchAlarmList']),
 
     toDetailPage(qnaNo) {
@@ -48,10 +47,8 @@ export default {
     name: 'QnaReadPage',
     params: { "qnaNo": qnaNo }
         })
-        },
-=======
-    ...mapActions(['fetchMyQnAList']),
->>>>>>> 0934491cb5070de12848396a6f7db374fc3f2903
+    },
+
     },
     mounted(){
         if(this.$cookies.isKey("user")) {
