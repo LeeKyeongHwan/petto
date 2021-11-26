@@ -40,14 +40,15 @@ export default {
     }
     },
     methods:{
+
     ...mapActions(['fetchMyQnAList', 'fetchAlarmList']),
 
     toDetailPage(qnaNo) {
-    this.$router.push({
-    name: 'QnaReadPage',
-    params: { "qnaNo": qnaNo }
-        })
-    },
+            this.$router.push({
+                name: 'QnaReadPage',
+                params: { "qnaNo": qnaNo }
+            })
+        },
 
     },
     mounted(){

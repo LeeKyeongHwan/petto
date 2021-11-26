@@ -103,11 +103,18 @@ export default {
         ...mapActions(['fetchUserInfo']),
     },
     mounted() {
-        var userNo =this.$store.state.session.memberNo //추후에 변경
-        this.fetchUserInfo(userNo)
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
 
-        if(this.$cookies.get("user").id) {
-        this.$store.state.session = this.$cookies.get("user")
+                const userNo = this.$store.state.session.memberNo
+                this.fetchUserInfo(userNo)
+
+                this.$store.state.isLoggedIn = true;
+            }
         }
         
         document.querySelectorAll('footer')[0].style.padding = '0px';
@@ -116,7 +123,7 @@ export default {
         
     },
     computed: {
-        ...mapState(['userInfo'])
+        ...mapState(['userInfo', 'fetchAlarmList', 'session'])
     }
 }
 </script>
