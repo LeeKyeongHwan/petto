@@ -7,7 +7,7 @@
                 <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
                     <div class="container">
                         <div id="animal">
-                            <div v-for="animal in calData" :key="animal.notice_no">
+                            <div v-for="(animal, index) in calData" :key="index">
                                 <v-card height="200" class="grow">
                                     <img :src="animal.image" style="cursor:pointer" width="230" height="230" @click="toDetailPage(animal.id)"/>
                                 </v-card>   
@@ -44,13 +44,15 @@ export default {
           },
     },
     mounted(){
+        this.fetchMyLikedAnimalList(this.$store.state.session.memberNo) 
+        
         if(this.$cookies.isKey("user")) {
   
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
-                this.$store.dispatch('fetchAlarmList', this.session.id)
-                this.fetchMyLikedAnimalList(this.session.memberNo) 
+                this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
+                this.fetchMyLikedAnimalList(this.$store.state.session.memberNo)
 
                 this.$store.state.isLoggedIn = true;
             }

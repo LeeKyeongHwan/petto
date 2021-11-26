@@ -22,10 +22,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(['qnaboard'])
+        ...mapState(['qnaboard','myLikedAnimals', 'isLoggedIn'])
     },
     methods: {
-        ...mapActions(['fetchQnA']),
+        ...mapActions(['fetchQnA','fetchMyLikedAnimalList']),
         onSubmit (payload) {
             
             const { qnaNo, title, writer, content,regDate, answerState, adminAnswer } = payload
@@ -58,7 +58,7 @@ export default {
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
-                this.$store.dispatch('fetchAlarmList', this.session.id)
+                this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
 
                 this.$store.state.isLoggedIn = true;
             }
