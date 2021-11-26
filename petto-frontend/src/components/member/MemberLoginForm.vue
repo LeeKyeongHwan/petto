@@ -1,7 +1,7 @@
 <template>
   <form class="login-screen" @submit.prevent="onSubmit">
     <div class="login-form">
-      <h1>petto</h1>
+      <h1 style="margin-top:40%;">petto</h1>
       <div class="form-group">
         <input
           id="id"
