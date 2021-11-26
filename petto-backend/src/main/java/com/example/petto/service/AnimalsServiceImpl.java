@@ -39,7 +39,7 @@ public class AnimalsServiceImpl implements AnimalsService {
         Collections.reverse(lists);
         List<Animals> olderList = new ArrayList<>();
 
-        for(int i=0; i< 12; i++){
+        for(int i=0; i< 5; i++){
             olderList.add(lists.get(i));
         }
         return olderList;

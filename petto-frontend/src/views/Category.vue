@@ -1,52 +1,71 @@
 <template>
-  <div>
-    <div id="main">
-      <div id="header">
+    <v-card flat width="100%" tile>
+      
+    <v-toolbar height="90">
+      <!-- <v-toolbar-title style="margin-left:1%;"  @click="$router.push('/pettohome')" >
+        <h1>petto</h1>
+      </v-toolbar-title> -->
+        <v-btn plain route :to="{ name: 'PettoHome' }">
+          <h1>
+            petto
+          </h1>
+        </v-btn>
 
-        <div style="width: 300px;">
-          <router-link :to="{ name: 'PettoHome' }">
-            <h1 class="logo">
-            </h1>
-          </router-link>
+      <v-spacer></v-spacer>
+
+
+       <div id="header" class="main-menu">
+          <ul>
+            <li><a href="/aboutPage">소개</a></li>
+            <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
+            <li><a href="/reportBoard">제보</a></li>
+            <li><a href="/voluntaryBoard">자원봉사</a></li>
+            <li><a href="/map">지도</a></li>
+          </ul>
         </div>
-        <div class="header-top">
-          
-          <v-tooltip bottom v-if="isLoggedIn">
-            <template v-slot:activator="{ on, attrs }">
-              <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
-                <alarm-dialog :updateAlarmList="updateAlarmList"/>
-              </div>
 
-              <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
-                <v-icon color="grey">
-                  add_alert
-                </v-icon>
-              </v-btn>
-            </template>
-            <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
-            <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
-          </v-tooltip>
+        <div id="header">
+          <ul>
+            <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;" v-if="!isLogin">LOGIN</a></li>
+            <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;" v-if="!isLogin">JOIN US</a></li>
+            <!-- <li><a href="#" style="font-size:0.8vw; margin-right:20px;" v-if="isLogin" @click="logout()">LOGOUT</a></li> -->
+          </ul>
+        </div>
 
-          &emsp;
+        <div id="header" v-if="isLogin && access">
+          <ul v-if="this.auth == '개인'">
+            <li><a href="/myProfile" style="font-size:0.8vw; margin-right:0px;">내정보</a></li>
+            <li><a href="/myLikedAnimals" style="font-size:0.8vw; margin-right:20px;" >찜리스트</a></li>
+            <li><a href="/myBoard" style="font-size:0.8vw; margin-right:20px;">내 게시물</a></li>
+            <li><a href="/MyQna" style="font-size:0.8vw; margin-right:20px;">문의</a></li>
+            <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
+          </ul>
 
-          <v-btn plain color="white" v-if="isLoggedIn" @click="logout">
-            LOGOUT
-          </v-btn>
+          <ul v-else>
+            <li><a href="/admin" style="font-size:0.8vw; margin-right:0px;">회원관리</a></li>
+            <li><a href="/qnalist" style="font-size:0.8vw; margin-right:20px;">문의관리</a></li>
+            <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
+          </ul>
+        </div>
 
-          <v-btn
-            plain
-            color="orange"
-            v-if="!isLoggedIn"
-            router
-            :to="{ name: 'MemberLoginPage' }"
-            >LOGIN
-          </v-btn>
 
-          <v-btn plain color="orange" v-if="!isLoggedIn" router :to="{ name: 'SignupPage' }">
-            JOIN US
-          </v-btn>
+        <v-tooltip bottom v-if="isLogin">
+              <template v-slot:activator="{ on, attrs }">
+                <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
+                  <alarm-dialog :updateAlarmList="updateAlarmList"/>
+                </div>
 
-          <v-app-bar-nav-icon plain color="orange" v-if="isLoggedIn" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+                <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
+                  <v-icon color="grey">
+                    add_alert
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
+              <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
+            </v-tooltip>
+
+        <!-- <v-app-bar-nav-icon plain color="orange" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
           <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
@@ -55,8 +74,7 @@
                             <v-icon left>{{ link.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title v-if="link.name == 'logout'" @click="logout()">{{ link.text }}</v-list-item-title>
-                            <v-list-item-title v-else>{{ link.text }}</v-list-item-title>
+                            <v-list-item-title>{{ link.text }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>
@@ -71,28 +89,14 @@
                             <v-icon left>{{ admin.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title v-if="admin.text == '로그아웃'" @click="logout()">{{ admin.text }}</v-list-item-title>
-                            <v-list-item-title v-else>{{ admin.text }}</v-list-item-title>
+                            <v-list-item-title>{{ admin.text }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
-          </v-navigation-drawer>
-
-        </div>
-
-        <div>
-          <ul>
-            <li><a href="/aboutPage">소개</a></li>
-            <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
-            <li><a href="/reportBoard">제보</a></li>
-            <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="/map">지도</a></li>
-          </ul>
-        </div>
-      </div>
-      </div>
-  </div> 
+          </v-navigation-drawer> -->
+    </v-toolbar>
+  </v-card>     
 </template>
 
 <script>
@@ -105,21 +109,20 @@ export default {
   },
   data() {
     return {
-      //isLogin: false,
+      isLogin: false,
       nav_drawer: false,
       group: false,
       auth: '',
+      access: this.$cookies.isKey("user"),
       links: [
           { icon: 'account_circle', text: '내 정보', name: 'my_info', route: '/myProfile' },
           { icon: 'favorite', text: '찜한 동물 리스트', name: 'my_favorite', route: '/myLikedAnimals' },
           { icon: 'keyboard', text: '내 게시물', name: 'my_board', route: '/myBoard' },
           { icon: 'help_outline', text: '1:1 문의', name: 'QnA', route: '/MyQna' },
-          { icon: 'input', text: '로그아웃', name: 'logout'}
       ],
       adminLinks: [
           { icon: 'people', text: '회원관리', name: 'my_board', route: '/admin' },
           { icon: 'help_outline', text: '1:1 문의관리', name: 'QnA', route: '/qnalist' },
-          { icon: 'input', text: '로그아웃', name: 'logout'}
       ]
     }
   },
@@ -133,9 +136,20 @@ export default {
       alert('로그아웃 되었습니다.')
     }
   },
-
+  mounted() {
+    if(this.$cookies.isKey("user")) {
+      this.auth = this.$cookies.get("user").auth
+      this.$store.state.session = this.$cookies.get("user");
+      if(this.$store.state.session != null) {
+        this.$store.dispatch('fetchAlarmList', this.session.id)
+        this.isLogin = true;
+      }
+    } else {
+      this.auth = '비회원'
+    }
+  },
   computed: {
-      ...mapState(['updateAlarmList', 'isLoggedIn']),
+      ...mapState(['updateAlarmList','fetchAlarmList','session']),
       updatedNewsNum() {
         return this.updateAlarmList.length
       }
@@ -150,38 +164,6 @@ export default {
 
 <style lang="scss" scoped>
 
-
-@font-face {
-  font-family: "Manse";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Manse.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "GowunDodum-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
-#main {
-  position: relative;
-  min-height: 100%;
-  display: flex;
-  color: white;
-  margin-bottom: 11%;
-  background-color: rgb(255, 249, 240);
-  border-bottom: dotted 6px rgb(243, 222, 189);
-}
-
 #header {
   position: absolute;
   top: 0;
@@ -194,8 +176,9 @@ export default {
 
 #header ul {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
+  align-items: right;
+  margin-right: 1%;
 }
 #header ul li {
   list-style: none;
@@ -206,41 +189,25 @@ export default {
   color: rgb(100, 93, 93);
   position: relative;
   font-family: "GowunDodum-Regular";
-  font-size: 1.5vw;
-  margin-left: 30px;
-  margin-right: 30px;
-}
-#header ul li a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 4px;
-  background: #f7b43e;
-  transition: all 0.5s ease-out;
-}
-#header ul li a:hover::after {
-  width: 100%;
+  font-size: 1.2vw;
+  margin-left: 10px;
+  margin-right: 20px;
 }
 
-.logo {
-  color: rgb(248, 201, 131);
-  letter-spacing: 3px;
+.main-menu{
+  margin-top:3vh;
 }
-@font-face {
-    font-family: 'WandohopeB';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeB.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 h1 {
 font-family: 'WandohopeB';
-  font-size: 6vw;
-  text-shadow: 2px 2px 2px gray;
+  font-size: 3vw;
+  margin:0vw;
+  letter-spacing: 4px;
+  color: black;
+  /* text-shadow: 2px 2px 2px gray; */
 }
+
 .header-top {
   position: absolute;
   top: 1em;
