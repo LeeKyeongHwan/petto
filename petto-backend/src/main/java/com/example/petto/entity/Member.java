@@ -81,4 +81,12 @@ public class Member implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private List<UpdateAlarm> updateAlarmList = new ArrayList<UpdateAlarm>();
+
+    public void removeLikedList(List<LikedAnimal> list) {
+        this.likedAnimals.remove(list);
+    }
+
+    public void removeAlarmList(List<UpdateAlarm> list) {
+        this.updateAlarmList.remove(list);
+    }
 }

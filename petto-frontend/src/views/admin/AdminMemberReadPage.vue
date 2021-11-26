@@ -30,7 +30,7 @@ export default {
         AdminMemberRead
     },
     computed: {
-        ...mapState(['adminMember'])
+        ...mapState(['adminMember', 'session', 'isLoggedIn'])
     },
     mounted() {
         this.fetchAdminMember(this.memberNo)
@@ -38,9 +38,20 @@ export default {
                     alert(err.response.data.message)
                     this.$router.push()
                 })
+
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+                
+                this.$store.state.isLoggedIn = true;
+            }
+        }
     },
     methods: {
-        ...mapActions(['fetchAdminMember']),
+        ...mapActions(['fetchAdminMember', 'fetchAlarmList']),
         onDelete () {
             const { memberNo } = this.adminMember
             axios.delete(`http://localhost:8888/petto/admin/${memberNo}`)

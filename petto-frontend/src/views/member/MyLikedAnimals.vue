@@ -44,14 +44,13 @@ export default {
           },
     },
     mounted(){
-        this.fetchMyLikedAnimalList(this.$store.state.session.memberNo) 
-        
         if(this.$cookies.isKey("user")) {
   
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.session.id)
+                this.fetchMyLikedAnimalList(this.session.memberNo) 
 
                 this.$store.state.isLoggedIn = true;
             }
