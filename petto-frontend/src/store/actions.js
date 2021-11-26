@@ -237,7 +237,7 @@ export default {
   fetchAlarmList({ commit }, payload) {
     return axios.get(`http://localhost:8888/petto/member/updateAlarmList/${payload}`)
             .then((res) => {
-              alert(res.data)
+              //alert(res.data)
                 commit(FETCH_ALARM_LIST, res.data)
             })
   }

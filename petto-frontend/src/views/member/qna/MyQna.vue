@@ -56,7 +56,7 @@ export default {
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
-                this.$store.dispatch('fetchAlarmList', this.session.id)
+                this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
                 this.fetchMyQnAList(this.$store.state.session.id)
                 this.$store.state.isLoggedIn = true;
             }

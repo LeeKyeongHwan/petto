@@ -27,7 +27,7 @@ export default {
         QnaRead
     },
     computed: {
-        ...mapState(['qnaboard'])
+        ...mapState(['qnaboard','myLikedAnimals', 'isLoggedIn'])
     },
     created () {
          this.fetchQnA(this.qnaNo)
@@ -37,7 +37,7 @@ export default {
                  })
     },
     methods: {
-        ...mapActions(['fetchQnA']),
+        ...mapActions(['fetchQnA', 'fetchMyLikedAnimalList']),
         onDelete () {
             const { qnaNo } = this.qnaboard
             axios.delete(`http://localhost:8888/petto/qna/${qnaNo}`)
@@ -59,7 +59,7 @@ export default {
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
-                this.$store.dispatch('fetchAlarmList', this.session.id)
+                this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
 
                 this.$store.state.isLoggedIn = true;
             }
