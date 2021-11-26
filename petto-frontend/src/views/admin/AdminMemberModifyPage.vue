@@ -24,10 +24,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(['adminMember'])
+        ...mapState(['adminMember', 'isLoggedIn', 'session'])
     },
     methods: {
-        ...mapActions(['fetchAdminMember']),
+        ...mapActions(['fetchAdminMember', 'fetchAlarmList']),
         onSubmit (payload) {
             const { auth } = payload
             axios.put(`http://localhost:8888/petto/admin/${this.memberNo}`, { auth })
@@ -49,6 +49,19 @@ export default {
                     alert(err.response.data.message)
                     this.$router.back()
                 })
+    },
+
+    mounted() {
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+                
+                this.$store.state.isLoggedIn = true;
+            }
+        }
     }
 }
 </script>

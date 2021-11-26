@@ -57,7 +57,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['session', 'isLoggedIn'])
+        ...mapState(['session', 'isLoggedIn', 'updateAlarmList'])
     }
 }
 </script>

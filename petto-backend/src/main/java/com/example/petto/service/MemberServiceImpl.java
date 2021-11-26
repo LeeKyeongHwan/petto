@@ -10,11 +10,13 @@ import com.example.petto.repository.MemberRepository;
 import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -170,6 +172,9 @@ public class MemberServiceImpl implements MemberService {
     public Member getUserInfo(Integer userNo) {
 
         Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
+
+        member.removeLikedList(member.getLikedAnimals());
+        member.removeAlarmList(member.getUpdateAlarmList());
 
         return member;
     }
