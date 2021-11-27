@@ -33,9 +33,7 @@ public class ReportServiceImpl implements ReportService {
     public Report read(Integer reportNo) {
         try {
             Report report = reportRepository.findByReportNo(new Long(reportNo)).get();
-
-            report.setReplies(null);
-
+            //report.setReplies(null);
             return report;
         } catch (Exception e) {
             return null;
@@ -92,5 +90,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void modifyReply(Reply reply) {
         replyRepository.save(reply);
+    }
+
+    @Override
+    public void plusViewCnt(Integer reportNo) {
+        reportRepository.plusViewCnt(new Long(reportNo));
     }
 }

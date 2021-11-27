@@ -33,6 +33,9 @@ public class AdminServiceImpl implements AdminService {
             Member member = memberDetail.get();
             memberRepository.save(member);
 
+            member.removeAlarmList(member.getUpdateAlarmList());
+            member.removeLikedList(member.getLikedAnimals());
+
             return member;
         } else {
             throw new NullPointerException();

@@ -261,7 +261,7 @@ export default {
                         const whereHappened = this.city + ' ' + this.place
 
                         const form = { reportNo: this.report.reportNo, category: this.keyword, title: this.title, writer: this.$store.state.session.id , whereHappened: whereHappened,
-                        whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content }
+                        whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content, viewCnt: this.report.viewCnt }
 
                         form.imgUploadedTime = dateId
                         form.imgUploadedCnt = res.data

@@ -13,12 +13,12 @@ import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.*;
 
+@DynamicUpdate
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name="petto_report")
 @Transactional
-@DynamicUpdate
 public class Report {
 
     @Id
@@ -52,6 +52,9 @@ public class Report {
 
     @Column(length = 300, nullable = true)
     private String content;
+
+    @Column(columnDefinition = "integer default 0")
+    private Integer viewCnt;
 
     @Column(columnDefinition = "boolean default false")
     private boolean expired;

@@ -17,4 +17,6 @@ public interface AnimalsService {
     public Long getNumOfAnimals();
 
     public List<Animals> filterAnimals(String[] selectedPlace, String[] selectedKinds);
+
+    public void plusSharedCnt(String notice_no);
 }

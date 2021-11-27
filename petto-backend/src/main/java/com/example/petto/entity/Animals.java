@@ -67,6 +67,9 @@ public class Animals {
     @Column(length = 300, nullable = false)
     private String careaddr;
 
-    @Column(columnDefinition = "Integer default 0")
+    @Column(columnDefinition = "integer default 0")
+    private Integer sharedCnt;
+
+    @Column(columnDefinition = "integer default 0")
     private Integer numberOfLiked;
 }
