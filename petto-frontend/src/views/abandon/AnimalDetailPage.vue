@@ -112,11 +112,18 @@
                 <span v-show="!chkLikedOrNot(animalsInfo.notice_no)">찜하기</span>
 
             </v-tooltip>
+            &emsp; &emsp;
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <img src="@/assets/img/kakao.png" width="35px; cursor: pointer;" @click="shareOnKaKao" v-on="on" v-bind="attrs"/>
+                </template>
+                <span>카톡 글 공유하기</span>
+            </v-tooltip>
         </div>
+
 
         <div id="latestSeenShower">
             <br>
-
             <p class="normalText" style="color: black;">최근에 본 유기동물</p>
 
             <v-btn text class="upBtn" :disabled="listNum === 0" @click="goListUp">
@@ -136,13 +143,10 @@
                         cancel
                     </v-icon>
                 </v-btn>
-
             </div>
 
             <span class="listCnt">{{ listNum + 1 }} / {{ listCount }}</span>
-
             &emsp; &ensp;
-
             <br>
 
             <v-btn text class="downBtn" :disabled="listNum >= listCount - 1"  @click="goListDown">
@@ -152,12 +156,11 @@
             </v-btn>
 
             <span style="display: inline-block; width: 60px;"/>
-
         </div>
     
     </div>
 </template>
-
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
@@ -177,16 +180,51 @@ export default {
             LATEST_SEEN_SIZE: 3,
             
             latestSeenDeleteCnt: 0,
-            DUPLI_PREVENTION_CHECK: 0 
+            DUPLI_PREVENTION_CHECK: 0,
         }
     },
 
     methods: {
         ...mapActions(['fetchAnimalInfo', 'fetchLikedAnimalList']),
 
+        shareOnKaKao() {
+            const likeCnt = this.animalsInfo.numberOfLiked
+            const sharedCnt = this.animalsInfo.sharedCnt
+
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: 'Petto) 이 유기동물의 가족이 되어주세요.',
+                        description: '이 동물의 가족이 될 사람은 누굴까요? 많은 유기동물들이 여러분들의 관심을 기다립니다.',
+                        imageUrl: this.animalsInfo.image,
+                    link: {
+                        mobileWebUrl: `http://localhost:8080/animalDetail/read/${this.animalsInfo.id}`,
+                        webUrl: `http://localhost:8080/animalDetail/read/${this.animalsInfo.id}`
+                    },
+                },
+                social: {
+                    likeCount: likeCnt,
+                    sharedCount: sharedCnt,
+                },
+                buttons: [
+                    {
+                        title: '웹으로 보기',
+                        link: {
+                            mobileWebUrl: `http://localhost:8080/animalDetail/read/${this.animalsInfo.id}`,
+                            webUrl: `http://localhost:8080/animalDetail/read/${this.animalsInfo.id}`
+                        },
+                    },
+                ],
+                // 카카오톡 미설치 시 카카오톡 설치 경로이동
+                installTalk: true,
+            })
+            
+            axios.post(`http://localhost:8888/petto/animals/plusSharedCnt/${this.animalsInfo.notice_no}`)
+            this.$store.state.animalsInfo.sharedCnt ++
+        },
+
         toFacilityInfo(carenm) {       
             axios.get(`http://localhost:8888/petto/facility/getFacilityNoAndAddr/${carenm}`)
-
                 .then((res) => {
 
                     if(res.data != '') {
@@ -309,7 +347,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['animalsInfo', 'session', 'likedAnimalList', 'animals']),
+        ...mapState(['animalsInfo', 'session', 'likedAnimalList', 'animals', 'isLoggedIn']),
 
         latestSeen() {
             console.log(this.latestSeenDeleteCnt)
@@ -342,10 +380,15 @@ export default {
     mounted() {
         this.fetchAnimalInfo(this.id)
 
-        if(this.$cookies.get("user").id) {
-            this.$store.state.session = this.$cookies.get("user")
-            this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
-        } 
+        if(this.$cookies.isKey("user")) {
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
+        }
     },
     
     updated() {
@@ -383,10 +426,8 @@ export default {
                     }
 
                     this.tmpLatestSeen.push(tmpObj)
-
                     this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
                 }
-
                 this.latestSeenDeleteCnt ++
                 this.DUPLI_PREVENTION_CHECK = 1
             } 

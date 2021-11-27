@@ -39,20 +39,7 @@ public class AdminController {
     @Transactional
     @GetMapping("/{memberNo}")
     public ResponseEntity<Member> read(@PathVariable("memberNo") Long memberNo) throws Exception {
-        Member tmp = adminService.read(memberNo);
-
-        Member member = new Member();
-
-        member.setId(tmp.getId());
-        member.setMemberNo(tmp.getMemberNo());
-        member.setAuth(tmp.getAuth());
-        member.setEmail(tmp.getEmail());
-        member.setPhoneNumber(tmp.getPhoneNumber());
-        member.setName(tmp.getName());
-        member.setBirthday(tmp.getBirthday());
-        member.setPetsRaised(tmp.getPetsRaised());
-        member.setRegDate(tmp.getRegDate());
-        member.setNickname(tmp.getNickname());
+        Member member = adminService.read(memberNo);
 
         return new ResponseEntity<Member>(member, HttpStatus.OK);
     }

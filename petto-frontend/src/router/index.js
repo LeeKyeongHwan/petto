@@ -259,7 +259,7 @@ const routes = [
     }
   },
   {
-    path: "/reportBoard/modify/id=:id/:reportNo",
+    path: "/reportBoard/modify/:reportNo",
     name: "ReportModifyPage",
     components: {
       default: ReportModifyPage
@@ -304,11 +304,6 @@ const routes = [
     props: {
       default: true,
     },
-  },
-  {
-    path: "/qna/Write",
-    name: "QnaWritePage",
-    component: QnaWritePage,
   },
   {
     path: "/qna/Write",

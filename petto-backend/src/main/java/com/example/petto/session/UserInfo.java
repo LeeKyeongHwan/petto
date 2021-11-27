@@ -19,5 +19,4 @@ public class UserInfo implements Serializable {
     private String id;
     private String nickname;
     private String auth;
-    private List<UpdateAlarm> updateAlarmList;
 }

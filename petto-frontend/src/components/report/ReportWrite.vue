@@ -187,7 +187,7 @@ export default {
                 const whereHappened = this.city + ' ' + this.place
 
                 const form = { category: this.keyword, title: this.title, writer: this.$store.state.session.id , whereHappened: whereHappened,
-                whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content }
+                whenHappened: this.date, keepingPlace: this.keepingPlace, breed: this.breed, feature: this.feature, content: this.content, viewCnt: 0 }
 
                 if(this.pics.length > 0) {
 

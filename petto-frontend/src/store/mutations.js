@@ -104,6 +104,8 @@ export default {
 
 
   [FETCH_REPORT] (state, payload) {
+    state.replyList = payload.replies
+    delete payload.replies
     state.report = payload
   },
 
@@ -130,10 +132,11 @@ export default {
   [FETCH_REPLY_LIST] (state, payload) {
     state.replyList = payload
   },
+
   [FETCH_QNA_LIST] (state, qnaboards) {
     state.qnaboards = qnaboards;
   },
-  //
+  
   [FETCH_QNA] (state, qnaboard) {
     state.qnaboard = qnaboard
   },

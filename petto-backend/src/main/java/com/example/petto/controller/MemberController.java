@@ -152,9 +152,6 @@ public class MemberController {
             session = request.getSession();
             session.setAttribute("member", info);
 
-            List<UpdateAlarm> updateAlarmList = updateAlarmRepository.findById(id);
-            info.setUpdateAlarmList(updateAlarmList);
-
         } else {
             log.info("Login Failure");
             info = null;
