@@ -12,7 +12,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
-import InfoModify from '../../components/member/InfoModify.vue'
+import InfoModify from '@/components/member/InfoModify.vue'
 
 export default {
     name: 'InfoModifyPage',

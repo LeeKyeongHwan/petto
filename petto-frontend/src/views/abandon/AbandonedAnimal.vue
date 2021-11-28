@@ -67,7 +67,7 @@ export default {
   },
   props: {
     pageNum: {
-      type: [Number,String],
+      type: [Number, String],
       required: false,
       default: 0
     },

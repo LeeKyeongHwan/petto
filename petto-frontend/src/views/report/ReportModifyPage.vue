@@ -41,15 +41,15 @@ export default {
         }
     },
     computed: {
-        ...mapState(['report'])
+        ...mapState(['report', 'session'])
     },
     mounted() {
         this.$store.dispatch("fetchReport", this.reportNo)
             .then(() => {
-                if(this.$cookies.get('user').id != this.report.writer) {
+                if(!this.$cookies.isKey('user') || this.$cookies.get('user').id != this.report.writer) {
                     alert('권한이 없습니다!')
                     history.go(-1);
-                }
+                } 
             })
 
         if(this.$cookies.isKey("user")) {

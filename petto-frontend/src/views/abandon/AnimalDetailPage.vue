@@ -169,7 +169,7 @@ export default {
     name: 'AnimalDetailPage',
     props: {
         id: {
-            type: String,
+            type: Number,
             required: true
         }
     },

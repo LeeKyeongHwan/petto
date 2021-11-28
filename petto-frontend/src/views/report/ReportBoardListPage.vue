@@ -160,7 +160,7 @@ export default {
 
             this.$router.push({
                 name: 'ReportReadPage',
-                params: { 'reportNo': reportNo } 
+                params: { "reportNo": parseInt(reportNo) } 
             })
 
             // let routeData = this.$router.resolve({

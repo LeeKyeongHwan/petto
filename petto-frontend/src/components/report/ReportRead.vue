@@ -44,7 +44,7 @@
                     readonly
                     style="width: 100px; float: left;"
                     class="normalText"
-                    :value="report.whereHappened.split(' ')[0]"
+                    :value="cityName"
                 />
 
                 &ensp;
@@ -176,6 +176,10 @@ export default {
 
         UploadedCnt() {
             return parseInt(this.report.imgUploadedCnt)
+        },
+
+        cityName() {
+            return this.report.whereHappened.split(' ')[0]
         }
     },
 
