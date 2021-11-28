@@ -225,10 +225,10 @@ export default {
       //   name: 'AnimalDetailPage',
       //   params: { 'id': id }
       // });window.open(routeData.href, '_blank')
-      
+  
       this.$router.push({
         name: 'AnimalDetailPage',
-        params: { id: id }
+        params: { "id": id }
       })
       
     },

@@ -214,7 +214,8 @@ export default {
     mounted() {
         this.$store.dispatch("fetchReport", this.reportNo)
             .then(() => {
-                if(this.$cookies.get("user").id != this.report.writer) axios.post(`http://localhost:8888/petto/report/plusViewCnt/${this.reportNo}`)
+                if(!this.$cookies.isKey("user").id || this.$cookies.get("user").id != this.report.writer) 
+                axios.post(`http://localhost:8888/petto/report/plusViewCnt/${this.reportNo}`)
             })
             
         if(this.$cookies.isKey("user")) {

@@ -36,7 +36,7 @@
 
                 <template v-slot:item="{ item }"> 
 
-                    <tr @click="toReadPage(item.facilityNo, item.facilityAddr, item.facilityName)">
+                    <tr @click="toReadPage(item.facilityNo)">
 
                         <td>{{ item.facilityName }}</td>
                         <td>{{ item.facilityAddr }}</td>
@@ -149,11 +149,11 @@ export default {
 
             return fl.sort()
         },
-        toReadPage(facilityNo, facilityAddr, facilityName) {
-
+        toReadPage(facilityNo) {
+        
             let routeData = this.$router.resolve({
               name: 'FacilityReadPage',
-              params: { facilityNo: facilityNo, facilityAddr: facilityAddr, facilityName: facilityName }
+              params: { "facilityNo": facilityNo }
             });window.open(routeData.href, '_blank')
         }
     },
