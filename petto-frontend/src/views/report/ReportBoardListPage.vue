@@ -6,7 +6,6 @@
         <v-container style="display: inline-block;">
 
             <span>
-
                 <v-btn text class="normalText" style="float: left;" @click="toWritePage">
                     <v-icon>
                         mode_edit
@@ -159,10 +158,15 @@ export default {
 
         toReadPage(reportNo) {
 
-            let routeData = this.$router.resolve({
+            this.$router.push({
                 name: 'ReportReadPage',
-                params: { 'reportNo': reportNo }
-            });window.open(routeData.href, '_blank')
+                params: { "reportNo": parseInt(reportNo) } 
+            })
+
+            // let routeData = this.$router.resolve({
+            //     name: 'ReportReadPage',
+            //     params: { 'reportNo': reportNo }
+            // });window.open(routeData.href, '_blank')
         },
 
         toWritePage() {

@@ -96,4 +96,9 @@ public class AnimalsServiceImpl implements AnimalsService {
         }
         return list;
     }
+
+    public void plusSharedCnt(String notice_no) {
+
+        animalsRepository.plusSharedCnt(notice_no);
+    }
 }

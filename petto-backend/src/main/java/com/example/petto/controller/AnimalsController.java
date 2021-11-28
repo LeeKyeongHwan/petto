@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +68,14 @@ public class AnimalsController {
         List<Animals> filteredAnimals = animalsService.filterAnimals(selectedPlace, selectedKinds);
 
         return new ResponseEntity<List<Animals>>(filteredAnimals, HttpStatus.OK);
+    }
+
+    @PostMapping("/plusSharedCnt/{notice_no}")
+    public ResponseEntity<Void> plusSharedCnt(@PathVariable("notice_no") String notice_no) {
+        log.info("plusSharedCnt(): " + notice_no);
+
+        animalsService.plusSharedCnt(notice_no);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

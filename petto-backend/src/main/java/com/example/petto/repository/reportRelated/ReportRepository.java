@@ -25,4 +25,9 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query(value = "SELECT A.* FROM petto_report A inner join petto_member B on A.writer = B.id WHERE writer = :id", nativeQuery = true)
     List<Report> myBoardList(String id);
+
+    @Transactional
+    @Modifying
+    @Query("update Report re set re.viewCnt = re.viewCnt + 1 where re.reportNo = :reportNo")
+    void plusViewCnt(Long reportNo);
 }

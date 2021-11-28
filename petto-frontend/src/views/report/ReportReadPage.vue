@@ -1,10 +1,9 @@
 <template>
     <div align="center"> 
 
-        <report-read v-bind:report="report"/>
+        <report-read v-bind:report="report" style="margin-bottom: 100px;"/>
 
         <v-container style="width: 51%; margin-bottom: 100px; margin-top: 50px;" v-if="report.expired == false">
-            
             <label class="normalText" style="float: left; color: grey;">
                 댓글 &emsp;
             </label>
@@ -69,7 +68,6 @@
 
     </div>
 </template>
-
 <script>
 import { mapActions, mapState } from 'vuex'
 import ReportRead from '@/components/report/ReportRead.vue'
@@ -90,7 +88,7 @@ export default {
             reply: '',
             targetIdx: -1,
             targetModifyReply: -1,
-            replyEdit: ''
+            replyEdit: '',
         }
     },
 
@@ -98,7 +96,6 @@ export default {
         ...mapActions(["fetchReport", 'fetchReplyList']),
 
         saveReply() {
-
             if(this.session) {
                 
                 if(this.reply == '') {
@@ -132,7 +129,6 @@ export default {
                             .catch(err => {
                                 console.log(err.response.massage)
                             })
-
                     })
                     .catch((err) => {
                         alert(err)
@@ -217,8 +213,11 @@ export default {
 
     mounted() {
         this.$store.dispatch("fetchReport", this.reportNo)
-        this.$store.dispatch("fetchReplyList", this.reportNo)
-
+            .then(() => {
+                if(!this.$cookies.isKey("user").id || this.$cookies.get("user").id != this.report.writer) 
+                axios.post(`http://localhost:8888/petto/report/plusViewCnt/${this.reportNo}`)
+            })
+            
         if(this.$cookies.isKey("user")) {
   
             this.$store.state.session = this.$cookies.get("user");
@@ -229,10 +228,6 @@ export default {
                 this.$store.state.isLoggedIn = true;
             }
         }
-        if(this.$cookies.get("user").id) {
-            this.$store.state.session = this.$cookies.get("user")
-            // this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
-        } 
     }
 }
 </script>

@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios'
 import ReportWrite from '@/components/report/ReportWrite'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -41,6 +42,9 @@ export default {
                 this.$store.state.isLoggedIn = true;
             }
         }
+    },
+    computed: {
+        ...mapState(['session'])
     }
 }
 </script>

@@ -67,7 +67,7 @@ export default {
   },
   props: {
     pageNum: {
-      type: [Number,String],
+      type: [Number, String],
       required: false,
       default: 0
     },
@@ -96,9 +96,9 @@ export default {
       ...mapState(['animals', 'latestSeenAnimals', 'isLoggedIn', 'session']),
 
       latestSeen() {
-        // console.log(this.latestSeenDeleteCnt)
-        if(this.$cookies.get("latestSeen")) {
+        console.log(this.latestSeenDeleteCnt)
 
+        if(this.$cookies.get("latestSeen")) {
           const start = this.listNum * this.LATEST_SEEN_SIZE
           const end = start + this.LATEST_SEEN_SIZE;
 
@@ -110,8 +110,8 @@ export default {
       },
 
       listCount() {
-        // console.log(this.latestSeenDeleteCnt)
-        
+        console.log(this.latestSeenDeleteCnt)
+    
         let listLeng = JSON.parse(this.$cookies.get('latestSeen')).length
 
         let page = Math.floor(listLeng / this.LATEST_SEEN_SIZE)
@@ -168,7 +168,6 @@ export default {
       },
 
       delLatestSeen(noticeNo) {
-
         this.latestSeenDeleteCnt++
 
         this.tmpLatestSeen = JSON.parse(this.$cookies.get('latestSeen'))

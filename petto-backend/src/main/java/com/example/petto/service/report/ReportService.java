@@ -29,4 +29,5 @@ public interface ReportService {
 
     public void modifyReply(Reply reply);
 
+    public void plusViewCnt(Integer reportNo);
 }

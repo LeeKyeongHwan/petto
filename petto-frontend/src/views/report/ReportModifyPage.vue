@@ -16,10 +16,6 @@ export default {
         ReportModify
     },
     props: {
-        id: {
-            type: String,
-            default: ''
-        },
         reportNo: {
             type: String,
             required: true
@@ -35,9 +31,9 @@ export default {
                 .then(() => {
                     alert('수정되었습니다.')
 
-                    //window.history.go(-1)
+                    window.history.go(-1)
                     //this.$router.push({ name: 'ReportReadPage', params: { reportNo: this.report } })
-                    window.close()
+                    //window.close()
                 })
                 .catch(() => {
                     alert('잠시후에 다시 시도해주세요.')
@@ -45,16 +41,16 @@ export default {
         }
     },
     computed: {
-        ...mapState(['report'])
+        ...mapState(['report', 'session'])
     },
     mounted() {
-        if(this.$cookies.get('user').id == this.id) {
-            this.$store.dispatch("fetchReport", this.reportNo)
-        }
-        else {
-            alert('권한이 없습니다!')
-            window.close()
-        }
+        this.$store.dispatch("fetchReport", this.reportNo)
+            .then(() => {
+                if(!this.$cookies.isKey('user') || this.$cookies.get('user').id != this.report.writer) {
+                    alert('권한이 없습니다!')
+                    history.go(-1);
+                } 
+            })
 
         if(this.$cookies.isKey("user")) {
   
