@@ -1,15 +1,20 @@
 <template>
-    <div align="center">
-        <h2>회원정보</h2>
-        <admin-member-read v-if="adminMember" :adminMember="adminMember"/>
-        <p v-else>로딩중 ...... </p>
-        <router-link :to="{ name: 'AdminMemberModifyPage', params: { memberNo } }">
-            게시물 수정
-        </router-link>
-        <button @click="onDelete">삭제</button>
-        <router-link :to="{ name: 'AdminMemberListPage' }">
-            게시물 보기
-        </router-link>
+    <div>
+        <v-container id="nav">
+            <admin-page-side-bar/>
+        </v-container>
+        <div align="center">
+            <h2>회원정보</h2>
+            <admin-member-read v-if="adminMember" :adminMember="adminMember"/>
+            <p v-else>로딩중 ...... </p>
+            <router-link :to="{ name: 'AdminMemberModifyPage', params: { memberNo } }">
+                게시물 수정
+            </router-link>
+            <button @click="onDelete">삭제</button>
+            <router-link :to="{ name: 'AdminMemberListPage' }">
+                게시물 보기
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -17,6 +22,7 @@
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import AdminMemberRead from '../../components/admin/AdminMemberRead.vue'
+import AdminPageSideBar from '@/components/admin/AdminPageSideBar.vue'
 
 export default {
     name: 'AdminMemberReadPage',
@@ -27,7 +33,8 @@ export default {
         }
     },
     components: {
-        AdminMemberRead
+        AdminMemberRead,
+        AdminPageSideBar
     },
     computed: {
         ...mapState(['adminMember', 'session', 'isLoggedIn'])
@@ -66,3 +73,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#nav{
+    overflow: hidden;
+}
+</style>

@@ -1,8 +1,13 @@
 <template>
+    <div>
+        <v-container id="nav">
+            <admin-page-side-bar/>
+        </v-container>
     <div align="center">
         <h2>회원 정보 수정</h2>
         <admin-member-modify v-if="adminMember" :adminMember="adminMember" @submit="onSubmit"/>
         <p v-else>로딩중 ......</p>
+    </div>
     </div>
 </template>
 
@@ -11,11 +16,13 @@
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import AdminMemberModify from '../../components/admin/AdminMemberModify.vue'
+import AdminPageSideBar from '@/components/admin/AdminPageSideBar.vue'
 
 export default {
     name: 'AnimalMemberModifyPage',
     components: {
-        AdminMemberModify
+        AdminMemberModify,
+        AdminPageSideBar
     },
     props: {
         memberNo: {
@@ -65,3 +72,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#nav{
+    overflow: hidden;
+}
+</style>

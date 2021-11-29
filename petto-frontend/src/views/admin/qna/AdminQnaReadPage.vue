@@ -1,17 +1,18 @@
 <template>
+  <div>
+      <v-container id="nav">
+            <admin-page-side-bar/>
+        </v-container>
     <div align="center" style="margin:5% 0% 15% 0%;">
         <admin-qna-read v-if="adminQnA" :adminQnA="adminQnA"/>
         <p v-else>로딩중 ...... </p>
-        
-        <!-- <v-btn route :to="{ name: 'QnaListPage' }">
-            목록보기
-        </v-btn> -->
-
     </div>
+  </div>
 </template>
 
 <script>
 import AdminQnaRead from '@/components/admin/qna/AdminQnaRead.vue'
+import AdminPageSideBar from '@/components/admin/AdminPageSideBar.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -23,7 +24,8 @@ export default {
         }
     },
     components: {
-        AdminQnaRead
+        AdminQnaRead,
+        AdminPageSideBar
     },
     computed: {
         ...mapState(['adminQnA'])
@@ -61,3 +63,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#nav{
+    overflow: hidden;
+}
+</style>
