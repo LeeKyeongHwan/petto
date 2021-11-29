@@ -177,7 +177,6 @@ export default {
         UploadedCnt() {
             return parseInt(this.report.imgUploadedCnt)
         },
-
         cityName() {
             return this.report.whereHappened.split(' ')[0]
         }
