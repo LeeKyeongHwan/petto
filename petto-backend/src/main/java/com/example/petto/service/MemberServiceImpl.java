@@ -218,8 +218,6 @@ public class MemberServiceImpl implements MemberService {
         updateAlarmRepository.deleteById(maybeMember.get().getId());
         memberRepository.deleteById(memberNo);
 
-        updateAlarmRepository.deleteById(maybeMember.get().getId());
-        memberRepository.deleteById(memberNo);
     }
 
     @Override
