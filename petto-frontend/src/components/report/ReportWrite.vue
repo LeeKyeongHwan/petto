@@ -110,8 +110,8 @@
                     label="작성 내용"
                     style="width: 950px;"
                     height="10%;"
-                    auto-grow/>
-
+                    auto-grow
+                    :rules="rules"/>
                 <br>
                 <br>
 

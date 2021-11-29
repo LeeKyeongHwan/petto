@@ -135,7 +135,6 @@
                     :rules="rules"
                     counter
                     auto-grow/>
-
                 </div>
 
                 <br>
@@ -200,7 +199,8 @@ export default {
 
             UploadedCnt: parseInt(this.report.imgUploadedCnt),
             pics: '',
-            deletePicsArr: []
+            deletePicsArr: [],
+            rules: [v => v.length <= 300 || '300자 이내 작성']
         }
     },
     methods: {
