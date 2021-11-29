@@ -8,6 +8,8 @@ public interface AnimalsService {
 
     public List<Animals> list() throws Exception;
 
+    public List<Animals> listByLocation(String cityName);
+
     public Animals getAnimalsInfo(String id);
 
     public List<Animals> oldList() throws Exception;

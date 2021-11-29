@@ -23,6 +23,13 @@ public class AnimalsServiceImpl implements AnimalsService {
     }
 
     @Override
+    public List<Animals> listByLocation(String cityName) {
+
+        log.info("xx:" + animalsRepository.findByCityName(cityName).size());
+        return animalsRepository.findByCityName(cityName);
+    }
+
+    @Override
     public Animals getAnimalsInfo(String id) {
 
         if(id.length() > 10) {

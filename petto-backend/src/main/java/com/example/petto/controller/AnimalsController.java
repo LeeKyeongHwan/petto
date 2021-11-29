@@ -25,9 +25,15 @@ public class AnimalsController {
     private AnimalsService animalsService;
 
     @GetMapping("/lists")
-    public ResponseEntity<List<Animals>> getLists () throws Exception {
-        log.info("getLists(): " + animalsService.list());
-        return new ResponseEntity<>(animalsService.list(), HttpStatus.OK);
+    public ResponseEntity<List<Animals>> getLists() throws Exception {
+        log.info("getLists(): ");
+        return new ResponseEntity<List<Animals>>(animalsService.list(), HttpStatus.OK);
+    }
+
+    @GetMapping("/lists/{cityName}")
+    public ResponseEntity<List<Animals>> getListsByLocation(@PathVariable("cityName") String cityName) {
+        log.info("getListsByLocation(): " + cityName);
+        return new ResponseEntity<List<Animals>>(animalsService.listByLocation(cityName), HttpStatus.OK);
     }
 
     @GetMapping("/getAnimalsInfo/{id}")

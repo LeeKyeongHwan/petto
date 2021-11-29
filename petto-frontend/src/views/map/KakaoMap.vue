@@ -67,14 +67,14 @@
       <br/>
       <br/>
 
-      <div v-show="showBasicFacilInfo">
+      <!-- <div id="facilInfoBox"> -->  <div v-show="showBasicFacilInfo">
 
         <p class="normalText" style="color: black; display: inline-block;">전국의 전체 보호소 수</p>
           &nbsp;
         <p class="normalText" style="display: inline-block;">{{ facilityList.length }}개 기관</p>
         <p class="normalText" style="color: black; display: inline-block;">이 검색되었습니다.</p>
 
-        <div v-show="showSpecificInfoFacil">
+        <div id="facilInfo" style="display: none;"> <!-- <div v-show="showSpecificInfoFacil"> -->
 
           <p class="normalText" style="color: black; display: inline-block;">현재 선택된 보호소</p>
 
@@ -104,7 +104,7 @@
 
         </div>
 
-        <div v-show="showSpecificAreaFacil">
+        <div id="facilsInArea" style="display: none">  <!-- <div v-show="showSpecificAreaFacil"> -->
 
           <p class="normalText" style="display: inline-block;">{{ chosenArea }}지역</p>
           <p class="normalText" style="color: black; display: inline-block;">의 보호소 수</p>
@@ -147,24 +147,11 @@
       </div>
 
       <div v-show="showBasicInfo">
-        
-        <div v-show="showWholeStat">
-          <p class="normalText" style="color: black; display: inline-block;">전국의 전체 유기동물 수</p>
-          &nbsp;
-          <p class="normalText" style="display: inline-block;">{{ animals.length }}마리</p>
-        </div>
-
+        <p class="normalText" style="display: inline-block;">{{ chosenArea }}</p>
+        <p class="normalText" style="color: black; display: inline-block;">지역의 전체 유기동물 수</p>
+        &nbsp;
+        <p class="normalText" style="display: inline-block;">{{ numOfDogs + numOfCats + numOfEtc }}마리</p>
         <br/>
-
-        <div v-show="showSpecificStat">
-
-          <p class="normalText" style="display: inline-block;">{{ chosenArea }}</p>
-          <p class="normalText" style="color: black; display: inline-block;">지역의 전체 유기동물 수</p>
-          &nbsp;
-          <p class="normalText" style="display: inline-block;">{{ numOfDogs + numOfCats + numOfEtc }}마리</p>
-
-        </div>
-
         <p class="normalText" style="color: black; display: inline-block;">유기된 개의 수</p>
         &nbsp;
         <p class="normalText" style="display: inline-block;">{{ numOfDogs }}마리</p>
@@ -176,7 +163,6 @@
         <p class="normalText" style="color: black; display: inline-block;">그 외 다른 동물들의 수</p>
         &nbsp;
         <p class="normalText" style="display: inline-block;">{{ numOfEtc }}마리</p>
-        
       </div>
 
       <div v-show="showNumOfAbandoned">
@@ -278,8 +264,6 @@ export default {
       loading: false,
 
       showBasicFacilInfo: true,
-      showSpecificAreaFacil: false,
-      showSpecificInfoFacil: false,
 
       searchedFacilities: [],
       searchedFacil: '',
@@ -297,7 +281,7 @@ export default {
       numOfCats: 0,
       numOfEtc: 0,
       
-      chosenArea: '',
+      chosenArea: '서울',
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
 
       markers: []
@@ -317,13 +301,13 @@ export default {
 
     if(this.$cookies.isKey("user")) {
 
-        this.$store.state.session = this.$cookies.get("user");
-        
-        if(this.$store.state.session != null) {
+      this.$store.state.session = this.$cookies.get("user");
+      
+      if(this.$store.state.session != null) {
 
-            this.$store.dispatch('fetchAlarmList', this.session.id)
-            this.$store.state.isLoggedIn = true;
-        }
+          this.$store.dispatch('fetchAlarmList', this.session.id)
+          this.$store.state.isLoggedIn = true;
+      }
     }
   },
 
@@ -332,10 +316,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchAnimalList', 'fetchFacilityList']),
+    ...mapActions(['fetchAnimalLisByLocation', 'fetchFacilityList']),
 
     chooseArea() {
-      var targetArea = this.chosenArea
+      const targetArea = this.chosenArea
       const map = this.map
       var geocoder = new kakao.maps.services.Geocoder();
       
@@ -348,8 +332,12 @@ export default {
 
       if(this.showBasicFacilInfo) { //지역별 *보호소* 정보
 
-        this.showSpecificInfoFacil = false
-        this.showSpecificAreaFacil = true
+        const facilInfo = document.querySelector('#facilInfo') //this.showSpecificInfoFacil = false
+        facilInfo.style.display = 'none'
+
+        const facilsInArea = document.querySelector('#facilsInArea') //this.showSpecificAreaFacil = true
+        facilsInArea.style.display = 'block'
+
         this.searchedFacilities = []
 
         for(var i=0; i<this.$store.state.facilityList.length; i++) {
@@ -366,11 +354,14 @@ export default {
         this.showSpecificStat = true
         this.searchedAnimals = [] //초기화
 
-        for(var j=0; j<this.$store.state.animals.length; j++) {
-          if(this.$store.state.animals[j].careaddr.includes(targetArea)) this.searchedAnimals.push(this.$store.state.animals[j])
-        }
+        this.showAnimalsDistribution()
+          .then(() => {
 
-        this.chkNumOfEachKind(this.searchedAnimals)
+            for(var j=0; j<this.$store.state.animals.length; j++) {
+              if(this.$store.state.animals[j].careaddr.includes(targetArea)) this.searchedAnimals.push(this.$store.state.animals[j])
+            }
+            this.chkNumOfEachKind(this.searchedAnimals)
+          })
       }
     },
 
@@ -523,24 +514,24 @@ export default {
       this.showSpecificStat = false
       this.showWholeStat = true
      
-      if(this.$store.state.animals == '') await this.fetchAnimalList() //
+      //if(this.$store.state.animals == '') await this.fetchAnimalLisByLocation(this.chosenArea)
+      await this.fetchAnimalLisByLocation(this.chosenArea)
 
       this.loading = true
 
       setTimeout(() => { 
 
         this.chkNumOfEachKind(this.$store.state.animals)
-
-        if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            
-          var lat = position.coords.latitude, 
-              lon = position.coords.longitude;
-          var locPosition = new kakao.maps.LatLng(lat, lon)
-          map.setCenter(locPosition)  
-         
+        
+        const targetArea = this.chosenArea
+        var geocoder = new kakao.maps.services.Geocoder();
+        
+        geocoder.addressSearch(targetArea, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            map.setCenter(coords);
+          }
         })
-      }
         
         var mapContainer = document.getElementById("map"),
         mapOption = {
@@ -563,7 +554,7 @@ export default {
         this.loading = false
         this.loadingAni(animals.length) //로딩 애니메이션
 
-        var geocoder = new kakao.maps.services.Geocoder();
+        //var geocoder = new kakao.maps.services.Geocoder();
 
         for (var i=0; i<animals.length; i++) { 
 
@@ -665,7 +656,6 @@ export default {
       this.showWholeStat = false
       this.showSpecificStat = false
 
-
       this.initMap()
     },
 
@@ -675,8 +665,11 @@ export default {
 
       if(this.showBasicFacilInfo) {
         
-        this.showSpecificAreaFacil = false
-        this.showSpecificInfoFacil = true
+        const facilsInArea = document.querySelector('#facilsInArea') //this.showSpecificAreaFacil = true
+        facilsInArea.style.display = 'none'
+
+        const facilInfo = document.querySelector('#facilInfo') //this.showSpecificInfoFacil = true
+        facilInfo.style.display = 'block'
 
         for(var j=0; j<this.$store.state.facilityList.length; j++) {
 
