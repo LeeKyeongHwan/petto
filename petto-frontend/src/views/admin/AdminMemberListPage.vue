@@ -1,16 +1,24 @@
 <template>
-    <div id="adminMember">
-        <admin-member-list :adminMembers="adminMembers"/>
+    <div>
+        <v-container id="nav">
+            <admin-page-side-bar/>
+        </v-container>
+
+        <div id="adminMember">
+            <admin-member-list :adminMembers="adminMembers"/>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import AdminMemberList from '../../components/admin/AdminMemberList.vue'
+import AdminPageSideBar from '@/components/admin/AdminPageSideBar.vue'
 export default {
     name: 'AdminMemberListPage',
     components: {
-        AdminMemberList
+        AdminMemberList,
+        AdminPageSideBar
     },
     computed: {
         ...mapState(['adminMembers', 'session', 'isLoggedIn'])
@@ -34,3 +42,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#nav{
+    overflow: hidden;
+}
+</style>

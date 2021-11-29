@@ -2,10 +2,11 @@
   <div>
     <div>
       <v-container class="slide">
-          <swiper class="swiper" :options="swiperOption">
+          <swiper class="swiper swiper-wrapper" :options="swiperOption">
               <swiper-slide v-for="image in images" :key="image.text">
                   <v-img :src="image.img" max-height="100%"></v-img>
-                  <v-btn class="overlay-btn" outlined color="white" x-large width="300" router :to="image.link">{{ image.text}}</v-btn>
+                  <v-btn class="overlay-btn" outlined color="white" x-large width="300" style="border:3px solid white;"
+                  router :to="image.link"><h4>{{ image.text}}</h4></v-btn>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev" slot="button-prev"></div>
@@ -58,7 +59,7 @@
       </section>
       </v-container>
 
-         <!-- <div>
+         <div>
             <div>
                 <v-card v-if="layers">
                   <div id="layer">
@@ -78,7 +79,7 @@
                   </div>
                 </v-card>
               </div>
-          </div> -->
+          </div>
     </div>
 </template>
 
@@ -174,8 +175,17 @@ export default {
 
 <style lang="scss" scoped>
 
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+
 .slide {
-    position: relative;
     padding-left: 0px;
     margin-left: 0px;
     padding-top: 0px;
@@ -185,6 +195,7 @@ export default {
     padding-bottom: 0px;
 }
 .swiper {
+    position: static;
     height: 94vh;
     width: 99.6vw;
     .swiper-slide {
@@ -241,6 +252,13 @@ export default {
   right: 10em;
   bottom: 3em;
   font-size: 12px;
+}
+
+h4{
+  font-family: "GowunDodum-Regular";
+  font-size: 1.5vw;
+  margin:0vw;
+  letter-spacing: 4px;
 }
 
 </style>

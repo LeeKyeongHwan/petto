@@ -1,101 +1,102 @@
 <template>
     <v-card flat width="100%" tile>
-      
-    <v-toolbar height="90">
-      <!-- <v-toolbar-title style="margin-left:1%;"  @click="$router.push('/pettohome')" >
-        <h1>petto</h1>
-      </v-toolbar-title> -->
-        <v-btn plain route :to="{ name: 'PettoHome' }">
-          <h1>
-            petto
-          </h1>
-        </v-btn>
-
-      <v-spacer></v-spacer>
-
-
-       <div id="header" class="main-menu">
-          <ul>
-            <li><a href="/aboutPage">소개</a></li>
-            <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
-            <li><a href="/reportBoard">제보</a></li>
-            <li><a href="/voluntaryBoard">자원봉사</a></li>
-            <li><a href="/map">지도</a></li>
-          </ul>
+ 
+      <v-toolbar height="90">
+        <div>
+          <v-btn  text plain route :to="{ name: 'PettoHome' }" height="90">
+            <h1>
+              petto
+            </h1>
+          </v-btn>
         </div>
 
-        <div id="header">
-          <ul>
-            <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;" v-if="!isLogin">LOGIN</a></li>
-            <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;" v-if="!isLogin">JOIN US</a></li>
-            <!-- <li><a href="#" style="font-size:0.8vw; margin-right:20px;" v-if="isLogin" @click="logout()">LOGOUT</a></li> -->
-          </ul>
-        </div>
-
-        <div id="header" v-if="isLogin && access">
-          <ul v-if="this.auth == '개인'">
-            <li><a href="/myProfile" style="font-size:0.8vw; margin-right:0px;">내정보</a></li>
-            <li><a href="/myLikedAnimals" style="font-size:0.8vw; margin-right:20px;" >찜리스트</a></li>
-            <li><a href="/myBoard" style="font-size:0.8vw; margin-right:20px;">내 게시물</a></li>
-            <li><a href="/MyQna" style="font-size:0.8vw; margin-right:20px;">문의</a></li>
-            <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
-          </ul>
-
-          <ul v-else>
-            <li><a href="/admin" style="font-size:0.8vw; margin-right:0px;">회원관리</a></li>
-            <li><a href="/qnalist" style="font-size:0.8vw; margin-right:20px;">문의관리</a></li>
-            <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
-          </ul>
-        </div>
+        <v-spacer></v-spacer>
 
 
-        <v-tooltip bottom v-if="isLogin">
-              <template v-slot:activator="{ on, attrs }">
-                <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
-                  <alarm-dialog :updateAlarmList="updateAlarmList"/>
-                </div>
+        <div id="header" class="main-menu">
+        <v-spacer></v-spacer>
+            <ul>
+              <li><a href="/aboutPage">소개</a></li>
+              <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
+              <li><a href="/reportBoard">제보</a></li>
+              <li><a href="/voluntaryBoard">자원봉사</a></li>
+              <li><a href="/map">지도</a></li>
+            </ul>
+          </div>
 
-                <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
-                  <v-icon color="grey">
-                    add_alert
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
-              <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
-            </v-tooltip>
+          <div id="header">
+            <ul>
+              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;" v-if="!isLogin">LOGIN</a></li>
+              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;" v-if="!isLogin">JOIN US</a></li>
+              <!-- <li><a href="#" style="font-size:0.8vw; margin-right:20px;" v-if="isLogin" @click="logout()">LOGOUT</a></li> -->
+            </ul>
+          </div>
 
-        <!-- <v-app-bar-nav-icon plain color="orange" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
-          <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
-            <v-list nav dense>
-                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-                    <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
-                        <v-list-item-action>
-                            <v-icon left>{{ link.icon }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>{{ link.text }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list-item-group>
-            </v-list>
-          </v-navigation-drawer>
+          <div id="header" v-if="isLogin && access">
+            <ul v-if="this.auth == '개인'">
+              <li><a href="/myProfile" style="font-size:0.8vw; margin-right:0px;">내정보</a></li>
+              <li><a href="/myLikedAnimals" style="font-size:0.8vw; margin-right:20px;" >찜리스트</a></li>
+              <li><a href="/myBoard" style="font-size:0.8vw; margin-right:20px;">내 게시물</a></li>
+              <li><a href="/MyQna" style="font-size:0.8vw; margin-right:20px;">문의</a></li>
+              <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
+            </ul>
 
-          <v-navigation-drawer app v-model="nav_drawer" temporary v-else>
-            <v-list nav dense>
-                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-                    <v-list-item v-for="admin in adminLinks" :key="admin.name" router :to="admin.route">
-                        <v-list-item-action>
-                            <v-icon left>{{ admin.icon }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>{{ admin.text }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list-item-group>
-            </v-list>
-          </v-navigation-drawer> -->
-    </v-toolbar>
+            <ul v-else>
+              <li><a href="/admin" style="font-size:0.8vw; margin-right:0px;">회원관리</a></li>
+              <li><a href="/qnalist" style="font-size:0.8vw; margin-right:20px;">문의관리</a></li>
+              <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
+            </ul>
+          </div>
+
+
+          <v-tooltip bottom v-if="isLogin">
+                <template v-slot:activator="{ on, attrs }">
+                  <div text v-on="on" v-bind="attrs" v-show="updatedNewsNum > 0" style="display: inline-block;">
+                    <alarm-dialog :updateAlarmList="updateAlarmList"/>
+                  </div>
+
+                  <v-btn text v-on="on" v-bind="attrs" v-show="updatedNewsNum == 0">
+                    <v-icon color="grey">
+                      add_alert
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span v-show="updatedNewsNum > 0">{{ updatedNewsNum }} 개의 최신 소식이 있어요!</span>
+                <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
+              </v-tooltip>
+              
+
+          <!-- <v-app-bar-nav-icon plain color="orange" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
+            <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
+              <v-list nav dense>
+                  <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                      <v-list-item v-for="link in links" :key="link.name" router :to="link.route">
+                          <v-list-item-action>
+                              <v-icon left>{{ link.icon }}</v-icon>
+                          </v-list-item-action>
+                          <v-list-item-content>
+                              <v-list-item-title>{{ link.text }}</v-list-item-title>
+                          </v-list-item-content>
+                      </v-list-item>
+                  </v-list-item-group>
+              </v-list>
+            </v-navigation-drawer>
+
+            <v-navigation-drawer app v-model="nav_drawer" temporary v-else>
+              <v-list nav dense>
+                  <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                      <v-list-item v-for="admin in adminLinks" :key="admin.name" router :to="admin.route">
+                          <v-list-item-action>
+                              <v-icon left>{{ admin.icon }}</v-icon>
+                          </v-list-item-action>
+                          <v-list-item-content>
+                              <v-list-item-title>{{ admin.text }}</v-list-item-title>
+                          </v-list-item-content>
+                      </v-list-item>
+                  </v-list-item-group>
+              </v-list>
+            </v-navigation-drawer> -->
+      </v-toolbar>
   </v-card>     
 </template>
 
@@ -214,4 +215,6 @@ font-family: 'WandohopeB';
   list-style: none;
   right: 2em;
 }
+
+
 </style>

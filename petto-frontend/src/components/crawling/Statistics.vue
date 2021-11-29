@@ -10,7 +10,7 @@
           <v-card class="sta-card grow">
             <p class="texts-overflow">오늘 구조된 동물</p>
             <span></span>
-            <p style="font-size:20px;">{{crawlInfo[0]}}</p>
+            <p style="font-size:20px;">{{crawlInfo[0]}}마리</p>
           </v-card>
         </div>
         <div>
