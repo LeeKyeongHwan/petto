@@ -23,6 +23,7 @@
         <v-list-item
           v-for="item in items"
           :key="item.title"
+          router :to="item.link"
         >
           <v-list-item-icon>
             <v-icon style="margin-left:2vw;">{{ item.icon }}</v-icon>
@@ -42,8 +43,8 @@
       return {
         id: '',
         items: [
-          { title: '회원목록', icon: 'mdi-account', link:'/' },
-          { title: '문의목록', icon: 'question_answer', link: '/' },
+          { title: '회원목록', icon: 'mdi-account', link:'/admin' },
+          { title: '문의목록', icon: 'question_answer', link: '/qnalist' },
         ],
       }
     }
