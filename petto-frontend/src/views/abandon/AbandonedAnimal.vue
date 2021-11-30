@@ -113,20 +113,23 @@ export default {
       }
   },
   mounted() {
-      alert(this.pageNum + ", " + this.place + ", " + this.kind)
-      let formData = new FormData()
-      formData.append('selectedPlace', this.place)
-      formData.append('selectedKinds', this.kind)
-      //if(this.$store.state.animals == '') 
-      this.fetchFIlteredAniList(formData)
-      if(this.$cookies.isKey("user")) {
-        this.$store.state.session = this.$cookies.get("user");
-        if(this.$store.state.session != null) {
-          this.$store.dispatch('fetchAlarmList', this.session.id)
-          this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
-          this.$store.state.isLoggedIn = true;
-        }
+    let formData = new FormData()
+    formData.append('selectedPlace', this.place)
+    formData.append('selectedKinds', this.kind)
+
+    //if(this.$store.state.animals == '') 
+    this.fetchFIlteredAniList(formData)
+    
+    if(this.$cookies.isKey("user")) {
+
+      this.$store.state.session = this.$cookies.get("user");
+
+      if(this.$store.state.session != null) {
+        this.$store.dispatch('fetchAlarmList', this.session.id)
+        this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+        this.$store.state.isLoggedIn = true;
       }
+    }
   },
   methods: {
       ...mapActions(['fetchAnimalList', 'fetchFIlteredAniList', 'fetchLikedAnimalList']),

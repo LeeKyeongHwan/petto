@@ -232,22 +232,22 @@ export default {
       else {
         let selectPlace = this.selectPlace
         let selectKinds = this.selectKinds
-        if(selectPlace == '') selectPlace = 'none'
-        if(selectKinds == '') selectKinds = 'none'
+        if(selectPlace == '' || selectPlace == undefined) selectPlace = 'none'
+        if(selectKinds == '' || selectKinds == undefined) selectKinds = 'none'
                 
         this.searchDialog = false
         this.pageNum = 0
 
         this.$router.push({
           name: 'AbandonedAnimal',
-          params: { "pageNum": this.pageNum, "place": selectPlace, "kind": selectKinds }
+          params: { "pageNum": this.pageNum, "place": selectPlace.toString(), "kind": selectKinds.toString() }
         })
       }
     },
     showAll() {
       this.$router.push({
         name: 'AbandonedAnimal',
-        params: { pageNum: 0, place: 'none', kind: 'none' }
+        params: { "pageNum": 0, "place": 'none', "kind": 'none' }
       })
     },
     addLikedAnimal(notice_no) {
