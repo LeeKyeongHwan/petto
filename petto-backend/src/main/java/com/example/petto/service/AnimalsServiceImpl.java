@@ -56,7 +56,6 @@ public class AnimalsServiceImpl implements AnimalsService {
             }
             return southKyngkiAnimals;
         }
-
         else return animalsRepository.findByCityName(cityName);
     }
 
