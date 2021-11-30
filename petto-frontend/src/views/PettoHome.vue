@@ -131,7 +131,7 @@ export default {
       this.$store.dispatch("TodayPopUp");
       this.layers = false;
     },
-    ...mapActions(['fetchOlderAnimalList']),
+    ...mapActions(['fetchOlderAnimalList', 'fetchAlarmList']),
       toDetailPage(id) {
       this.$router.push({
         name: 'AnimalDetailPage',
@@ -152,9 +152,14 @@ export default {
       this.layers = true;
     }
     this.fetchOlderAnimalList()
+
+    if(this.$cookies.isKey("user")) {
+      this.$store.state.session = this.$cookies.get("user");
+      if(this.$store.state.session != null) this.$store.dispatch('fetchAlarmList', this.session.id)
+    }
   },
   computed: {
-      ...mapState(['olderList'])
+      ...mapState(['olderList', 'session'])
   },
   created() {
         axios.post("http://localhost:5000/pythonCrawlNews")
