@@ -68,19 +68,19 @@ export default {
   },
   props: {
     pageNum: {
-      type:  [Number, String],
+      type: Number,
       required: false,
       default: 0
     },
     place: {
-      type: [String],
+      type: String,
       required: false,
-      default: null
+      default: 'none'
     },
     kind: {
-      type: [String],
+      type: String,
       required: false,
-      default: null
+      default: 'none'
     }
   },
   data() {
@@ -116,11 +116,14 @@ export default {
     let formData = new FormData()
     formData.append('selectedPlace', this.place)
     formData.append('selectedKinds', this.kind)
-    //if(this.$store.state.animals == '') 
+
+    //if(this.$store.state.animals == '')
     this.fetchFIlteredAniList(formData)
-    
+
     if(this.$cookies.isKey("user")) {
+
       this.$store.state.session = this.$cookies.get("user");
+
       if(this.$store.state.session != null) {
         this.$store.dispatch('fetchAlarmList', this.session.id)
         this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
