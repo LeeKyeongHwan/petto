@@ -1,10 +1,10 @@
 <template>
   <v-app>
-      <category v-if="($route.name !== 'PettoHome') && ($route.name !== 'Home')"/>
+      <category v-if="($route.name !== 'Home')"/>
       <v-main>
         <router-view :key="$route.fullPath"/>
       </v-main>
-    <petto-footer/>
+    <petto-footer v-if="($route.name !== 'Home')"/>
   </v-app>
 </template>
 

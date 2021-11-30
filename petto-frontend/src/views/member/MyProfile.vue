@@ -24,7 +24,7 @@
 
           <template v-slot:activator="{ on, attrs }">
         
-          <v-btn text color="#FFB300"  v-on="on" v-bind="attrs"  href="passwordCheckPage">
+          <v-btn text color="#FFB300"  v-on="on" v-bind="attrs"  href="passwordCheckWithdrawalPage">
             <v-icon>
               delete
             </v-icon>

@@ -1,82 +1,90 @@
 <template>
     <div>
-        <v-container class="justify-center">
-            <v-card style="float:left; margin-right:2vw; overflow:hidden;">
-                <v-form style="width:500px;">
-                    <h3 style="font-size:30px;">문의 내용</h3>
-                    <tr>
-                        <td>등록일자</td>
-                        <td><input type="text" :value="adminQnA.regDate" readonly></td>
-                    </tr>
-                    <tr>
-                        <td>답변여부</td>
-                        <td>
-                            <v-chip :color="getColor(adminQnA.answerState)" style="width:90px; text-align:center;">
-                                <input type="text" :value="adminQnA.answerState" readonly style="color:white; border:0; margin:0;">
-                            </v-chip></td>
-                    </tr>
-                    <tr>
-                        <td>제목</td>
-                        <td><input type="text" :value="adminQnA.title" readonly></td>
-                    </tr>
-                    <tr>
-                        <td>작성자</td>
-                        <td><input type="text" :value="adminQnA.writer" readonly></td>
-                    </tr>
-                    <tr>
-                        <td>본문</td>
-                        <td><v-textarea cols="40" rows="20"  :value="adminQnA.content" readonly  outlined height="200"></v-textarea></td>
-                    </tr>
-                    <!-- <tr v-if="adminQnA.adminAnswer != '답변대기'">
-                        <td>답변</td>
-                        <td><v-textarea cols="40" rows="20" :value="adminQnA.adminAnswer" readonly  
-                          outlined height="200"></v-textarea></td>
-                    </tr> -->
-                </v-form>
-            </v-card>
+    <section>
+        <div id="board">
+            <h3 style="font-size:30px; text-align:left;"><b>문의 내용</b></h3>
+            <v-row align="center" >
+            <v-divider ></v-divider>
+            </v-row>
 
-            <v-card  style="float:left; overflow:hidden;">
-                <form style="width:500px;">
-                    <h3 style="font-size:30px;">관리자 답변</h3>
-                    <tr v-if="adminQnA.adminAnswer != '답변대기'">
-                        <td>등록된<br> 답변</td>
-                        <td><v-textarea cols="40" rows="20" :value="adminQnA.adminAnswer" readonly  
-                          outlined height="100"></v-textarea></td>
-                    </tr>
-                    <tr>
-                        <td>문의상태</td>
-                        <td>
-                            <v-radio-group v-model="radioGroup" row>
-                                <v-radio color="orange" v-for="kinds in answerStates" :key="kinds" :label="`${kinds}`"></v-radio>
-                            </v-radio-group>
-                        </td>
-                    </tr>
+                <v-row align="center" style="margin-top:1vw;">
+                    <v-chip :color="getColor(adminQnA.answerState)" style="width:90px; color:white; border:0; margin:0;">{{adminQnA.answerState}}
+                    </v-chip>
+                </v-row>
 
-                    <tr>
-                        <td>답변</td>
-                        <td><v-textarea cols="40" rows="20" v-model="adminAnswer"
-                        outlined height="200"></v-textarea></td>
-                    </tr>
-                    <span>
-                        <v-btn @click="complete()" icon x-large color="orange">
-                                ...send<v-icon>send</v-icon></v-btn>
-                    </span>
-                </form>
+                <span><p style="font-size:20px; text-align:left; margin-bottom:0.5vw;">{{adminQnA.title}}</p></span>
 
-                
-            </v-card>
-        </v-container>
+                <span><p style="text-align:left; margin-bottom:0.5vw;"><v-icon style="margin-right:0.5vw;">person</v-icon>{{adminQnA.writer}}</p></span>
+                <span><p style="text-align:left;">{{adminQnA.regDate}}</p></span>
 
-        <section style="content: '';display: block;clear: both;">
-        <v-container class="justify-center">
-            <!-- <span> -->
-                <v-btn route :to="{ name: 'QnaListPage' }" style="margin-top:5%;" 
-                color="orange" outlined rounded plain>
-                목록보기
-                </v-btn>
-            <!-- </span> -->
-        </v-container>
-        </section>
+                <span><p style="font-size:17px; text-align:left;">{{adminQnA.content}}</p></span>
+
+            <v-row v-if="adminQnA.adminAnswer != '답변대기'" align="center" style="margin-top:1vw;">
+                <v-card style="width:50vw;">
+                    <v-card-text><p style="text-align:left;"><v-icon>subdirectory_arrow_right</v-icon><b>관리자 답변 :</b> {{adminQnA.adminAnswer}}</p></v-card-text>
+                </v-card>
+            </v-row>
+
+            <v-row justify="center">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="500"
+    >
+      <template v-slot:activator="{ on, attrs }">
+          <v-row align="center" style="margin:3%;" justify="center">
+            <v-btn route :to="{ name: 'QnaListPage' }"
+            color="gray" outlined plain>
+            목록보기
+            </v-btn>
+            <v-btn
+            color="gray"
+            style="margin:0% 1% 0% 1%;"
+            v-bind="attrs"
+            v-on="on"
+            >
+            답변 작성
+            </v-btn>
+          </v-row>
+      </template>
+      <v-card>
+        <v-card-title class="text-h5">
+          관리자 답변
+        </v-card-title>
+        <v-card-subtitle>
+            <span>
+                <v-radio-group v-model="radioGroup" row>
+                    <v-radio color="orange" v-for="kinds in answerStates" :key="kinds" :label="`${kinds}`"></v-radio>
+                </v-radio-group>
+            </span>
+        </v-card-subtitle>
+        <v-card-text>
+            <td><v-textarea cols="55" rows="30" v-model="adminAnswer" label="답변"
+                outlined height="200"></v-textarea></td>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="orange darken-1"
+            text
+            @click="dialog = false"
+          >
+            취소
+          </v-btn>
+          <v-btn
+            color="orange darken-1"
+            text
+            @click="complete()"
+          >
+            등록
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+        </div>
+    </section>
+
     </div>
 </template>
 
@@ -93,6 +101,7 @@ export default {
     },
     data () {
         return {
+            dialog: false,
             radioGroup: 1,
             answerStates: [
                 '답변완료',
@@ -124,7 +133,7 @@ export default {
                             .catch(err => {
                                 console.log(err.response.massage)
                             })
-                            
+                        this.dialog = false
                         alert('답변을 작성했습니다.')
                         this.$router.push({
                             name: 'QnaListPage'
@@ -158,5 +167,14 @@ p{
     font-family: 'MapoGoldenPier';
     font-size: 15px;
     margin: 0;
+}
+
+#board{
+    position: relative;
+    left:25vw;
+    top:0vw;
+}
+#nav{
+    overflow: hidden;
 }
 </style>

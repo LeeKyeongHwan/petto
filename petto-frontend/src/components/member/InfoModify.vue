@@ -5,7 +5,7 @@
         <form @submit.prevent="onSubmitModified">
       
             <label style="float: right;">
-                <h7 style="margin-right: 20px;">id</h7>
+                <span style="margin-right: 20px;">id</span>
                 <input v-model="id" style="width: 200px;" required/>
             </label>
 
@@ -13,7 +13,7 @@
             <br/>
 
             <label style="float: right;">
-                <h7 style="margin-right: 20px;">이메일</h7>
+                <span style="margin-right: 20px;">이메일</span>
                 <input v-model="email" style="width: 200px;" required/>
             </label>
 
@@ -21,7 +21,7 @@
             <br/>
 
             <label style="float: right;">
-                <h7 style="margin-right: 20px;">휴대번호</h7>
+                <span style="margin-right: 20px;">휴대번호</span>
                 <input v-model="phoneNumber" style="width: 200px;" required/>
             </label>
 
@@ -29,7 +29,7 @@
             <br/>
 
             <label style="float: right;">
-                <h7 style="margin-right: 20px;">이름</h7>
+                <span style="margin-right: 20px;">이름</span>
                 <input v-model="name" style="width: 200px;" required/>
             </label>
 
@@ -37,7 +37,7 @@
             <br/>
 
             <label style="float: right;">
-                <h7 style="margin-right: 20px;">생년월일(6자)</h7>
+                <span style="margin-right: 20px;">생년월일(6자)</span>
                 <input v-model="birthday" style="width: 200px;" required/>
             </label>
 
@@ -45,7 +45,7 @@
             <br/>
 
             <label style="float: right;">
-                <h7 style="margin-right: 20px;">닉네임</h7>
+                <span style="margin-right: 20px;">닉네임</span>
                 <input v-model="nickname" style="width: 200px;" required/>
             </label>
             
