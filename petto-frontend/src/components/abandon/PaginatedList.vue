@@ -170,7 +170,8 @@ export default {
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
       selectPlace: [],
       selectKinds: [],
-      kinds: [ '개', '고양이', '기타' ]
+      kinds: [ '개', '고양이', '기타' ],
+      pageNum: this.initPageNum
     }
   },
   props: {
@@ -183,17 +184,21 @@ export default {
       required: false,
       default: 12
     },
-    pageNum: {
+    // pageNum: {
+    //   type: Number,
+    //   required: true
+    // },
+    initPageNum: {
       type: Number,
       required: true
     },
     place: {
       type: String,
-      required: true
+      required: false
     },
     kind: {
       type: String,
-      required: true
+      required: false
     }
   },
   methods: {
@@ -237,7 +242,6 @@ export default {
                 
         this.searchDialog = false
         this.pageNum = 0
-
         this.$router.push({
           name: 'AbandonedAnimal',
           params: { "pageNum": this.pageNum, "place": selectPlace.toString(), "kind": selectKinds.toString() }
