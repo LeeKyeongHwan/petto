@@ -392,7 +392,6 @@ export default {
     },
     
     updated() {
-
         //this.$cookies.remove("latestSeen");    
 
         if(this.$store.state.animalsInfo) {

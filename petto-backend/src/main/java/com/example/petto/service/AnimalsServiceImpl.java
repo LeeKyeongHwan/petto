@@ -23,6 +23,44 @@ public class AnimalsServiceImpl implements AnimalsService {
     }
 
     @Override
+    public List<Animals> listByLocation(String cityName) {
+
+        String[] northKyungki = { "남양주", "일산", "가평", "파주", "양주" };
+        String[] southKyungki = { "부천", "하남", "광명", "양평", "광주", "여주", "용인", "성남", "수원", "오산", "화성", "안산", "평택" };
+
+        List<Animals> kyungKiAnimals = animalsRepository.findByCityName("경기");
+
+        if(cityName.equals("경기북부")) {
+            List<Animals> northKyngkiAnimals = new ArrayList<Animals>();
+            
+            for(Animals ani : kyungKiAnimals) {
+                
+                for(int i=0; i<northKyungki.length; i++) {
+                    if(ani.getCareaddr().contains(northKyungki[i])) {
+                        northKyngkiAnimals.add(ani);
+                    }
+                }
+            }
+            return northKyngkiAnimals;
+            
+        } else if(cityName.equals("경기남부")) {
+            List<Animals> southKyngkiAnimals = new ArrayList<Animals>();
+
+            for(Animals ani : kyungKiAnimals) {
+
+                for(int i=0; i<southKyungki.length; i++) {
+                    if(ani.getCareaddr().contains(southKyungki[i])) {
+                        southKyngkiAnimals.add(ani);
+                    }
+                }
+            }
+            return southKyngkiAnimals;
+        }
+
+        else return animalsRepository.findByCityName(cityName);
+    }
+
+    @Override
     public Animals getAnimalsInfo(String id) {
 
         if(id.length() > 10) {
