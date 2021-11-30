@@ -11,7 +11,7 @@
     <h1>유기동물 리스트</h1>
 
     <!-- <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" :place="place" :kind="kind" style="position relative;"/> -->
-    <paginated-list v-if="animals" :animals="animals" :pageNum="parseInt(pageNum)" :place="place" :kind="kind" style="position relative;"/>
+    <paginated-list v-if="animals" :animals="animals" :initPageNum="parseInt(pageNum)" :place="place" :kind="kind" style="position relative;"/>
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
@@ -68,19 +68,19 @@ export default {
   },
   props: {
     pageNum: {
-      type: Number,
+      type:  [Number, String],
       required: false,
       default: 0
     },
     place: {
-      type: String,
+      type: [String],
       required: false,
-      default: 'none'
+      default: null
     },
     kind: {
-      type: String,
+      type: [String],
       required: false,
-      default: 'none'
+      default: null
     }
   },
   data() {
@@ -113,20 +113,20 @@ export default {
       }
   },
   mounted() {
-      alert(this.pageNum + ", " + this.place + ", " + this.kind)
-      let formData = new FormData()
-      formData.append('selectedPlace', this.place)
-      formData.append('selectedKinds', this.kind)
-      //if(this.$store.state.animals == '') 
-      this.fetchFIlteredAniList(formData)
-      if(this.$cookies.isKey("user")) {
-        this.$store.state.session = this.$cookies.get("user");
-        if(this.$store.state.session != null) {
-          this.$store.dispatch('fetchAlarmList', this.session.id)
-          this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
-          this.$store.state.isLoggedIn = true;
-        }
+    let formData = new FormData()
+    formData.append('selectedPlace', this.place)
+    formData.append('selectedKinds', this.kind)
+    //if(this.$store.state.animals == '') 
+    this.fetchFIlteredAniList(formData)
+    
+    if(this.$cookies.isKey("user")) {
+      this.$store.state.session = this.$cookies.get("user");
+      if(this.$store.state.session != null) {
+        this.$store.dispatch('fetchAlarmList', this.session.id)
+        this.fetchLikedAnimalList(this.$cookies.get("user").memberNo)
+        this.$store.state.isLoggedIn = true;
       }
+    }
   },
   methods: {
       ...mapActions(['fetchAnimalList', 'fetchFIlteredAniList', 'fetchLikedAnimalList']),
