@@ -1,15 +1,9 @@
 <template>
-	<div>
-		<div style="margin-top:5%;">
-            <p style="text-align:center;">| 자원봉사 |</p>
-		</div>
-		<v-divider></v-divider>
-
-		<div class="container white z-depth-2">
-			<div class="col s12">
-				
-				<form class="col s12">
-					<div class="form-container">
+    <div class="back">
+        <v-container class="justify center" style="width:40%; padding:3%;">
+            <span><img src="https://i.dlpng.com/static/png/6345652_preview.png" width="300"/></span>
+                <v-card height="450" style="margin-top:-6vh;">
+                    <v-container>
 						<h5 style="text-align:center;">자원봉사</h5>
 							<v-text-field label="자원봉사명" outlined type="title" v-model="volTitle"></v-text-field>
 
@@ -61,10 +55,9 @@
 						<center>
 							<v-btn @click="submitFiles()" :disabled="!contentFiles || !files" outlined style="margin-top:10%;">작성하기</v-btn>
 						</center>
-					</div>
-				</form>
-			</div>
-		</div>
+					</v-container>
+            </v-card>
+        </v-container>
 	</div>
 </template>
 
@@ -140,21 +133,13 @@ export default {
     font-style: normal;
 }
 
+
 h5{
 	font-size: 40px;
 	font-family: 'JSongMyung-Regular-KO';
 }
 
-.container{
-	margin-top: 5%;
-	width: 600px;
-	height: 500px;
-	margin-bottom: 10%;
-	position: relative;
-}
-
-.form-container{
-	padding: 40px;
-	padding-top: 10px;
+.back{
+    background-color:rgb(224, 226, 248);
 }
 </style>
