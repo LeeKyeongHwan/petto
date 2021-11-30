@@ -39,7 +39,6 @@ import MyboardPage from "../views/member/MyboardPage.vue";
 
 import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
 import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
-import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
 
 import QnaListPage from "../views/admin/qna/QnaListPage.vue";
 
@@ -263,16 +262,6 @@ const routes = [
     name: "ReportModifyPage",
     components: {
       default: ReportModifyPage
-    },
-    props: {
-      default: true
-    }
-  },
-  {
-    path: '/admin/:memberNo/edit',
-    name: 'AdminMemberModifyPage',
-    components: {
-      default: AdminMemberModifyPage
     },
     props: {
       default: true

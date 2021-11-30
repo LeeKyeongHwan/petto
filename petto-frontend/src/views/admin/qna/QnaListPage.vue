@@ -1,5 +1,9 @@
 <template>
-    <div align="center" style="margin:5%;">
+    <div>
+        <v-container id="nav">
+            <admin-page-side-bar/>
+        </v-container>
+    <div align="center" style="margin:5% 0% 5% 15%;">
         <h3>문의글 목록</h3>
 
          <v-card-text style="text-align:right; padding-right:10em;">
@@ -43,14 +47,18 @@
                 </template>
 
             </v-data-table>
-
+    </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import AdminPageSideBar from '@/components/admin/AdminPageSideBar.vue'
 export default {
     name: 'QnaListPage',
+    components:{
+        AdminPageSideBar
+    },
     data() {
         return {
             headers:
@@ -161,6 +169,10 @@ p{
 .answer-view{
     color: white;
     margin-top:3%;
+}
+
+#nav{
+    overflow: hidden;
 }
 </style>
     
