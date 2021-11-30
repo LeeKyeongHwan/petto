@@ -145,10 +145,13 @@ const routes = [
     }
   },
   {
-    path: '/voluntaryBoard',
-    name: 'AnimalVoluntaryListPage',
+    path: "/voluntaryBoard/list/page=:pageNum",
+    name: "AnimalVoluntaryListPage",
     components: {
       default: AnimalVoluntaryListPage
+    },
+    props: {
+      default: true
     }
   },
   {

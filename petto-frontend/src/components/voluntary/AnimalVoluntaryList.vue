@@ -1,5 +1,5 @@
 <template>
-    <div align="center" class="board-box">
+    <div align="center">
 
         <div v-if="!paginatedData || (Array.isArray(paginatedData) && paginatedData.length === 0)">
                 <span>
@@ -57,26 +57,37 @@ export default {
         type: Number,
         required: false,
         default: 4
+        },
+        initPageNum: {
+          type: Number,
+          required: true
         }
     },
     data () {
         return {
-        pageNum: 0,
-        todayDate: ''
+        // pageNum: 0,
+        todayDate: '',
+        pageNum: this.initPageNum
         }
     },
     methods: {
         nextPage () {
-        this.pageNum += 1;
+            this.pageNum += 1;
+            this.$router.push({
+            name: 'AnimalVoluntaryListPage',
+            params: { pageNum: this.pageNum }
+        })
         },
         prevPage () {
         this.pageNum -= 1;
+        this.$router.push({
+            name: 'AnimalVoluntaryListPage',
+            params: { pageNum: this.pageNum }
+        })
         },
         changeDate () {
         const date = new Date()
         const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
-        console.log(today)
-
         this.todayDate = today
         },
     },

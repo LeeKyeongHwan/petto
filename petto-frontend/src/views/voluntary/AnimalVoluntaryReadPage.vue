@@ -1,9 +1,6 @@
 <template>
     <div id="voluntaryboard">
-        <v-container class="justify center" style="margin-top:5%;">
-            <p>| 자원봉사 |</p>
-        </v-container>
-        <v-divider></v-divider>
+
 
         <animal-voluntary-read v-if="voluntaryboard" :voluntaryboard="voluntaryboard"/>
 

@@ -19,7 +19,7 @@
               <li><a href="/aboutPage">소개</a></li>
               <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
               <li><a href="/reportBoard">제보</a></li>
-              <li><a href="/voluntaryBoard">자원봉사</a></li>
+              <li><a href="/voluntaryBoard/list/page=0">자원봉사</a></li>
               <li><a href="/map">지도</a></li>
             </ul>
           </div>
