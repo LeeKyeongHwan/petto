@@ -9,8 +9,19 @@
       <span class="row" style="margin-left: 100px; float: left;">
         
         <v-select
+            v-if="showBasicFacilInfo"
             v-model="chosenArea"
             :items="areas"
+            label="지역"
+            dense
+            class="normalText"
+            style="width: 120px;"
+          ></v-select>
+
+          <v-select
+            v-else-if="!showBasicFacilInfo"
+            v-model="chosenArea"
+            :items="areasAni"
             label="지역"
             dense
             class="normalText"
@@ -283,6 +294,7 @@ export default {
       
       chosenArea: '서울',
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
+      areasAni: [ '서울', '경기북부', '경기남부', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
 
       markers: []
     };
@@ -319,10 +331,10 @@ export default {
     ...mapActions(['fetchAnimalLisByLocation', 'fetchFacilityList']),
 
     chooseArea() {
-      const targetArea = this.chosenArea
+      let targetArea = this.chosenArea
       const map = this.map
       var geocoder = new kakao.maps.services.Geocoder();
-      
+
       geocoder.addressSearch(targetArea, function(result, status) {
        if (status === kakao.maps.services.Status.OK) {
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -331,6 +343,7 @@ export default {
       })
 
       if(this.showBasicFacilInfo) { //지역별 *보호소* 정보
+        this.chosenArea = targetArea == '경기북부' || targetArea == '경기남부' ? '경기' : targetArea
 
         const facilInfo = document.querySelector('#facilInfo') //this.showSpecificInfoFacil = false
         facilInfo.style.display = 'none'
@@ -409,7 +422,7 @@ export default {
     },
 
     async initMap() {
-
+      this.chosenArea = this.chosenArea == '경기북부' || this.chosenArea == '경기남부' ? '경기' : this.chosenArea
       this.showBasicFacilInfo = true
 
       if(this.$store.state.facilityList == '') await this.fetchFacilityList()
@@ -515,17 +528,18 @@ export default {
       this.showWholeStat = true
      
       //if(this.$store.state.animals == '') await this.fetchAnimalLisByLocation(this.chosenArea)
+      let targetArea = this.chosenArea == '경기북부' ? '남양주' : this.chosenArea
+      if(targetArea === '경기남부') targetArea = '경기'
+
+      this.chosenArea = this.chosenArea == '경기' ? '경기남부' : this.chosenArea
       await this.fetchAnimalLisByLocation(this.chosenArea)
 
       this.loading = true
-
       setTimeout(() => { 
 
         this.chkNumOfEachKind(this.$store.state.animals)
-        
-        const targetArea = this.chosenArea
+
         var geocoder = new kakao.maps.services.Geocoder();
-        
         geocoder.addressSearch(targetArea, function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);

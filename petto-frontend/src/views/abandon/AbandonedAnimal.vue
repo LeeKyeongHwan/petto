@@ -8,7 +8,7 @@
     <h1>유기동물 리스트</h1>
 
     <!-- <paginated-list v-if="animals" :animals="animals" :pageNum="pageNum" :place="place" :kind="kind" style="position relative;"/> -->
-    <paginated-list v-if="animals" :animals="animals" :initPageNum="parseInt(pageNum)" :place="place" :kind="kind" style="position relative;"/>
+    <paginated-list v-if="animals" :animals="animals" :pageNum="parseInt(pageNum)" :place="place" :kind="kind" style="position relative;"/>
     <p v-else-if="!animals">???</p>
 
     <div id="latestSeenShower">
@@ -67,19 +67,19 @@ export default {
   },
   props: {
     pageNum: {
-      type: [Number, String],
+      type: Number,
       required: false,
       default: 0
     },
     place: {
-      type: [String],
+      type: String,
       required: false,
-      default: null
+      default: 'none'
     },
     kind: {
-      type: [String],
+      type: String,
       required: false,
-      default: null
+      default: 'none'
     }
   },
   data() {
@@ -120,12 +120,11 @@ export default {
 
         return page;
       }
-      
   },
 
   mounted() {
+      alert(this.pageNum + ", " + this.place + ", " + this.kind)
       let formData = new FormData()
-
       formData.append('selectedPlace', this.place)
       formData.append('selectedKinds', this.kind)
 

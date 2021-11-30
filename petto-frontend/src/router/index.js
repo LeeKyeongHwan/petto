@@ -227,7 +227,7 @@ const routes = [
     component: PasswordCheckPage,
   },
   {
-    path: "/passwordCheckWithdrawalPage",
+    path: "/passwordCheck",
     name: "PasswordCheckWithdrawalPage",
     component: PasswordCheckWithdrawalPage,
   },

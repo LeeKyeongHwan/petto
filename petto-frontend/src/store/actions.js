@@ -86,7 +86,7 @@ export default {
   },
 
   fetchAnimalLisByLocation({ commit }, cityName) {
-    return axios.get(`http://localhost:8888/petto/animals/lists/${cityName}`)  
+    return axios.get(`http://localhost:8888/petto/animals/lists/${cityName}`)
             .then((res) => {
               commit(FETCH_ANIMAL_LIST, res.data)
       })

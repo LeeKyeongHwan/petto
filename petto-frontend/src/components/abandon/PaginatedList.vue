@@ -170,8 +170,7 @@ export default {
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
       selectPlace: [],
       selectKinds: [],
-      kinds: [ '개', '고양이', '기타' ],
-      pageNum: this.initPageNum
+      kinds: [ '개', '고양이', '기타' ]
     }
   },
   props: {
@@ -184,21 +183,17 @@ export default {
       required: false,
       default: 12
     },
-    initPageNum: {
+    pageNum: {
       type: Number,
       required: true
     },
-    // pageNum: {
-    //   type: Number,
-    //   required: true
-    // },
     place: {
       type: String,
-      required: false
+      required: true
     },
     kind: {
       type: String,
-      required: false
+      required: true
     }
   },
   methods: {
@@ -230,23 +225,22 @@ export default {
         name: 'AnimalDetailPage',
         params: { "id": id }
       })
-      
     },
     
     selectSearch() {
       if(this.selectPlace == '' && this.selectKinds == '') alert('최소 하나 이상의 조건을 설정해주세요!')
       else {
-        
         let selectPlace = this.selectPlace
         let selectKinds = this.selectKinds
-        if(selectPlace == undefined) selectPlace = 'none'
-        if(selectKinds == undefined) selectKinds = 'none'
+        if(selectPlace == '') selectPlace = 'none'
+        if(selectKinds == '') selectKinds = 'none'
                 
         this.searchDialog = false
         this.pageNum = 0
+
         this.$router.push({
           name: 'AbandonedAnimal',
-          params: { pageNum: this.pageNum, place: selectPlace.toString(), kind: selectKinds.toString() }
+          params: { "pageNum": this.pageNum, "place": selectPlace, "kind": selectKinds }
         })
       }
     },
