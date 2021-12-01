@@ -1,6 +1,5 @@
 <template>
     <div align="center">
-        <h2>게시물 수정</h2>
         <qna-modify v-if="qnaboard" :qnaboard="qnaboard" @submit="onSubmit"/>
         <p v-else>로딩중 .......</p>
     </div>
