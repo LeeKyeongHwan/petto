@@ -108,8 +108,8 @@ export default {
                 '답변대기'
             ],
             adminAnswer: ''
-        }   
-    },   
+        }
+    },
     methods: {
         getColor (answer) {
             if (answer =='답변완료') return 'green'
@@ -122,7 +122,7 @@ export default {
             console.log(answerState)
             axios.put(`http://localhost:8888/petto/admin/qna/${qnaNo}`, { answerState, adminAnswer })
                     .then(() => {
-                        
+
                         const id = this.adminQnA.writer
                         const commentator = '관리자'
                         const title = this.adminQnA.title

@@ -17,7 +17,7 @@
                         <v-chip color="orange lighten-4">{{ myQnaList.answerState}}</v-chip>
                   </v-card-text></td>
                    <td  class="text-center" style="color:black;"><router-link :to="{ name: 'QnaReadPage',
-                                    params: { qnaNo: myQnaList.qnaNo.toString() } }"> 
+                                    params: { qnaNo: myQnaList.qnaNo.toString() } }">
                         {{ myQnaList.title }}
                     </router-link></td>
                 <td class="text-left">{{ myQnaList.writer}}</td>
@@ -25,11 +25,11 @@
                 </tr>
             </tbody>
          </v-simple-table>
-         <p style="text-align:center; margin:20px;" v-if="myQnaList.length == 0">문의 내역이 없습니다. </p>       
+         <p style="text-align:center; margin:20px;" v-if="myQnaList.length == 0">문의 내역이 없습니다. </p>
          <v-btn style="float: right;"><v-icon color="blue">create</v-icon><router-link :to="{ name: 'QnaWritePage' }">&nbsp; 문의하기</router-link></v-btn>
          <v-pagination  :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white; margin-bottom:130px;"> </v-pagination>
     </v-container>
-</template>  
+</template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
@@ -56,7 +56,7 @@ export default {
         if(this.$cookies.isKey("user")) {
 
             this.$store.state.session = this.$cookies.get("user");
-            
+
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
                 this.fetchMyQnAList(this.$store.state.session.id)
@@ -67,7 +67,7 @@ export default {
 
     computed: {
         ...mapState(['myQnaList', 'session']),
-        
+
         startOffset() {
             return ((this.curpagenum - 1) * this.datapage);
         },
@@ -79,7 +79,7 @@ export default {
         },
         calData() {
             return this.myQnaList.slice(this.startOffset, this.endOffset);
-        }    
+        }
     },
 
 
