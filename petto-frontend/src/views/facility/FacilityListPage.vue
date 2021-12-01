@@ -9,7 +9,7 @@
             <v-btn outlined route :to="{name: 'FacilityListPage'}" width="10vw">보호소 </v-btn>
         </v-container>
         <div align="center">
-            <h1>전국 보호소 리스트</h1>
+            <h1 style="margin-bottom:1%;">전국 보호소 리스트</h1>
 
             <v-container>
                 <div style="float: right;">
@@ -18,6 +18,7 @@
                         :items="areas"
                         label="지역 선택"
                         multiple
+                        outlined
                         style="width: 250px; display: inline-block; margin-right: 40px; font-size: 12px;"
                         persistent-hint>
                     </v-select>
@@ -27,6 +28,7 @@
                         :items="animals"
                         label="보호 동물 선택"
                         multiple
+                        outlined
                         style="width: 200px; display: inline-block; font-size: 12px;"
                         persistent-hint>
                     </v-select>

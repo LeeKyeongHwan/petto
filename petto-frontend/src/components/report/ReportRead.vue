@@ -15,95 +15,125 @@
                 <br>
                 <img v-for="(num, idx) in UploadedCnt" :key="idx" :src="imgRequest(idx)" class="img" style="margin-top: 18px;"/>
 
+                <!-- <br>
                 <br>
                 <br>
                 <br>
                 <br>
                 <br>
                 <br>
-                <br>
-                <br>
+                <br> -->
             </div>
 
-            <div>
-                <input
+            <div style="margin-top:10%;">
+                <!-- <input
                     readonly
                     style="width: 120px; display: inline-block; float: left;"
                     class="normalText"
                     :value="report.category"
-                />
-                <input :value="report.title" style="width: 70%; color: black; float: right;" 
-                readonly class="normalText"/>
+                /> -->
+                <span>
+                <p style="width: 120px; display: inline-block; float: left;" class="normalText">{{ report.category }}</p>
+                <!-- <input :value="report.title" style="width: 70%; color: black; float: right;" 
+                readonly class="normalText"/> -->
+                <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.title }}</p>
+                </span>
 
+                <!-- <br>
                 <br>
                 <br>
-                <br>
-                <br>
+                <br> -->
                 
-                <input
+                <!-- <input
                     readonly
                     style="width: 100px; float: left;"
                     class="normalText"
                     :value="cityName"
-                />
+                /> -->
 
-                &ensp;
+                <!-- &ensp; -->
+                <span>
+                    <p style="width: 120px;display: inline-block; float: left;" class="normalText">{{cityName}}</p>
+                    <!-- <input :value="report.whereHappened" style="width: 70%; color: black; float: right;" 
+                readonly class="normalText"/> -->
+                <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.whereHappened }}</p>
+                </span>
+                
 
-                <input :value="report.whereHappened" style="width: 70%; color: black; float: right;" 
-                readonly class="normalText"/>
-
+                <!-- <br>
                 <br>
                 <br>
-                <br>
-                <br>
+                <br> -->
+                <span>
+                    <p style="width: 120px;display: inline-block; float: left;" class="normalText">해당일</p>
+                    <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.whenHappened }}</p>
+                </span>
 
-                <label class="normalText" style="float: left; color: grey;">
+                <!-- <label class="normalText" style="float: left; color: grey;">
                     해당일 &emsp;
                     <input type="date" :value="report.whenHappened" style="width: 140px; color: black; margin-top: 12px;" 
                     readonly class="normalText"/>
-                </label>
+                </label> -->
                 
+                <!-- <br>
                 <br>
                 <br>
-                <br>
-                <br>
+                <br> -->
 
-                <div>
+                <span>
+                    <p style="width: 120px;display: inline-block; float: left;" class="normalText">종 명</p>
+                    <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.breed }}</p>
+                </span>
+
+                <!-- <div>
                     <label class="normalText" style="float: left; color: grey;">
                         종 명 &emsp;
                         <input :value="report.breed" style="width: 200px; color: black; margin-top: 12px;" readonly class="normalText"/>
                     </label>
-                </div>
+                </div> -->
 
+                <!-- <br>
                 <br>
                 <br>
-                <br>
-                <br>
+                <br> -->
 
-                <label class="normalText" style="float: left; color: grey;">
+                <span>
+                    <p style="width: 120px;display: inline-block; float: left;" class="normalText">특징</p>
+                    <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.feature }}</p>
+                </span>
+
+                <!-- <label class="normalText" style="float: left; color: grey;">
                     특징 &emsp;
                     <input :value="report.feature" style="width: 670px; color: black; margin-top: 12px;" readonly class="normalText"/>
-                </label>
+                </label> -->
 
                 <div v-if="report.category == '보호'">
 
+                    <!-- <br>
                     <br>
                     <br>
-                    <br>
-                    <br>
+                    <br> -->
+                    <span>
+                    <p style="width: 120px;display: inline-block; float: left;" class="normalText">보호장소</p>
+                    <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.keepingPlace }}</p>
+                </span>
 
-                    <label class="normalText" style="float: left; color: grey;">
+                    <!-- <label class="normalText" style="float: left; color: grey;">
                         보호장소 &emsp;
                         <input :value="report.keepingPlace" style="width: 650px; color: black; margin-top: 12px;" readonly class="normalText"/>
-                    </label>
+                    </label> -->
                 </div>
 
+                <!-- <br>
                 <br>
                 <br>
-                <br>
-                <br>
+                <br> -->
+                <span>
+                    <p style="width: 120px;display: inline-block; float: left;" class="normalText">상세내용</p>
+                    <p style="width: 70%; color: black; text-align:left;" class="normalText">{{ report.content }}</p>
+                </span>
 
-                <v-textarea 
+                <!-- <v-textarea 
                 readonly
                 :value="report.content"
                 clear-icon="mdi-close-circle"
@@ -113,11 +143,12 @@
                 style="width: 950px;"
                 height="10%;"
                 counter
-                auto-grow/>
+                auto-grow/> -->
 
             </div>
             <br>
             <br>
+            
             <span>
                 
                 <div style="float: left;">
@@ -131,6 +162,7 @@
                         만료된 공고입니다.
                     </v-btn>
                 </div>
+                <br><br><br>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <img src="@/assets/img/kakao.png" @click="shareOnKakao" style="float: right; width: 40px; cursor: pointer;" v-on="on" v-bind="attrs"/>
@@ -139,6 +171,7 @@
                 </v-tooltip>
                 <br><br><br>
                 <div style="float: right;">
+                    
                     <v-btn v-if="!report.expired" text class="normalText" @click="modifyReport">
                         수정
                     </v-btn>

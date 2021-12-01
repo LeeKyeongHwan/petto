@@ -1,13 +1,9 @@
 <template>
-    <div>
-
-        <h1 style="margin-bottom: -80px;">공고 수정 양식</h1>
-        <br>
-        <br>
-        <br>
-
-        <v-container style="width: 51%; color: grey;" class="normalText">
-
+    <div id="report">
+        <span><img src="https://clipart-best.com/img/cat/cat-clip-art-42.png" class="top-img"/></span>
+        <v-card style="width: 60%;" class="report-board">
+        <h1>공고 수정 양식</h1>
+        <!-- <v-container style="width: 51%; color: grey;" class="normalText"> -->
             <div v-if="UploadedCnt > 0">           
                 <p style="float: left;">해당 동물 사진</p>
 
@@ -102,7 +98,7 @@
 
                     <label class="normalText" style="float: left; color: grey;">
                         특징 &emsp;
-                        <input v-model="feature" style="width: 670px; color: black; margin-top: 12px;" required class="normalText"/>
+                        <input v-model="feature" style="width: 40vw; color: black; margin-top: 12px;" required class="normalText"/>
                     </label>
 
                     <div v-if="keyword == '보호'">
@@ -146,20 +142,20 @@
                 </label>
 
                 <span style="float: right;">
-                    <v-btn text class="normalText" type="submit">
+                    <v-btn outlined class="normalText" type="submit">
                         수정 제출
                     </v-btn>
 
                     &emsp;
 
-                    <v-btn text class="normalText" @click="goBack">
+                    <v-btn outlined class="normalText" @click="goBack">
                         뒤로
                     </v-btn>
                 </span>
             </form>
 
-        </v-container>
-
+        <!-- </v-container> -->
+        </v-card>
         <br>
         <br>
         <br>
@@ -253,8 +249,8 @@ export default {
 
                 axios.put('http://localhost:8888/petto/report/modifyPics', formData)
                     .then((res) => {
-                        alert(res.data) //서버에서 받은 숫자 cnt
-                        alert(this.report.reportNo)
+                        // alert(res.data) //서버에서 받은 숫자 cnt
+                        // alert(this.report.reportNo)
 
                         if(this.breed == '기타') this.breed = this.etcAnimal
                 
@@ -285,18 +281,37 @@ export default {
 
 <style scoped>
 
+
+
 @font-face {
     font-family: 'GowunDodum-Regular';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
-
 h1 {
     font-family: 'GowunDodum-Regular';
-    font-size: 25px;
+    font-size: 30px;
     text-align: center;
-    padding: 5% 0% 5% 0%;
+}
+
+#report{
+    background-color:lightblue;
+    padding-bottom: 10%;
+}
+
+.report-board{
+    padding:3% 8% 10% 8% ;
+    margin-top: -1%;
+    position: relative;
+}
+
+.top-img{
+    width: 300px;
+    height: 300px; 
+    margin-right: 0px;
+    border-radius: 0px;
+    border: 0px solid #42b8d4;
 }
 
 img {

@@ -37,7 +37,7 @@
           <p v-show="mapSize=='big'" style="font-size: 12px;" @click="reduceMapSize">지도 작게</p>
         </div>
 
-        <div style="margin-top: 50px;">
+        <div style="margin-top: 50px; margin-bottom: 150px;">
 
           <a class="normalText" style="color: black; margin-right: 20px;" target="_blank"
           :href="urlRequestForLostAnimals(facilityInfo.facilityName)">해당 보호소의 유기동물 검색</a>

@@ -12,7 +12,7 @@
 
         <v-spacer></v-spacer>
 
-        <div id="header" class="main-menu">
+        <div class="header main-menu">
         <v-spacer></v-spacer>
             <ul>
               <li><a href="/aboutPage">소개</a></li>
@@ -23,15 +23,16 @@
             </ul>
           </div>
 
-          <div id="header">
-            <ul v-if="!isLoggedIn">
-              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;">LOGIN</a></li>
-              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;">JOIN US</a></li>
+
+          <div class="header">
+            <ul>
+              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;" v-if="!isLoggedIn">LOGIN</a></li>
+              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;" v-if="!isLoggedIn">JOIN US</a></li>
               <!-- <li><a href="#" style="font-size:0.8vw; margin-right:20px;" v-if="isLogin" @click="logout()">LOGOUT</a></li> -->
             </ul>
           </div>
 
-          <div id="header" v-if="isLoggedIn">
+          <div class="header" v-if="isLoggedIn">
             <ul v-if="this.auth == '개인'">
               <li><a href="/myProfile" style="font-size:0.8vw; margin-right:0px;">내정보</a></li>
               <li><a href="/myLikedAnimals" style="font-size:0.8vw; margin-right:20px;" >찜리스트</a></li>
@@ -133,6 +134,9 @@ export default {
       alert('로그아웃 되었습니다.')
     }
   },
+  mounted() {
+    console.log('session : ' + this.session)
+  },
   // mounted() {
   //   if(this.$cookies.isKey("user")) {
   //     this.auth = this.$cookies.get("user").auth
@@ -152,8 +156,17 @@ export default {
       },
 
       isLoggedIn() {
-        if(this.session != '') return true
-        else return false
+        // if(this.session != null) {
+        //   return true
+        // } else {
+        //   return false
+        // }
+        if(this.session == null || this.session == '') {
+          return false
+        } else {
+          return true
+        }
+
       },
       auth() {
         return this.session.auth;
@@ -169,7 +182,7 @@ export default {
 
 <style lang="scss" scoped>
 
-#header {
+.header {
   position: absolute;
   top: 0;
   left: 0;
@@ -179,16 +192,16 @@ export default {
   align-items: center;
 }
 
-#header ul {
+.header ul {
   display: flex;
   justify-content: right;
   align-items: right;
   margin-right: 1%;
 }
-#header ul li {
+.header ul li {
   list-style: none;
 }
-#header ul li a {
+.header ul li a {
   text-decoration: none;
   padding: 6px 12px;
   color: rgb(100, 93, 93);

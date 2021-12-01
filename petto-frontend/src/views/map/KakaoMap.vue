@@ -78,7 +78,7 @@
       <br/>
       <br/>
 
-      <!-- <div id="facilInfoBox"> -->  <div v-show="showBasicFacilInfo">
+      <!-- <div id="facilInfoBox"> -->  <div v-show="showBasicFacilInfo" style="margin:5%;">
 
         <p class="normalText" style="color: black; display: inline-block;">전국의 전체 보호소 수</p>
           &nbsp;
@@ -115,7 +115,7 @@
 
         </div>
 
-        <div id="facilsInArea" style="display: none">  <!-- <div v-show="showSpecificAreaFacil"> -->
+        <div id="facilsInArea" style="display: none; margin: 5%;">  <!-- <div v-show="showSpecificAreaFacil"> -->
 
           <p class="normalText" style="display: inline-block;">{{ chosenArea }}지역</p>
           <p class="normalText" style="color: black; display: inline-block;">의 보호소 수</p>
@@ -157,7 +157,7 @@
         </div>
       </div>
 
-      <div v-show="showBasicInfo">
+      <div v-show="showBasicInfo" style="margin: 5%;">
         <p class="normalText" style="display: inline-block;">{{ chosenArea }}</p>
         <p class="normalText" style="color: black; display: inline-block;">지역의 전체 유기동물 수</p>
         &nbsp;
