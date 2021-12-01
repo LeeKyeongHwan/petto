@@ -125,8 +125,7 @@
 
                 <span v-show="!chkLikedOrNot(animalsInfo.notice_no)">찜하기</span>
 
-            </v-tooltip>
-            
+            </v-tooltip>            
             &emsp;
             &emsp;             
             <v-tooltip bottom>
@@ -134,12 +133,16 @@
                 <template v-slot:activator="{ on, attrs }">
                     <img src="@/assets/footer/KakaoTalk.png" width="50px; cursor: pointer;" style="margin-top: 10px;"
                      @click="shareOnKaKao" v-on="on" v-bind="attrs"/>
+
+            &emsp; &emsp;
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <img src="@/assets/img/kakao.png" width="35px; cursor: pointer;" @click="shareOnKaKao" v-on="on" v-bind="attrs"/>
+
                 </template>
                 <span>카톡 글 공유하기</span>
             </v-tooltip>
         </div>
-
-
 
         <div id="latestSeenShower">
             <br>
@@ -175,11 +178,10 @@
             </v-btn>
  
         </div> 
- <br/>
-  <br/>   
-       
+    <br/>
  
-
+  <br/>
+  
     <div class="detail">  
        
     <h1> petto </h1>
@@ -194,6 +196,10 @@
             
     </div>  
  </div>
+            <span style="display: inline-block; width: 60px;"/>
+        </div>
+    
+    </div>
 </template>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>

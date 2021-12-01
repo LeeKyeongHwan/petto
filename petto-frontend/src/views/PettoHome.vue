@@ -53,7 +53,7 @@
                           <v-card-actions style="padding:0%;">
                               <statistics/>
                           </v-card-actions>
-                      </div>
+                      </div>   
               </v-card>
           </div>
       </section>
@@ -166,7 +166,7 @@ export default {
         axios.post("http://localhost:5000/pythonCrawlNews")
         .then(res => {
           if(res.status == 200){
-
+            
             for(var i=0; i<5; i++){
                 this.title.push(res.data[0][i])
                 this.url.push(res.data[1][i])

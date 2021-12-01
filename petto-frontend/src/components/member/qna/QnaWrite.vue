@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="onSubmit">
+        <h4 id="title"  style="width:50%; margin-top: 50px;">문의하기</h4>
         <v-container>
             <table>
                 <tr>
@@ -8,13 +9,12 @@
                 </tr>
                 <tr>
                     <td>본문</td>
-                    <td><textarea cols="50" rows="20" v-model="content"></textarea></td>
+                    <td><textarea style="width:100%; min-height:300px; padding:10px;" v-model="content"></textarea></td>
                 </tr>
             </table>
         </v-container>
-
         <div>
-            <button type="submit">등록</button>
+            <button style="margin-bottom:70px" type="submit">등록</button>
             <router-link :to="{ name: 'MyQna' }">
                 취소
             </router-link>
@@ -29,7 +29,7 @@ export default {
         return {
             title: '제목을 작성하세요.',
             writer: '', 
-            content: '본문을 작성하면 됩니다.',
+            content: '내용을 작성하면 됩니다.',
             // answerState: '',
             // adminAnswer: ''
         }
@@ -44,3 +44,10 @@ export default {
 
 }
 </script>
+
+<style scoped>
+#title {
+  font-family: "GowunDodum-Regular";
+}
+	
+</style>

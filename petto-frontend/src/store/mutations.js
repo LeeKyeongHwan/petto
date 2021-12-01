@@ -1,7 +1,7 @@
-import {
+import { 
   FETCH_USER_INFO,
   FETCH_SESSION,
-
+  
   FETCH_FACILITY_LIST,
   FETCH_FACILITY_INFO,
 
@@ -58,12 +58,12 @@ export default {
   [FETCH_FACILITY_INFO] (state, payload) {
     state.facilityInfo = payload
   },
-
+  
   [FETCH_ANIMAL_LIST] (state, animals) {
     //alert(JSON.stringify(animals[1]))
     state.animals = animals;
   },
-
+  
   [FETCH_ANIMAL_INFO] (state, animals) {
     state.animalsInfo = animals;
   },
@@ -136,7 +136,7 @@ export default {
   [FETCH_QNA_LIST] (state, qnaboards) {
     state.qnaboards = qnaboards;
   },
-
+  
   [FETCH_QNA] (state, qnaboard) {
     state.qnaboard = qnaboard
   },

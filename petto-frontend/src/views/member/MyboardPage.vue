@@ -1,7 +1,7 @@
 <template>
     <v-container>
          <h4 style="text-align:center; padding: 3%;"><p class="normalText">내 게시물</p></h4>
-
+                   
          <v-simple-table>
              <thead>
                 <tr>
@@ -17,7 +17,7 @@
                 <td class="text-left">{{ myBoardList.reportNo}}</td>
                 <td class="text-center">{{ myBoardList.category}}</td>
                 <td class="text-center"><router-link :to="{ name: 'ReportReadPage',
-                                    params: { reportNo: myBoardList.reportNo.toString() } }">
+                                    params: { reportNo: myBoardList.reportNo.toString() } }"> 
                         {{ myBoardList.title}}
                     </router-link></td>
                 <td class="text-center">{{ myBoardList.regDate}}</td>
@@ -25,10 +25,10 @@
                 </tr>
             </tbody>
          </v-simple-table>
-        <p style="text-align:center; margin:20px;" v-if="myBoardList.length == 0">작성한 게시물이 없습니다. </p>
+        <p style="text-align:center; margin:20px;" v-if="myBoardList.length == 0">작성한 게시물이 없습니다. </p>       
         <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
     </v-container>
-</template>
+</template>  
 
 <script>
 import { mapActions, mapState } from 'vuex';
@@ -45,9 +45,9 @@ export default {
     },
     mounted(){
         if(this.$cookies.isKey("user")) {
-
+  
             this.$store.state.session = this.$cookies.get("user");
-
+            
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
                 this.fetchMyBoardList(this.session.id)
@@ -69,7 +69,7 @@ export default {
         },
         calData() {
             return this.myBoardList.slice(this.startOffset, this.endOffset);
-        }
+        }  
     }
 }
 </script>

@@ -3,6 +3,8 @@
 
         <report-read v-bind:report="report" style="margin-bottom: 100px;"/>
 
+        <v-divider></v-divider>
+
         <v-container style="width: 51%; margin-bottom: 100px; margin-top: 50px;" v-if="report.expired == false">
             <label class="normalText" style="float: left; color: grey;">
                 댓글 &emsp;

@@ -47,7 +47,7 @@
 
                                             </v-tooltip>
                                           </span>
-                                </v-card>
+                                </v-card>   
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
             </v-row>
         </div>
     </section>
-</template>
+</template>  
 
 <script>
 import axios from 'axios'
@@ -119,7 +119,7 @@ export default {
         }
       }
     },
-
+    
      computed: {
     ...mapState(['myLikedAnimals', 'session']),
 

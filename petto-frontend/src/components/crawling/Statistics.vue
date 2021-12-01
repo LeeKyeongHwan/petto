@@ -38,7 +38,7 @@ import { FETCH_NUM_OF_ANIMALS } from '@/store/mutation-types'
 
 export default {
   name: "Statistics",
-  created(){
+  created(){      
       axios.post("http://localhost:5000/pawinhandCrawling")
         .then(res => {
 
@@ -56,7 +56,7 @@ export default {
         });
   },
   computed: {
-    ...mapState({crawlInfo: state => state.crawlInfo,
+    ...mapState({crawlInfo: state => state.crawlInfo, 
                 numOfAnimals: state => state.numOfAnimals})
   },
 
@@ -69,7 +69,7 @@ export default {
           console.log(err.message)
         })
   },
-
+  
 
 }
 </script>
@@ -80,7 +80,7 @@ export default {
 
 .sta-card{
   position: relative;
-  float:left;
+  float:left; 
   width:48%;
   height: 100%;
   padding:10% 3% 10% 3%;
