@@ -3,7 +3,7 @@
  
       <v-toolbar height="90">
         <div>
-          <v-btn  text plain route :to="{ name: 'PettoHome' }" height="90">
+          <v-btn text plain route :to="{ name: 'PettoHome' }" height="90">
             <h1>
               petto
             </h1>
@@ -18,10 +18,11 @@
               <li><a href="/aboutPage">소개</a></li>
               <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
               <li><a href="/reportBoard">제보</a></li>
-              <li><a href="/voluntaryBoard/list/page=0">자원봉사</a></li>
+              <li><a href="/voluntaryBoard">자원봉사</a></li>
               <li><a href="/map">지도</a></li>
             </ul>
           </div>
+
 
           <div class="header">
             <ul>
@@ -63,7 +64,6 @@
             <span v-show="updatedNewsNum == 0">아직 새로운 사항이 없습니다.</span>
           </v-tooltip>
               
-
           <!-- <v-app-bar-nav-icon plain color="orange" v-if="isLogin" @click="nav_drawer = !nav_drawer"></v-app-bar-nav-icon>
             <v-navigation-drawer app v-model="nav_drawer" temporary  v-if="this.auth == '개인'">
               <v-list nav dense>
@@ -129,7 +129,7 @@ export default {
     logout() {
       this.$cookies.remove("user");
       this.isLogin = false;
-      this.$store.state.session = null;
+      this.$store.state.session = '';
       this.$router.push({ name: 'PettoHome' })
       alert('로그아웃 되었습니다.')
     }
