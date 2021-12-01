@@ -166,7 +166,6 @@ export default {
         } else {
           return true
         }
-
       },
       auth() {
         return this.session.auth;
