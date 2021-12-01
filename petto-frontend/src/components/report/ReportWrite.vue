@@ -1,12 +1,9 @@
 <template>
-    <div>
-
-        <br>
-        <br>
-        <br>
-
-        <v-container style="width: 51%;">
-            
+    <div id="report">
+        <span><img src="https://clipart-best.com/img/cat/cat-clip-art-42.png" height="300"/></span>
+        <v-card style="width: 60%;" class="report-board">
+        <!-- <v-container style="width: 51%;"> -->
+            <h1>제보 작성하기</h1>
             <form @submit.prevent="onSubmit">
               
                     <v-select
@@ -80,7 +77,7 @@
 
                     <label class="normalText" style="float: left; color: grey;">
                         특징 &emsp;
-                        <input v-model="feature" style="width: 670px; color: black; margin-top: 12px;" required class="normalText"/>
+                        <input v-model="feature" style="width: 40vw; color: black; margin-top: 12px;" required class="normalText"/>
                     </label>
 
                     <div v-if="keyword == '보호'">
@@ -121,19 +118,20 @@
                 </label>
 
                 <span style="float: right;">
-                    <v-btn text class="normalText" type="submit">
+                    <v-btn outlined class="normalText" type="submit">
                         확인
                     </v-btn>
 
                     &emsp;
 
-                    <v-btn text class="normalText" @click="goBack">
+                    <v-btn outlined class="normalText" @click="goBack">
                         뒤로
                     </v-btn>
                 </span>
             </form>
 
-        </v-container>
+        </v-card>
+        <!-- </v-container> -->
 
         <br>
         <br>
@@ -229,3 +227,28 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+@font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h1 {
+    font-family: 'GowunDodum-Regular';
+    font-size: 30px;
+    text-align: center;
+}
+
+#report{
+    background-color:lightblue;
+    padding-bottom: 10%;
+}
+
+.report-board{
+    padding:3% 8% 10% 8% ;
+    margin-top: -1%;
+    position: relative;
+}
+</style>

@@ -35,19 +35,19 @@
 
                 <tr v-for="(report, index) in filterReportList" :key="index" class="normalText" style="color: black;" @click="toReadPage(report.reportNo)">
 
-                    <td v-if="!report.expired" style="width: 35%; font-size: 12px;">{{ report.title }}</td>
+                    <td v-if="!report.expired" style="width: 25%; font-size: 12px;">{{ report.title }}</td>
                     <td v-else-if="report.expired" style="width: 30%; font-size: 12px;">만료된 공고</td>
 
 
-                    <td style="width: 35%; font-size: 12px;">{{ report.whereHappened }}</td>
+                    <td style="width: 30%; font-size: 12px;">{{ report.whereHappened }}</td>
 
                     <td>
-                        <span style="width: 10%; font-size:10px;">종:&ensp;</span>{{ report.breed }}</td>
+                        <span style="width: 30%; font-size:10px;">종:&ensp;</span>{{ report.breed }}</td>
 
-                    <td style="width: 10%;">
+                    <td style="width: 15%;">
                         <span style="font-size: 10px;">게시자:&ensp;</span> {{ report.writer }}</td>
 
-                    <td style="width: 12%; text-align: right;">
+                    <td style="width: 15%; text-align: right;">
                         <span style="font-size: 10px;">발생일:&ensp;</span>{{ report.whenHappened }}</td>
                     
                 </tr>
@@ -67,7 +67,7 @@
                 :length="reportListLength"
                 circle
                 color="#42b8d4"
-                style="background-color: white; box-shadow: 0px 0px white;"
+                style="background-color: white; box-shadow: 0px 0px white; margin-bottom:10%;"
             ></v-pagination>
 
         </v-container>
