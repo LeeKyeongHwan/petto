@@ -1,5 +1,5 @@
 <template>
-  <div class="out" style="text-align: center; vertical-align: middle; margin-top: 200px;">
+  <div class="out" style="text-align: center; vertical-align: middle; margin: 0% 0% 10% 0%;">
 
     <vueper-slides class="in" :touchable="false" :bullets="false" :arrows="false" ref="first" 
     style="width: 100%; display: inline-block;" :slide-ratio="1 / 2" fixed-height="300px;">
