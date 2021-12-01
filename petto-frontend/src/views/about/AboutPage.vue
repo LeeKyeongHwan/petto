@@ -11,7 +11,21 @@
 </template>
 
 <script>
-
+import { mapActions, mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['session'])
+  },
+  methods: {
+    ...mapActions(['fetchAlarmList'])
+  },
+  mounted() {
+    if(this.$cookies.isKey("user")) {
+      this.$store.state.session = this.$cookies.get("user");
+      if(this.$store.state.session != null) this.$store.dispatch('fetchAlarmList', this.session.id)
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -26,7 +40,6 @@ html,body{
   max-width: 100%;
   height: auto;
 }
-
 
 .gallery-wrap {
   display: flex;
