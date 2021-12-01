@@ -34,7 +34,7 @@ export default {
     }
     },
     methods:{
-      ...mapActions(['fetchMyLikedAnimalList']),
+      ...mapActions(['fetchMyLikedAnimalList', 'fetchAlarmList']),
 
       toDetailPage(id) {
         this.$router.push({
@@ -44,23 +44,19 @@ export default {
           },
     },
     mounted(){
-        this.fetchMyLikedAnimalList(this.$store.state.session.memberNo) 
-        
-        if(this.$cookies.isKey("user")) {
-  
-            this.$store.state.session = this.$cookies.get("user");
-            
-            if(this.$store.state.session != null) {
-                this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
-                this.fetchMyLikedAnimalList(this.$store.state.session.memberNo)
+      if(this.$cookies.isKey("user")) {
 
-                this.$store.state.isLoggedIn = true;
-            }
+        this.$store.state.session = this.$cookies.get("user");
+        
+        if(this.$store.state.session != null) {
+            this.$store.dispatch('fetchAlarmList', this.session.id)
+            this.fetchMyLikedAnimalList(this.session.memberNo)
         }
+      }
     },
     
     computed: {
-    ...mapState(['myLikedAnimals', 'isLoggedIn']),
+    ...mapState(['myLikedAnimals', 'session']),
 
     startOffset() {
       return ((this.curpagenum - 1) * this.datapage);
@@ -97,11 +93,8 @@ export default {
 }
 
 #animal{
-  width: 100%;
-  
+  width: 100%; 
 }
-  
-
 
 #animal div{
   display:inline-block;
@@ -120,6 +113,5 @@ export default {
 #v-card:hover {
   filter: brightness(120%);
   -webkit-filter: brightness(120%);
-  
 }
 </style>

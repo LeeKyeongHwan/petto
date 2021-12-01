@@ -139,7 +139,8 @@ export default {
       })
     },
     moreNews() {
-        window.open("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=%EC%9C%A0%EA%B8%B0%EB%8F%99%EB%AC%BC+%EC%95%88%EB%9D%BD%EC%82%AC");
+        const url = 'https://search.naver.com/search.naver?where=news&sm=tab_jum&query=%EC%9C%A0%EA%B8%B0%EB%8F%99%EB%AC%BC+%EC%95%88%EB%9D%BD%EC%82%AC';
+        window.open(url);
     },
     links(mainNews) {
         var num = this.title.indexOf(mainNews)

@@ -37,41 +37,35 @@ export default {
     }
     },
     methods:{
-    ...mapActions(['fetchMyBoardList']),
-
+    ...mapActions(['fetchMyBoardList'])
     },
     mounted(){
-        this.fetchMyBoardList(this.$store.state.session.id) 
-
         if(this.$cookies.isKey("user")) {
   
             this.$store.state.session = this.$cookies.get("user");
             
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
+                this.fetchMyBoardList(this.session.id)
 
                 this.$store.state.isLoggedIn = true;
             }
         }
     },
-
     computed: {
-        ...mapState(['myBoardList']),
-    startOffset() {
-      return ((this.curpagenum - 1) * this.datapage);
-    },
-    endOffset() {
-      return (this.startOffset + this.datapage);
-    },
-    numofpage() {
-        return Math.ceil(this.myBoardList.length / this.datapage);
-    },
-    calData() {
-      return this.myBoardList.slice(this.startOffset, this.endOffset);
-    }  
-    },
-
-
-    
+        ...mapState(['myBoardList', 'session']),
+        startOffset() {
+            return ((this.curpagenum - 1) * this.datapage);
+        },
+        endOffset() {
+            return (this.startOffset + this.datapage);
+        },
+        numofpage() {
+            return Math.ceil(this.myBoardList.length / this.datapage);
+        },
+        calData() {
+            return this.myBoardList.slice(this.startOffset, this.endOffset);
+        }  
+    }
 }
 </script>
