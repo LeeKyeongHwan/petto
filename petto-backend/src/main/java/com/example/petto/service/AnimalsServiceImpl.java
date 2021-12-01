@@ -23,6 +23,43 @@ public class AnimalsServiceImpl implements AnimalsService {
     }
 
     @Override
+    public List<Animals> listByLocation(String cityName) {
+
+        String[] northKyungki = { "남양주", "일산", "가평", "파주", "양주" };
+        String[] southKyungki = { "부천", "하남", "광명", "양평", "광주", "여주", "용인", "성남", "수원", "오산", "화성", "안산", "평택" };
+
+        List<Animals> kyungKiAnimals = animalsRepository.findByCityName("경기");
+
+        if(cityName.equals("경기북부")) {
+            List<Animals> northKyngkiAnimals = new ArrayList<Animals>();
+            
+            for(Animals ani : kyungKiAnimals) {
+                
+                for(int i=0; i<northKyungki.length; i++) {
+                    if(ani.getCareaddr().contains(northKyungki[i])) {
+                        northKyngkiAnimals.add(ani);
+                    }
+                }
+            }
+            return northKyngkiAnimals;
+            
+        } else if(cityName.equals("경기남부")) {
+            List<Animals> southKyngkiAnimals = new ArrayList<Animals>();
+
+            for(Animals ani : kyungKiAnimals) {
+
+                for(int i=0; i<southKyungki.length; i++) {
+                    if(ani.getCareaddr().contains(southKyungki[i])) {
+                        southKyngkiAnimals.add(ani);
+                    }
+                }
+            }
+            return southKyngkiAnimals;
+        }
+        else return animalsRepository.findByCityName(cityName);
+    }
+
+    @Override
     public Animals getAnimalsInfo(String id) {
 
         if(id.length() > 10) {
@@ -39,7 +76,7 @@ public class AnimalsServiceImpl implements AnimalsService {
         Collections.reverse(lists);
         List<Animals> olderList = new ArrayList<>();
 
-        for(int i=0; i< 12; i++){
+        for(int i=0; i< 5; i++){
             olderList.add(lists.get(i));
         }
         return olderList;
@@ -73,10 +110,8 @@ public class AnimalsServiceImpl implements AnimalsService {
         List<Animals> list = new ArrayList<Animals>();
         boolean isPlaceKeyword = true;
 
-        for(int i=0; i<keywordList.length; i++) {
-            if(keywordList[i].contains("개") || keywordList[i].contains("고양이") || keywordList[i].contains("기타")) {
-                isPlaceKeyword = false;
-            }
+        for(String keyword : keywordList) {
+            if(keyword.contains("개") || keyword.contains("고양이") || keyword.contains("기타")) isPlaceKeyword = false;
         }
 
         if(isPlaceKeyword) {
@@ -97,5 +132,10 @@ public class AnimalsServiceImpl implements AnimalsService {
             }
         }
         return list;
+    }
+
+    public void plusSharedCnt(String notice_no) {
+
+        animalsRepository.plusSharedCnt(notice_no);
     }
 }

@@ -2,9 +2,7 @@
   <div>
     <div>
       <v-layout class="search-btn">
-
             <v-dialog v-model="searchDialog" persistent max-width="400px">
-
                 <template v-slot:activator="{ on }">
                     <v-btn icon x-large v-on="on"><v-icon>search</v-icon></v-btn>        
                 </template>
@@ -163,7 +161,6 @@
 import axios from 'axios'
 //import { FETCH_ANIMAL_LIST } from '@/store/mutation-types'
 import { mapActions, mapState } from 'vuex';
-
 export default {
   name: 'paginated-list',
   data () {
@@ -171,23 +168,27 @@ export default {
       //pageNum: 0,
       searchDialog: false,
       areas: [ '서울', '경기', '인천', '강원', '충청', '대전', '전라북도', '전라남도', '경상북도', '경상남도', '부산', '대구', '제주' ],
-      //selectPlace: [],
-      //selectKinds: [],
+      selectPlace: [],
+      selectKinds: [],
       kinds: [ '개', '고양이', '기타' ],
+      pageNum: this.initPageNum
     }
   },
-
   props: {
-    animals: {
-      type: Array,
-      required: true
-    },
+    // animals: {
+    //   type: Array,
+    //   required: true
+    // },
     pageSize: {
       type: Number,
       required: false,
       default: 12
     },
-    pageNum: {
+    // pageNum: {
+    //   type: Number,
+    //   required: true
+    // },
+    initPageNum: {
       type: Number,
       required: true
     },
@@ -200,86 +201,67 @@ export default {
       required: false
     }
   },
-
   methods: {
     ...mapActions(['fetchLikedAnimalList', 'fetchLikedAnimalCnt']),
-
     nextPage() {
       this.pageNum = parseInt(this.pageNum) + 1; //이걸 스트링으로 인식해서 1 -> 11 -> 111이렇게됨
-
       this.$router.push({
         name: 'AbandonedAnimal',
         params: { pageNum: this.pageNum }
       })
     },
-
     prevPage() {
       this.pageNum = parseInt(this.pageNum) - 1;
-
       this.$router.push({
         name: 'AbandonedAnimal',
         params: { pageNum: this.pageNum }
       })
     },
-
     cancel() {
       this.searchDialog = false
     },
-
     toDetailPage(id) {
       // let routeData = this.$router.resolve({
       //   name: 'AnimalDetailPage',
       //   params: { 'id': id }
       // });window.open(routeData.href, '_blank')
-      
+  
       this.$router.push({
         name: 'AnimalDetailPage',
-        params: { id: id }
+        params: { "id": id }
       })
-      
     },
     
     selectSearch() {
-
       if(this.selectPlace == '' && this.selectKinds == '') alert('최소 하나 이상의 조건을 설정해주세요!')
-
       else {
-        
         let selectPlace = this.selectPlace
         let selectKinds = this.selectKinds
-
-        if(selectPlace == undefined) selectPlace = 'none'
-        if(selectKinds == undefined) selectKinds = 'none'
+        if(selectPlace == '' || selectPlace == undefined) selectPlace = 'none'
+        if(selectKinds == '' || selectKinds == undefined) selectKinds = 'none'
                 
         this.searchDialog = false
         this.pageNum = 0
-
         this.$router.push({
           name: 'AbandonedAnimal',
-          params: { pageNum: this.pageNum, place: selectPlace.toString(), kind: selectKinds.toString() }
+          params: { "pageNum": this.pageNum, "place": selectPlace.toString(), "kind": selectKinds.toString() }
         })
       }
     },
-
     showAll() {
       this.$router.push({
         name: 'AbandonedAnimal',
-        params: { pageNum: 0, place: 'none', kind: 'none' }
+        params: { "pageNum": 0, "place": 'none', "kind": 'none' }
       })
     },
-
     addLikedAnimal(notice_no) {
-
       if(this.$store.state.session) {
       
         const memberNo = this.$store.state.session.memberNo
         const noticeNo = notice_no
-
         axios.post('http://localhost:8888/petto/member/addLikedAnimal', { memberNo, noticeNo })
           .then(() => {
-
             this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
-
             const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
             this.$store.state.animals[targetIndex].numberOfLiked ++
           })
@@ -287,27 +269,20 @@ export default {
           .catch(() => {
             alert('잠시후에 다시 시도해주세요.')
           })
-
       } else alert('로그인이 필요한 서비스입니다.')
       
     },
-
     chkLikedOrNot(notice_no) {
-
       if(this.$store.state.session) {
-
         for(var i=0; i<this.$store.state.likedAnimalList.length; i++) {
           if(notice_no == this.$store.state.likedAnimalList[i].noticeNo) {
             return true
           }
         }
         return false
-
       } else return false
     },
-
     deleteLikedAnimal(notice_no) {
-
       if(this.$store.state.session) {
       
         const memberNo = this.$store.state.session.memberNo
@@ -317,7 +292,6 @@ export default {
           .then(() => {
             const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no == notice_no)
             this.$store.state.animals[targetIndex2].numberOfLiked --
-
             const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo == notice_no) //*** likedAnimalList에는 noticeNo ***
             this.$store.state.likedAnimalList.splice(targetIndex, 1)
           })
@@ -325,20 +299,17 @@ export default {
           .catch(() => {
             alert('잠시후에 다시 시도해주세요.')
           })
-
       } else alert('로그인이 필요한 서비스입니다.')
     }
   },
   
   computed: {
     ...mapState(['session', 'likedAnimalList', 'animals']),
-
     pageCount() {
       let listLeng = this.animals.length,
           listSize = this.pageSize,
           page = Math.floor(listLeng / listSize);
       if(listLeng % listSize > 0) page += 1;
-
       return page;
     },
     paginatedData() {
@@ -351,13 +322,12 @@ export default {
 </script>
 
 <style lang="scss">
-
 .search-btn{
   position: absolute;
-  top:11em;
-  right: 10em;
+  margin:2%;
+  right:17vw;
+  top:30vh;
 }
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -390,14 +360,11 @@ table tr td {
 .btn-cover .page-count {
   padding: 0 1rem;
 }
-
 .list-card{
   float: left;
   margin: 0% 3% 2% 3%;
   align-items: center;
 }
-
-
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700);
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 figure.snip1477 {
@@ -477,14 +444,12 @@ figure.snip1477 .title div:after {
 figure.snip1477 h2 {
   font-weight: 400;
 }
-
 @font-face {
   font-family: 'SangSangRock';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/SangSangRockOTF.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
-
 figure.snip1477 h4 {
   font-family: 'SangSangRock';
   font-size: 20px;
@@ -546,5 +511,4 @@ figure.snip1477.hover figcaption {
     -webkit-transition-delay: 0.2s;
     transition-delay: 0.2s;
 }
-
 </style>

@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios'
 import ReportWrite from '@/components/report/ReportWrite'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -28,6 +29,22 @@ export default {
                     alert('잠시후에 다시 시도해주세요.')
                 })
         }
+    },
+
+    mounted() {
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
+        }
+    },
+    computed: {
+        ...mapState(['session'])
     }
 }
 </script>

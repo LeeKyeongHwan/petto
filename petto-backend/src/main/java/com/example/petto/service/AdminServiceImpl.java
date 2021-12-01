@@ -33,6 +33,9 @@ public class AdminServiceImpl implements AdminService {
             Member member = memberDetail.get();
             memberRepository.save(member);
 
+            member.removeAlarmList(member.getUpdateAlarmList());
+            member.removeLikedList(member.getLikedAnimals());
+
             return member;
         } else {
             throw new NullPointerException();
@@ -40,18 +43,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Member edit(Long memberNo,Member member) throws Exception {
+    public Member edit(Long memberNo, Member member) throws Exception {
         Optional<Member> adminEdit = memberRepository.findById(memberNo);
 
-        adminEdit.ifPresent( changeInfo ->{
+        adminEdit.ifPresent( changeInfo -> {
             changeInfo.setAuth(member.getAuth());
             member.setMemberNo(memberNo);
             memberRepository.save(changeInfo);
         });
-
         return member;
     }
-
 
     @Override
     public void remove(Long memberNo) throws Exception {

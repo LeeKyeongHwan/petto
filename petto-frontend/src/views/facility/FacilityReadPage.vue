@@ -37,7 +37,7 @@
           <p v-show="mapSize=='big'" style="font-size: 12px;" @click="reduceMapSize">지도 작게</p>
         </div>
 
-        <div style="margin-top: 50px;">
+        <div style="margin-top: 50px; margin-bottom: 150px;">
 
           <a class="normalText" style="color: black; margin-right: 20px;" target="_blank"
           :href="urlRequestForLostAnimals(facilityInfo.facilityName)">해당 보호소의 유기동물 검색</a>
@@ -60,18 +60,7 @@ export default {
   name: "KakaoMap",
 
   props: {
-
     facilityNo: {
-      type: String,
-      required: true
-    },
-
-    facilityAddr: {
-      type: String,
-      required: true
-    },
-
-    facilityName: {
       type: String,
       required: true
     }
@@ -146,15 +135,11 @@ export default {
 
       var geocoder = new kakao.maps.services.Geocoder();
 
-      var facilName = this.facilityName
-
-      if(!this.facilityAddr || !this.facilityName) {
-        this.facilityAddr = this.$store.state.facilityInfo.facilityAddr
-        facilName = this.$store.state.facilityInfo.facilityName
-      }
-
-      //여기서부터 
-      geocoder.addressSearch(this.facilityAddr, function(result, status) {
+      const facilityAddr = this.facilityInfo.facilityAddr
+      const facilName = this.facilityInfo.facilityName
+      
+      //여기서부터 d
+      geocoder.addressSearch(facilityAddr, function(result, status) {
 
           if (status === kakao.maps.services.Status.OK) {
 

@@ -8,6 +8,8 @@ public interface AnimalsService {
 
     public List<Animals> list() throws Exception;
 
+    public List<Animals> listByLocation(String cityName);
+
     public Animals getAnimalsInfo(String id);
 
     public List<Animals> oldList() throws Exception;
@@ -17,4 +19,6 @@ public interface AnimalsService {
     public Long getNumOfAnimals();
 
     public List<Animals> filterAnimals(String[] selectedPlace, String[] selectedKinds);
+
+    public void plusSharedCnt(String notice_no);
 }

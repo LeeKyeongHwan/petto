@@ -1,4 +1,4 @@
-import {
+import { 
   FETCH_USER_INFO,
   FETCH_SESSION,
   
@@ -34,19 +34,10 @@ import {
   FETCH_QNA,
   FETCH_MY_QNA_LIST,
 
-  FETCH_LIKED_ANIMAL_LIST,
-  FETCH_ORDER_ANIMAL_LIST,
-  FETCH_REPORT_LIST,
-
-  FETCH_VOLUNTARYBOARD_LIST,
-  FETCH_VOLUNTARYBOARD,
-
-  FETCH_MY_BOARD_LIST,
-
-  FETCH_VOL_COMMENT,
-
   FETCH_ADMIN_QNA_LIST,
-  FETCH_ADMIN_QNA
+  FETCH_ADMIN_QNA,
+
+  FETCH_ALARM_LIST
 
 } from "./mutation-types";
 
@@ -113,6 +104,8 @@ export default {
 
 
   [FETCH_REPORT] (state, payload) {
+    state.replyList = payload.replies
+    delete payload.replies
     state.report = payload
   },
 
@@ -139,10 +132,11 @@ export default {
   [FETCH_REPLY_LIST] (state, payload) {
     state.replyList = payload
   },
+
   [FETCH_QNA_LIST] (state, qnaboards) {
     state.qnaboards = qnaboards;
   },
-  //
+  
   [FETCH_QNA] (state, qnaboard) {
     state.qnaboard = qnaboard
   },
@@ -156,7 +150,10 @@ export default {
   },
   [FETCH_ADMIN_QNA] (state, adminQnA) {
     state.adminQnA = adminQnA
+  },
+
+  [FETCH_ALARM_LIST] (state, payload) {
+    state.updateAlarmList = payload
   }
 
 };
-

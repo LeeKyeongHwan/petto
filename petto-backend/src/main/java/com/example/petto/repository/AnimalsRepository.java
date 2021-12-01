@@ -15,6 +15,9 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
 
     //Optional<Animals> findByNoticeNo(String noticeNo); 엔티티의 변수명에 언더바를 넣으면 findBy로 찾을 수 없다.
 
+    @Query("select an from Animals an where an.careaddr like :cityName%")
+    List<Animals> findByCityName(String cityName);
+
     @Query("select an from Animals an where an.notice_no = :noticeNo")
     Optional<Animals> findByNoticeNo(String noticeNo);
 
@@ -33,4 +36,9 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
 
     @Query(value = "SELECT A.* FROM animals A inner join liked_animal B on A.notice_no = B.notice_no WHERE member_no = :memberNo", nativeQuery = true)
     List<Animals> myLikedAnimals(long memberNo);
+
+    @Transactional
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("update Animals an set an.sharedCnt = an.sharedCnt + 1 where an.notice_no = :noticeNo")
+    void plusSharedCnt(String noticeNo);
 }

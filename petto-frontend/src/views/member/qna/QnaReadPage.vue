@@ -1,12 +1,12 @@
 <template>
     <div align="center">
-        <h2>내 질문</h2>
+        <h4></h4>
         <qna-read v-if="qnaboard" :qnaboard="qnaboard"/>
         <p v-else>로딩중 ...... </p>
-        <router-link :to="{ name: 'QnaModifyPage', params: { qnaNo } }">
+        <router-link  :to="{ name: 'QnaModifyPage', params: { qnaNo } }">
             게시물 수정
         </router-link>
-        <button @click="onDelete">삭제</button>
+        <button style="margin-bottom:70px"  @click="onDelete">삭제</button>
     </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
         QnaRead
     },
     computed: {
-        ...mapState(['qnaboard'])
+        ...mapState(['qnaboard','myLikedAnimals', 'isLoggedIn'])
     },
     created () {
          this.fetchQnA(this.qnaNo)
@@ -37,7 +37,7 @@ export default {
                  })
     },
     methods: {
-        ...mapActions(['fetchQnA']),
+        ...mapActions(['fetchQnA', 'fetchMyLikedAnimalList']),
         onDelete () {
             const { qnaNo } = this.qnaboard
             axios.delete(`http://localhost:8888/petto/qna/${qnaNo}`)
@@ -48,6 +48,21 @@ export default {
                 .catch(err => {
                     alert(err.response.data.message)
                 })
+        }
+    },
+
+    mounted() {
+        this.fetchMyLikedAnimalList(this.$store.state.session.memberNo) 
+        
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.$store.state.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
         }
     }
 }

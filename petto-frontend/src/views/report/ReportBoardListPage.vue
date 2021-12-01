@@ -6,7 +6,6 @@
         <v-container style="display: inline-block;">
 
             <span>
-
                 <v-btn text class="normalText" style="float: left;" @click="toWritePage">
                     <v-icon>
                         mode_edit
@@ -159,10 +158,15 @@ export default {
 
         toReadPage(reportNo) {
 
-            let routeData = this.$router.resolve({
+            this.$router.push({
                 name: 'ReportReadPage',
-                params: { 'reportNo': reportNo }
-            });window.open(routeData.href, '_blank')
+                params: { "reportNo": parseInt(reportNo) } 
+            })
+
+            // let routeData = this.$router.resolve({
+            //     name: 'ReportReadPage',
+            //     params: { 'reportNo': reportNo }
+            // });window.open(routeData.href, '_blank')
         },
 
         toWritePage() {
@@ -237,13 +241,20 @@ export default {
     mounted() {
         this.$store.dispatch("fetchReportList")
 
-        if(this.$cookies.get("user").id) {
-            this.$store.state.session = this.$cookies.get("user")
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
         }
     },
 
     computed: {
-        ...mapState(['reportList', 'session']),
+        ...mapState(['reportList', 'session', 'isLoggedIn']),
 
         filterReportList() {
 

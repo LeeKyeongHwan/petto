@@ -10,12 +10,13 @@ import com.example.petto.repository.MemberRepository;
 import com.example.petto.repository.memberRelated.UpdateAlarmRepository;
 import com.example.petto.utility_python.PythonRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -37,15 +38,12 @@ public class MemberServiceImpl implements MemberService {
     AnimalsRepository animalsRepository;
 
     @Autowired
-    BCryptPasswordEncoder decoder;
-
-    @Autowired
     UpdateAlarmRepository updateAlarmRepository;
 
     @Override
     public boolean idDupliChk(String id) {
 
-        if(memberRepository.findById(id).isEmpty()) return true;
+        if (memberRepository.findById(id).isEmpty()) return true;
 
         return false;
     }
@@ -53,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean nicknameDupliChk(String nickname) {
 
-        if(memberRepository.findByNickname(nickname).isEmpty()) return true;
+        if (memberRepository.findByNickname(nickname).isEmpty()) return true;
 
         return false;
     }
@@ -81,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 
         Optional<Member> member = memberRepository.findByEmailAndBirthday(email, birthday); //NonUniqueResultException 이메일 체크 메소드도 만들어야 하나 고민중..
 
-        if(!member.isEmpty()) {
+        if (!member.isEmpty()) {
             String id = member.get().getId();
 
             String res = new PythonRequest().findIdAndPwByEmail(email, id);
@@ -97,7 +95,7 @@ public class MemberServiceImpl implements MemberService {
 
         Optional<Member> member = memberRepository.findByEmailAndId(email, id);
 
-        if(!member.isEmpty()) {
+        if (!member.isEmpty()) {
 
             String confidentialCode = makeConfidentialCode().toString();
 
@@ -113,13 +111,13 @@ public class MemberServiceImpl implements MemberService {
 
         Random rnd = new Random();
 
-        StringBuffer buf =new StringBuffer();
+        StringBuffer buf = new StringBuffer();
 
-        for(int i=0;i<6;i++){
+        for (int i = 0; i < 6; i++) {
 
-            if(rnd.nextBoolean()){
-                buf.append((char)((int)(rnd.nextInt(26))+97));
-            }else{
+            if (rnd.nextBoolean()) {
+                buf.append((char) ((int) (rnd.nextInt(26)) + 97));
+            } else {
                 buf.append((rnd.nextInt(10)));
             }
         }
@@ -142,16 +140,14 @@ public class MemberServiceImpl implements MemberService {
 
         log.info("member: " + maybeMember);
 
-        if (maybeMember.isEmpty())
-        {
+        if (maybeMember.isEmpty()) {
             log.info("login(): 그런 사람 없다.");
             return false;
         }
 
         Member loginMember = maybeMember.get();
 
-        if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword()))
-        {
+        if (!passwordEncoder.matches(memberRequest.getPassword(), loginMember.getPassword())) {
             log.info("login(): 비밀번호 잘못 입력하였습니다.");
             return false;
         }
@@ -163,8 +159,7 @@ public class MemberServiceImpl implements MemberService {
     public boolean checkIdValidation(String id) {
         Optional<Member> maybeMember = memberRepository.findById(id);
 
-        if (maybeMember == null)
-        {
+        if (maybeMember == null) {
             log.info("login(): 회원가입부터 하세요");
             return false;
         }
@@ -177,6 +172,9 @@ public class MemberServiceImpl implements MemberService {
     public Member getUserInfo(Integer userNo) {
 
         Member member = memberRepository.findByMemberNo(new Long(userNo)).get();
+
+        member.removeLikedList(member.getLikedAnimals());
+        member.removeAlarmList(member.getUpdateAlarmList());
 
         return member;
     }
@@ -209,7 +207,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteLikedAnimal(LikedAnimal likedAnimal) {
         animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
-        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
+        likedAnimalRepository.delete(likedAnimal.getNoticeNo(), likedAnimal.getMemberNo());
     }
 
     @Override
@@ -220,15 +218,13 @@ public class MemberServiceImpl implements MemberService {
         updateAlarmRepository.deleteById(maybeMember.get().getId());
         memberRepository.deleteById(memberNo);
 
-        updateAlarmRepository.deleteById(maybeMember.get().getId());
-        memberRepository.deleteById(memberNo);
     }
 
     @Override
-    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception{
+    public List<LikedAnimal> deleteContainingMemberNo(Long memberNo) throws Exception {
         List<LikedAnimal> lists = likedAnimalRepository.findByMemberNo(memberNo);
 
-        for(LikedAnimal list : lists) {
+        for (LikedAnimal list : lists) {
             likedAnimalRepository.deleteById(list.getLikedAnimalNo());
         }
         return null;
@@ -248,7 +244,6 @@ public class MemberServiceImpl implements MemberService {
         if (!passwordEncoder.matches(memberRequest.getPassword(), User.getPassword())) {
             return false;
         }
-
         return true;
     }
 
@@ -258,18 +253,26 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void deleteAlarms(Long alarmNo) {
+    public void deleteAlarm(Long alarmNo) {
         updateAlarmRepository.deleteByAlarmNo(alarmNo);
     }
-//
-//    @Override
-//    public List<Member> list() throws Exception {
-//        List<Member> members = memberRepository.findAll();
-//        return members;
-//        animalsRepository.subNumberOfLiked(likedAnimal.getNoticeNo());
-//        likedAnimalRepository.delete(likedAnimal.getNoticeNo(),likedAnimal.getMemberNo());
-//    }
-//
+
+    @Override
+    public List<UpdateAlarm> getUpdateAlarmList(String id) {
+
+        Optional<Member> member = memberRepository.findById(id);
+
+        if(member.isPresent()) {
+            if(member.get().getAuth().matches("관리자")) return updateAlarmRepository.findById("관리자");
+            else ;
+        }
+        return updateAlarmRepository.findById(id);
+    }
+
+    @Override
+    public void deleteAllAlarms(String id) {
+        updateAlarmRepository.deleteById(id);
+    }
 }
 
 

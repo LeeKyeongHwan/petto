@@ -15,6 +15,7 @@ import ImageShadow from 'vue-image-shadow'
 Vue.component('image-shadow', ImageShadow)
 
 Vue.use(cookies)
+
 //Vue.$cookies.config("1h") 
 
 import 'materialize-css/dist/css/materialize.min.css'

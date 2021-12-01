@@ -53,19 +53,19 @@ html,body{
 }
 
 .item-2 { 
-  background-image: url("../../assets/about/about02.jpg");
+  background-image: url("../../assets/about/about01.jpg");
 }
 
 .item-3 { 
-  background-image: url("../../assets/about/about03.jpg");
+  background-image: url("../../assets/about/about02.jpg");
 }
 
 .item-4 { 
-  background-image: url('https://images.unsplash.com/photo-1510425463958-dcced28da480?auto=format&fit=crop&w=1352&q=80');
+  background-image: url("../../assets/about/about04.jpg");
 }
 
 .item-5 { 
-  background-image: url('https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1234&q=80');
+  background-image: url("../../assets/about/about05.jpg");
 }
 
 .social{

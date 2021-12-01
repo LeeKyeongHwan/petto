@@ -12,7 +12,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
-import InfoModify from '../../components/member/InfoModify.vue'
+import InfoModify from '@/components/member/InfoModify.vue'
 
 export default {
     name: 'InfoModifyPage',
@@ -37,7 +37,7 @@ export default {
         }
     },
     mounted() {
-        var userNo = this.$store.state.session.memberNo //추후에 변경
+        var userNo = this.$store.state.session.memberNo 
         this.fetchUserInfo(userNo)
     },
     computed: {

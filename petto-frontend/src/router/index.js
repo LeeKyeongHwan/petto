@@ -39,7 +39,6 @@ import MyboardPage from "../views/member/MyboardPage.vue";
 
 import AdminMemberListPage from '@/views/admin/AdminMemberListPage.vue'
 import AdminMemberReadPage from '@/views/admin/AdminMemberReadPage.vue'
-import AdminMemberModifyPage from '@/views/admin/AdminMemberModifyPage.vue'
 
 import QnaListPage from "../views/admin/qna/QnaListPage.vue";
 
@@ -227,7 +226,7 @@ const routes = [
     component: PasswordCheckPage,
   },
   {
-    path: "/passwordCheckWithdrawalPage",
+    path: "/passwordCheck",
     name: "PasswordCheckWithdrawalPage",
     component: PasswordCheckWithdrawalPage,
   },
@@ -259,20 +258,10 @@ const routes = [
     }
   },
   {
-    path: "/reportBoard/modify/id=:id/:reportNo",
+    path: "/reportBoard/modify/:reportNo",
     name: "ReportModifyPage",
     components: {
       default: ReportModifyPage
-    },
-    props: {
-      default: true
-    }
-  },
-  {
-    path: '/admin/:memberNo/edit',
-    name: 'AdminMemberModifyPage',
-    components: {
-      default: AdminMemberModifyPage
     },
     props: {
       default: true
@@ -304,11 +293,6 @@ const routes = [
     props: {
       default: true,
     },
-  },
-  {
-    path: "/qna/Write",
-    name: "QnaWritePage",
-    component: QnaWritePage,
   },
   {
     path: "/qna/Write",

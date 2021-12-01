@@ -48,6 +48,19 @@ export default {
         toPreviousPage() {
             history.go(-1); 
         }
+    },
+    
+    mounted() {
+        if(this.$cookies.isKey("user")) {
+  
+            this.$store.state.session = this.$cookies.get("user");
+            
+            if(this.$store.state.session != null) {
+                this.$store.dispatch('fetchAlarmList', this.session.id)
+
+                this.$store.state.isLoggedIn = true;
+            }
+        }
     }
 }
 </script>

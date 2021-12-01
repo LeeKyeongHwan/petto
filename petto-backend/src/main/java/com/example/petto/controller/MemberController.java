@@ -152,9 +152,6 @@ public class MemberController {
             session = request.getSession();
             session.setAttribute("member", info);
 
-            List<UpdateAlarm> updateAlarmList = updateAlarmRepository.findById(id);
-            info.setUpdateAlarmList(updateAlarmList);
-
         } else {
             log.info("Login Failure");
             info = null;
@@ -180,7 +177,6 @@ public class MemberController {
         }
         return new ResponseEntity<Boolean>(isLogin, HttpStatus.OK);
     }
-
 
     @PostMapping("/removeSession")
     public ResponseEntity<Boolean> removeSession(HttpServletRequest request) throws Exception {
@@ -218,7 +214,6 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-
     @DeleteMapping("/{memberNo}")
     public ResponseEntity<Void> removeUser(@PathVariable("memberNo") Long memberNo) throws Exception {
         log.info("memberNo == " + memberNo);
@@ -240,7 +235,7 @@ public class MemberController {
     public ResponseEntity<Void> deleteAlarm(@PathVariable("alarmNo") Long alarmNo) {
         log.info("deleteAlarm: " + alarmNo);
 
-        memberService.deleteAlarms(alarmNo);
+        memberService.deleteAlarm(alarmNo);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -254,6 +249,22 @@ public class MemberController {
         log.info("passwordChk(): " + passwordChk);
 
         return new ResponseEntity<Boolean>(passwordChk,HttpStatus.OK);
+    }
+
+    @GetMapping("/updateAlarmList/{id}")
+    public ResponseEntity<List<UpdateAlarm>> updateAlarmList(@PathVariable("id") String id) {
+        log.info("updateAlarmList(): " + id);
+
+        return new ResponseEntity<List<UpdateAlarm>>(memberService.getUpdateAlarmList(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteAllAlarms/{id}")
+    public ResponseEntity<Void> deleteAllAlarms(@PathVariable("id") String id) {
+        log.info("deleteAllAlarms(): " + id);
+
+        memberService.deleteAllAlarms(id);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
 
