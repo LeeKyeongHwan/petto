@@ -135,6 +135,7 @@ export default {
     mounted() {
         if(this.$cookies.isKey('user') == true){
             this.access = this.$cookies.get('user').auth
+            this.$store.state.session = this.$cookies.get("user");
             if(this.access != '관리자'){
                 alert('권한이 필요한 서비스입니다')
                 this.$router.push({
