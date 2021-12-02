@@ -31,12 +31,12 @@
               </v-card>
           </div>
           <div style="float:left; width:30%; height:100%; margin:1%">
-            <v-card height="40%">
+            <v-card max-height="40%">
                 <v-row>
                     <v-card-title style="width:65%; font-size:20px;">공고만료</v-card-title>
-                    <v-card-actions>
+                    <!-- <v-card-actions>
                         <v-btn plain  route :to="{ name: 'AbandonedAnimal' }"><v-icon>chevron_right</v-icon>더보기</v-btn>
-                    </v-card-actions>
+                    </v-card-actions> -->
                 </v-row>
                     <div v-for="oldAnimal in olderList" :key="oldAnimal.notice_no">
                         <v-card-text @click="toDetailPage(oldAnimal.id)"

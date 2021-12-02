@@ -7,7 +7,7 @@
       </div>
        
       <div id="header">
-        <a href="/pettohome" class="logo"><h1>petto</h1></a>
+        <a href="/pettohome" class="logo"><h1 style="color:white;">petto</h1></a>
         <div class="header-top">
         </div>
         <section>
