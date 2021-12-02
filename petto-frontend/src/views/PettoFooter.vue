@@ -18,10 +18,13 @@
           <div class="col-xs-6 col-md-3">
             <h6>PETTO SNS</h6>          
             <ul class="footer-links">                 
-              <a href="#"> <img width="50" height="50"  src="@/assets/footer/Facebook.png"></a>
-              <a href="#"> <img width="50" height="50" src="@/assets/footer/Instagram.png"></a>
-              <a href="#"> <img width="50" height="50" src="@/assets/footer/KakaoTalk.png"></a>
-              <a href="#"> <img width="50" height="50" src="@/assets/footer/Twitter.png"></a>
+              <a href="https://www.facebook.com/" target="_blank"> <img width="50" height="50"  src="@/assets/footer/Facebook.png"></a>
+              &nbsp;
+              <a href="https://www.instagram.com/?hl=ko" target="_blank"> <img width="50" height="50" src="@/assets/footer/Instagram.png"></a>
+              &nbsp;
+              <a href="https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=ko" target="_blank"> <img width="50" height="50" src="@/assets/footer/KakaoTalk.png"></a>
+              &nbsp;
+              <a href="https://twitter.com/?lang=ko"  target="_blank"> <img width="50" height="50" src="@/assets/footer/Twitter.png"></a>
             </ul>
             </div>
 
@@ -45,8 +48,7 @@
               <!-- &copy;
               <a href="#"> </a>
                -->     
-               <a href="#"> <img width="20" height="20" src="@/assets/footer/bang.png"></a>        
-              저희 PETTO는 현재 후원을 받지 않고 있습니다.            
+               
 
         
             </p>
