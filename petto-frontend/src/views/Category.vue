@@ -23,10 +23,10 @@
             </ul>
           </div>
 
-          <div class="header">
+          <div class="header" v-if="!isLoggedIn">
             <ul>
-              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;" v-if="!isLoggedIn">LOGIN</a></li>
-              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;" v-if="!isLoggedIn">JOIN US</a></li>
+              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;">LOGIN</a></li>
+              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;">JOIN US</a></li>
               <!-- <li><a href="#" style="font-size:0.8vw; margin-right:20px;" v-if="isLogin" @click="logout()">LOGOUT</a></li> -->
             </ul>
           </div>
