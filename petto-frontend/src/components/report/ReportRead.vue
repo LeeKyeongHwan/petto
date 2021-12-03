@@ -5,25 +5,15 @@
         <h1 v-else style="margin-bottom: -80px;" class="head">만료된 공고</h1>
         <br>
         <v-container style="width: 51%; color: grey;" class="normalText">
-
+            <p style="float: left;">해당 동물 사진</p>
             <p class="normalText" style="float: right; color: grey;">작성자 {{ report.writer }} &emsp; 조회수 {{ report.viewCnt + 1 }}</p>
-            <br>
             <div v-if="report.imgUploadedCnt > 0">           
-                <p style="float: left;">해당 동물 사진</p>
-
                 <br>
                 <br>
                 <img v-for="(num, idx) in UploadedCnt" :key="idx" :src="imgRequest(idx)" class="img" style="margin-top: 18px;"/>
                 <br>
                 <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
             </div>
-
             <div style="margin-top:10%;">
                 <input
                     readonly
@@ -31,10 +21,8 @@
                     class="normalText"
                     :value="report.category"
                 />
-        
                 <input :value="report.title" style="width: 70%; color: black; float: right;" 
                 readonly class="normalText"/>
-        
                 <br>
                 <br>
                 <br>

@@ -6,7 +6,7 @@
         <br/>
 
         <div style="display: inline-block; margin-right: 50px;">
-            <img :src="animalsInfo.image" width="350" height="300"/>
+            <img :src="animalsInfo.image" width="350" height="300" class="aniPic"/>
         </div>
 
         <div style="display: inline-block;">
@@ -94,9 +94,7 @@
 
             &emsp;
             &emsp;
-            
             <v-tooltip bottom>
-
                 <template v-slot:activator="{ on, attrs }">
             
                 <font-awesome-icon v-show="chkLikedOrNot(animalsInfo.notice_no)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
@@ -115,13 +113,11 @@
             &emsp; &emsp;
             <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                    <img src="@/assets/img/kakao.png" width="35px; cursor: pointer;" @click="shareOnKaKao" v-on="on" v-bind="attrs"/>
+                    <img src="@/assets/img/kakao.png" width="35px; cursor: pointer;" @click="shareOnKaKao" v-on="on" v-bind="attrs" class="aniPic"/>
                 </template>
                 <span>카톡 글 공유하기</span>
             </v-tooltip>
         </div>
-
-
         <div id="latestSeenShower">
             <br>
             <p class="normalText" style="color: black;">최근에 본 유기동물</p>
@@ -131,13 +127,9 @@
                 expand_less
                 </v-icon>
             </v-btn>
-
             <br>
-
             <div v-for="(latestSeenAni, index) in latestSeen" :key="index">
-
                 <img :src="latestSeenAni.imgSrc" class="lateSeenThumbnail" @click="toDetailPage(latestSeenAni.noticeNo)"/>
-
                 <v-btn text x-small color="grey" class="delBtn" @click="delLatestSeen(latestSeenAni.noticeNo)">
                     <v-icon>
                         cancel
@@ -249,7 +241,7 @@ export default {
         addLikedAnimal(notice_no) {
 
             if(this.$store.state.session) {
-      
+            
                 const memberNo = this.$store.state.session.memberNo
                 const noticeNo = notice_no
 
@@ -258,8 +250,8 @@ export default {
 
                         this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
 
-                        const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-                        this.$store.state.animals[targetIndex].numberOfLiked ++
+                        //const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        //this.$store.state.animals[targetIndex].numberOfLiked ++
 
                         this.$store.state.animalsInfo.numberOfLiked ++
                     })
@@ -281,7 +273,6 @@ export default {
                     }
                 }
                 return false
-
             } else return false
         },
 
@@ -301,8 +292,8 @@ export default {
                         const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === notice_no) //*** likedAnimalList에는 noticeNo ***
                         this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
-                        const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-                        this.$store.state.animals[targetIndex2].numberOfLiked -- 
+                        //const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        //this.$store.state.animals[targetIndex2].numberOfLiked -- 
 
                         this.$store.state.animalsInfo.numberOfLiked --
                     })
@@ -385,12 +376,12 @@ export default {
             
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.session.id)
+                this.fetchLikedAnimalList(this.session.memberNo)
 
                 this.$store.state.isLoggedIn = true;
             }
         }
     },
-    
     updated() {
         //this.$cookies.remove("latestSeen");    
 
@@ -403,27 +394,25 @@ export default {
                 if(!this.$cookies.get('latestSeen')) {
 
                     this.tmpLatestSeen.push(tmpObj)
-                    
                     this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
 
                 } else {
-
                     this.tmpLatestSeen = JSON.parse(this.$cookies.get('latestSeen'))
 
+                    if(this.tmpLatestSeen.length == 21) {
+                        this.tmpLatestSeen.splice(0, 1)
+                        this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
+                        return false
+                    }
+
                     for(var i=0; i<this.tmpLatestSeen.length; i++) {
-
                         if(this.tmpLatestSeen[i].noticeNo == this.$store.state.animalsInfo.notice_no) {
-
                             this.tmpLatestSeen.splice(i, 1)
-
                             this.tmpLatestSeen.push(tmpObj)
-
                             this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
-
                             return false
                         }
                     }
-
                     this.tmpLatestSeen.push(tmpObj)
                     this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
                 }
@@ -435,3 +424,13 @@ export default {
 }
 
 </script>
+
+<style>
+
+.aniPic {
+    margin-right: 20px;
+    border-radius: 8px;
+    border: 3px solid #42b8d4;
+}
+
+</style>
