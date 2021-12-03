@@ -151,7 +151,6 @@ public class MemberServiceImpl implements MemberService {
             log.info("login(): 비밀번호 잘못 입력하였습니다.");
             return false;
         }
-
         return true;
     }
 
