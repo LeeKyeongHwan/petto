@@ -7,7 +7,7 @@
                 </span>
         </div>
 
-        <v-card v-for="voluntaryboard in voluntaryboards" :key="voluntaryboard.volunteerNo" width="800px" style=" margin-bottom:5%;">
+        <v-card v-for="voluntaryboard in paginatedData" :key="voluntaryboard.volunteerNo" width="800px" style=" margin-bottom:5%;">
             <section v-if="voluntaryboard.closingDate < todayDate">
                 <router-link :to="{ name: 'AnimalVoluntaryReadPage',
                                     params: { volunteerNo: voluntaryboard.volunteerNo.toString() } }">
@@ -74,20 +74,21 @@ export default {
         nextPage () {
             this.pageNum += 1;
             this.$router.push({
-            name: 'AnimalVoluntaryListPage',
-            params: { pageNum: this.pageNum }
-        })
+                name: 'AnimalVoluntaryListPage',
+                params: { pageNum: this.pageNum }
+            })
         },
         prevPage () {
-        this.pageNum -= 1;
-        this.$router.push({
-            name: 'AnimalVoluntaryListPage',
-            params: { pageNum: this.pageNum }
-        })
+            this.pageNum -= 1;
+            this.$router.push({
+                name: 'AnimalVoluntaryListPage',
+                params: { pageNum: this.pageNum }
+            })
         },
         changeDate () {
         const date = new Date()
-        const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        // const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        const today = `${date.getFullYear()}-${("0" + (date.getMonth() + 1) ).slice(-2)}-${("0" + date.getDate()).slice(-2)}`
         this.todayDate = today
         },
     },
@@ -108,6 +109,7 @@ export default {
     },
     mounted() {
         this.changeDate()
+
     }
 }
 </script>
@@ -150,4 +152,3 @@ p{
 }
 
 </style>
-

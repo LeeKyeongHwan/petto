@@ -1,12 +1,12 @@
 <template>
     <div align="center">
-        <h2>내 질문</h2>
+        <h4></h4>
         <qna-read v-if="qnaboard" :qnaboard="qnaboard"/>
         <p v-else>로딩중 ...... </p>
-        <router-link :to="{ name: 'QnaModifyPage', params: { qnaNo } }">
+        <router-link  :to="{ name: 'QnaModifyPage', params: { qnaNo } }">
             게시물 수정
         </router-link>
-        <button @click="onDelete">삭제</button>
+        <button style="margin-bottom:70px"  @click="onDelete">삭제</button>
     </div>
 </template>
 

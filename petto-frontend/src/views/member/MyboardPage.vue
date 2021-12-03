@@ -1,23 +1,27 @@
 <template>
     <v-container>
-         <h4 style="text-align:center; padding: 3%;"><p class="normalText">내가 작성한 게시물</p></h4>
+         <h4 style="text-align:center; padding: 3%;"><p class="normalText">내 게시물</p></h4>
                    
          <v-simple-table>
              <thead>
                 <tr>
                 <th class="text-left" style="width: 100px; " >no</th>
-                <th class="text-left" style="width: 150px;">카테고리</th>
-                <th class="text-left" style="width: 300px;">제목</th>
+                <th class="text-center" style="width: 80px;">카테고리</th>
+                <th class="text-center" style="width: 300px;">제목</th>
+                <th class="text-center" style="width: 150px;">작성일시</th>
+                <th class="text-center" style="width: 100px;">조회수</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(myBoardList, idx) of calData" :key="idx">
-                <td >{{ myBoardList.reportNo}}</td>
-                <td>{{ myBoardList.category}}</td>
-                <td><router-link :to="{ name: 'ReportReadPage',
+                <td class="text-left">{{ myBoardList.reportNo}}</td>
+                <td class="text-center">{{ myBoardList.category}}</td>
+                <td class="text-center"><router-link :to="{ name: 'ReportReadPage',
                                     params: { reportNo: myBoardList.reportNo.toString() } }"> 
                         {{ myBoardList.title}}
                     </router-link></td>
+                <td class="text-center">{{ myBoardList.regDate}}</td>
+                <td class="text-center">{{ myBoardList.viewCnt}}</td>
                 </tr>
             </tbody>
          </v-simple-table>

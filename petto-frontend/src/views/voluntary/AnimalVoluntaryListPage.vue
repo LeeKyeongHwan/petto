@@ -38,20 +38,20 @@ export default {
         }
     },
     computed: {
-        ...mapState(['voluntaryboards', 'session'])
+        ...mapState(['voluntaryboards'])
     },
-    mounted() {
-        if(this.$cookies.isKey("user")) {
+    mounted () {
+        if(this.$cookies.isKey("user") == true) {
             this.$store.state.session = this.$cookies.get("user");
-
-            if(this.$store.state.session != null) {
-                this.$store.dispatch('fetchAlarmList', this.session.id)
-                this.access = this.$cookies.get("user").auth
-            }
-        } else this.access = '비회원'
+            this.access = this.$cookies.get("user").auth
+        } else {
+            this.access = '비회원'
+        }
+        this.fetchVoluntaryBoardList()
     },
     methods: {
-        ...mapActions(['fetchVoluntaryBoardList', 'fetchAlarmList'])
+        ...mapActions(['fetchVoluntaryBoardList']),
+
     }
 }
 </script>
