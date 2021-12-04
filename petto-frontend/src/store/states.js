@@ -43,6 +43,8 @@ export default {
   adminQnAList: [],
   adminQnA: null,
 
-  isLoggedIn: false
+  isLoggedIn: false,
 
+  youtubeVidList: [],
+  videos: []
 };

@@ -36,7 +36,9 @@ import {
   FETCH_ADMIN_QNA_LIST,
   FETCH_ADMIN_QNA,
 
-  FETCH_ALARM_LIST
+  FETCH_ALARM_LIST,
+
+  FETCH_VIDEO_LIST
 
 } from "./mutation-types";
 
@@ -246,6 +248,13 @@ export default {
     return axios.get(`http://localhost:8888/petto/member/updateAlarmList/${payload}`)
             .then((res) => {
                 commit(FETCH_ALARM_LIST, res.data)
+            })
+  },
+
+  fetchVideoList({ commit }) {
+    return axios.get('http://localhost:8888/petto/admin/get_videos')
+            .then((res) => {
+                commit(FETCH_VIDEO_LIST, res.data)
             })
   }
 

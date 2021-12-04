@@ -1,13 +1,10 @@
 <template>
 
   <div align="center" style="padding-top: 60px;">
-
     <div class="vld-parent">
       
-      <p class="mainText">현재 유기동물 현황 지도</p>
-
+      <h1>보호소 & 유기동물 위치</h1>
       <span class="row" style="margin-left: 100px; float: left;">
-        
         <v-select
             v-if="showBasicFacilInfo"
             v-model="chosenArea"
@@ -69,17 +66,11 @@
 
         </v-tooltip>
       </span>
-
       <br/>
       <br/>
-
+      
       <div id="map" style="width: 100%; margin-top: 40px;" @click="searchByMap"></div>
-
-      <br/>
-      <br/>
-
-      <!-- <div id="facilInfoBox"> -->  <div v-show="showBasicFacilInfo" style="margin:5%;">
-
+      <!-- <div id="facilInfoBox"> -->  <div v-show="showBasicFacilInfo" style="margin: 2%;">
         <p class="normalText" style="color: black; display: inline-block;">전국의 전체 보호소 수</p>
           &nbsp;
         <p class="normalText" style="display: inline-block;">{{ facilityList.length }}개 기관</p>
@@ -115,7 +106,7 @@
 
         </div>
 
-        <div id="facilsInArea" style="display: none; margin: 5%;">  <!-- <div v-show="showSpecificAreaFacil"> -->
+        <div id="facilsInArea" style="display: none; margin: 0.5%;">  <!-- <div v-show="showSpecificAreaFacil"> -->
 
           <p class="normalText" style="display: inline-block;">{{ chosenArea }}지역</p>
           <p class="normalText" style="color: black; display: inline-block;">의 보호소 수</p>
@@ -157,7 +148,7 @@
         </div>
       </div>
 
-      <div v-show="showBasicInfo" style="margin: 5%;">
+      <div v-show="showBasicInfo" style="margin: 2%;">
         <p class="normalText" style="display: inline-block;">{{ chosenArea }}</p>
         <p class="normalText" style="color: black; display: inline-block;">지역의 전체 유기동물 수</p>
         &nbsp;
@@ -176,8 +167,7 @@
         <p class="normalText" style="display: inline-block;">{{ numOfEtc }}마리</p>
       </div>
 
-      <div v-show="showNumOfAbandoned">
-
+      <div v-show="showNumOfAbandoned" style="margin: 3%;">
         <p class="normalText" style="display: inline-block;">{{ facilityName }}</p>
 
         <p class="normalText" style="color: black; display: inline-block;">이 보호하는 동물 수</p>
@@ -742,6 +732,19 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap');
+@font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    font-family: 'GowunDodum-Regular';
+    font-size: 30px;
+    text-align: center;
+}
+
 #map {
   height: 500px;  
 }
