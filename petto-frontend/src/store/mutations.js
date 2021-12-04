@@ -37,7 +37,9 @@ import {
   FETCH_ADMIN_QNA_LIST,
   FETCH_ADMIN_QNA,
 
-  FETCH_ALARM_LIST
+  FETCH_ALARM_LIST,
+
+  FETCH_VIDEO_LIST
 
 } from "./mutation-types";
 
@@ -154,6 +156,10 @@ export default {
 
   [FETCH_ALARM_LIST] (state, payload) {
     state.updateAlarmList = payload
+  },
+
+  [FETCH_VIDEO_LIST] (state, payload) {
+    state.videos = payload
   }
 
 };

@@ -40,3 +40,5 @@ export const FETCH_USER_INFO = 'FETCH_USER_INFO'
 
 export const FETCH_ALARM_LIST = 'FETCH_ALARM_LIST'
 
+export const FETCH_VIDEO_LIST = 'FETCH_VIDEO_LIST'
+

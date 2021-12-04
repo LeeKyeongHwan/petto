@@ -9,7 +9,7 @@
             <v-btn outlined route :to="{name: 'FacilityListPage'}" width="10vw">보호소 </v-btn>
         </v-container>
         <div align="center">
-            <h1 style="margin-bottom:1%;">전국 보호소 리스트</h1>
+            <h1 style="margin-bottom: 1%;">전국 보호소 리스트</h1>
 
             <v-container>
                 <div style="float: right;">

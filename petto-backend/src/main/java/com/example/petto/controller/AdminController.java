@@ -1,6 +1,7 @@
 package com.example.petto.controller;
 
 import com.example.petto.entity.Member;
+import com.example.petto.entity.PettoCrawledVideo;
 import com.example.petto.entity.QnA;
 import com.example.petto.service.AdminService;
 import com.example.petto.service.QnAService;
@@ -77,5 +78,25 @@ public class AdminController {
                                        @Validated @RequestBody QnA qnA ) throws Exception {
         qnAService.qnaAnswers(qnaNo,qnA);
         return new ResponseEntity<>(qnA, HttpStatus.OK);
+    }
+
+    @GetMapping("/videos")
+    public ResponseEntity<List<PettoCrawledVideo>> getVids() {
+        log.info("getVids(): ");
+
+        return new ResponseEntity<List<PettoCrawledVideo>>(adminService.getVids(), HttpStatus.OK);
+    }
+
+    @PatchMapping("/change_stat_vid/{videoNo}")
+    public ResponseEntity<List<PettoCrawledVideo>> blockVid(@PathVariable("videoNo") Long videoNo) {
+        log.info("blockVid(): " + videoNo);
+        adminService.changeVidStat(videoNo);
+        return new ResponseEntity<List<PettoCrawledVideo>>(HttpStatus.OK);
+    }
+
+    @GetMapping("/get_videos")
+    public ResponseEntity<List<PettoCrawledVideo>> get_videos() {
+        log.info("get_videos(): ");
+        return new ResponseEntity<List<PettoCrawledVideo>>(adminService.getAllowedVids(), HttpStatus.OK);
     }
 }

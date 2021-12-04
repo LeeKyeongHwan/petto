@@ -14,13 +14,13 @@
           </swiper>
       </v-container>
     </div>
-
-    <v-container class="justify-center">
+    <br>
+    <div style="width: 80%; margin: auto;">
       <section>
-          <div style="float:left; width:30%; margin:1%; height:100%;">
+          <div style="float:left; width: 22%; margin:1%; height:100%;">
               <v-card height="40%">
                   <v-row>
-                      <v-card-title style="width:65%; font-size:20px;">유기동물 뉴스</v-card-title>
+                      <v-card-title style="width:65%; font-size:20px; color: grey;" class="normalText">유기동물 뉴스</v-card-title>
                       <v-card-actions>
                           <v-btn plain @click="moreNews()"><v-icon>chevron_right</v-icon>더보기</v-btn>
                       </v-card-actions>
@@ -30,10 +30,10 @@
                   </div>
               </v-card>
           </div>
-          <div style="float:left; width:30%; height:100%; margin:1%">
+          <div style="float:left ;width: 22%; margin:1%; margin:1%">
             <v-card max-height="40%">
                 <v-row>
-                    <v-card-title style="width:65%; font-size:20px;">공고만료</v-card-title>
+                    <v-card-title style="width:65%; font-size:20px; color: grey;" class="normalText">공고만료</v-card-title>
                     <!-- <v-card-actions>
                         <v-btn plain  route :to="{ name: 'AbandonedAnimal' }"><v-icon>chevron_right</v-icon>더보기</v-btn>
                     </v-card-actions> -->
@@ -44,10 +44,10 @@
                     </div>
             </v-card>
           </div>
-          <div style="float:left;width:30%; margin:1%;">
+          <div style="float:left; width: 22%; margin:1%;">
               <v-card height="40%">
                   <v-row style="margin-bottom:0%;">
-                      <v-card-title style="width:65%; font-size:20px; padding-bottom:2%;" class="texts-overflow">오늘의 통계</v-card-title>
+                      <v-card-title style="width:65%; font-size:20px; padding-bottom:2%; color: grey;" class="texts-overflow normalText">오늘의 통계</v-card-title>
                   </v-row>
                       <div>
                           <v-card-actions style="padding:0%;">
@@ -56,30 +56,60 @@
                       </div>   
               </v-card>
           </div>
-      </section>
-      </v-container>
-
-         <div>
-            <div>
-                <v-card v-if="layers">
-                  <div id="layer">
-                    <img src="@/assets/img/popup.png" alt="자원봉사" />
-                    <v-btn class="close" @click="Close()" small icon
-                      ><v-icon>close</v-icon></v-btn
-                    >
-                    <v-btn
-                      class="img-link"
-                      color="#feecae"
-                      depressed
-                      width="200"
-                      height="40"
-                      route :to="{name : 'AnimalVoluntaryListPage'}"
-                      >자세히보기</v-btn>
-                    <v-btn class="today-close" @click="TodayClose()" plain>오늘 하루 보지 않기</v-btn>
-                  </div>
-                </v-card>
-              </div>
+          <div style="float:left; width: 22%; margin:1%;">
+            <v-card height="40%">
+              <v-row style="margin-bottom:0%;">
+                  <v-card-title style="width:65%; font-size:20px; padding-bottom:2%; color: grey;" class="texts-overflow normalText">지도 & 보호소</v-card-title>
+              </v-row>
+                <br>
+                <div>
+                  <v-card-actions style="padding:0%;">
+                    <!-- -->
+                    <v-btn text x-large class="normalText" style="width: 47%; height: 270px; font-size: 18px;"
+                    @click="toMapPage">
+                      유기동물<br>관련 지도
+                    </v-btn>
+                    &ensp;
+                    <v-btn text x-large class="normalText" style="width: 47%; height: 270px; font-size: 20px;"
+                    @click="toFacilListPage">
+                      보호소
+                    </v-btn>
+                  </v-card-actions>
+              </div>   
+            </v-card>
           </div>
+        </section>
+    </div>
+    <div style="padding-top: 100px;">
+      <div id="youtube">
+        <ul>
+          <li v-for="(vid, idx) in videos" :key="idx">
+            <img :src="vid.imgSrc" style="width: 250px;" @click="watchVid(vid.url)"/>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <div>
+        <div>
+            <v-card v-if="layers">
+              <div id="layer">
+                <img src="@/assets/img/popup.png" alt="자원봉사" />
+                <v-btn class="close" @click="Close()" small icon
+                  ><v-icon>close</v-icon></v-btn
+                >
+                <v-btn
+                  class="img-link"
+                  color="#feecae"
+                  depressed
+                  width="200"
+                  height="40"
+                  route :to="{name : 'AnimalVoluntaryListPage'}"
+                  >자세히보기</v-btn>
+                <v-btn class="today-close" @click="TodayClose()" plain>오늘 하루 보지 않기</v-btn>
+              </div>
+            </v-card>
+          </div>
+      </div>
     </div>
 </template>
 
@@ -124,6 +154,9 @@ export default {
         }
     },
   methods: {
+    watchVid(url) {
+      window.open(url, 'newWindow');
+    },
     Close() {
       this.layers = false;
     },
@@ -131,7 +164,7 @@ export default {
       this.$store.dispatch("TodayPopUp");
       this.layers = false;
     },
-    ...mapActions(['fetchOlderAnimalList', 'fetchAlarmList']),
+    ...mapActions(['fetchOlderAnimalList', 'fetchAlarmList', 'fetchVideoList']),
       toDetailPage(id) {
       this.$router.push({
         name: 'AnimalDetailPage',
@@ -146,6 +179,16 @@ export default {
         var num = this.title.indexOf(mainNews)
         var toLink = this.url[num]
         window.open(toLink);
+    },
+    toMapPage() {
+      this.$router.push({
+        name: 'KakaoMap'
+      })
+    },
+    toFacilListPage() {
+      this.$router.push({
+        name: 'FacilityListPage'
+      })
     }
   },
   mounted() {
@@ -158,9 +201,11 @@ export default {
       this.$store.state.session = this.$cookies.get("user");
       if(this.$store.state.session != null) this.$store.dispatch('fetchAlarmList', this.session.id)
     }
+
+    this.fetchVideoList()
   },
   computed: {
-      ...mapState(['olderList', 'session'])
+      ...mapState(['olderList', 'session', 'videos'])
   },
   created() {
         axios.post("http://localhost:5000/pythonCrawlNews")
@@ -237,10 +282,12 @@ export default {
   border: 3px solid #fff;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
 }
+
 #layer img {
   width: 100%;
   display: block;
 }
+
 #layer .close {
   position: absolute;
   right: 0.2em;
@@ -265,6 +312,54 @@ h4{
   font-size: 1.5vw;
   margin:0vw;
   letter-spacing: 4px;
+}
+
+.container3{
+  width: 100%;
+  
+  margin-top:5%;
+  margin-bottom: 5%;
+}
+
+#youtube{
+  padding: 0% 5em 5% 5em;
+  max-width: 100vw;
+}
+
+#youtube ul {
+  white-space:nowrap;
+  overflow-x: auto;
+  text-align:center;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+#youtube ul::-webkit-scrollbar{
+    width: 1em;
+    height: 0.8em;
+}
+
+#youtube ul::-webkit-scrollbar-thumb{
+    height: 10%;
+    background-color:#f7b43e;
+    border-radius: 10px;
+}
+
+#youtube ul li{
+    margin-left: 15px;
+    display:inline-block;
+
+    position: relative;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transform-origin: center left;
+
+}
+
+#youtube ul li iframe{
+    text-decoration:none;
+    color:inherit;
 }
 
 </style>
