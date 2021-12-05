@@ -87,7 +87,8 @@ export default {
         },
         changeDate () {
         const date = new Date()
-        const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        // const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        const today = `${date.getFullYear()}-${("0" + (date.getMonth() + 1) ).slice(-2)}-${("0" + date.getDate()).slice(-2)}`
         this.todayDate = today
         },
     },
@@ -108,6 +109,7 @@ export default {
     },
     mounted() {
         this.changeDate()
+
     }
 }
 </script>

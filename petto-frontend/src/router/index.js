@@ -49,7 +49,7 @@ import MyQna from "../views/member/qna/MyQna.vue";
 
 
 import AdminQnaReadPage from "../views/admin/qna/AdminQnaReadPage.vue";
-
+import AdminVideoManagePage from "../views/admin/youtube_manage/AdminVideoManagePage.vue";
 
 import AboutPage from '@/views/about/AboutPage.vue';
 
@@ -251,7 +251,7 @@ const routes = [
     }
   },
   {
-    path: '/admin/:memberNo',
+    path: '/admin/member/:memberNo', //얘가 문제 url을 명확히 써줘야했음
     name: 'AdminMemberReadPage',
     components: {
       default: AdminMemberReadPage
@@ -322,7 +322,12 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: '/admin/video_manage',
+    name: 'AdminVideoManagePage',
+    component: AdminVideoManagePage
+  },
 ];
 
 const router = new VueRouter({

@@ -19,14 +19,14 @@
               <li><a href="/abandonedAnimal/list/page=0&place=none&kind=none">유기동물</a></li>
               <li><a href="/reportBoard">제보</a></li>
               <li><a href="/voluntaryBoard/list/page=0">자원봉사</a></li>
-              <li><a href="/map">지도</a></li>
+              <!-- <li><a href="/map">지도</a></li> -->
             </ul>
           </div>
 
-          <div class="header">
+          <div class="header" v-if="!isLoggedIn">
             <ul>
-              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;" v-if="!isLoggedIn">LOGIN</a></li>
-              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;" v-if="!isLoggedIn">JOIN US</a></li>
+              <li><a href="/memberLoginPage" style="font-size:0.8vw; margin-right:0px;">LOGIN</a></li>
+              <li><a href="/signupPage" style="font-size:0.8vw; margin-right:20px;">JOIN US</a></li>
               <!-- <li><a href="#" style="font-size:0.8vw; margin-right:20px;" v-if="isLogin" @click="logout()">LOGOUT</a></li> -->
             </ul>
           </div>
@@ -43,6 +43,7 @@
             <ul v-else-if="this.auth == '관리자'">
               <li><a href="/admin" style="font-size:0.8vw; margin-right:0px;">회원관리</a></li>
               <li><a href="/qnalist" style="font-size:0.8vw; margin-right:20px;">문의관리</a></li>
+              <li><a href="/admin/video_manage" style="font-size:0.8vw; margin-right:20px;">유튜브 관리</a></li>
               <li><a href="#" style="font-size:0.8vw; margin-right:20px;" @click="logout()">LOGOUT</a></li>
             </ul>
           </div>

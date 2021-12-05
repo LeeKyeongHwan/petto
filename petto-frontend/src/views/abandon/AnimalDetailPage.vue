@@ -1,116 +1,87 @@
 <template>
 <div>
     <div align="center" style="padding-top: 60px;" >
-
         <p class="mainText">유기동물 정보</p>
-
-        <br/>
-       
-<table class="tg">
-<thead>
-  <tr>
-      <td class="img" rowspan="5" >
-          <div style="display: inline-block;">
-            <img :src="animalsInfo.image" width="300" height="250"/> 
+        <br><br>
+        <div style="display: inline-block; margin-right: 50px;">
+            <img :src="animalsInfo.image" width="350" height="300" class="aniPic"/>
         </div>
-        <br/>    
-      </td>
-    <td class="tg-0pky" colspan="3" height="50">        
-        <p class="normalText" style="display: inline-block; color: orangered;">공고 번호</p>
-        </td>
-        <td class="tg-0pky" colspan="3">
-            <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.notice_no }}</p>
-   </td>
-  </tr>
-  <tr>
-    <td class="tg-0pky" height="50">
-         <p class="normalText" style="display: inline-block; color: orangered;">종</p>
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.kind }}</p>
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block;; color: orangered;">색</p>
-    </td>
-    <td class="tg-0pky">
-  <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.color }}</p>
-    </td>
-    <td class="tg-0pky">
-      <p class="normalText" style="display: inline-block; color: orangered;">나이</p>
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.age }}</p>
-    </td>
-  </tr>
-  <tr>    
-    <td class="tg-0pky" height="50">
-         <p class="normalText" style="display: inline-block; color: orangered;">성별</p>
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.gender }}</p>
-    </td>
-    <td class="tg-0pky">
-        <p class="normalText" style="display: inline-block; color: orangered;">특징</p>
-    </td>
-    <td class="tg-0pky">
-        <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.feature }}</p>
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block; color: orangered;">발견 일자</p> <!-- 형식 수정 필요 -->
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.happened }}</p>
-    </td>
-  </tr>
-  <td class="tg-0pky" colspan="3" height="50">
-            <p class="normalText" style="display: inline-block; color: orangered;">발견 장소</p>
-    </td>
-    <td class="tg-0pky" colspan="3">
-       <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.happenplace }}</p>
-    </td>
-   
-</thead>
-</table>   
-<br/>
-<table class="tg"> 
- <td class="tg-0pky">
-          <p class="normalText" style="display: inline-block; color: orangered;">보호소명</p>
-    </td>
-    <td class="tg-0pky">
-           <p class="normalText" style="display: inline-block; color: black;">{{ animalsInfo.carenm }}</p>
-    </td>
-    <td class="tg-0pky">
-        <p class="normalText" style="display: inline-block; color: orangered;">보호소 전화번호</p>
-    </td>
-    <td class="tg-0pky">
-         <p class="normalText" style="display: inline-block; color: black;;">{{ animalsInfo.caretel }}</p>
-    </td>
-     <tr>
-    <td class="tg-0lax" colspan="2">
-        <p class="normalText" style="display: inline-block; color: orangered;">보호소 주소</p>
-        </td>
-         <td class="tg-0lax" >
-        <p class="normalText" style="display: inline-block; color: black;" >{{ animalsInfo.careaddr }}</p>
- </td>
 
-      <td class="tg-0lax" >  
-            <v-btn text class="normalText" style="color: black;" @click="toFacilityInfo(animalsInfo.carenm) ">
-              <img width="50" height="40" src="@/assets/img/doghome.png">        
-               
-                 </v-btn>                 
-          
-      </td>      
-  </tr>  
- </table>
+        <div style="display: inline-block;">
+            
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">공고 번호</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.notice_no }}</p>
 
+            <br/>
+            <br/>
 
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">종</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.kind }}</p>
+            
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">색</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.color }}</p>
+
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">나이</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.age }}</p>
+
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">성별</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.gender }}</p>
+
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">특징</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.feature }}</p>
+
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">발견 일자</p> <!-- 형식 수정 필요 -->
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.happened }}</p>
+
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">발견 장소</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.happenplace }}</p>
+
+            <br/>
+            <br/>
+                   
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">보호소명</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.carenm }}</p>
+         
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">보호소 전화번호</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.caretel }}</p>
+
+            <br/>
+            <br/>
+
+            <p class="normalText" style="display: inline-block; margin-right: 20px; float: left;">보호소 주소</p>
+            <p class="normalText" style="display: inline-block; color: black; margin-bottom: 20px; float: left;">{{ animalsInfo.careaddr }}</p>
+        </div>
+        &emsp;
+        &emsp;
+        <br><br>
+        <span style="float: right; width: 60%;"> 
             &emsp;
-            <p class="normalText" style="display: inline-block; font-size: 30px; margin-left: 640px">{{ animalsInfo.numberOfLiked }}</p>
-            &nbsp;
-            <p class="normalText" style="display: inline-block; font-size: 15px; color: black;"> 명이 입양을 희망하고 있어요!</p>          
-            &nbsp;
+            <p class="normalText" style="display: inline-block; font-size: 20px; margin-left: 100px;">{{ animalsInfo.numberOfLiked }}</p> 
+            &emsp;
+            <p class="normalText" style="display: inline-block; font-size: 12px; color: black;">명이 이 동물을 찜했어요!</p>
+            &emsp;
             <v-tooltip bottom>
-
                 <template v-slot:activator="{ on, attrs }">
             
                 <font-awesome-icon v-show="chkLikedOrNot(animalsInfo.notice_no)" :icon="['fas','heart']" size="lg" :style="{ color: '#42b8d4' }" v-on="on" v-bind="attrs"
@@ -125,21 +96,18 @@
 
                 <span v-show="!chkLikedOrNot(animalsInfo.notice_no)">찜하기</span>
 
-            </v-tooltip>
-            
+            </v-tooltip>  
             &emsp;
-            &emsp;             
+            &emsp;     
+            &emsp;           
             <v-tooltip bottom>
-                
                 <template v-slot:activator="{ on, attrs }">
-                    <img src="@/assets/footer/KakaoTalk.png" width="50px; cursor: pointer;" style="margin-top: 10px;"
-                     @click="shareOnKaKao" v-on="on" v-bind="attrs"/>
+                    <img src="@/assets/img/kakao.png" width="35px; cursor: pointer;" @click="shareOnKaKao" v-on="on" v-bind="attrs" class="aniPic"/>
                 </template>
                 <span>카톡 글 공유하기</span>
             </v-tooltip>
-        </div>
-
-
+        </span>
+    </div>
 
         <div id="latestSeenShower">
             <br>
@@ -150,13 +118,9 @@
                 expand_less
                 </v-icon>
             </v-btn>
-
             <br>
-
             <div v-for="(latestSeenAni, index) in latestSeen" :key="index">
-
                 <img :src="latestSeenAni.imgSrc" class="lateSeenThumbnail" @click="toDetailPage(latestSeenAni.noticeNo)"/>
-
                 <v-btn text x-small color="grey" class="delBtn" @click="delLatestSeen(latestSeenAni.noticeNo)">
                     <v-icon>
                         cancel
@@ -173,27 +137,22 @@
                 expand_more
                 </v-icon>
             </v-btn>
- 
         </div> 
- <br/>
-  <br/>   
-       
- 
-
-    <div class="detail">  
-       
-    <h1> petto </h1>
         <br/>
-    <br/>
-    <div>
-       <video src="@/assets/img/movie.mp4" width="600" height="300" muted loop autoplay class="video-main"/>
-      </div>
-       <br/>
+        <br/>   
+        <div class="detail">  
+        <h1> petto </h1>
+            <br/>
         <br/>
-        <img width="60%" height="100%" src="@/assets/img/detall.jpg">               
-            
-    </div>  
- </div>
+        <div>
+        <video src="@/assets/img/movie.mp4" width="600" height="300" muted loop autoplay class="video-main"/>
+        </div>
+        <br/>
+            <br/>
+            <img width="60%" height="100%" src="@/assets/img/detall.jpg">               
+                
+        </div>  
+    </div>
 </template>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
@@ -284,7 +243,7 @@ export default {
         addLikedAnimal(notice_no) {
 
             if(this.$store.state.session) {
-      
+            
                 const memberNo = this.$store.state.session.memberNo
                 const noticeNo = notice_no
 
@@ -293,8 +252,8 @@ export default {
 
                         this.$store.state.likedAnimalList.push({ 'memberNo': memberNo, 'noticeNo': noticeNo })
 
-                        const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-                        this.$store.state.animals[targetIndex].numberOfLiked ++
+                        //const targetIndex = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        //this.$store.state.animals[targetIndex].numberOfLiked ++
 
                         this.$store.state.animalsInfo.numberOfLiked ++
                     })
@@ -316,7 +275,6 @@ export default {
                     }
                 }
                 return false
-
             } else return false
         },
 
@@ -336,8 +294,8 @@ export default {
                         const targetIndex = this.$store.state.likedAnimalList.findIndex(v => v.noticeNo === notice_no) //*** likedAnimalList에는 noticeNo ***
                         this.$store.state.likedAnimalList.splice(targetIndex, 1)
 
-                        const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
-                        this.$store.state.animals[targetIndex2].numberOfLiked -- 
+                        //const targetIndex2 = this.$store.state.animals.findIndex(v => v.notice_no === notice_no)
+                        //this.$store.state.animals[targetIndex2].numberOfLiked -- 
 
                         this.$store.state.animalsInfo.numberOfLiked --
                     })
@@ -420,12 +378,12 @@ export default {
             
             if(this.$store.state.session != null) {
                 this.$store.dispatch('fetchAlarmList', this.session.id)
+                this.fetchLikedAnimalList(this.session.memberNo)
 
                 this.$store.state.isLoggedIn = true;
             }
         }
     },
-    
     updated() {
         //this.$cookies.remove("latestSeen");    
 
@@ -438,27 +396,25 @@ export default {
                 if(!this.$cookies.get('latestSeen')) {
 
                     this.tmpLatestSeen.push(tmpObj)
-                    
                     this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
 
                 } else {
-
                     this.tmpLatestSeen = JSON.parse(this.$cookies.get('latestSeen'))
 
+                    if(this.tmpLatestSeen.length == 21) {
+                        this.tmpLatestSeen.splice(0, 1)
+                        this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
+                        return false
+                    }
+
                     for(var i=0; i<this.tmpLatestSeen.length; i++) {
-
                         if(this.tmpLatestSeen[i].noticeNo == this.$store.state.animalsInfo.notice_no) {
-
                             this.tmpLatestSeen.splice(i, 1)
-
                             this.tmpLatestSeen.push(tmpObj)
-
                             this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
-
                             return false
                         }
                     }
-
                     this.tmpLatestSeen.push(tmpObj)
                     this.$cookies.set('latestSeen', JSON.stringify(this.tmpLatestSeen), '12h')
                 }
@@ -470,6 +426,15 @@ export default {
 }
 
 </script>
+
+
+<style>
+.aniPic {
+    margin-right: 20px;
+    border-radius: 8px;
+    border: 3px solid #42b8d4;
+}
+</style>
 
 <style type="text/css">
 
@@ -539,8 +504,6 @@ font-family: 'WandohopeB';
     border-color:inherit;
     text-align:center;
     vertical-align:middle;
-
-   
 }
 
 .tg-0lax{
