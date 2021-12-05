@@ -25,7 +25,7 @@
                           <v-btn plain @click="moreNews()"><v-icon>chevron_right</v-icon>더보기</v-btn>
                       </v-card-actions>
                   </v-row>
-                  <div  v-for=" mainNews in title" :key="mainNews">
+                  <div  v-for="mainNews in title" :key="mainNews">
                     <v-card-text class="texts-overflow" @click="links(mainNews)">{{mainNews}}</v-card-text>
                   </div>
               </v-card>
@@ -176,8 +176,8 @@ export default {
         window.open(url);
     },
     links(mainNews) {
-        var num = this.title.indexOf(mainNews)
-        var toLink = this.url[num]
+        const num = this.title.indexOf(mainNews)
+        const toLink = this.url[num]
         window.open(toLink);
     },
     toMapPage() {
@@ -203,25 +203,24 @@ export default {
     }
 
     this.fetchVideoList()
+
+    //axios.post("http://localhost:5000/pythonCrawlNews")
+    axios.get("http://localhost:8888/petto/admin/python_crawled_News")
+      .then(res => {
+        if(res.status == 200){
+          for(var i=0; i<5; i++){
+              this.title.push(res.data[i].title)
+              this.url.push(res.data[i].url)
+          }
+        } else {
+          alert('잠시후 다시 실행해 주세요');
+        }
+    });
   },
   computed: {
       ...mapState(['olderList', 'session', 'videos'])
-  },
-  created() {
-        axios.post("http://localhost:5000/pythonCrawlNews")
-        .then(res => {
-          if(res.status == 200){
-            
-            for(var i=0; i<5; i++){
-                this.title.push(res.data[0][i])
-                this.url.push(res.data[1][i])
-            }
-          } else {
-            alert('잠시후 다시 실행해 주세요');
-          }
-        });
-    }
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>

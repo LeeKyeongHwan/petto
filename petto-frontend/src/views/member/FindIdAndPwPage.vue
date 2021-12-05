@@ -1,5 +1,5 @@
 <template>
-    <div align="center">
+    <div align="center" style="margin-top: 150px;">
         <span>
             <v-btn text class="mainText" @click="onFindId">
                 아이디 찾기

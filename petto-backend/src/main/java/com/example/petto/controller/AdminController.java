@@ -1,8 +1,10 @@
 package com.example.petto.controller;
 
+import com.example.petto.entity.Crawling.PettoCrawledNews;
 import com.example.petto.entity.Member;
 import com.example.petto.entity.PettoCrawledVideo;
 import com.example.petto.entity.QnA;
+import com.example.petto.repository.admin.PettoCrawledNewsRepository;
 import com.example.petto.service.AdminService;
 import com.example.petto.service.QnAService;
 import com.example.petto.session.UserInfo;
@@ -28,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private QnAService qnAService;
+
+    @Autowired
+    private PettoCrawledNewsRepository pettoCrawledNewsRepository;
 
     @Transactional
     @GetMapping("/lists")
@@ -98,5 +103,11 @@ public class AdminController {
     public ResponseEntity<List<PettoCrawledVideo>> get_videos() {
         log.info("get_videos(): ");
         return new ResponseEntity<List<PettoCrawledVideo>>(adminService.getAllowedVids(), HttpStatus.OK);
+    }
+
+    @GetMapping("/python_crawled_News")
+    public ResponseEntity<List<PettoCrawledNews>> python_crawled_News() {
+        log.info("python_crawled_News(): ");
+        return new ResponseEntity<List<PettoCrawledNews>>(pettoCrawledNewsRepository.findAll(), HttpStatus.OK);
     }
 }
