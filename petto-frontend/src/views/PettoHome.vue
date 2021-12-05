@@ -30,7 +30,7 @@
                   </div>
               </v-card>
           </div>
-          <div style="float:left ;width: 22%; margin:1%; margin:1%">
+          <div style="float:left ;width: 22%; margin:1%;">
             <v-card max-height="40%">
                 <v-row>
                     <v-card-title style="width:65%; font-size:20px; color: grey;" class="normalText">공고만료</v-card-title>
