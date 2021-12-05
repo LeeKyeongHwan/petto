@@ -142,7 +142,7 @@
                     <v-icon color="white;">
                         done
                     </v-icon>
-                    <p class="btnText" style="margin: 10px;">생일이 올바른지 확인해주세요</p>
+                    <p class="btnText" style="margin: 10px;">이름 또는 생일이 올바른지 확인해주세요</p>
                 </v-btn>
 
                 <v-btn text large @click="$refs.first.next()" v-else-if="isRightBirthday()">
@@ -335,7 +335,7 @@ export default {
         if(7 <= this.id.length) {
 
             const id = this.id
-            const regEngNum = /(?=.*\d)(?=.*[a-z]).{8,20}$/;
+            const regEngNum = /^[a-z]+[a-z0-9]{8,16}$/g;
             
             if(!regEngNum.test(id)) { 
                 alert('영문과 숫자를 포함해 8~16자로 작성해주세요.'); 
@@ -359,9 +359,8 @@ export default {
         }
     },
     checkSamePassword() {
-
         const pwTest = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        // 최소 8 자, 최소 하나의 문자 및 하나의 숫자 :
+        // 최소 8자, 최소 하나의 문자 및 하나의 숫자 :
         if(this.password == this.passwordChk && pwTest.test(this.password)) {
             return true
 
@@ -370,14 +369,21 @@ export default {
         }
     },
     checkMailAndNumber() {
-        if(this.email != "" && this.phoneNumber != "") {
+        const emailRegex = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i;
+        const phNumRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+        if(emailRegex.test(this.email) && phNumRegex.test(this.phoneNumber)) {
             return true
         } else {
             return false
         }
     },
     isRightBirthday() {
-        return true
+        const nameReg = /^[가-힣]{2,4}$/;
+        const birthDayReg = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/;
+
+        if(nameReg.test(this.name) && birthDayReg.test(this.birthday)) return true
+        else return false
     },
     dogChecked() {
         if(this.whichAnimal.includes("dog")) {
@@ -412,6 +418,9 @@ export default {
         this.$refs.first.next()
     },
     checkNicknameDupli() {
+        const nickReg = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/;
+        if(!nickReg.test(this.nickname)) return false
+
         const nickname = this.nickname
         axios.post(`http://localhost:8888/petto/member/nicknameDupliChk/${ nickname }`)
             .then((res) => {
