@@ -1,61 +1,55 @@
 <template>
-    <section>
-        <div style="width: 100%; padding-top:6em;">
-            <h4><p class="normalText" style="text-align:center; margin:0%;">찜 리스트</p></h4>
-        </div>
-        <div class="text-center">
-            <v-row justify="center">
-                <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
-                    <div class="container">
-                        <div id="animal">
-                            <div v-for="(animal, index) in calData" :key="index">
-                                <v-card height="300" width="370" class="grow">
-                                    <img :src="animal.image" style="cursor:pointer" width="370" height="230" @click="toDetailPage(animal.id)"/>
-                                        <v-card-title style="float: left; "> {{animal.carenm}}</v-card-title>
+  <v-container  style="margin-top:0%;">
+      <section>
+          <div style="width: 100%; margin:0%;">
+              <h4 id="title"><p style="text-align:center; margin:0%;">찜 리스트</p></h4>
+          </div>
+          <div class="text-center">
+              <v-row justify="center">
+                  <v-container class="justify center" style="margin-top:0%; margin-bottom:0%;">
+                      <div class="container">
+                          <div id="animal">
+                              <div v-for="(animal, index) in calData" :key="index">
+                                  <v-card height="310" width="370" class="grow" >
+                                      <img :src="animal.image" style="cursor:pointer; margin-top:10px;" width="360" height="230" @click="toDetailPage(animal.id)"/>
+                                          <v-card-title id="title" style="float: left; "> {{animal.carenm}}</v-card-title>
+                                          <span style="float: right; margin-top:12px;">
+                                              <v-tooltip bottom>
+                                                <template v-slot:activator="{ on, attrs }">
+                                                <v-btn flat text color="#FFB300" @click="toDetailPage(animal.id)" v-on="on" v-bind="attrs" >
+                                                  <v-icon>
+                                                    assessment
+                                                  </v-icon>
+                                                </v-btn>
+                                                </template>
+                                                <span>상세 페이지</span>
+                                              </v-tooltip>
+                                              <v-tooltip bottom>
+                                                <template v-slot:activator="{ on, attrs }">
 
+                                                <v-btn text color="#FFB300" @click="toFacilityInfo(animal.carenm)" v-on="on" v-bind="attrs"  >
+                                                  <v-icon>
+                                                    place
+                                                  </v-icon>
+                                                </v-btn>
 
-                                        <span style="float: right; margin-top:12px;">
-                                            <v-tooltip bottom>
+                                                </template>
 
-                                              <template v-slot:activator="{ on, attrs }">
+                                                <span>보호소 정보</span>
 
-                                              <v-btn text color="#FFB300" @click="toDetailPage(animal.id)" v-on="on" v-bind="attrs" >
-                                                <v-icon>
-                                                  assessment
-                                                </v-icon>
-                                              </v-btn>
-
-                                              </template>
-
-                                              <span>상세 페이지</span>
-
-                                            </v-tooltip>
-
-                                            <v-tooltip bottom>
-
-                                              <template v-slot:activator="{ on, attrs }">
-
-                                              <v-btn text color="#FFB300" @click="toFacilityInfo(animal.carenm)" v-on="on" v-bind="attrs"  >
-                                                <v-icon>
-                                                  place
-                                                </v-icon>
-                                              </v-btn>
-
-                                              </template>
-
-                                              <span>보호소 정보</span>
-
-                                            </v-tooltip>
-                                          </span>
-                                </v-card>   
-                            </div>
-                        </div>
-                    </div>
-                </v-container>
-                <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
-            </v-row>
-        </div>
-    </section>
+                                              </v-tooltip>
+                                            </span>
+                                  </v-card>   
+                              </div>
+                              <v-pagination :length= "numofpage" v-model="curpagenum" color="#42b8d4" style="background-color: white; box-shadow: 0px 0px white;"> </v-pagination>
+                          </div>
+                      </div>
+                  </v-container>
+                  
+              </v-row>
+          </div>
+      </section>
+  </v-container>
 </template>  
 
 <script>
@@ -118,6 +112,11 @@ export default {
             this.fetchMyLikedAnimalList(this.session.memberNo)
         }
       }
+      
+      // document.querySelectorAll('.v-main__wrap')[0].style.background = "#ffefba;";
+      // document.querySelectorAll('.v-main__wrap')[0].style.background = " -webkit-linear-gradient(to right, #ffefba, #ffffff)";
+      // document.querySelectorAll('.v-main__wrap')[0].style.background = "linear-gradient(to right, #ffefba, #ffffff)";
+        
     },
     
      computed: {
@@ -140,6 +139,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#title {
+  font-family: "GowunDodum-Regular";
+}
+	
 
 #header ul {
   display: flex;

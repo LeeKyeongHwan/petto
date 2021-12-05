@@ -104,7 +104,7 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
-    name: 'MyProfile2',
+    name: 'MyProfile',
     methods: {
         ...mapActions(['fetchUserInfo']),
     },

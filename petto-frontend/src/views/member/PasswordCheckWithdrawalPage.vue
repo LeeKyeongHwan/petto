@@ -76,6 +76,9 @@ export default {
         if(this.$cookies.get("user").id) {
         this.$store.state.session = this.$cookies.get("user")
         }
+        document.querySelectorAll('.v-main__wrap')[0].style.background = "#ffeeee;";
+        document.querySelectorAll('.v-main__wrap')[0].style.background = " -webkit-linear-gradient(to right, #ffeeee, #ddefbb)";
+        document.querySelectorAll('.v-main__wrap')[0].style.background = "linear-gradient(to right, #ffeeee, #ddefbb)";
     },
 }
 

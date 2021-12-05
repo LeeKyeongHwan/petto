@@ -1,35 +1,35 @@
 <template>
-  <form class="login-screen" >
-    <div class="login-form">
-      <div class="form-group">
-
-        <input
-          id="password"
-          class="login-password"
-          type="password"
-          placeholder="Password"
-          v-model="password"
-        />
-        <label for="password">
-          <svg>
-            <use xlink:href="#padlock" />
-          </svg>
-        </label>
-      </div>
-      <div class="form-group">
-          
-        <input style="border:0 padding-top:2; text-align:center;" class="login-submit" @click="chkPassword" value="확인" />
-      </div>
-
-      <svg>
-        <symbol id="padlock" viewBox="0 0 1792 1792">
-          <path
-            d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"
+  <v-container>
+    <form class="login-screen"  >
+      <div class="login-form">
+        <div class="form-group">
+          <input
+            id="password"
+            class="login-password"
+            type="password"
+            placeholder="Password"
+            v-model="password"
           />
-        </symbol>
-      </svg>
-    </div>
-  </form>
+          <label for="password">
+            <svg>
+              <use xlink:href="#padlock" />
+            </svg>
+          </label>
+        </div>
+        <div class="form-group" >
+          <input style="border:0 padding-top:2; text-align:center; " class="login-submit" @click="chkPassword" value="확인" />
+        </div>
+
+        <svg>
+          <symbol id="padlock" viewBox="0 0 1792 1792">
+            <path
+              d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"
+            />
+          </symbol>
+        </svg>
+      </div>
+    </form>
+  </v-container>
 </template>
 
 <script>
@@ -65,12 +65,16 @@ export default {
         if(this.$cookies.get("user").id) {
         this.$store.state.session = this.$cookies.get("user")
         }
+        document.querySelectorAll('.v-main__wrap')[0].style.background = "#ffeeee;";
+        document.querySelectorAll('.v-main__wrap')[0].style.background = " -webkit-linear-gradient(to right, #ffeeee, #ddefbb)";
+        document.querySelectorAll('.v-main__wrap')[0].style.background = "linear-gradient(to right, #ffeeee, #ddefbb)";
     },
 }
 
 </script>
 
 <style scoped>
+
 
 .form-group {
   margin-top: 15px;
