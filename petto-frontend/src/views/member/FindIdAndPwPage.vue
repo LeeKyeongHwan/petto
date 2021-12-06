@@ -1,5 +1,5 @@
 <template>
-    <div align="center">
+    <div align="center" style="margin-top: 150px;">
         <span>
             <v-btn text class="mainText" @click="onFindId">
                 아이디 찾기
@@ -178,8 +178,14 @@ export default {
             }
         },
         changePassword() {
-            if(this.password != "" && this.password == this.passwordChk) {
-                
+            const pwTest = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+            if(!pwTest.test(this.password)) {
+                alert('최소 8자, 최소 하나의 문자 및 하나의 숫자입력')
+                return false;
+            }
+
+            if(this.password == this.passwordChk) {
                 const id = this.id
                 const password = this.password
                 axios.post('http://localhost:8888/petto/member/changePassword', { id, password })
