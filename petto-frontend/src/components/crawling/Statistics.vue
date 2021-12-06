@@ -81,7 +81,7 @@ export default {
   float:left; 
   width:48%;
   height: 100%;
-  padding:10% 3% 10% 3%;
+  padding:29px 3% 21px 3%;
   margin:1%;
   background-color: rgba(235, 169, 46, 0.3);
 }
